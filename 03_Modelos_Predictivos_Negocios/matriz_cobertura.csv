@@ -1,0 +1,31 @@
+criterio_o_tema,nivel,contenido,qmd_ancla,html_ancla,notebook,notebook_ancla,evidencia
+1.1,nucleo,"Técnicas principales: principios, fortalezas y limitaciones",sec-tecnicas,c2,notebooks/MPN_01_problema_predictivo.ipynb,tecnicas,Comparar técnicas y justificar la elección por tipo de problema
+1.2,nucleo,Ejemplos prácticos en contextos de negocio,sec-tecnicas,c2,notebooks/MPN_01_problema_predictivo.ipynb,tipos,"Declarar Y, unidad, momento y decisión de casos sectoriales"
+1.3,nucleo,Explicaciones adaptadas al contexto empresarial,sec-problema,c1,notebooks/MPN_01_problema_predictivo.ipynb,linea-base,Relacionar datos y propósito de la predicción frente a una línea base
+1.4,nucleo,Comunicar la aplicabilidad sin tecnicismos,sec-tecnicas,c2,notebooks/MPN_01_problema_predictivo.ipynb,comunicar,Mensaje para audiencia no técnica con decisión e incertidumbre
+2.1,nucleo,Selección de datos históricos relevantes,sec-crisp,c3,notebooks/MPN_02_crisp_preparacion.ipynb,contrato,Contrato de datos y exploración dirigida a la pregunta
+2.2,nucleo,"Limpieza: vacíos, valores extremos y estandarización",sec-crisp,c3,notebooks/MPN_02_crisp_preparacion.ipynb,calidad,Tratamiento según mecanismo de vacíos y tipo de extremo
+2.3,nucleo,Construcción de un modelo simple con software especializado,sec-regresion,c4,notebooks/MPN_03_regresion_demanda.ipynb,mco,Regresión múltiple estimada e interpretada con incertidumbre
+2.4,nucleo,"Pasos esenciales: variables, ajuste y validación",sec-validacion,c7,notebooks/MPN_05_validacion_evaluacion.ipynb,cv,Validación cruzada y búsqueda de hiperparámetros dentro de entrenamiento
+2.5,nucleo,Predicciones de tendencias y comportamientos futuros,sec-regresion,c4,notebooks/MPN_03_regresion_demanda.ipynb,escenarios,Escenarios con intervalo de predicción y control de extrapolación
+2.6,nucleo,Confianza y precisión de las predicciones para decidir,sec-clasificacion,c5,notebooks/MPN_04_clasificacion_abandono.ipynb,ranking,Ganancia acumulada y beneficio de campaña con supuestos explícitos
+3.1,nucleo,Selección de métricas clave según modelo y datos,sec-metricas,c8,notebooks/MPN_05_validacion_evaluacion.ipynb,laboratorio-s8,Métricas de regresión y clasificación del laboratorio S8 con sesgo
+3.2,nucleo,Análisis e interpretación de métricas en contexto empresarial,sec-umbral,c9,notebooks/MPN_05_validacion_evaluacion.ipynb,umbral-costo,Umbral por costo elegido en validación y prueba consultada una vez
+3.3,nucleo,Limitaciones del modelo predictivo,sec-limitaciones,c10,notebooks/MPN_06_limitaciones_comunicacion.ipynb,segmentos,"Desempeño por segmento, estabilidad y deriva con evidencia"
+3.4,nucleo,Comunicación de resultados de la evaluación,sec-comunicacion,c11,notebooks/MPN_06_limitaciones_comunicacion.ipynb,comunicacion,Mensajes SCR para tres audiencias con cifras verificables
+3.5,nucleo,Recomendaciones de mejora estructuradas y argumentadas,sec-comunicacion,c11,notebooks/MPN_06_limitaciones_comunicacion.ipynb,mejoras,"Limitación, evidencia, acción y métrica de verificación"
+T01,apoyo_nucleo,Error reducible e irreducible,sec-problema,c1,notebooks/MPN_01_problema_predictivo.ipynb,estructura,"Distinguir sesgo, varianza y piso σ² en una simulación"
+T02,apoyo_nucleo,Fuga de información,sec-problema,c1,notebooks/MPN_01_problema_predictivo.ipynb,fuga,Prueba de disponibilidad de variables al decidir
+T03,apoyo_nucleo,Fuga en la preparación y pipeline,sec-crisp,c3,notebooks/MPN_02_crisp_preparacion.ipynb,fuga-preparacion,Selección de variables dentro de la validación
+T04,apoyo_nucleo,Regularización Ridge y Lasso,sec-regresion,c6,notebooks/MPN_03_regresion_demanda.ipynb,regularizacion,Elegir α por validación cruzada e interpretar coeficientes nulos
+T05,apoyo_nucleo,"Logística, árboles, KNN y bosques",sec-clasificacion,c5,notebooks/MPN_04_clasificacion_abandono.ipynb,logistica,Razones de chances y efecto de la escala en KNN
+T06,apoyo_nucleo,"KS, Gini, AP y Brier",sec-metricas,c5,notebooks/MPN_04_clasificacion_abandono.ipynb,comparacion,Comparar ordenamiento y calidad probabilística en validación
+T07,apoyo_nucleo,Calibración de probabilidades,sec-umbral,c9,notebooks/MPN_05_validacion_evaluacion.ipynb,calibracion,Diagrama de confiabilidad y recalibración de Platt
+T08,apoyo_nucleo,Eventos raros e incertidumbre,sec-umbral,c9,notebooks/MPN_05_validacion_evaluacion.ipynb,desbalance,Predicciones fuera de pliegue e intervalos bootstrap
+T09,apoyo_nucleo,"Estabilidad, deriva y PSI",sec-limitaciones,c10,notebooks/MPN_06_limitaciones_comunicacion.ipynb,deriva,Monitoreo sin etiquetas e interpretación del PSI
+T10,apoyo_nucleo,Ficha del modelo,sec-comunicacion,c11,notebooks/MPN_06_limitaciones_comunicacion.ipynb,ficha,"Documentar propósito, evaluación, limitaciones y monitoreo"
+P01,profundizacion,Pronóstico con origen móvil y MASE,sec-series,c16,notebooks/MPN_07_pronostico_demanda.ipynb,validacion-temporal,Comparar contra el ingenuo estacional sin mezclar pasado y futuro
+P02,profundizacion,Intervalos empíricos por horizonte,sec-series,c16,notebooks/MPN_07_pronostico_demanda.ipynb,intervalos,Verificar cobertura en orígenes posteriores
+P03,profundizacion,Intervalos conformales y su cobertura,sec-regresion,c4,notebooks/MPN_03_regresion_demanda.ipynb,evaluacion-final,Explicar por qué la cobertura observada difiere de la nominal
+P04,profundizacion,Sensibilidad del umbral a los costos,sec-umbral,c9,notebooks/MPN_06_limitaciones_comunicacion.ipynb,sensibilidad-costos,Contrastar umbral empírico y t* en un rango de costos
+P05,profundizacion,Riesgo de modelo y revisión crítica de informes,sec-limitaciones,c10,notebooks/MPN_06_limitaciones_comunicacion.ipynb,caso-informe,Lista de revisión aplicada a un informe modelo

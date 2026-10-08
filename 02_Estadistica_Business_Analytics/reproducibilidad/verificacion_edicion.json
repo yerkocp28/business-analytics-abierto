@@ -1,0 +1,66 @@
+{
+  "edicion": "2026-10-08",
+  "notebooks": [
+    {
+      "archivo": "EBA_01_problema_descripcion_muestreo.ipynb",
+      "celdas_codigo": 8,
+      "resultado": "OK"
+    },
+    {
+      "archivo": "EBA_02_probabilidad_bayes_distribuciones.ipynb",
+      "celdas_codigo": 7,
+      "resultado": "OK"
+    },
+    {
+      "archivo": "EBA_03_estimacion_intervalos.ipynb",
+      "celdas_codigo": 7,
+      "resultado": "OK"
+    },
+    {
+      "archivo": "EBA_04_correlacion_regresion.ipynb",
+      "celdas_codigo": 7,
+      "resultado": "OK"
+    },
+    {
+      "archivo": "EBA_05_hipotesis_anova.ipynb",
+      "celdas_codigo": 9,
+      "resultado": "OK"
+    },
+    {
+      "archivo": "EBA_06_series_tiempo.ipynb",
+      "celdas_codigo": 9,
+      "resultado": "OK"
+    },
+    {
+      "archivo": "EBA_07_visualizacion_herramientas.ipynb",
+      "celdas_codigo": 8,
+      "resultado": "OK"
+    },
+    {
+      "archivo": "EBA_08_integrador_comunicacion.ipynb",
+      "celdas_codigo": 7,
+      "resultado": "OK"
+    }
+  ],
+  "alcance": "Ejecución y contenido local; no aprueba currículo ni automatiza Excel/Power BI Desktop.",
+  "cobertura": {
+    "criterios": 12,
+    "minimos": 17,
+    "filas": 32,
+    "enlaces_html": 79
+  },
+  "calculos": "Bayes, IC t, Wilson, Holm, ANOVA y agregados Excel verificados con casos independientes.",
+  "guia": {
+    "sin_red": true,
+    "errores_js": [],
+    "filtros_conciliados": 12,
+    "cambios_controles": 53,
+    "autoevaluaciones": 8,
+    "movil_sin_desborde": true
+  },
+  "manual": {
+    "paginas": 15,
+    "caracteres": 44171,
+    "formulas_mathml": 112
+  }
+}

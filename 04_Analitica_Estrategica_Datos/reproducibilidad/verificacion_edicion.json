@@ -1,0 +1,73 @@
+{
+  "edicion": "2026-10-08",
+  "notebooks": [
+    {
+      "nombre": "AED_01_proceso_calidad.ipynb",
+      "celdas_codigo": 6,
+      "widgets": 21,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "AED_02_tecnicas_analiticas.ipynb",
+      "celdas_codigo": 7,
+      "widgets": 28,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "AED_03_kpis_dashboard.ipynb",
+      "celdas_codigo": 7,
+      "widgets": 24,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "AED_04_optimizacion_restricciones.ipynb",
+      "celdas_codigo": 6,
+      "widgets": 24,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "AED_05_alternativas_decision.ipynb",
+      "celdas_codigo": 7,
+      "widgets": 28,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "AED_06_solarsur_monte_carlo.ipynb",
+      "celdas_codigo": 8,
+      "widgets": 27,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "AED_07_comunicacion_integracion.ipynb",
+      "celdas_codigo": 7,
+      "widgets": 31,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "AED_08_profundizacion_prescriptiva.ipynb",
+      "celdas_codigo": 7,
+      "widgets": 28,
+      "resultado": "OK"
+    }
+  ],
+  "html": {
+    "javascript": "OK",
+    "sin_red": "OK",
+    "enlaces_locales": 89,
+    "filtros_contrastados_python": 16,
+    "cambios_controles": 30,
+    "quizzes": 8,
+    "LP_EVPI_MonteCarlo_contrastados": "OK",
+    "movil_390x844": "OK"
+  },
+  "pdf": {
+    "paginas": 13,
+    "caracteres_extraidos": 43423,
+    "resultado": "OK"
+  },
+  "cobertura": {
+    "criterios_oficiales": 13,
+    "filas": 38,
+    "anclas_y_rutas": "OK"
+  }
+}

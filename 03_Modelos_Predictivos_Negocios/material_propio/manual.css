@@ -1,0 +1,8 @@
+:root { --bs-body-color: #172b32; --bs-link-color: #175159; }
+body { line-height: 1.7; }
+h1, h2, h3 { color: #0f3a42; }
+h1 { margin-top: 2.5rem; }
+table { font-size: .9rem; }
+figcaption { color: #4d5f68; }
+code { color: #6b3a5b; }
+@media print { .quarto-title-block { break-after: page; } }

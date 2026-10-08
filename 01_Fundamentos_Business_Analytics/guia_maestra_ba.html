@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía maestra — Fundamentos de Business Analytics</title>
+<style>
+:root{
+  --petrol-900:#08262c;
+  --petrol-800:#0f3a42;
+  --petrol-700:#175159;
+  --petrol-100:#dce8e9;
+  --gold:#c8951b;
+  --gold-soft:#f0e2c2;
+  --plum:#6b3a5b;
+  --plum-soft:#efe1ea;
+  --green:#2d7a5f;
+  --green-soft:#e0efe8;
+  --red:#b03a2e;
+  --red-soft:#f7e4e1;
+  --paper:#eef1f0;
+  --card:#ffffff;
+  --ink:#14232a;
+  --ink-soft:#4d5f68;
+  --ink-faint:#7d8d95;
+  --line:#d3dbda;
+  --fh:'Iowan Old Style','Palatino Linotype','Book Antiqua',Georgia,serif;
+  --fb:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
+  --fm:'SFMono-Regular',Consolas,'Courier New',monospace;
+  --scale:1;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--fb);
+  font-size:calc(15px * var(--scale));
+  line-height:1.65;
+}
+body.clase{--scale:1.28;}
+
+/* ---------- layout ---------- */
+.shell{display:flex;min-height:100vh;}
+aside{
+  width:250px;flex-shrink:0;
+  background:var(--petrol-900);color:#cfdcdd;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  padding:1.5rem 0;
+}
+aside .brand{padding:0 1.2rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:.8rem;}
+aside .brand .uni{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
+aside .brand h1{font-family:var(--fh);font-size:17px;color:#fff;font-weight:600;line-height:1.25;margin-top:.35rem;}
+aside .brand .prof{font-size:11.5px;color:#8ba3a6;margin-top:.4rem;}
+aside nav a{
+  display:block;padding:.5rem 1.2rem;color:#a9bfc2;text-decoration:none;
+  font-size:13px;border-left:3px solid transparent;transition:all .12s;
+}
+aside nav a:hover{background:rgba(255,255,255,.05);color:#fff;}
+aside nav a.active{border-left-color:var(--gold);color:#fff;background:rgba(200,149,27,.1);}
+aside nav .grp{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#5f7a7e;padding:1rem 1.2rem .3rem;}
+
+main{flex:1;min-width:0;padding:2.5rem 3rem 6rem;max-width:900px;}
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--line);
+}
+.toggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft);cursor:pointer;user-select:none;}
+.toggle input{width:36px;height:20px;appearance:none;background:var(--line);border-radius:10px;position:relative;cursor:pointer;transition:.2s;}
+.toggle input:checked{background:var(--petrol-800);}
+.toggle input::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:2px;transition:.2s;}
+.toggle input:checked::after{transform:translateX(16px);}
+
+section.chapter{margin-bottom:4rem;scroll-margin-top:1.5rem;}
+.chapter-head{margin-bottom:1.4rem;}
+.chapter-head .num{font-family:var(--fm);font-size:11px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;}
+.chapter-head h2{font-family:var(--fh);font-size:calc(27px * var(--scale));color:var(--petrol-900);font-weight:600;line-height:1.2;margin-top:.25rem;}
+.chapter-head .sub{color:var(--ink-soft);margin-top:.5rem;max-width:640px;}
+h3.sec{font-family:var(--fh);font-size:calc(19px * var(--scale));color:var(--petrol-800);margin:2rem 0 .8rem;}
+h4.mini{font-size:calc(14.5px * var(--scale));color:var(--petrol-800);margin:1.2rem 0 .5rem;font-weight:600;}
+p{margin-bottom:.9rem;color:var(--ink);}
+p.muted{color:var(--ink-soft);}
+ul.bul{margin:0 0 1rem 1.2rem;color:var(--ink-soft);}
+ul.bul li{margin-bottom:.35rem;}
+
+/* ---------- components ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1.1rem 1.25rem;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:1.2rem;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.2rem;}
+.tile{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--petrol-700);border-radius:5px;padding:.9rem 1rem;}
+.tile .tag{font-family:var(--fm);font-size:10.5px;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;}
+.tile h4{font-size:calc(14.5px * var(--scale));color:var(--petrol-900);margin:.3rem 0 .3rem;}
+.tile p{font-size:calc(13px * var(--scale));color:var(--ink-soft);margin:0;}
+.tile.plum{border-left-color:var(--plum);}
+.tile.gold{border-left-color:var(--gold);}
+.tile.green{border-left-color:var(--green);}
+
+table.data{width:100%;border-collapse:collapse;font-size:calc(13.5px * var(--scale));margin-bottom:1.2rem;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+table.data th{background:var(--petrol-800);color:#fff;text-align:left;padding:.6rem .85rem;font-weight:600;font-size:calc(12.5px * var(--scale));}
+table.data td{padding:.55rem .85rem;border-top:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+table.data tr:nth-child(even) td{background:#f9fbfa;}
+table.data td strong{color:var(--ink);}
+
+.formula{
+  background:var(--petrol-900);color:#e6efef;font-family:var(--fm);
+  padding:.85rem 1.1rem;border-radius:5px;font-size:calc(13.5px * var(--scale));
+  margin:.8rem 0;overflow-x:auto;border-left:4px solid var(--gold);
+}
+.formula .note{display:block;color:#8ba3a6;font-size:calc(11.5px * var(--scale));margin-top:.4rem;font-family:var(--fb);}
+
+.callout{border-radius:5px;padding:.85rem 1.1rem;font-size:calc(13.5px * var(--scale));margin:1rem 0;border-left:4px solid;}
+.callout.key{background:var(--gold-soft);border-color:var(--gold);color:#5c4308;}
+.callout.warn{background:var(--red-soft);border-color:var(--red);color:#6d2119;}
+.callout.tip{background:var(--green-soft);border-color:var(--green);color:#1d4f3d;}
+.callout strong{display:block;margin-bottom:.2rem;}
+
+details.acc{background:var(--card);border:1px solid var(--line);border-radius:5px;margin-bottom:8px;}
+details.acc summary{padding:.75rem 1rem;cursor:pointer;font-weight:600;font-size:calc(14px * var(--scale));color:var(--petrol-800);list-style:none;display:flex;justify-content:space-between;}
+details.acc summary::-webkit-details-marker{display:none;}
+details.acc summary::after{content:'+';font-family:var(--fm);color:var(--gold);font-size:17px;}
+details.acc[open] summary::after{content:'−';}
+details.acc .bd{padding:.2rem 1rem 1rem;font-size:calc(13.5px * var(--scale));color:var(--ink-soft);border-top:1px solid var(--line);padding-top:.75rem;}
+
+/* interactive lab */
+.lab{background:var(--petrol-900);border-radius:8px;padding:1.3rem 1.4rem;margin:1.4rem 0;color:#dbe7e8;}
+.lab .lab-h{font-family:var(--fh);font-size:calc(17px * var(--scale));color:var(--gold);margin-bottom:.3rem;}
+.lab .lab-s{font-size:calc(12.5px * var(--scale));color:#8ba3a6;margin-bottom:1rem;}
+.lab label{display:block;font-size:calc(12.5px * var(--scale));color:#a9bfc2;margin-bottom:.25rem;}
+.lab input[type=range]{width:100%;accent-color:var(--gold);margin-bottom:.9rem;}
+.lab textarea,.lab input[type=text],.lab select{
+  width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);
+  color:#eef4f4;border-radius:4px;padding:.55rem .7rem;font-family:var(--fm);
+  font-size:calc(12.5px * var(--scale));margin-bottom:.8rem;
+}
+.lab button{
+  background:var(--gold);color:#2c2004;border:none;border-radius:4px;
+  padding:.5rem .95rem;font-size:calc(12.5px * var(--scale));font-weight:600;
+  cursor:pointer;font-family:var(--fb);margin-right:6px;margin-bottom:6px;
+}
+.lab button.ghost{background:rgba(255,255,255,.1);color:#dbe7e8;}
+.lab canvas{background:#fff;border-radius:5px;display:block;width:100%;max-width:100%;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:8px;margin:.9rem 0;}
+.stat{background:rgba(255,255,255,.07);border-radius:5px;padding:.5rem .7rem;}
+.stat .k{font-size:calc(10.5px * var(--scale));color:#8ba3a6;text-transform:uppercase;letter-spacing:.05em;}
+.stat .v{font-size:calc(18px * var(--scale));font-weight:600;color:#fff;font-family:var(--fm);}
+.lab .hint{font-size:calc(12px * var(--scale));color:#8ba3a6;margin-top:.7rem;}
+.lab .row{display:flex;gap:14px;flex-wrap:wrap;}
+.lab .row>div{flex:1;min-width:150px;}
+
+.chartgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:1.2rem;}
+.chartcard{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:.9rem;}
+.chartcard canvas{width:100%;display:block;background:#fff;}
+.chartcard h4{font-size:calc(13.5px * var(--scale));color:var(--petrol-900);margin:.5rem 0 .2rem;}
+.chartcard p{font-size:calc(12.5px * var(--scale));color:var(--ink-soft);margin:0;}
+
+/* quiz */
+#quiz-root button{
+  font-family:var(--fb);background:var(--card);border:1px solid var(--line);border-radius:4px;
+  padding:.65rem .9rem;font-size:calc(13.5px * var(--scale));color:var(--ink);cursor:pointer;text-align:left;
+}
+#quiz-root button:hover{border-color:var(--gold);}
+#quiz-root button.primary{background:var(--petrol-800);color:#fff;border-color:var(--petrol-800);font-weight:600;}
+.ptrack{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin:.7rem 0 1.1rem;}
+.pfill{height:100%;background:var(--gold);transition:width .3s;}
+
+.glosario dt{font-weight:600;color:var(--petrol-800);margin-top:.7rem;font-size:calc(14px * var(--scale));}
+.glosario dd{color:var(--ink-soft);font-size:calc(13.5px * var(--scale));margin-left:0;}
+
+footer.pie{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-size:calc(12px * var(--scale));color:var(--ink-faint);}
+
+@media(max-width:900px){
+  .shell{flex-direction:column;}
+  aside{width:100%;height:auto;position:relative;}
+  aside nav{display:flex;flex-wrap:wrap;gap:2px;padding:0 .8rem;}
+  aside nav a{border-left:none;border-bottom:2px solid transparent;padding:.4rem .7rem;font-size:12px;}
+  aside nav a.active{border-left:none;border-bottom-color:var(--gold);}
+  aside nav .grp{display:none;}
+  main{padding:1.5rem 1.2rem 4rem;}
+}
+@media print{aside{display:none;}main{max-width:100%;}}
+
+.resource-links{display:flex;gap:.7rem;flex-wrap:wrap;margin:1.2rem 0}.resource-links a{padding:.6rem .8rem;background:#0f3a42;color:#fff;border-radius:6px;text-decoration:none}
+.fba-controls{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem}.fba-controls select{display:block;min-width:130px;padding:.5rem;border-radius:4px}
+.lab table{width:100%;color:#fff;border-collapse:collapse;margin:1rem 0}.lab th,.lab td{padding:.5rem;text-align:right;border-bottom:1px solid #49666b}.lab th:first-child,.lab td:first-child{text-align:left}
+aside nav .grp{color:#9bb4b7}.lab p{color:#dce8e9}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #c8951b;outline-offset:3px}
+@media(max-width:700px){main{padding:1.2rem}.grid3{grid-template-columns:1fr}table{display:block;overflow-x:auto}.fba-controls{flex-direction:column}.topbar{gap:1rem;flex-wrap:wrap}}
+@media print{aside,.toggle{display:none}main{max-width:none;padding:0}.lab{break-inside:avoid}section.chapter{break-before:auto}a{color:#175159}}
+
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside>
+  <div class="brand">
+    <div class="uni">Colección abierta de Business Analytics</div>
+    <h1>Fundamentos de Business Analytics</h1>
+    <div class="prof">Prof. Yerko Carreño · Guía maestra</div>
+  </div>
+  <nav id="nav" aria-label="Capítulos de la guía">
+    <a href="#inicio">Orientación y recursos</a>
+    <div class="grp">Marco conceptual</div>
+    <a href="#c1">1 · ¿Qué es Business Analytics?</a>
+    <a href="#c2">2 · Los cuatro tipos de analytics</a>
+    <a href="#c3">3 · Datos, variables y escalas</a>
+    <a href="#c4">4 · El proceso (CRISP-DM)</a>
+    <div class="grp">Análisis de datos</div>
+    <a href="#c5">5 · Estadística descriptiva</a>
+    <a href="#c6">6 · Visualización de datos</a>
+    <a href="#c7">7 · Relación entre variables</a>
+    <a href="#c8">8 · Probabilidad (optativo)</a>
+    <div class="grp">Profundización optativa</div>
+    <a href="#c9">9 · Modelos predictivos</a>
+    <a href="#c10">10 · Evaluación de modelos</a>
+    <div class="grp">Cierre</div>
+    <a href="#c11">11 · De datos a decisiones</a>
+    <a href="#c12">12 · Glosario</a>
+    <a href="#c13">13 · Autoevaluación</a>
+    <div class="grp">Herramientas y aplicación · RA3</div>
+    <a href="#c14">14 · Excel, pandas y SQL</a>
+    <a href="#c15">15 · Casos y decisión</a>
+    <a href="#c16">16 · Referencias y ruta docente</a>
+  </nav>
+</aside>
+
+<main>
+<div class="topbar">
+  <div style="font-size:12.5px;color:var(--ink-soft);">Edición integral · tres unidades y profundización · 08 oct 2026</div>
+  <label class="toggle"><input type="checkbox" id="clase-toggle"> Modo clase (texto grande)</label>
+</div>
+
+<section class="chapter" id="inicio">
+<div class="chapter-head"><div class="num">Edición docente · 2026</div><h2>De una pregunta de negocio a una decisión defendible</h2>
+<p class="sub">Guía para explicar, experimentar y volver a consultar. Integra las tres unidades de Fundamentos y mantiene las extensiones de la guía recibida.</p></div>
+<div class="grid3">
+<div class="tile"><span class="tag">RA1 · U1</span><h4>Entender</h4><p>Capítulos 1–4 y 11. Conceptos, datos, proceso, impacto y límites.</p></div>
+<div class="tile gold"><span class="tag">RA2 · U2</span><h4>Descubrir patrones</h4><p>Capítulos 5–7. Descripción, visualización e interpretación.</p></div>
+<div class="tile plum"><span class="tag">RA3 · U3</span><h4>Aplicar y comunicar</h4><p>Capítulos 11, 14 y 15. Herramientas, casos y recomendaciones.</p></div>
+</div>
+<p>Los capítulos 8–10 son <strong>profundización optativa</strong> y puente a cursos posteriores. No sustituyen el núcleo de herramientas ni crean requisitos nuevos de evaluación.</p>
+<div class="resource-links"><a href="material_propio/FBA_manual_cientifico.pdf">Manual científico · PDF</a><a href="material_propio/FBA_manual_cientifico.qmd">Fuente Quarto · QMD</a><a href="material_propio/FBA_manual_cientifico.html">Manual de lectura · HTML</a></div>
+<table class="data"><caption>Laboratorios completos con kernel Python e ipywidgets</caption><tr><th>Notebook</th><th>Uso</th></tr>
+<tr><td><a href="notebooks/FBA_01_negocio_datos.ipynb">01 · Negocio y datos</a></td><td>Núcleo U1; decisión, calidad, CRISP-DM y ética</td></tr>
+<tr><td><a href="notebooks/FBA_02_exploracion_visual.ipynb">02 · Exploración visual</a></td><td>Núcleo U2; gráficos, patrones y denominadores</td></tr>
+<tr><td><a href="notebooks/FBA_03_herramientas_caso_integrador.ipynb">03 · Herramientas y caso</a></td><td>Núcleo U3; filtros, tablas, búsquedas, SQL y decisión</td></tr>
+<tr><td><a href="notebooks/FBA_04_probabilidad_simulacion.ipynb">04 · Probabilidad</a></td><td>Extensión: distribuciones y simulación</td></tr>
+<tr><td><a href="notebooks/FBA_05_modelos_evaluacion.ipynb">05 · Modelos y evaluación</a></td><td>Extensión: partición, métricas y clustering</td></tr></table>
+<div class="callout warn"><strong>Alcance de la edición</strong>Material propio de apoyo; no establece reglas de evaluación: cada curso comunica las suyas. Los ejemplos son docentes y los resultados se interpretan dentro de sus supuestos.</div>
+</section>
+<!-- ============ 1 ============ -->
+<section class="chapter" id="c1">
+  <div class="chapter-head">
+    <div class="num">Capítulo 01</div>
+    <h2>¿Qué es Business Analytics?</h2>
+    <p class="sub">Business Analytics es el uso sistemático de datos, métodos estadísticos y modelos para <strong>tomar mejores decisiones de negocio</strong>. No es estadística por sí sola, ni tecnología por sí sola: es el puente entre ambas y la decisión.</p>
+  </div>
+
+  <div class="grid3">
+    <div class="tile"><span class="tag">Insumo</span><h4>Datos</h4><p>Transacciones, registros, sensores, encuestas, fuentes externas.</p></div>
+    <div class="tile plum"><span class="tag">Método</span><h4>Estadística y modelos</h4><p>Descriptiva, inferencia, modelos predictivos, optimización.</p></div>
+    <div class="tile gold"><span class="tag">Resultado</span><h4>Decisión</h4><p>Una acción concreta de negocio, mejor informada que sin datos.</p></div>
+  </div>
+
+  <h3 class="sec">BA, BI y Big Data</h3>
+<p><strong>Business Analytics</strong> conecta evidencia y decisión. <strong>Business Intelligence</strong> integra y presenta indicadores; ambos enfoques pueden convivir. <strong>Big Data</strong> plantea desafíos de volumen, velocidad y variedad que se justifican por la tarea y la infraestructura: 180 transacciones no exigen por sí solas procesamiento distribuido.</p>
+<p>Defina decisor, alternativas, unidad de análisis, horizonte, indicador y restricciones antes de elegir una herramienta. Un KPI necesita denominador, período y responsable.</p>
+<h3 class="sec">Las tres disciplinas que se cruzan</h3>
+  <table class="data">
+    <tr><th>Dimensión</th><th>Qué aporta</th><th>Si falta</th></tr>
+    <tr><td><strong>Negocio</strong></td><td>Define la pregunta correcta y el contexto de la decisión.</td><td>Se responden preguntas irrelevantes con mucha sofisticación.</td></tr>
+    <tr><td><strong>Estadística</strong></td><td>Permite cuantificar incertidumbre y revisar supuestos; no garantiza por sí sola la validez de una conclusión.</td><td>Se confunde correlación con causalidad; se sobreajusta.</td></tr>
+    <tr><td><strong>Tecnología</strong></td><td>Permite procesar volumen, automatizar y escalar.</td><td>El análisis no es reproducible ni sostenible en el tiempo.</td></tr>
+  </table>
+
+  <div class="callout key"><strong>Idea central de la unidad</strong>El valor del analytics no está en el modelo, está en la decisión que habilita. Un modelo excelente que nadie usa vale cero.</div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="chapter" id="c2">
+  <div class="chapter-head">
+    <div class="num">Capítulo 02</div>
+    <h2>Los cuatro tipos de analytics</h2>
+    <p class="sub">Cada tipo responde una pregunta distinta. Se eligen según la decisión: un método más complejo no garantiza mayor valor.</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Explorador de tipos</div>
+    <div class="lab-s">Haz clic en cada tipo para ver la pregunta, las herramientas y un caso aplicado.</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;">
+      <button onclick="showTipo(0)">Descriptivo</button>
+      <button onclick="showTipo(1)">Diagnóstico</button>
+      <button onclick="showTipo(2)">Predictivo</button>
+      <button onclick="showTipo(3)">Prescriptivo</button>
+    </div>
+    <div id="tipo-out" style="background:rgba(255,255,255,.07);border-radius:5px;padding:1rem;font-size:13.5px;"></div>
+  </div>
+
+  <table class="data">
+    <tr><th>Tipo</th><th>Pregunta</th><th>Herramientas típicas</th><th>Ejemplo</th></tr>
+    <tr><td><strong>Descriptivo</strong></td><td>¿Qué pasó?</td><td>Dashboards, KPIs, tablas dinámicas</td><td>Ventas del trimestre por región</td></tr>
+    <tr><td><strong>Diagnóstico</strong></td><td>¿Por qué pasó?</td><td>Drill-down, correlaciones, cohortes</td><td>Por qué subió la morosidad</td></tr>
+    <tr><td><strong>Predictivo</strong></td><td>¿Qué pasará?</td><td>Regresión, clasificación, series de tiempo</td><td>Probabilidad de fuga de un cliente</td></tr>
+    <tr><td><strong>Prescriptivo</strong></td><td>¿Qué debo hacer?</td><td>Optimización, simulación, reglas de decisión</td><td>Qué oferta enviar a cada cliente</td></tr>
+  </table>
+
+  <div class="callout tip"><strong>Para la clase</strong>Un buen ejercicio de discusión: pedir a los estudiantes que clasifiquen 5 reportes reales de una empresa. Distinguir la pregunta que responde cada reporte y qué evidencia adicional exigiría recomendar una acción.</div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="chapter" id="c3">
+  <div class="chapter-head">
+    <div class="num">Capítulo 03</div>
+    <h2>Datos, variables y escalas de medición</h2>
+    <p class="sub">Antes de calcular nada hay que saber qué tipo de variable se tiene. La escala de medición determina qué estadísticos y qué gráficos son válidos.</p>
+  </div>
+
+  <h3 class="sec">Tipos de variable</h3>
+  <div class="grid2">
+    <div class="tile"><span class="tag">Cualitativa</span><h4>Nominal</h4><p>Categorías sin orden. Ej: región, tipo de producto, género. Solo permite moda y frecuencias.</p></div>
+    <div class="tile"><span class="tag">Cualitativa</span><h4>Ordinal</h4><p>Categorías con orden pero sin distancia definida. Ej: nivel de satisfacción, rating de riesgo (AAA, AA, A).</p></div>
+    <div class="tile plum"><span class="tag">Cuantitativa</span><h4>De intervalo</h4><p>Orden y distancia constante, pero cero arbitrario. Ej: temperatura en °C, año calendario.</p></div>
+    <div class="tile plum"><span class="tag">Cuantitativa</span><h4>De razón</h4><p>Orden, distancia y cero absoluto. Ej: ingreso, edad, monto de un crédito. Permite interpretar cocientes; cada estadístico conserva sus propios requisitos.</p></div>
+  </div>
+
+  <h3 class="sec">Qué se puede calcular en cada escala</h3>
+  <table class="data">
+    <tr><th>Escala</th><th>Moda</th><th>Mediana</th><th>Media</th><th>Desv. estándar</th><th>Gráfico típico</th></tr>
+    <tr><td><strong>Nominal</strong></td><td>Sí</td><td>No</td><td>No</td><td>No</td><td>Barras, torta</td></tr>
+    <tr><td><strong>Ordinal</strong></td><td>Sí</td><td>Sí</td><td>Discutible</td><td>No</td><td>Barras ordenadas</td></tr>
+    <tr><td><strong>Intervalo</strong></td><td>Sí</td><td>Sí</td><td>Sí</td><td>Sí</td><td>Histograma, línea</td></tr>
+    <tr><td><strong>Razón</strong></td><td>Sí</td><td>Sí</td><td>Sí</td><td>Sí</td><td>Histograma, boxplot</td></tr>
+  </table>
+
+  <h3 class="sec">Grano, estructura y gestión</h3>
+<p>Una fila puede representar transacción, cliente o cliente-mes: no son intercambiables. Identificadores numéricos siguen siendo nominales. Diferencie datos tabulares, JSON y texto libre; documente fuentes, claves, cobertura, moneda y transformaciones. Conserve originales y valide cardinalidad al integrar tablas.</p>
+<h3 class="sec">Calidad de datos: los seis problemas frecuentes</h3>
+  <details class="acc"><summary>Valores faltantes (missing)</summary><div class="bd">Datos ausentes. Opciones: investigar el mecanismo de ausencia antes de eliminar filas, imputar por media/mediana, o modelar la ausencia como información. Nunca ignorar sin documentar.</div></details>
+  <details class="acc"><summary>Duplicados</summary><div class="bd">Registros repetidos que inflan artificialmente frecuencias y sesgan promedios. Detectar por clave única antes de cualquier cálculo.</div></details>
+  <details class="acc"><summary>Outliers (valores atípicos)</summary><div class="bd">Valores extremos. Pueden ser errores de registro o casos genuinamente raros. Regla común: fuera de Q1 − 1.5·RIC o Q3 + 1.5·RIC. Decidir caso a caso: no siempre se eliminan.</div></details>
+  <details class="acc"><summary>Inconsistencia de formato</summary><div class="bd">Fechas en distintos formatos, texto con mayúsculas mixtas, unidades diferentes en la misma columna (pesos vs UF). Estandarizar antes de agregar.</div></details>
+  <details class="acc"><summary>Errores de tipeo y codificación</summary><div class="bd">"Santiago", "santiago", "Stgo" como tres categorías distintas. Normalizar categorías reduce la dimensionalidad falsa.</div></details>
+  <details class="acc"><summary>Sesgo de muestreo</summary><div class="bd">Los datos disponibles no representan la población de interés. Es el problema más peligroso porque no se ve en la tabla: solo se detecta pensando en cómo se generaron los datos.</div></details>
+
+  <div class="callout warn"><strong>Advertencia clásica</strong>La preparación puede consumir una parte importante del esfuerzo, pero no existe aquí una estimación empírica para asignarle un porcentaje universal. Documentar calidad, transformaciones y supuestos.</div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="chapter" id="c4">
+  <div class="chapter-head">
+    <div class="num">Capítulo 04</div>
+    <h2>El proceso: CRISP-DM</h2>
+    <p class="sub">CRISP-DM (Cross-Industry Standard Process for Data Mining) es un marco de trabajo de uso extendido. Seis fases, iterativas, no lineales.</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Recorrido por las seis fases</div>
+    <div class="lab-s">Navega fase por fase. Cada una muestra su objetivo, entregables y errores típicos.</div>
+    <div id="crisp-nav" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem;"></div>
+    <div id="crisp-out" style="background:rgba(255,255,255,.07);border-radius:5px;padding:1rem;font-size:13.5px;min-height:130px;"></div>
+    <div style="margin-top:.8rem;">
+      <button class="ghost" onclick="crispStep(-1)">← Anterior</button>
+      <button onclick="crispStep(1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <div class="callout key"><strong>Por qué es un ciclo y no una línea</strong>Las flechas de CRISP-DM van en ambos sentidos. Al preparar datos se descubre que la pregunta estaba mal planteada; al evaluar el modelo se descubre que faltan variables. Volver atrás no es fracaso, es el método.</div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="chapter" id="c5">
+  <div class="chapter-head">
+    <div class="num">Capítulo 05</div>
+    <h2>Estadística descriptiva</h2>
+    <p class="sub">Cuatro familias de medidas describen cualquier conjunto de datos numéricos: tendencia central, dispersión, posición y forma.</p>
+  </div>
+
+  <h3 class="sec">Las cuatro familias</h3>
+  <div class="grid2">
+    <div class="tile"><span class="tag">Familia 1</span><h4>Tendencia central</h4><p>Media, mediana, moda. Responde: ¿alrededor de qué valor se concentran los datos?</p></div>
+    <div class="tile plum"><span class="tag">Familia 2</span><h4>Dispersión</h4><p>Rango, varianza, desviación estándar, coeficiente de variación, RIC. ¿Qué tan separados están?</p></div>
+    <div class="tile gold"><span class="tag">Familia 3</span><h4>Posición</h4><p>Cuartiles, deciles, percentiles. ¿Dónde cae un valor respecto al resto?</p></div>
+    <div class="tile green"><span class="tag">Familia 4</span><h4>Forma</h4><p>Asimetría (skewness) y curtosis. ¿Cómo se ve la distribución?</p></div>
+  </div>
+
+  <h3 class="sec">Fórmulas fundamentales</h3>
+  <div class="formula">Media:  x̄ = (1/n) · Σ xᵢ<span class="note">Sensible a valores extremos. Es el "centro de gravedad" de los datos.</span></div>
+  <div class="formula">Varianza muestral:  s² = Σ(xᵢ − x̄)² / (n − 1)<span class="note">Se divide por n−1 (grados de libertad) para estimar sin sesgo la varianza bajo muestreo independiente y varianza finita.</span></div>
+  <div class="formula">Desviación estándar:  s = √s²<span class="note">Vuelve a las unidades originales de la variable. Por eso se reporta más que la varianza.</span></div>
+  <div class="formula">Coeficiente de variación:  CV = s / x̄<span class="note">Dispersión relativa, sin unidades. Interpretar en escalas de razón y con media positiva lejos de cero; no usar como regla universal.</span></div>
+  <div class="formula">Rango intercuartílico:  RIC = Q3 − Q1<span class="note">Dispersión del 50% central. Robusto ante outliers, a diferencia del rango total.</span></div>
+  <div class="formula">Puntaje z:  z = (x − x̄) / s<span class="note">Cuántas desviaciones estándar separa un valor de la media. Base de la estandarización.</span></div>
+
+  <div class="lab">
+    <div class="lab-h">Calculadora de estadística descriptiva</div>
+    <div class="lab-s">Pega datos con punto decimal (separados por coma, espacio o salto de línea) y calcula todo en vivo, con histograma y boxplot.</div>
+    <label for="ds-input">Datos numéricos</label>
+    <textarea id="ds-input" rows="3">12, 15, 14, 18, 22, 19, 16, 13, 25, 17, 20, 21, 14, 16, 45, 18, 19, 23, 15, 17</textarea>
+    <div>
+      <button onclick="calcDesc()">Calcular</button>
+      <button class="ghost" onclick="loadEjemplo('normal')">Ejemplo simétrico</button>
+      <button class="ghost" onclick="loadEjemplo('sesgado')">Ejemplo con outlier</button>
+      <button class="ghost" onclick="loadEjemplo('bimodal')">Ejemplo bimodal</button>
+    </div>
+    <div class="stats" id="ds-stats"></div>
+    <div class="row" style="margin-top:.6rem;">
+      <div><label>Histograma</label><canvas role="img" aria-label="Gráfico interactivo: ds-hist" id="ds-hist" width="420" height="200"></canvas></div>
+      <div><label>Boxplot</label><canvas role="img" aria-label="Gráfico interactivo: ds-box" id="ds-box" width="420" height="200"></canvas></div>
+    </div>
+    <div class="hint" id="ds-interp"></div>
+  </div>
+
+  <h3 class="sec">Cómo leer la forma de una distribución</h3>
+  <table class="data">
+    <tr><th>Situación</th><th>Qué indica</th><th>Qué medida reportar</th></tr>
+    <tr><td>Media ≈ Mediana</td><td>Distribución aproximadamente simétrica</td><td>Media y desviación estándar</td></tr>
+    <tr><td>Media &gt; Mediana</td><td>Asimetría positiva (cola a la derecha)</td><td>Mediana y RIC</td></tr>
+    <tr><td>Media &lt; Mediana</td><td>Asimetría negativa (cola a la izquierda)</td><td>Mediana y RIC</td></tr>
+    <tr><td>Dos picos en el histograma</td><td>Distribución bimodal: probablemente hay dos subpoblaciones mezcladas</td><td>Separar los grupos antes de resumir</td></tr>
+  </table>
+
+  <div class="callout tip"><strong>Regla práctica</strong>Si la media y la mediana difieren mucho, reportar solo la media es engañoso. El caso clásico son los ingresos: en distribuciones de ingresos con cola derecha, la media puede superar ampliamente la mediana. No es una identidad universal.</div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="chapter" id="c6">
+  <div class="chapter-head">
+    <div class="num">Capítulo 06</div>
+    <h2>Visualización de datos</h2>
+    <p class="sub">La elección del gráfico no es estética: depende del tipo de variable y de la pregunta que se quiere responder.</p>
+  </div>
+
+  <h3 class="sec">Catálogo de gráficos fundamentales</h3>
+  <div class="chartgrid">
+    <div class="chartcard"><canvas role="img" aria-label="Gráfico interactivo: mini-hist" id="mini-hist" width="280" height="150"></canvas><h4>Histograma</h4><p>Una variable numérica. Muestra la <strong>forma</strong> de la distribución.</p></div>
+    <div class="chartcard"><canvas role="img" aria-label="Gráfico interactivo: mini-box" id="mini-box" width="280" height="150"></canvas><h4>Boxplot</h4><p>Comparar <strong>dispersión y outliers</strong> entre grupos.</p></div>
+    <div class="chartcard"><canvas role="img" aria-label="Gráfico interactivo: mini-scatter" id="mini-scatter" width="280" height="150"></canvas><h4>Scatterplot</h4><p>Dos variables numéricas. Muestra <strong>relación</strong> y su forma.</p></div>
+    <div class="chartcard"><canvas role="img" aria-label="Gráfico interactivo: mini-bar" id="mini-bar" width="280" height="150"></canvas><h4>Gráfico de barras</h4><p>Comparar <strong>magnitudes</strong> entre categorías.</p></div>
+    <div class="chartcard"><canvas role="img" aria-label="Gráfico interactivo: mini-line" id="mini-line" width="280" height="150"></canvas><h4>Gráfico de línea</h4><p>Evolución de una variable en el <strong>tiempo</strong>.</p></div>
+    <div class="chartcard"><canvas role="img" aria-label="Gráfico interactivo: mini-heat" id="mini-heat" width="280" height="150"></canvas><h4>Mapa de calor</h4><p><strong>Intensidad</strong> en una matriz. Útil para correlaciones.</p></div>
+  </div>
+
+  <h3 class="sec">Cómo elegir el gráfico correcto</h3>
+  <table class="data">
+    <tr><th>Quiero mostrar…</th><th>Con variables…</th><th>Uso…</th></tr>
+    <tr><td>Distribución</td><td>1 numérica</td><td>Histograma o boxplot</td></tr>
+    <tr><td>Comparación entre categorías</td><td>1 categórica + 1 numérica</td><td>Gráfico de barras</td></tr>
+    <tr><td>Relación</td><td>2 numéricas</td><td>Scatterplot</td></tr>
+    <tr><td>Evolución temporal</td><td>1 numérica + tiempo</td><td>Gráfico de línea</td></tr>
+    <tr><td>Composición de un total</td><td>1 categórica</td><td>Barras apiladas (evitar torta con &gt;5 categorías)</td></tr>
+    <tr><td>Correlaciones múltiples</td><td>Varias numéricas</td><td>Mapa de calor de correlación</td></tr>
+  </table>
+
+  <h3 class="sec">Errores comunes de visualización</h3>
+  <details class="acc"><summary>Eje Y truncado</summary><div class="bd">No empezar el eje en cero en un gráfico de barras exagera visualmente diferencias pequeñas. En gráficos de línea puede ser aceptable si se declara explícitamente.</div></details>
+  <details class="acc"><summary>Gráfico de torta con muchas categorías</summary><div class="bd">El ojo humano compara ángulos peor que longitudes. Con muchas categorías suele ser más fácil comparar barras ordenadas; la elección depende de la tarea.</div></details>
+  <details class="acc"><summary>Efectos 3D y decoración</summary><div class="bd">Distorsionan la percepción de proporciones y no agregan información. El principio es maximizar la razón datos/tinta.</div></details>
+  <details class="acc"><summary>Confundir correlación visual con causalidad</summary><div class="bd">Un scatterplot muestra asociación, nunca causa. Es el error de interpretación más frecuente en presentaciones ejecutivas.</div></details>
+
+  <div class="callout key"><strong>Principio de Tufte</strong>Maximizar la razón datos/tinta: cada elemento visual debe representar información. Si se puede borrar sin perder significado, sobra.</div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="chapter" id="c7">
+  <p class="callout tip">Pearson resume asociación lineal; Spearman usa rangos y resume asociación monótona. Ninguno demuestra causalidad. En regresión simple con intercepto, ajustada y evaluada en los mismos datos, R² coincide con r²; no se generaliza esa igualdad sin condiciones. El notebook 02 también demuestra cómo una mezcla distinta de segmentos puede invertir una comparación agregada.</p>
+  <div class="chapter-head">
+    <div class="num">Capítulo 07</div>
+    <h2>Relación entre variables</h2>
+    <p class="sub">La covarianza y la correlación miden si dos variables se mueven juntas. La correlación es la versión estandarizada, y por eso es la que se reporta.</p>
+  </div>
+
+  <div class="formula">Covarianza:  Cov(X,Y) = Σ(xᵢ − x̄)(yᵢ − ȳ) / (n − 1)<span class="note">Signo indica dirección, pero la magnitud depende de las unidades: no es comparable entre pares de variables.</span></div>
+  <div class="formula">Correlación de Pearson:  r = Cov(X,Y) / (sₓ · s_y)<span class="note">Entre −1 y 1 cuando ambas variables tienen variabilidad. Mide asociación lineal, no causalidad.</span></div>
+
+  <div class="lab">
+    <div class="lab-h">Explorador de correlación</div>
+    <div class="lab-s">Mueve el control y observa cómo cambia la nube de puntos y la recta ajustada.</div>
+    <label for="corr-slider">Correlación objetivo (r): <span id="corr-val">0.70</span></label>
+    <input type="range" id="corr-slider" min="-100" max="100" value="70" step="1">
+    <canvas role="img" aria-label="Gráfico interactivo: corr-canvas" id="corr-canvas" width="560" height="280"></canvas>
+    <div class="stats" id="corr-stats"></div>
+    <div class="hint" id="corr-hint"></div>
+  </div>
+
+  <h3 class="sec">Cómo interpretar el valor de r</h3>
+  <table class="data">
+    <tr><th>|r|</th><th>Interpretación habitual</th></tr>
+    <tr><td>0.00 – 0.19</td><td>Relación lineal muy débil o inexistente</td></tr>
+    <tr><td>0.20 – 0.39</td><td>Débil</td></tr>
+    <tr><td>0.40 – 0.59</td><td>Moderada</td></tr>
+    <tr><td>0.60 – 0.79</td><td>Fuerte</td></tr>
+    <tr><td>0.80 – 1.00</td><td>Muy fuerte</td></tr>
+  </table>
+
+  <div class="callout warn"><strong>Las tres trampas de la correlación</strong>
+  1. <strong>Correlación no implica causalidad.</strong> Puede haber una tercera variable (confusora) explicando ambas.<br>
+  2. <strong>r solo captura relaciones lineales.</strong> Una relación en forma de U puede dar r ≈ 0 pese a ser perfectamente determinística.<br>
+  3. <strong>r es sensible a outliers.</strong> Un solo punto extremo puede crear o destruir una correlación aparente.</div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section class="chapter" id="c8"><p class="callout tip">Bajo independencia y varianza finita, la media estandarizada admite aproximación normal al crecer la muestra; los datos no se vuelven normales. El notebook 04 incluye Bayes y simulaciones reproducibles.</p>
+  <h3 class="sec">Probabilidad condicional y prevalencia</h3>
+  <p>Para P(B)&gt;0, P(A|B)=P(A∩B)/P(B). Independencia exige P(A∩B)=P(A)P(B); correlación nula no basta. El valor esperado de una variable discreta pondera cada resultado por su probabilidad.</p>
+  <div class="formula">P(A|B) = P(B|A)P(A) / [P(B|A)P(A) + P(B|no A)P(no A)]<span class="note">Bayes. Una alerta ficticia con prevalencia 2%, sensibilidad 90% y especificidad 95% tiene valor predictivo positivo 0,018/(0,018+0,049) ≈ 26,87%. Sensibilidad y probabilidad del evento dada una alerta son distintas.</span></div>
+  <p>Monte Carlo repite un mecanismo supuesto. Para observaciones independientes con desviación σ, el error estándar de la media es σ/√n; no es la desviación de una observación individual. Semilla fija permite repetir el cálculo, pero no verifica la realidad del mecanismo.</p>
+  <div class="chapter-head">
+    <div class="num">Capítulo 08 · Profundización optativa</div>
+    <h2>Probabilidad y la distribución normal</h2>
+    <p class="sub">La distribución normal aparece en todas partes por el Teorema Central del Límite. Entenderla es la base de la inferencia y de la evaluación de riesgo.</p>
+  </div>
+
+  <div class="lab">
+    <div class="lab-h">Curva normal interactiva</div>
+    <div class="lab-s">Ajusta media y desviación estándar, y calcula la probabilidad acumulada bajo la curva.</div>
+    <div class="row">
+      <div>
+        <label>Media (μ): <span id="mu-val">0</span></label>
+        <input type="range" id="mu-slider" min="-30" max="30" value="0" step="1">
+      </div>
+      <div>
+        <label>Desviación estándar (σ): <span id="sd-val">1.0</span></label>
+        <input type="range" id="sd-slider" min="5" max="40" value="10" step="1">
+      </div>
+    </div>
+    <label>Valor de corte (x): <span id="x-val">1.0</span> — se sombrea P(X ≤ x)</label>
+    <input type="range" id="x-slider" min="-40" max="40" value="10" step="1">
+    <canvas role="img" aria-label="Gráfico interactivo: norm-canvas" id="norm-canvas" width="560" height="260"></canvas>
+    <div class="stats" id="norm-stats"></div>
+    <div class="hint">El puntaje z indica cuántas desviaciones estándar separa el corte de la media. La probabilidad acumulada es el área sombreada.</div>
+  </div>
+
+  <h3 class="sec">La regla empírica (68 – 95 – 99.7)</h3>
+  <table class="data">
+    <tr><th>Intervalo</th><th>Probabilidad aproximada</th><th>Lectura</th></tr>
+    <tr><td>μ ± 1σ</td><td>68.3%</td><td>Dos tercios de los casos</td></tr>
+    <tr><td>μ ± 2σ</td><td>95.4%</td><td>Casi todos los casos habituales</td></tr>
+    <tr><td>μ ± 3σ</td><td>99.7%</td><td>Fuera de aquí: evento realmente excepcional</td></tr>
+  </table>
+
+  <div class="callout key"><strong>Teorema Central del Límite</strong>La media de una muestra suficientemente grande tiende a distribuirse normal, sin importar la forma de la distribución original. Esto es lo que permite hacer inferencia sobre poblaciones que no conocemos.</div>
+
+  <h3 class="sec">Otras distribuciones que conviene conocer</h3>
+  <div class="grid2">
+    <div class="tile"><span class="tag">Discreta</span><h4>Binomial</h4><p>Número de éxitos en n intentos independientes. Ej: cuántos de 100 clientes aceptan una oferta.</p></div>
+    <div class="tile"><span class="tag">Discreta</span><h4>Poisson</h4><p>Número de eventos en un intervalo fijo. Ej: llamadas al call center por hora.</p></div>
+    <div class="tile plum"><span class="tag">Continua</span><h4>Uniforme</h4><p>Todos los valores del rango son igualmente probables. Base de simulación.</p></div>
+    <div class="tile plum"><span class="tag">Continua</span><h4>Exponencial</h4><p>Tiempo entre eventos. Ej: tiempo hasta la próxima falla o el próximo default.</p></div>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section class="chapter" id="c9">
+  <div class="chapter-head">
+    <div class="num">Capítulo 09 · Profundización optativa</div>
+    <h2>Modelos predictivos</h2>
+    <p class="sub">La primera decisión de todo modelamiento: ¿hay una variable objetivo conocida? De ahí se desprende toda la taxonomía.</p>
+  </div>
+
+  <h3 class="sec">Árbol de decisión: qué modelo usar</h3>
+  <div class="lab">
+    <div class="lab-h">Selector de modelo</div>
+    <div class="lab-s">Responde dos preguntas y llega a la familia de modelo correcta.</div>
+    <div id="tree-out"></div>
+  </div>
+
+  <h3 class="sec">Regresión lineal simple</h3>
+  <p>Busca la recta que minimiza la suma de los errores al cuadrado entre lo observado y lo predicho. Es el modelo predictivo más fundamental y la base conceptual de casi todo lo demás.</p>
+  <div class="formula">ŷ = β₀ + β₁·x<span class="note">β₁ = Cov(x,y)/Var(x) — pendiente. β₀ = ȳ − β₁·x̄ — intercepto.</span></div>
+  <div class="formula">Criterio de mínimos cuadrados:  minimizar Σ(yᵢ − ŷᵢ)²<span class="note">Los errores se elevan al cuadrado para penalizar más los desvíos grandes y evitar que positivos y negativos se cancelen.</span></div>
+
+  <div class="lab">
+    <div class="lab-h">Laboratorio de regresión lineal</div>
+    <div class="lab-s">Haz clic en el gráfico para agregar puntos. La recta de mínimos cuadrados se recalcula en vivo, junto con los residuos.</div>
+    <canvas role="img" aria-label="Gráfico interactivo: reg-canvas" id="reg-canvas" width="560" height="300" style="cursor:crosshair;"></canvas>
+    <div style="margin-top:.7rem;">
+      <button class="ghost" onclick="regReset()">Limpiar</button>
+      <button class="ghost" onclick="regDemo()">Cargar ejemplo</button>
+      <button class="ghost" onclick="toggleResid()">Mostrar/ocultar residuos</button>
+    </div>
+    <div class="stats" id="reg-stats"></div>
+    <div class="hint" id="reg-eq"></div>
+  </div>
+
+  <h3 class="sec">Clasificación</h3>
+  <p>Cuando la variable objetivo es categórica. La regresión logística modela la <em>probabilidad</em> de pertenecer a una clase, no la clase directamente.</p>
+  <div class="formula">Regresión logística:  P(y=1|x) = 1 / (1 + e^−(β₀ + β₁x))<span class="note">La función logística comprime cualquier valor real al intervalo (0,1), lo que permite interpretarlo como probabilidad.</span></div>
+  <div class="grid2">
+    <div class="tile"><span class="tag">Clasificación</span><h4>Regresión logística</h4><p>Interpretable, robusta, estándar en scoring crediticio. Supone relación lineal en el log-odds.</p></div>
+    <div class="tile"><span class="tag">Clasificación</span><h4>Árbol de decisión</h4><p>Divide el espacio con reglas sucesivas. Muy interpretable, pero propenso a sobreajuste sin poda.</p></div>
+    <div class="tile"><span class="tag">Clasificación</span><h4>K vecinos más cercanos</h4><p>Clasifica según los k casos más parecidos. Sin entrenamiento explícito, pero costoso en predicción.</p></div>
+    <div class="tile"><span class="tag">Ensamble</span><h4>Random forest</h4><p>Muchos árboles combinados. Alto desempeño, menor interpretabilidad individual.</p></div>
+  </div>
+
+  <h3 class="sec">Clustering (no supervisado)</h3>
+  <p>No hay variable objetivo: el algoritmo busca estructura en los datos. K-means asigna cada punto al centroide más cercano y recalcula centroides hasta converger.</p>
+  <div class="lab">
+    <div class="lab-h">Demostración de k-means</div>
+    <div class="lab-s">Ejecuta las iteraciones y observa cómo los centroides se desplazan hasta estabilizarse.</div>
+    <label>Número de clusters (k): <span id="k-val">3</span></label>
+    <input type="range" id="k-slider" min="2" max="5" value="3" step="1">
+    <canvas role="img" aria-label="Gráfico interactivo: km-canvas" id="km-canvas" width="560" height="300"></canvas>
+    <div style="margin-top:.7rem;">
+      <button onclick="kmStep()">Ejecutar una iteración</button>
+      <button class="ghost" onclick="kmRun()">Ejecutar hasta converger</button>
+      <button class="ghost" onclick="kmReset()">Reiniciar</button>
+    </div>
+    <div class="hint" id="km-hint">Iteración 0 — centroides asignados al azar.</div>
+  </div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="chapter" id="c10"><p class="callout tip">El simulador construye tasas ilustrativas; no representa un modelo entrenado. En el notebook 05, modelo y umbral se eligen con validación y se reporta test solo al final. Las transformaciones se aprenden con entrenamiento.</p>
+  <p>ROC-AUC evalúa ordenamiento; average precision (AP) resume precisión–recall y depende de la prevalencia. Ninguna garantiza calibración: una probabilidad bien calibrada debe concordar con frecuencias observadas. La pérdida media (cFN·FN + cFP·FP)/n incorpora costos declarados y permite comparar umbrales en validación. Use particiones temporales o por grupos cuando el problema lo requiera.</p>
+  <div class="chapter-head">
+    <div class="num">Capítulo 10 · Profundización optativa</div>
+    <h2>Evaluación de modelos</h2>
+    <p class="sub">Un modelo se juzga por cómo predice datos que nunca vio, no por cuán bien ajusta los que ya conoce.</p>
+  </div>
+
+  <h3 class="sec">Train / test y sobreajuste</h3>
+  <div class="grid3">
+    <div class="tile"><span class="tag">70–80%</span><h4>Entrenamiento</h4><p>El modelo aprende los patrones aquí.</p></div>
+    <div class="tile plum"><span class="tag">10–15%</span><h4>Validación</h4><p>Se ajustan hiperparámetros y se comparan modelos.</p></div>
+    <div class="tile gold"><span class="tag">10–20%</span><h4>Prueba (test)</h4><p>Se usa una sola vez, al final, para estimar el desempeño real.</p></div>
+  </div>
+
+  <div class="callout warn"><strong>Sobreajuste (overfitting)</strong>El modelo memoriza el ruido de los datos de entrenamiento en vez de aprender el patrón. Una brecha entre entrenamiento y validación es una señal para investigar; también puede haber cambio de distribución. Revisar partición, complejidad y calidad de datos antes de decidir una corrección.</div>
+
+  <h3 class="sec">Métricas para regresión</h3>
+  <div class="formula">RMSE = √( Σ(yᵢ − ŷᵢ)² / n )<span class="note">Error típico en las unidades de la variable. Penaliza fuerte los errores grandes.</span></div>
+  <div class="formula">MAE = Σ|yᵢ − ŷᵢ| / n<span class="note">Error absoluto medio. Más robusto ante outliers que RMSE.</span></div>
+  <div class="formula">R² = 1 − (SCE / SCT)<span class="note">Comparación con predecir la media del conjunto evaluado. Puede ser negativo fuera de muestra; queda indefinido si la respuesta es constante.</span></div>
+
+  <h3 class="sec">Métricas para clasificación</h3>
+  <div class="lab">
+    <div class="lab-h">Matriz de confusión interactiva</div>
+    <div class="lab-s">Ajusta el umbral de decisión y observa el intercambio entre precisión y recall. Escenario: modelo de detección de fraude sobre 1.000 casos.</div>
+    <label>Umbral de decisión: <span id="th-val">0.50</span></label>
+    <input type="range" id="th-slider" min="5" max="95" value="50" step="1">
+    <canvas role="img" aria-label="Gráfico interactivo: cm-canvas" id="cm-canvas" width="560" height="230"></canvas>
+    <div class="stats" id="cm-stats"></div>
+    <div class="hint" id="cm-hint"></div>
+  </div>
+
+  <table class="data">
+    <tr><th>Métrica</th><th>Fórmula</th><th>Cuándo priorizarla</th></tr>
+    <tr><td><strong>Exactitud (accuracy)</strong></td><td>(VP + VN) / total</td><td>Clases balanceadas. Engañosa si una clase es rara.</td></tr>
+    <tr><td><strong>Precisión</strong></td><td>VP / (VP + FP)</td><td>Cuando un falso positivo es costoso (ej: bloquear una tarjeta legítima).</td></tr>
+    <tr><td><strong>Recall (sensibilidad)</strong></td><td>VP / (VP + FN)</td><td>Cuando un falso negativo es costoso (ej: no detectar un fraude o una enfermedad).</td></tr>
+    <tr><td><strong>F1</strong></td><td>2·(P·R)/(P+R)</td><td>Cuando se necesita equilibrio entre ambas.</td></tr>
+  </table>
+
+  <div class="callout key"><strong>La paradoja de la exactitud</strong>Si solo el 1% de las transacciones son fraude, un modelo que diga "nunca hay fraude" tiene 99% de exactitud y es completamente inútil. Por eso en clases desbalanceadas se reportan precisión y recall, no exactitud.</div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section class="chapter" id="c11">
+  <div class="chapter-head">
+    <div class="num">Capítulo 11</div>
+    <h2>De datos a decisiones</h2>
+    <p class="sub">El cierre de la unidad: todo lo anterior existe para habilitar una decisión mejor. Sin ese paso final, el análisis no genera valor.</p>
+  </div>
+
+  <h3 class="sec">La cadena de valor del analytics</h3>
+  <table class="data">
+    <tr><th>Etapa</th><th>Qué es</th><th>Ejemplo</th></tr>
+    <tr><td><strong>Dato</strong></td><td>Registro crudo, sin interpretación</td><td>"Cliente 4821, mora 62 días"</td></tr>
+    <tr><td><strong>Información</strong></td><td>Dato organizado y agregado</td><td>"3.2% de la cartera tiene mora &gt; 60 días"</td></tr>
+    <tr><td><strong>Insight</strong></td><td>Patrón interpretado con implicancia</td><td>"Los clientes con mora tardía reinciden en 70% de los casos"</td></tr>
+    <tr><td><strong>Decisión</strong></td><td>Acción concreta tomada</td><td>"Se cambia la política de cobranza para ese segmento"</td></tr>
+  </table>
+
+  <h3 class="sec">Comunicar resultados a una audiencia no técnica</h3>
+  <ul class="bul">
+    <li><strong>Empezar por la conclusión</strong>, no por la metodología. La audiencia decide si sigue escuchando en los primeros 30 segundos.</li>
+    <li><strong>Un mensaje por gráfico.</strong> Si un gráfico necesita tres párrafos de explicación, hay que dividirlo.</li>
+    <li><strong>Cuantificar el impacto en términos de negocio</strong>, no de métricas técnicas: "recuperaríamos $X millones", no "el AUC subió a 0.83".</li>
+    <li><strong>Declarar los supuestos y limitaciones.</strong> La credibilidad se construye reconociendo lo que el modelo no puede hacer.</li>
+  </ul>
+
+  <h3 class="sec">Ética y sesgos en analytics</h3>
+  <details class="acc"><summary>Sesgo en los datos históricos</summary><div class="bd">Si los datos reflejan decisiones pasadas discriminatorias, el modelo las aprende y las perpetúa a escala. Ejemplo clásico: modelos de crédito entrenados con datos de una época en que ciertos grupos no accedían a préstamos.</div></details>
+  <details class="acc"><summary>Variables proxy</summary><div class="bd">Aunque se excluya una variable sensible (género, etnia), otras variables correlacionadas pueden reintroducirla indirectamente. Ej: comuna de residencia como proxy de nivel socioeconómico.</div></details>
+  <details class="acc"><summary>Transparencia e interpretabilidad</summary><div class="bd">En decisiones que afectan a personas (crédito, contratación, salud), hay una obligación creciente de poder explicar por qué el modelo decidió lo que decidió. Esto favorece modelos interpretables sobre cajas negras.</div></details>
+  <details class="acc"><summary>Privacidad y uso de datos</summary><div class="bd">Que un dato esté disponible no significa que sea legítimo usarlo. El consentimiento, la finalidad declarada y la minimización de datos son principios básicos.</div></details>
+
+  <div class="callout tip"><strong>Pregunta de cierre para la clase</strong>"¿Qué decisión concreta cambia como resultado de este análisis?" Si no hay respuesta clara, el proyecto todavía no está terminado.</div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section class="chapter" id="c12">
+  <div class="chapter-head">
+    <div class="num">Capítulo 12</div>
+    <h2>Glosario</h2>
+    <p class="sub">Términos que aparecen a lo largo de toda la unidad.</p>
+  </div>
+  <input aria-label="Buscar término en el glosario" type="text" id="glos-search" placeholder="Buscar término…" style="width:100%;padding:.6rem .8rem;border:1px solid var(--line);border-radius:5px;margin-bottom:1rem;font-family:var(--fb);font-size:14px;">
+  <dl class="glosario" id="glos-list"></dl>
+</section>
+
+<!-- ============ 13 ============ -->
+<section class="chapter" id="c13">
+  <div class="chapter-head">
+    <div class="num">Capítulo 13</div>
+    <h2>Autoevaluación</h2>
+    <p class="sub">Banco de preguntas por capítulo. Se puede rendir completo o por tema específico.</p>
+  </div>
+  <div id="quiz-root"></div>
+</section>
+
+
+<section class="chapter" id="c14">
+<div class="chapter-head"><div class="num">Capítulo 14 · U3 · RA3</div><h2>Herramientas: Excel, pandas y SQL</h2><p class="sub">Un mismo problema, definiciones consistentes y resultados reconciliados.</p></div>
+<p>El caso QuillayMarket tiene 180 transacciones de enero–junio de 2025. Los datos se incluyen en esta página para que los filtros funcionen sin conexión. El archivo fuente permanece en el banco compartido; no se modifica al usar los controles.</p>
+<table class="data"><tr><th>Pregunta</th><th>Excel</th><th>pandas</th></tr>
+<tr><td>Total y promedio</td><td>SUMA; PROMEDIO</td><td>sum(); mean()</td></tr>
+<tr><td>Conteo condicionado</td><td>CONTAR.SI; SUMAR.SI.CONJUNTO</td><td>Filtro booleano y agregación</td></tr>
+<tr><td>Decisión por condición</td><td>SI</td><td>np.where</td></tr>
+<tr><td>Buscar atributo</td><td>BUSCARX con clave auditada</td><td>merge(validate="many_to_one")</td></tr>
+<tr><td>Tabla dinámica</td><td>Filas, columnas, valores y filtro</td><td>pivot_table(aggfunc="sum")</td></tr></table>
+<div class="lab"><div class="lab-h">Explorador de filtros y tabla dinámica</div>
+<div class="fba-controls"><label>Región<select id="fba-region"><option value="Todas">Todas</option></select></label>
+<label>Producto<select id="fba-producto"><option value="Todos">Todos</option></select></label>
+<label>Trimestre<select id="fba-trimestre"><option value="0">Semestre completo</option><option value="1">Primero</option><option value="2" selected>Segundo</option></select></label></div>
+<div class="stats" id="fba-kpis" aria-live="polite"></div><div id="fba-tabla"></div><p id="fba-filtro-nota" aria-live="polite"></p>
+</div>
+<h3 class="sec">Procedimiento para clase</h3>
+<ol class="bul"><li>En Excel, importe <a href="../_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv">quillaymarket_ventas_detalle.csv</a> (Datos › Desde texto/CSV) y conviértalo en una tabla llamada Ventas.</li>
+<li>Compruebe encabezados, fechas y Monto = Unidades × Precio_Unitario. El grano es transacción.</li>
+<li>Filtre fechas desde 1 de abril inclusive hasta 1 de julio exclusivo; combine producto y región con «y».</li>
+<li>Construya una tabla dinámica región × producto con suma de monto; compare con el total del filtro.</li>
+<li>Reproduzca el cálculo en el notebook 03 con pandas y SQL en memoria. Justifique cualquier diferencia.</li></ol>
+<div class="formula">Ticket = ingreso / transacciones · Precio por unidad = ingreso / unidades<span class="note">No se promedian tickets de grupos sin considerar sus tamaños. Una selección vacía no tiene ticket observado.</span></div>
+<p>SQL permite expresar el mismo filtro con WHERE y la agregación con GROUP BY. El notebook utiliza parámetros y una base en memoria. En búsquedas, una clave repetida debe detectarse antes de que una unión multiplique filas e ingresos.</p>
+</section>
+<section class="chapter" id="c15">
+<div class="chapter-head"><div class="num">Capítulo 15 · Aplicación y comunicación</div><h2>Casos sectoriales y decisiones bajo supuestos</h2><p class="sub">Separar lo que observamos de lo que suponemos.</p></div>
+<table class="data"><tr><th>Contexto</th><th>Indicador y pregunta</th><th>Revisión necesaria</th></tr>
+<tr><td>Retail</td><td>Ingreso, unidades y surtido</td><td>Faltan costos y ventas no realizadas por quiebres</td></tr>
+<tr><td>Banca</td><td>Atraso por cohorte</td><td>Maduración y exposición comparables</td></tr>
+<tr><td>Logística</td><td>Entregas a tiempo / entregas</td><td>Distancias y composición de rutas</td></tr>
+<tr><td>Salud</td><td>Espera y ausentismo</td><td>Prioridad, acceso y equidad</td></tr>
+<tr><td>SaaS</td><td>Abandono en la base elegible</td><td>Horizonte, altas y cohortes</td></tr>
+<tr><td>Consultoría</td><td>Utilización y capacidad</td><td>Competencias, calidad y variabilidad</td></tr></table>
+<div class="lab"><div class="lab-h">Sensibilidad de una campaña hipotética</div><p>Los costos y efectos son supuestos; no se conocen márgenes reales del archivo. Se conserva mezcla y costo variable unitario.</p>
+<label for="fba-crecimiento">Crecimiento de unidades: <output id="fba-g">10%</output></label><input id="fba-crecimiento" type="range" min="0" max="60" value="10" step="1">
+<label for="fba-descuento">Descuento: <output id="fba-d">5%</output></label><input id="fba-descuento" type="range" min="0" max="30" value="5" step="1">
+<label for="fba-margen">Margen base supuesto: <output id="fba-m">30%</output></label><input id="fba-margen" type="range" min="10" max="60" value="30" step="1">
+<div id="fba-sensibilidad" aria-live="polite"></div></div>
+<div class="formula">ΔΠ = R · [(1 + g)(m − d) − m] − C<span class="note">R: ingreso base; g: crecimiento; m: margen supuesto; d: descuento; C: costo fijo. El control usa C=0.</span></div>
+<p>Con margen 30% y descuento 5%, el crecimiento de equilibrio es 20% si no hay costo fijo. Más ventas no garantizan mayor contribución. La guía no estima causalmente el efecto de la campaña.</p>
+<h3 class="sec">Entrega integradora</h3><p>Presente pregunta, fuente y cobertura, controles, dos hallazgos con gráficos, propuesta condicionada y plan de seguimiento. Distinga evidencia, interpretación e hipótesis. Una recomendación debe decir quién actúa y bajo qué resultado se revisa.</p>
+<details class="acc"><summary>Rúbrica de práctica y soluciones orientativas</summary><div class="bd">Pregunta y grano 20%; calidad 25%; análisis y visualización 25%; decisión y límites 20%; comunicación y reproducción 10%. Es una rúbrica formativa, no una ponderación oficial. Ticket general: ingreso/operaciones; precio ponderado: ingreso/unidades. Con g=10%, m=30% y d=5%, ΔΠ/R=−0,025. Con g=20%, la diferencia es cero bajo los supuestos.</div></details>
+</section>
+<section class="chapter" id="c16">
+<div class="chapter-head"><div class="num">Capítulo 16</div><h2>Referencias y ruta docente</h2></div>
+<p>La secuencia del núcleo propone tres unidades en doce semanas: U1 S01–S04; U2 S05–S08; U3 S09–S12. El <a href="material_propio/FBA_manual_cientifico.pdf">manual científico</a> desarrolla supuestos, fórmulas, ejercicios resueltos y un guion de sesión.</p>
+<ul class="bul"><li><a href="https://www.statlearning.com/">James y colaboradores (2023), An Introduction to Statistical Learning with Applications in Python</a>: profundización en modelos.</li>
+<li><a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda33q.htm">NIST: diagramas de dispersión</a>; <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm">asimetría y curtosis</a>.</li>
+<li><a href="https://pandas.pydata.org/docs/user_guide/reshaping.html">pandas: tablas dinámicas</a>.</li>
+<li><a href="https://scikit-learn.org/stable/common_pitfalls.html">scikit-learn: fuga de información</a> y <a href="https://scikit-learn.org/stable/modules/model_evaluation.html">métricas</a>.</li>
+<li><a href="https://docs.scipy.org/doc/scipy/reference/stats.html">SciPy: distribuciones y funciones estadísticas</a>.</li></ul>
+<p>Antes de usar un simulador, prediga el resultado; después cambie un parámetro y explique qué supuesto mantuvo. Las demostraciones de regresión y clustering son ilustrativas. Un gráfico o métrica favorable no acredita validez causal ni aprobación de un modelo para uso real.</p>
+</section>
+
+<footer class="pie">
+  Guía maestra de Fundamentos de Business Analytics · Prof. Yerko Carreño Pérez · CC BY-NC-SA 4.0<br>
+  Documento autocontenido: funciona sin conexión a internet.
+</footer>
+
+</main>
+</div>
+
+<script>
+/* ================= util ================= */
+const $ = id => document.getElementById(id);
+const fmt = (v,d=2) => (isFinite(v) ? v.toFixed(d) : '—');
+
+/* ============ modo clase ============ */
+$('clase-toggle').addEventListener('change', e => {
+  document.body.classList.toggle('clase', e.target.checked);
+  setTimeout(()=>{ calcDesc(); drawCorr(); drawNorm(); drawReg(); drawKm(); drawCM(); drawMinis(); }, 60);
+});
+
+/* ============ nav activo ============ */
+const navLinks = document.querySelectorAll('#nav a');
+const chapters = document.querySelectorAll('section.chapter');
+function updateNav(){
+  let cur = chapters[0].id;
+  chapters.forEach(c => { if (c.getBoundingClientRect().top <= 120) cur = c.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+cur));
+}
+window.addEventListener('scroll', updateNav); updateNav();
+
+/* ============ cap 2: tipos ============ */
+const TIPOS = [
+  {n:'Descriptivo', q:'¿Qué pasó?', h:'Dashboards, KPIs, tablas dinámicas, reportes periódicos.', c:'Un banco publica el informe mensual de colocaciones por segmento y sucursal. Resume lo ocurrido, sin explicar causas ni proyectar.'},
+  {n:'Diagnóstico', q:'¿Por qué pasó?', h:'Drill-down, análisis de correlación, segmentación, análisis de cohortes.', c:'Al detectar un alza de morosidad, se desagrega por producto, canal de originación y cosecha para identificar dónde se concentra el deterioro.'},
+  {n:'Predictivo', q:'¿Qué pasará?', h:'Regresión, clasificación, series de tiempo, machine learning.', c:'Un modelo estima la probabilidad de que cada cliente entre en mora en los próximos 90 días, usando historial de pagos y comportamiento transaccional.'},
+  {n:'Prescriptivo', q:'¿Qué debo hacer?', h:'Optimización, simulación, reglas de decisión, testing A/B.', c:'Dado el riesgo estimado por cliente y el costo de cada acción de cobranza, el sistema recomienda qué tratamiento aplicar a cada caso para maximizar recuperación neta.'}
+];
+function showTipo(i){
+  const t = TIPOS[i];
+  $('tipo-out').innerHTML = `<div style="color:#e8c46b;font-weight:600;font-size:15px;margin-bottom:.4rem;">${t.n} — ${t.q}</div>
+  <div style="margin-bottom:.5rem;"><span style="color:#8ba3a6;">Herramientas:</span> ${t.h}</div>
+  <div><span style="color:#8ba3a6;">Caso aplicado:</span> ${t.c}</div>`;
+}
+showTipo(0);
+
+/* ============ cap 4: CRISP-DM ============ */
+const CRISP = [
+  {n:'1. Comprensión del negocio', o:'Traducir el objetivo de negocio en un problema analítico concreto y medible.', e:'Objetivo definido, criterios de éxito, plan de proyecto.', err:'Saltarse esta fase y empezar a explorar datos sin saber qué se busca responder.'},
+  {n:'2. Comprensión de los datos', o:'Reunir los datos disponibles y evaluar su calidad, cobertura y limitaciones.', e:'Inventario de fuentes, estadística descriptiva inicial, informe de calidad.', err:'Asumir que los datos son correctos sin verificarlos.'},
+  {n:'3. Preparación de los datos', o:'Limpiar, transformar, integrar y construir el dataset final de modelamiento.', e:'Dataset analítico documentado y reproducible.', err:'No documentar las transformaciones, lo que hace imposible reproducir el resultado.'},
+  {n:'4. Modelamiento', o:'Seleccionar y entrenar los modelos candidatos, ajustando sus parámetros.', e:'Modelos entrenados, parámetros, comparación entre alternativas.', err:'Buscar el modelo más complejo en vez del más adecuado al problema.'},
+  {n:'5. Evaluación', o:'Verificar que el modelo cumple los criterios de éxito de negocio, no solo los técnicos.', e:'Métricas de desempeño, validación con el área usuaria.', err:'Evaluar solo con métricas estadísticas y olvidar el objetivo de negocio original.'},
+  {n:'6. Despliegue', o:'Poner el modelo en producción y monitorear su desempeño en el tiempo.', e:'Modelo operativo, plan de monitoreo, documentación.', err:'No monitorear: los modelos se degradan cuando cambia el comportamiento subyacente.'}
+];
+let crispIdx = 0;
+function renderCrispNav(){
+  $('crisp-nav').innerHTML = CRISP.map((c,i)=>
+    `<button class="${i===crispIdx?'':'ghost'}" onclick="crispGo(${i})">${i+1}</button>`).join('');
+}
+function renderCrisp(){
+  const c = CRISP[crispIdx];
+  $('crisp-out').innerHTML = `<div style="color:#e8c46b;font-weight:600;font-size:15px;margin-bottom:.5rem;">${c.n}</div>
+  <div style="margin-bottom:.4rem;"><span style="color:#8ba3a6;">Objetivo:</span> ${c.o}</div>
+  <div style="margin-bottom:.4rem;"><span style="color:#8ba3a6;">Entregables:</span> ${c.e}</div>
+  <div><span style="color:#8ba3a6;">Error típico:</span> ${c.err}</div>`;
+  renderCrispNav();
+}
+function crispGo(i){ crispIdx = i; renderCrisp(); }
+function crispStep(d){ crispIdx = (crispIdx + d + CRISP.length) % CRISP.length; renderCrisp(); }
+renderCrisp();
+
+/* ============ cap 5: descriptiva ============ */
+function parseData(txt){
+  return txt.trim().split(/[\s,;]+/).filter(Boolean).map(Number).filter(Number.isFinite);
+}
+function quantile(sorted, p){
+  const idx = (sorted.length - 1) * p;
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  return lo === hi ? sorted[lo] : sorted[lo] + (idx - lo) * (sorted[hi] - sorted[lo]);
+}
+function describe(d){
+  const n = d.length;
+  const sorted = [...d].sort((a,b)=>a-b);
+  const mean = d.reduce((a,b)=>a+b,0)/n;
+  const median = quantile(sorted,0.5);
+  const q1 = quantile(sorted,0.25), q3 = quantile(sorted,0.75);
+  const varr = n>1 ? d.reduce((a,b)=>a+(b-mean)**2,0)/(n-1) : 0;
+  const sd = Math.sqrt(varr);
+  const skew = n>2 && sd>0 ? (n/((n-1)*(n-2))) * d.reduce((a,b)=>a+((b-mean)/sd)**3,0) : 0;
+  const freq = {}; d.forEach(v=>freq[v]=(freq[v]||0)+1);
+  const maxF = Math.max(...Object.values(freq));
+  const modes = Object.keys(freq).filter(k=>freq[k]===maxF);
+  return {n, mean, median, moda: maxF>1 ? modes.slice(0,2).join(', ') : '—',
+    sd, varr, min:sorted[0], max:sorted[n-1], q1, q3, ric:q3-q1,
+    cv: mean>0 ? sd/mean : NaN, skew, sorted};
+}
+function calcDesc(){
+  const d = parseData($('ds-input').value);
+  if (d.length < 2){ $('ds-stats').textContent = 'Ingrese al menos dos números finitos.'; $('ds-interp').textContent='Use punto decimal; comas, espacios o punto y coma separan observaciones.'; ['ds-hist','ds-box'].forEach(id=>{const c=$(id);c.getContext('2d').clearRect(0,0,c.width,c.height);}); return; }
+  const s = describe(d);
+  const cells = [['n',s.n],['Media',fmt(s.mean)],['Mediana',fmt(s.median)],['Moda',s.moda],
+    ['Desv. est.',fmt(s.sd)],['Varianza',fmt(s.varr)],['CV',fmt(s.cv)],
+    ['Mín',fmt(s.min)],['Q1',fmt(s.q1)],['Q3',fmt(s.q3)],['Máx',fmt(s.max)],['RIC',fmt(s.ric)]];
+  $('ds-stats').innerHTML = cells.map(c=>`<div class="stat"><div class="k">${c[0]}</div><div class="v">${c[1]}</div></div>`).join('');
+  drawHist($('ds-hist'), d);
+  drawBox($('ds-box'), s);
+  let msg = '';
+  const diff = s.mean - s.median;
+  if (s.sd === 0) msg = 'Todos los valores son iguales: dispersión cero. Correlaciones y puntajes z no quedan definidos.';
+  else if (Math.abs(diff) < 0.05*s.sd) msg = 'Media y mediana cercanas. Esto no demuestra simetría ni normalidad; revise el histograma y el contexto.';
+  else if (diff > 0) msg = 'Media > mediana: asimetría positiva (cola a la derecha). Conviene reportar mediana y RIC, porque la media está inflada por valores altos.';
+  else msg = 'Media < mediana: asimetría negativa (cola a la izquierda). Conviene reportar mediana y RIC.';
+  const lo = s.q1 - 1.5*s.ric, hi = s.q3 + 1.5*s.ric;
+  const outs = d.filter(v=>v<lo||v>hi);
+  if (outs.length) msg += ` Se detectan ${outs.length} outlier(s) según el criterio 1.5·RIC: ${outs.map(v=>fmt(v,1)).join(', ')}.`;
+  $('ds-interp').textContent = msg;
+}
+function loadEjemplo(tipo){
+  const ej = {
+    normal:'48,50,52,49,51,50,53,47,50,51,49,52,50,48,51,50,49,52,50,51',
+    sesgado:'12,15,14,18,22,19,16,13,17,20,21,14,16,18,19,15,17,120,14,16',
+    bimodal:'10,11,12,11,10,12,11,13,10,11,38,40,39,41,38,40,39,42,38,40'
+  };
+  $('ds-input').value = ej[tipo]; calcDesc();
+}
+function drawHist(cv, d){
+  const ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const pad = {l:36,r:12,t:12,b:26};
+  const min = Math.min(...d), max = Math.max(...d);
+  const nb = Math.min(12, Math.max(5, Math.ceil(Math.sqrt(d.length))));
+  const bw = (max-min)/nb || 1;
+  const bins = new Array(nb).fill(0);
+  d.forEach(v=>{ let i = Math.floor((v-min)/bw); if(i>=nb) i=nb-1; if(i<0) i=0; bins[i]++; });
+  const maxC = Math.max(...bins);
+  const pw = W-pad.l-pad.r, ph = H-pad.t-pad.b;
+  ctx.strokeStyle='#d3dbda'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,pad.t+ph); ctx.lineTo(pad.l+pw,pad.t+ph); ctx.stroke();
+  bins.forEach((c,i)=>{
+    const x = pad.l + (i/nb)*pw, w = pw/nb - 2, h = (c/maxC)*ph;
+    ctx.fillStyle='#175159'; ctx.fillRect(x+1, pad.t+ph-h, w, h);
+  });
+  ctx.fillStyle='#4d5f68'; ctx.font='10px sans-serif';
+  ctx.fillText(min.toFixed(0), pad.l, H-8);
+  ctx.fillText(max.toFixed(0), pad.l+pw-18, H-8);
+  ctx.fillText(maxC, 6, pad.t+8); ctx.fillText('0', 18, pad.t+ph);
+}
+function drawBox(cv, s){
+  const ctx = cv.getContext('2d'), W = cv.width, H = cv.height;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const pad = 40, pw = W-2*pad, cy = H/2;
+  const lo = s.q1 - 1.5*s.ric, hi = s.q3 + 1.5*s.ric;
+  const inl = s.sorted.filter(v=>v>=lo&&v<=hi);
+  const wl = inl.length?Math.min(...inl):s.min, wh = inl.length?Math.max(...inl):s.max;
+  const dmin = Math.min(s.min, wl), dmax = Math.max(s.max, wh);
+  const rng = (dmax-dmin)||1;
+  const X = v => pad + ((v-dmin)/rng)*pw;
+  ctx.strokeStyle='#175159'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(X(wl),cy); ctx.lineTo(X(s.q1),cy); ctx.moveTo(X(s.q3),cy); ctx.lineTo(X(wh),cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(X(wl),cy-14); ctx.lineTo(X(wl),cy+14); ctx.moveTo(X(wh),cy-14); ctx.lineTo(X(wh),cy+14); ctx.stroke();
+  ctx.fillStyle='#dce8e9'; ctx.fillRect(X(s.q1),cy-26,X(s.q3)-X(s.q1),52);
+  ctx.strokeRect(X(s.q1),cy-26,X(s.q3)-X(s.q1),52);
+  ctx.strokeStyle='#c8951b'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(X(s.median),cy-26); ctx.lineTo(X(s.median),cy+26); ctx.stroke();
+  ctx.fillStyle='#b03a2e';
+  s.sorted.filter(v=>v<lo||v>hi).forEach(v=>{ ctx.beginPath(); ctx.arc(X(v),cy,4,0,7); ctx.fill(); });
+  ctx.fillStyle='#4d5f68'; ctx.font='10px sans-serif';
+  ctx.fillText('Q1 '+s.q1.toFixed(1), X(s.q1)-16, cy+44);
+  ctx.fillText('Q3 '+s.q3.toFixed(1), X(s.q3)-16, cy+44);
+  ctx.fillStyle='#c8951b'; ctx.fillText('Md '+s.median.toFixed(1), X(s.median)-16, cy-34);
+}
+calcDesc();
+
+/* ============ cap 6: minis ============ */
+function drawMinis(){
+  // hist
+  let c = $('mini-hist').getContext('2d'), W=280,H=150;
+  c.clearRect(0,0,W,H); c.fillStyle='#fff'; c.fillRect(0,0,W,H);
+  const hb=[3,7,14,22,26,20,12,6,3];
+  const mh=Math.max(...hb);
+  hb.forEach((v,i)=>{ const h=(v/mh)*110; c.fillStyle='#175159'; c.fillRect(18+i*28, 130-h, 24, h); });
+  c.strokeStyle='#d3dbda'; c.beginPath(); c.moveTo(14,130); c.lineTo(272,130); c.stroke();
+
+  // box
+  c = $('mini-box').getContext('2d'); c.clearRect(0,0,W,H); c.fillStyle='#fff'; c.fillRect(0,0,W,H);
+  [[40,'#175159'],[110,'#6b3a5b'],[180,'#c8951b']].forEach(([y,col],gi)=>{
+    const q1=60+gi*18, q3=170-gi*12, md=(q1+q3)/2, lo=q1-40, hi=q3+35;
+    const cy = 35+gi*40;
+    c.strokeStyle=col; c.lineWidth=1.2;
+    c.beginPath(); c.moveTo(lo,cy); c.lineTo(q1,cy); c.moveTo(q3,cy); c.lineTo(hi,cy); c.stroke();
+    c.beginPath(); c.moveTo(lo,cy-6); c.lineTo(lo,cy+6); c.moveTo(hi,cy-6); c.lineTo(hi,cy+6); c.stroke();
+    c.fillStyle='#eef1f0'; c.fillRect(q1,cy-12,q3-q1,24); c.strokeRect(q1,cy-12,q3-q1,24);
+    c.lineWidth=2; c.beginPath(); c.moveTo(md,cy-12); c.lineTo(md,cy+12); c.stroke();
+  });
+
+  // scatter
+  c = $('mini-scatter').getContext('2d'); c.clearRect(0,0,W,H); c.fillStyle='#fff'; c.fillRect(0,0,W,H);
+  c.strokeStyle='#d3dbda'; c.beginPath(); c.moveTo(24,126); c.lineTo(268,126); c.moveTo(24,14); c.lineTo(24,126); c.stroke();
+  let seed=7; const rnd=()=>{seed=(seed*9301+49297)%233280; return seed/233280;};
+  c.fillStyle='rgba(23,81,89,.7)';
+  for(let i=0;i<45;i++){ const x=30+rnd()*230; const y=126-((x-30)/230)*95 + (rnd()-0.5)*38; c.beginPath(); c.arc(x,Math.max(16,Math.min(122,y)),3,0,7); c.fill(); }
+  c.strokeStyle='#c8951b'; c.lineWidth=2; c.beginPath(); c.moveTo(30,122); c.lineTo(260,32); c.stroke();
+
+  // bar
+  c = $('mini-bar').getContext('2d'); c.clearRect(0,0,W,H); c.fillStyle='#fff'; c.fillRect(0,0,W,H);
+  const bv=[62,88,45,74,30];
+  bv.forEach((v,i)=>{ c.fillStyle='#6b3a5b'; c.fillRect(28+i*48, 126-v, 34, v); });
+  c.strokeStyle='#d3dbda'; c.beginPath(); c.moveTo(20,126); c.lineTo(272,126); c.stroke();
+
+  // line
+  c = $('mini-line').getContext('2d'); c.clearRect(0,0,W,H); c.fillStyle='#fff'; c.fillRect(0,0,W,H);
+  c.strokeStyle='#d3dbda'; c.beginPath(); c.moveTo(24,126); c.lineTo(268,126); c.moveTo(24,14); c.lineTo(24,126); c.stroke();
+  const lv=[40,55,48,70,66,88,82,104,98,112];
+  c.strokeStyle='#175159'; c.lineWidth=2; c.beginPath();
+  lv.forEach((v,i)=>{ const x=32+i*25, y=126-v; i?c.lineTo(x,y):c.moveTo(x,y); }); c.stroke();
+  c.fillStyle='#c8951b'; lv.forEach((v,i)=>{ c.beginPath(); c.arc(32+i*25,126-v,3,0,7); c.fill(); });
+
+  // heat
+  c = $('mini-heat').getContext('2d'); c.clearRect(0,0,W,H); c.fillStyle='#fff'; c.fillRect(0,0,W,H);
+  const m=[[1,.72,.31,-.18],[.72,1,.55,.05],[.31,.55,1,.42],[-.18,.05,.42,1]];
+  m.forEach((row,i)=>row.forEach((v,j)=>{
+    const a=Math.abs(v);
+    c.fillStyle = v>=0 ? `rgba(23,81,89,${0.15+a*0.8})` : `rgba(176,58,46,${0.15+a*0.8})`;
+    c.fillRect(60+j*40, 12+i*32, 38, 30);
+    c.fillStyle = a>0.6?'#fff':'#14232a'; c.font='9px sans-serif';
+    c.fillText(v.toFixed(2), 66+j*40, 31+i*32);
+  }));
+}
+drawMinis();
+
+/* ============ cap 7: correlación ============ */
+let corrPts = [];
+function genCorr(r){
+  let seed = 42;
+  const rnd = () => { seed = (seed*16807) % 2147483647; return seed/2147483647; };
+  const nrm = () => { let u=0,v=0; while(!u)u=rnd(); while(!v)v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); };
+  const pts = [];
+  for(let i=0;i<80;i++){
+    const z1 = nrm(), z2 = nrm();
+    const x = z1, y = r*z1 + Math.sqrt(Math.max(0,1-r*r))*z2;
+    pts.push([x,y]);
+  }
+  return pts;
+}
+function pearson(pts){
+  const n=pts.length;
+  const mx=pts.reduce((a,p)=>a+p[0],0)/n, my=pts.reduce((a,p)=>a+p[1],0)/n;
+  let sxy=0,sxx=0,syy=0;
+  pts.forEach(p=>{ sxy+=(p[0]-mx)*(p[1]-my); sxx+=(p[0]-mx)**2; syy+=(p[1]-my)**2; });
+  return {r: sxy/Math.sqrt(sxx*syy), b1: sxy/sxx, mx, my};
+}
+function drawCorr(){
+  const r = parseInt($('corr-slider').value)/100;
+  $('corr-val').textContent = r.toFixed(2);
+  corrPts = genCorr(r);
+  const st = pearson(corrPts);
+  const cv = $('corr-canvas'), ctx = cv.getContext('2d'), W=cv.width, H=cv.height;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const pad=40, pw=W-2*pad, ph=H-2*pad;
+  const X = v => pad + ((v+3.2)/6.4)*pw, Y = v => H-pad - ((v+3.2)/6.4)*ph;
+  ctx.strokeStyle='#e6ebea'; ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){ const y=pad+i*ph/4; ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(pad+pw,y); ctx.stroke(); }
+  ctx.strokeStyle='#c3ccca'; ctx.beginPath(); ctx.moveTo(pad,H-pad); ctx.lineTo(pad+pw,H-pad); ctx.moveTo(pad,pad); ctx.lineTo(pad,H-pad); ctx.stroke();
+  ctx.fillStyle='rgba(23,81,89,.62)';
+  corrPts.forEach(p=>{ ctx.beginPath(); ctx.arc(X(p[0]),Y(p[1]),4,0,7); ctx.fill(); });
+  const b0 = st.my - st.b1*st.mx;
+  ctx.strokeStyle='#c8951b'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(X(-3.2), Y(b0+st.b1*(-3.2))); ctx.lineTo(X(3.2), Y(b0+st.b1*3.2)); ctx.stroke();
+  ctx.fillStyle='#4d5f68'; ctx.font='11px sans-serif';
+  ctx.fillText('Variable X', W/2-28, H-12); ctx.save(); ctx.translate(14,H/2+28); ctx.rotate(-Math.PI/2); ctx.fillText('Variable Y',0,0); ctx.restore();
+  const r2 = st.r*st.r;
+  $('corr-stats').innerHTML = `
+    <div class="stat"><div class="k">r observado</div><div class="v">${fmt(st.r)}</div></div>
+    <div class="stat"><div class="k">r²</div><div class="v">${fmt(r2)}</div></div>
+    <div class="stat"><div class="k">Pendiente</div><div class="v">${fmt(st.b1)}</div></div>
+    <div class="stat"><div class="k">n</div><div class="v">${corrPts.length}</div></div>`;
+  const a = Math.abs(st.r);
+  let lbl = a<0.2?'muy débil':a<0.4?'débil':a<0.6?'moderada':a<0.8?'fuerte':'muy fuerte';
+  $('corr-hint').textContent = `Asociación lineal ${lbl} y ${st.r>=0?'positiva':'negativa'} en esta muestra simulada. Las etiquetas de intensidad son orientativas. Aquí r² coincide con R² de una recta con intercepto ajustada y evaluada en los mismos puntos; no es un efecto causal.`;
+}
+$('corr-slider').addEventListener('input', drawCorr); drawCorr();
+
+/* ============ cap 8: normal ============ */
+function normPdf(x,mu,sd){ return Math.exp(-((x-mu)**2)/(2*sd*sd))/(sd*Math.sqrt(2*Math.PI)); }
+function normCdf(z){
+  const t = 1/(1+0.2316419*Math.abs(z));
+  const d = 0.3989423*Math.exp(-z*z/2);
+  let p = d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));
+  return z>0 ? 1-p : p;
+}
+function drawNorm(){
+  const mu = parseInt($('mu-slider').value)/10;
+  const sd = parseInt($('sd-slider').value)/10;
+  const xc = parseInt($('x-slider').value)/10;
+  $('mu-val').textContent = mu.toFixed(1);
+  $('sd-val').textContent = sd.toFixed(1);
+  $('x-val').textContent = xc.toFixed(1);
+  const cv = $('norm-canvas'), ctx = cv.getContext('2d'), W=cv.width, H=cv.height;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const pad={l:44,r:16,t:16,b:32}, pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+  const lo=Math.min(mu-4.5*sd,xc)-0.1*sd, hi=Math.max(mu+4.5*sd,xc)+0.1*sd;
+  const X = v => pad.l + ((v-lo)/(hi-lo))*pw;
+  const peak = normPdf(mu,mu,sd);
+  const Y = p => H-pad.b - (p/(peak*1.12))*ph;
+  ctx.fillStyle='rgba(200,149,27,.32)'; ctx.beginPath(); ctx.moveTo(X(lo),H-pad.b);
+  for(let v=lo; v<=xc; v+=0.02) ctx.lineTo(X(v), Y(normPdf(v,mu,sd)));
+  ctx.lineTo(X(Math.min(xc,hi)),H-pad.b); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle='#175159'; ctx.lineWidth=2.5; ctx.beginPath();
+  for(let v=lo; v<=hi; v+=0.02){ const x=X(v), y=Y(normPdf(v,mu,sd)); v===lo?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+  ctx.stroke();
+  ctx.strokeStyle='#c3ccca'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(pad.l,H-pad.b); ctx.lineTo(pad.l+pw,H-pad.b); ctx.stroke();
+  ctx.strokeStyle='#b03a2e'; ctx.lineWidth=1.5; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(X(xc),pad.t); ctx.lineTo(X(xc),H-pad.b); ctx.stroke(); ctx.setLineDash([]);
+  ctx.strokeStyle='#6b3a5b'; ctx.setLineDash([2,3]);
+  ctx.beginPath(); ctx.moveTo(X(mu),Y(peak)); ctx.lineTo(X(mu),H-pad.b); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='#4d5f68'; ctx.font='10px sans-serif';
+  for(let i=0;i<=6;i++){const v=lo+(hi-lo)*i/6;ctx.fillText(v.toFixed(1), X(v)-8, H-12);}
+  ctx.fillStyle='#6b3a5b'; ctx.fillText('μ', X(mu)-3, pad.t+10);
+  ctx.fillStyle='#b03a2e'; ctx.fillText('x', X(xc)-3, pad.t+10);
+  const z = (xc-mu)/sd, p = normCdf(z);
+  $('norm-stats').innerHTML = `
+    <div class="stat"><div class="k">Puntaje z</div><div class="v">${fmt(z)}</div></div>
+    <div class="stat"><div class="k">P(X ≤ x)</div><div class="v">${(p*100).toFixed(1)}%</div></div>
+    <div class="stat"><div class="k">P(X > x)</div><div class="v">${((1-p)*100).toFixed(1)}%</div></div>
+    <div class="stat"><div class="k">μ ± 1σ</div><div class="v">${(mu-sd).toFixed(1)} a ${(mu+sd).toFixed(1)}</div></div>`;
+}
+['mu-slider','sd-slider','x-slider'].forEach(id=>$(id).addEventListener('input',drawNorm));
+drawNorm();
+
+/* ============ cap 9: árbol ============ */
+const treeState = {step:0, sup:null};
+function renderTree(){
+  const el = $('tree-out');
+  if (treeState.step === 0){
+    el.innerHTML = `<div style="margin-bottom:.7rem;">Pregunta 1 — ¿Existe una variable objetivo (etiqueta) conocida en tus datos?</div>
+      <button onclick="treeAns(true)">Sí, tengo una variable objetivo</button>
+      <button onclick="treeAns(false)">No, quiero descubrir estructura</button>`;
+  } else if (treeState.step === 1 && treeState.sup){
+    el.innerHTML = `<div style="color:#e8c46b;margin-bottom:.5rem;">→ Aprendizaje supervisado</div>
+      <div style="margin-bottom:.7rem;">Pregunta 2 — ¿La variable objetivo es numérica o categórica?</div>
+      <button onclick="treeFinal('reg')">Numérica (precio, monto, demanda)</button>
+      <button onclick="treeFinal('clas')">Categórica (sí/no, tipo, clase)</button>
+      <button class="ghost" onclick="treeReset()">Reiniciar</button>`;
+  } else if (treeState.step === 1){
+    el.innerHTML = `<div style="color:#e8c46b;margin-bottom:.5rem;">→ Aprendizaje no supervisado</div>
+      <div style="background:rgba(255,255,255,.07);padding:.9rem;border-radius:5px;margin-bottom:.7rem;">
+      <strong>Clustering</strong> — el algoritmo agrupa observaciones por similitud sin categorías predefinidas.<br>
+      <span style="color:#8ba3a6;">Algoritmos:</span> k-means, clustering jerárquico, DBSCAN.<br>
+      <span style="color:#8ba3a6;">Caso típico:</span> segmentación de clientes a partir de comportamiento transaccional.</div>
+      <button class="ghost" onclick="treeReset()">Reiniciar</button>`;
+  }
+}
+function treeAns(sup){ treeState.sup = sup; treeState.step = 1; renderTree(); }
+function treeFinal(t){
+  const info = t==='reg'
+    ? {t:'Regresión', d:'Predice un valor numérico continuo.', a:'Regresión lineal simple y múltiple, regresión polinómica, regresión regularizada (Ridge, Lasso).', c:'Estimar el monto de venta de una propiedad según superficie, ubicación y antigüedad.', m:'RMSE, MAE, R².'}
+    : {t:'Clasificación', d:'Predice a qué categoría pertenece una observación.', a:'Regresión logística, árboles de decisión, k-NN, random forest.', c:'Predecir si un cliente entrará en mora en los próximos 90 días.', m:'Exactitud, precisión, recall, F1, AUC.'};
+  $('tree-out').innerHTML = `<div style="color:#e8c46b;margin-bottom:.5rem;">→ Aprendizaje supervisado → ${info.t}</div>
+    <div style="background:rgba(255,255,255,.07);padding:.9rem;border-radius:5px;margin-bottom:.7rem;">
+    <strong>${info.t}</strong> — ${info.d}<br>
+    <span style="color:#8ba3a6;">Algoritmos:</span> ${info.a}<br>
+    <span style="color:#8ba3a6;">Caso típico:</span> ${info.c}<br>
+    <span style="color:#8ba3a6;">Métricas:</span> ${info.m}</div>
+    <button class="ghost" onclick="treeReset()">Reiniciar</button>`;
+}
+function treeReset(){ treeState.step=0; treeState.sup=null; renderTree(); }
+renderTree();
+
+/* ============ cap 9: regresión ============ */
+let regPts = [], showResid = true;
+const regCv = $('reg-canvas');
+function regToData(px,py){
+  const pad=44, W=regCv.width, H=regCv.height;
+  return [((px-pad)/(W-2*pad))*100, ((H-pad-py)/(H-2*pad))*100];
+}
+function regToPix(x,y){
+  const pad=44, W=regCv.width, H=regCv.height;
+  return [pad + (x/100)*(W-2*pad), H-pad - (y/100)*(H-2*pad)];
+}
+regCv.addEventListener('click', e=>{
+  const r = regCv.getBoundingClientRect();
+  const px = (e.clientX-r.left)*(regCv.width/r.width);
+  const py = (e.clientY-r.top)*(regCv.height/r.height);
+  const [x,y] = regToData(px,py);
+  if (x>=0&&x<=100&&y>=0&&y<=100){ regPts.push([x,y]); drawReg(); }
+});
+function regReset(){ regPts=[]; drawReg(); }
+function toggleResid(){ showResid=!showResid; drawReg(); }
+function regDemo(){
+  regPts = [[10,18],[18,26],[25,30],[32,41],[40,44],[47,55],[55,58],[62,68],[70,72],[78,84],[85,86],[92,95]]
+    .map((p,i)=>[p[0], p[1] + Math.sin(i*2.31)*5]);
+  drawReg();
+}
+function drawReg(){
+  const ctx = regCv.getContext('2d'), W=regCv.width, H=regCv.height, pad=44;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#eef1f0'; ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){
+    const y = pad+i*(H-2*pad)/5, x = pad+i*(W-2*pad)/5;
+    ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(W-pad,y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x,pad); ctx.lineTo(x,H-pad); ctx.stroke();
+  }
+  ctx.strokeStyle='#c3ccca'; ctx.lineWidth=1.2;
+  ctx.beginPath(); ctx.moveTo(pad,pad); ctx.lineTo(pad,H-pad); ctx.lineTo(W-pad,H-pad); ctx.stroke();
+  ctx.fillStyle='#4d5f68'; ctx.font='11px sans-serif';
+  ctx.fillText('X', W/2, H-14); ctx.save(); ctx.translate(16,H/2); ctx.rotate(-Math.PI/2); ctx.fillText('Y',0,0); ctx.restore();
+
+  if (regPts.length < 2){
+    ctx.fillStyle='#7d8d95'; ctx.font='13px sans-serif';
+    ctx.fillText('Haz clic para agregar puntos (mínimo 2)', W/2-120, H/2);
+    $('reg-stats').innerHTML=''; $('reg-eq').textContent=''; return;
+  }
+  const n = regPts.length;
+  const mx = regPts.reduce((a,p)=>a+p[0],0)/n, my = regPts.reduce((a,p)=>a+p[1],0)/n;
+  let sxy=0,sxx=0,syy=0;
+  regPts.forEach(p=>{ sxy+=(p[0]-mx)*(p[1]-my); sxx+=(p[0]-mx)**2; syy+=(p[1]-my)**2; });
+  if (sxx < 1e-12) {
+    ctx.fillStyle='#175159';
+    regPts.forEach(p=>{const [px,py]=regToPix(p[0],p[1]);ctx.beginPath();ctx.arc(px,py,4,0,7);ctx.fill();});
+    $('reg-stats').textContent='X no tiene variabilidad: no existe una pendiente única estimable.';
+    $('reg-eq').textContent='Agregue puntos con distintos valores de X.';
+    return;
+  }
+  const b1 = sxy/sxx, b0 = my - b1*mx;
+  let sse=0; regPts.forEach(p=>{ sse += (p[1]-(b0+b1*p[0]))**2; });
+  const r2 = syy? 1 - sse/syy : NaN;
+  const rmse = Math.sqrt(sse/n);
+  const r = syy&&sxx ? sxy/Math.sqrt(sxx*syy) : NaN;
+
+  if (showResid){
+    ctx.strokeStyle='rgba(176,58,46,.55)'; ctx.lineWidth=1.2; ctx.setLineDash([3,2]);
+    regPts.forEach(p=>{
+      const [px,py] = regToPix(p[0],p[1]);
+      const [, pyh] = regToPix(p[0], b0+b1*p[0]);
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px,pyh); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+  }
+  ctx.strokeStyle='#c8951b'; ctx.lineWidth=2.8;
+  const [x1,y1] = regToPix(0, b0), [x2,y2] = regToPix(100, b0+b1*100);
+  ctx.save(); ctx.beginPath(); ctx.rect(pad,pad,W-2*pad,H-2*pad); ctx.clip();
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.restore();
+  ctx.fillStyle='#175159';
+  regPts.forEach(p=>{ const [px,py]=regToPix(p[0],p[1]); ctx.beginPath(); ctx.arc(px,py,5,0,7); ctx.fill(); });
+
+  $('reg-stats').innerHTML = `
+    <div class="stat"><div class="k">n</div><div class="v">${n}</div></div>
+    <div class="stat"><div class="k">Pendiente β₁</div><div class="v">${fmt(b1)}</div></div>
+    <div class="stat"><div class="k">Intercepto β₀</div><div class="v">${fmt(b0)}</div></div>
+    <div class="stat"><div class="k">r</div><div class="v">${fmt(r)}</div></div>
+    <div class="stat"><div class="k">R²</div><div class="v">${fmt(r2)}</div></div>
+    <div class="stat"><div class="k">RMSE</div><div class="v">${fmt(rmse)}</div></div>`;
+  $('reg-eq').textContent = `Ecuación ajustada: ŷ = ${b0.toFixed(2)} ${b1>=0?'+':'−'} ${Math.abs(b1).toFixed(3)}·x . El modelo explica el ${(r2*100).toFixed(1)}% de la variabilidad de Y. Las líneas punteadas rojas son los residuos: la distancia vertical entre cada punto y la recta, que es exactamente lo que mínimos cuadrados minimiza (al cuadrado).`;
+}
+regDemo();
+
+/* ============ cap 9: k-means ============ */
+const KM = {pts:[], cent:[], iter:0, k:3};
+const KCOLORS = ['#175159','#6b3a5b','#c8951b','#2d7a5f','#b03a2e'];
+function kmGenPts(){
+  const centers = [[25,28],[70,32],[48,74],[80,78],[18,70]];
+  const pts = [];
+  let seed=99; const rnd=()=>{seed=(seed*16807)%2147483647; return seed/2147483647;};
+  for(let g=0; g<3; g++){
+    for(let i=0;i<28;i++){
+      pts.push([centers[g][0] + (rnd()-0.5)*26, centers[g][1] + (rnd()-0.5)*26, -1]);
+    }
+  }
+  return pts;
+}
+function kmReset(){
+  KM.k = parseInt($('k-slider').value);
+  KM.pts = kmGenPts();
+  KM.iter = 0;
+  let seed=13; const rnd=()=>{seed=(seed*16807)%2147483647; return seed/2147483647;};
+  KM.cent = Array.from({length:KM.k},()=>[15+rnd()*70, 15+rnd()*70]);
+  $('km-hint').textContent = 'Iteración 0 — centroides asignados al azar. Ejecuta una iteración para asignar puntos.';
+  drawKm();
+}
+function kmAssign(){
+  let changed = 0;
+  KM.pts.forEach(p=>{
+    let best=0, bd=Infinity;
+    KM.cent.forEach((c,i)=>{ const d=(p[0]-c[0])**2+(p[1]-c[1])**2; if(d<bd){bd=d;best=i;} });
+    if (p[2]!==best) changed++;
+    p[2]=best;
+  });
+  return changed;
+}
+function kmUpdate(){
+  KM.cent = KM.cent.map((c,i)=>{
+    const mem = KM.pts.filter(p=>p[2]===i);
+    if (!mem.length) return c;
+    return [mem.reduce((a,p)=>a+p[0],0)/mem.length, mem.reduce((a,p)=>a+p[1],0)/mem.length];
+  });
+}
+function kmStep(){
+  const changed = kmAssign();
+  kmUpdate();
+  KM.iter++;
+  drawKm();
+  $('km-hint').textContent = changed === 0
+    ? `Iteración ${KM.iter} — convergencia alcanzada: ningún punto cambió de cluster. El algoritmo se detiene aquí.`
+    : `Iteración ${KM.iter} — ${changed} punto(s) cambiaron de cluster. Los centroides se recalcularon como el promedio de sus miembros.`;
+  return changed;
+}
+function kmRun(){
+  let guard = 0;
+  while (kmStep() > 0 && guard++ < 30){}
+}
+function drawKm(){
+  const cv = $('km-canvas'), ctx = cv.getContext('2d'), W=cv.width, H=cv.height, pad=30;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const X = v => pad + (v/100)*(W-2*pad), Y = v => H-pad - (v/100)*(H-2*pad);
+  ctx.strokeStyle='#eef1f0';
+  for(let i=0;i<=5;i++){ const y=pad+i*(H-2*pad)/5; ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(W-pad,y); ctx.stroke(); }
+  KM.pts.forEach(p=>{
+    ctx.fillStyle = p[2]>=0 ? KCOLORS[p[2]]+'aa' : '#b8c4c3';
+    ctx.beginPath(); ctx.arc(X(p[0]),Y(p[1]),4.5,0,7); ctx.fill();
+  });
+  KM.cent.forEach((c,i)=>{
+    ctx.fillStyle = KCOLORS[i]; ctx.strokeStyle='#fff'; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.arc(X(c[0]),Y(c[1]),10,0,7); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 11px sans-serif';
+    ctx.fillText(String(i+1), X(c[0])-3, Y(c[1])+4);
+  });
+}
+$('k-slider').addEventListener('input', e=>{ $('k-val').textContent = e.target.value; kmReset(); });
+kmReset();
+
+/* ============ cap 10: matriz de confusión ============ */
+function drawCM(){
+  const th = parseInt($('th-slider').value)/100;
+  $('th-val').textContent = th.toFixed(2);
+  const POS = 100, NEG = 900;
+  const recall = Math.max(0, Math.min(1, 1 - Math.pow(th, 1.6)));
+  const fpRate = Math.max(0, Math.min(1, 0.30 * Math.pow(1-th, 1.9)));
+  const VP = Math.round(POS*recall), FN = POS-VP;
+  const FP = Math.round(NEG*fpRate), VN = NEG-FP;
+  const prec = VP+FP ? VP/(VP+FP) : 0;
+  const rec = VP+FN ? VP/(VP+FN) : 0;
+  const acc = (VP+VN)/(POS+NEG);
+  const f1 = prec+rec ? 2*prec*rec/(prec+rec) : 0;
+  const cv = $('cm-canvas'), ctx = cv.getContext('2d'), W=cv.width, H=cv.height;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  const bx=150, by=48, bw=150, bh=68;
+  const cells = [
+    {x:bx,   y:by,      v:VP, l:'Verdadero positivo', c:'#2d7a5f'},
+    {x:bx+bw,y:by,      v:FN, l:'Falso negativo',     c:'#b03a2e'},
+    {x:bx,   y:by+bh,   v:FP, l:'Falso positivo',     c:'#b03a2e'},
+    {x:bx+bw,y:by+bh,   v:VN, l:'Verdadero negativo', c:'#2d7a5f'}
+  ];
+  cells.forEach(c=>{
+    ctx.fillStyle = c.c + '22'; ctx.fillRect(c.x,c.y,bw,bh);
+    ctx.strokeStyle='#d3dbda'; ctx.lineWidth=1; ctx.strokeRect(c.x,c.y,bw,bh);
+    ctx.fillStyle=c.c; ctx.font='bold 21px sans-serif';
+    ctx.fillText(String(c.v), c.x+14, c.y+34);
+    ctx.fillStyle='#4d5f68'; ctx.font='11px sans-serif';
+    ctx.fillText(c.l, c.x+14, c.y+54);
+  });
+  ctx.fillStyle='#14232a'; ctx.font='bold 11.5px sans-serif';
+  ctx.fillText('Predicho: fraude', bx+16, by-12);
+  ctx.fillText('Predicho: legítimo', bx+bw+16, by-12);
+  ctx.save(); ctx.translate(bx-14, by+52); ctx.rotate(-Math.PI/2); ctx.fillText('Real: fraude',0,0); ctx.restore();
+  ctx.save(); ctx.translate(bx-14, by+bh+58); ctx.rotate(-Math.PI/2); ctx.fillText('Real: legítimo',0,0); ctx.restore();
+  ctx.fillStyle='#7d8d95'; ctx.font='11px sans-serif';
+  ctx.fillText('Total: 1.000 casos · 100 fraudes reales · 900 legítimos reales', bx, by+2*bh+26);
+  $('cm-stats').innerHTML = `
+    <div class="stat"><div class="k">Exactitud</div><div class="v">${(acc*100).toFixed(1)}%</div></div>
+    <div class="stat"><div class="k">Precisión</div><div class="v">${(prec*100).toFixed(1)}%</div></div>
+    <div class="stat"><div class="k">Recall</div><div class="v">${(rec*100).toFixed(1)}%</div></div>
+    <div class="stat"><div class="k">F1</div><div class="v">${(f1*100).toFixed(1)}%</div></div>`;
+  let msg;
+  if (th < 0.3) msg = `Umbral bajo: el modelo marca fraude con poca evidencia. Detecta casi todos los fraudes (recall alto) pero genera ${FP} falsas alarmas sobre clientes legítimos.`;
+  else if (th > 0.7) msg = `Umbral alto: el modelo es muy conservador. Casi no molesta a clientes legítimos, pero deja pasar ${FN} fraudes reales sin detectar.`;
+  else msg = `Umbral intermedio: equilibrio entre precisión y recall. La elección correcta depende del costo relativo de un falso positivo frente a un falso negativo.`;
+  $('cm-hint').textContent = msg;
+}
+$('th-slider').addEventListener('input', drawCM); drawCM();
+
+/* ============ cap 12: glosario ============ */
+const GLOS = [
+  ['Analytics descriptivo','Análisis que resume lo que ya ocurrió, sin explicar causas ni proyectar el futuro.'],
+  ['Asimetría (skewness)','Medida de la falta de simetría de una distribución. Positiva: cola hacia la derecha.'],
+  ['Clasificación','Modelo supervisado cuya variable objetivo es categórica.'],
+  ['Clustering','Técnica no supervisada que agrupa observaciones por similitud sin categorías predefinidas.'],
+  ['Coeficiente de variación','Desviación estándar dividida por la media. Interpretación usual en escala de razón y media positiva lejos de cero.'],
+  ['Correlación de Pearson (r)','Medida estandarizada de asociación lineal entre dos variables numéricas. Va de −1 a 1.'],
+  ['Covarianza','Medida de cómo varían dos variables conjuntamente. Su magnitud depende de las unidades.'],
+  ['CRISP-DM','Marco de referencia de seis fases para proyectos de análisis de datos.'],
+  ['Cuartil','Valor que divide los datos ordenados en cuatro partes iguales (Q1, Q2 = mediana, Q3).'],
+  ['Curtosis','Medida del peso de las colas de una distribución respecto a la normal.'],
+  ['Desviación estándar','Raíz cuadrada de la varianza. Expresa la dispersión en las unidades originales.'],
+  ['Exactitud (accuracy)','Proporción de predicciones correctas sobre el total. Engañosa con clases desbalanceadas.'],
+  ['F1','Media armónica entre precisión y recall. Útil cuando ambas importan.'],
+  ['Falso negativo','Caso positivo real que el modelo clasificó como negativo.'],
+  ['Falso positivo','Caso negativo real que el modelo clasificó como positivo.'],
+  ['Insight','Hallazgo interpretado que tiene una implicancia accionable para el negocio.'],
+  ['K-means','Algoritmo de clustering que asigna cada punto al centroide más cercano e itera hasta converger.'],
+  ['Mediana','Valor central de los datos ordenados. Robusta ante valores extremos.'],
+  ['Mínimos cuadrados','Criterio de ajuste que minimiza la suma de los errores al cuadrado.'],
+  ['Outlier','Valor atípico, muy alejado del resto. Criterio habitual: fuera de Q1 − 1.5·RIC o Q3 + 1.5·RIC.'],
+  ['Precisión','De los casos que el modelo marcó como positivos, qué proporción realmente lo era.'],
+  ['R²','Comparación del error cuadrático con una referencia de media; puede ser negativo y no identifica causalidad.'],
+  ['Rango intercuartílico (RIC)','Q3 − Q1. Dispersión del 50% central de los datos.'],
+  ['Recall (sensibilidad)','De los casos positivos reales, qué proporción detectó el modelo.'],
+  ['Regresión','Modelo supervisado cuya variable objetivo es numérica continua.'],
+  ['Residuo','Diferencia entre el valor observado y el valor predicho por el modelo.'],
+  ['RMSE','Raíz del error cuadrático medio. Error típico del modelo en las unidades de la variable.'],
+  ['Sobreajuste (overfitting)','El modelo memoriza el ruido del entrenamiento y falla en datos nuevos.'],
+  ['Teorema Central del Límite','La media muestral tiende a distribuirse normal cuando la muestra es suficientemente grande.'],
+  ['Variable proxy','Variable que, sin ser la sensible, la representa indirectamente por estar correlacionada.'],
+  ['Varianza','Promedio de las desviaciones al cuadrado respecto a la media.'],
+  ['Puntaje z','Número de desviaciones estándar que separan un valor de la media.']
+];
+function renderGlos(filter=''){
+  const f = filter.toLowerCase();
+  $('glos-list').innerHTML = GLOS
+    .filter(g => g[0].toLowerCase().includes(f) || g[1].toLowerCase().includes(f))
+    .map(g => `<dt>${g[0]}</dt><dd>${g[1]}</dd>`).join('') || '<dd style="color:#7d8d95;">Sin resultados.</dd>';
+}
+$('glos-search').addEventListener('input', e => renderGlos(e.target.value));
+renderGlos();
+
+/* ============ cap 13: quiz ============ */
+const BANK = {
+  c1:{label:'Cap. 1 — Qué es BA', questions:[
+    {q:'¿Cuál es la definición más precisa de Business Analytics?',o:['Programar en Python','El uso sistemático de datos y modelos para tomar mejores decisiones de negocio','Construir dashboards','Almacenar grandes volúmenes de datos'],c:1,e:'BA es el puente entre datos, método y decisión; ninguna de las otras opciones es suficiente por sí sola.'},
+    {q:'Si un proyecto tiene excelente estadística y tecnología pero no entiende el negocio, ¿qué ocurre?',o:['Se sobreajusta el modelo','Se responden preguntas irrelevantes con mucha sofisticación','El código no es reproducible','Se confunde correlación con causalidad'],c:1,e:'La dimensión de negocio es la que define cuál es la pregunta correcta.'}
+  ]},
+  c2:{label:'Cap. 2 — Tipos de analytics', questions:[
+    {q:'Un banco analiza por qué subió la morosidad el mes pasado. ¿Qué tipo de analytics es?',o:['Descriptivo','Diagnóstico','Predictivo','Prescriptivo'],c:1,e:'Diagnóstico responde "¿por qué pasó?": busca causas de un resultado ya observado.'},
+    {q:'Un sistema que recomienda qué acción de cobranza aplicar a cada cliente según su riesgo es:',o:['Descriptivo','Diagnóstico','Predictivo','Prescriptivo'],c:3,e:'Prescriptivo va más allá de predecir: recomienda la acción a tomar.'},
+    {q:'Un informe mensual de colocaciones por sucursal, sin análisis de causas, es:',o:['Descriptivo','Diagnóstico','Predictivo','Prescriptivo'],c:0,e:'Descriptivo resume lo ocurrido sin explicar ni proyectar.'}
+  ]},
+  c3:{label:'Cap. 3 — Datos y variables', questions:[
+    {q:'La clasificación de riesgo AAA, AA, A, BBB corresponde a una variable:',o:['Nominal','Ordinal','De intervalo','De razón'],c:1,e:'Hay orden claro entre categorías, pero la distancia entre ellas no está definida numéricamente.'},
+    {q:'¿En qué escala tiene sentido calcular la media?',o:['Solo nominal','Nominal y ordinal','Intervalo y razón','En todas'],c:2,e:'La media requiere distancias numéricas constantes, que solo existen en escalas de intervalo y razón.'},
+    {q:'¿Cuál es el problema de calidad de datos más difícil de detectar?',o:['Duplicados','Valores faltantes','Sesgo de muestreo','Errores de tipeo'],c:2,e:'El sesgo de muestreo no aparece en la tabla: solo se detecta pensando en cómo se generaron los datos.'},
+    {q:'¿Qué práctica hace auditable la preparación de datos?',o:['Borrar originales','Ocultar faltantes','Registrar reglas y comparar antes/después','Modificar datos sin bitácora'],c:2,e:'La trazabilidad exige conservar fuentes y documentar transformaciones; no un porcentaje universal de esfuerzo.'}
+  ]},
+  c4:{label:'Cap. 4 — CRISP-DM', questions:[
+    {q:'¿Cuál es la primera fase de CRISP-DM?',o:['Comprensión de los datos','Comprensión del negocio','Preparación de los datos','Modelamiento'],c:1,e:'Todo parte por traducir el objetivo de negocio en un problema analítico concreto.'},
+    {q:'¿Por qué CRISP-DM es un ciclo y no una secuencia lineal?',o:['Por convención visual','Porque los hallazgos de cada fase pueden obligar a revisar fases anteriores','Porque todas las fases duran lo mismo','Porque se ejecutan en paralelo'],c:1,e:'Al preparar datos o evaluar el modelo se descubren cosas que obligan a volver atrás.'},
+    {q:'El error típico de la fase de despliegue es:',o:['Elegir el modelo equivocado','No monitorear el desempeño del modelo en el tiempo','No limpiar los datos','No definir la pregunta'],c:1,e:'Los modelos se degradan cuando cambia el comportamiento subyacente; sin monitoreo esto pasa inadvertido.'}
+  ]},
+  c5:{label:'Cap. 5 — Estadística descriptiva', questions:[
+    {q:'Una distribución de ingresos tiene valores extremadamente altos. ¿Qué medida de tendencia central es más robusta?',o:['Media','Mediana','Moda','Rango'],c:1,e:'La mediana no se ve afectada por valores extremos, a diferencia de la media.'},
+    {q:'¿Por qué la varianza muestral divide por n−1 y no por n?',o:['Por convención histórica','Para que sea un estimador insesgado de la varianza poblacional','Para que el resultado sea menor','Porque n siempre es grande'],c:1,e:'Dividir por los grados de libertad (n−1) corrige el sesgo del estimador.'},
+    {q:'Si la media es notoriamente mayor que la mediana, la distribución tiene:',o:['Asimetría negativa','Asimetría positiva','Simetría perfecta','Curtosis alta'],c:1,e:'Media > mediana indica cola hacia la derecha: asimetría positiva.'},
+    {q:'¿Qué medida permite comparar la dispersión entre variables de escalas distintas?',o:['Varianza','Desviación estándar','Coeficiente de variación','Rango'],c:2,e:'El CV es adimensional, pero requiere escala de razón y media positiva alejada de cero para su interpretación habitual.'},
+    {q:'Según el criterio habitual, un outlier está fuera de:',o:['μ ± 1σ','Q1 − 1.5·RIC y Q3 + 1.5·RIC','La media ± el rango','El percentil 50'],c:1,e:'Es el criterio del boxplot, basado en el rango intercuartílico.'}
+  ]},
+  c6:{label:'Cap. 6 — Visualización', questions:[
+    {q:'¿Qué gráfico es mejor para detectar outliers y comparar dispersión entre grupos?',o:['Gráfico de barras','Histograma','Boxplot','Gráfico de torta'],c:2,e:'El boxplot muestra cuartiles, mediana y outliers de forma explícita.'},
+    {q:'Para mostrar la relación entre dos variables numéricas se usa:',o:['Histograma','Scatterplot','Gráfico de barras','Boxplot'],c:1,e:'El scatterplot es el gráfico estándar para relación entre dos variables numéricas.'},
+    {q:'Truncar el eje Y en un gráfico de barras:',o:['Mejora la legibilidad','Exagera visualmente diferencias pequeñas','Es siempre recomendable','No tiene efecto perceptual'],c:1,e:'Es una de las distorsiones visuales más comunes y engañosas.'},
+    {q:'El principio de maximizar la razón datos/tinta implica:',o:['Usar más colores','Eliminar todo elemento visual que no represente información','Agregar efectos 3D','Usar siempre gráficos de torta'],c:1,e:'Es el principio de Tufte: si un elemento se puede borrar sin perder significado, sobra.'}
+  ]},
+  c7:{label:'Cap. 7 — Relación entre variables', questions:[
+    {q:'¿Por qué se reporta la correlación y no la covarianza?',o:['Es más fácil de calcular','La correlación está estandarizada entre −1 y 1, comparable entre pares de variables','La covarianza no existe para variables continuas','Son lo mismo'],c:1,e:'La magnitud de la covarianza depende de las unidades; la correlación no.'},
+    {q:'Una relación en forma de U entre X e Y puede dar r ≈ 0. ¿Por qué?',o:['Porque no hay relación','Porque r solo mide relaciones lineales','Porque hay outliers','Porque n es pequeño'],c:1,e:'Pearson captura únicamente asociación lineal; una relación curva perfecta puede dar r cercano a cero.'},
+    {q:'Un r = 0.85 entre dos variables permite concluir que:',o:['Una causa la otra','Existe fuerte asociación lineal, pero no causalidad','No hay relación','La relación es cuadrática'],c:1,e:'Correlación nunca implica causalidad: puede haber una variable confusora.'}
+  ]},
+  c8:{label:'Cap. 8 — Probabilidad y normal', questions:[
+    {q:'Según la regla empírica, ¿qué proporción de los datos cae dentro de μ ± 2σ?',o:['68%','95%','99.7%','50%'],c:1,e:'La regla 68–95–99.7: dos desviaciones estándar cubren aproximadamente el 95%.'},
+    {q:'El Teorema Central del Límite establece que:',o:['Todos los datos son normales','La media muestral tiende a distribuirse normal si la muestra es grande','La varianza siempre converge a 1','La mediana equivale a la media'],c:1,e:'La aproximación requiere condiciones como independencia y varianza finita; no vuelve normales los datos originales ni garantiza un tamaño fijo.'},
+    {q:'Un puntaje z de 2.5 significa que el valor está:',o:['A 2.5 unidades de la media','A 2.5 desviaciones estándar sobre la media','En el percentil 25','Fuera de la distribución'],c:1,e:'El puntaje z estandariza: mide distancia a la media en unidades de desviación estándar.'},
+    {q:'Para modelar el número de llamadas que llegan a un call center por hora se usa típicamente:',o:['Distribución normal','Distribución de Poisson','Distribución uniforme','Distribución exponencial'],c:1,e:'Poisson modela conteos de eventos en un intervalo fijo de tiempo.'}
+  ]},
+  c9:{label:'Cap. 9 — Modelos predictivos', questions:[
+    {q:'Quieres predecir si un cliente entrará en mora (sí/no). ¿Qué familia de modelo usarías?',o:['Regresión lineal','Clasificación','Clustering','Ninguna, es descriptivo'],c:1,e:'La variable objetivo es categórica, por lo tanto es clasificación.'},
+    {q:'Segmentar clientes sin categorías predefinidas corresponde a:',o:['Aprendizaje supervisado','Aprendizaje no supervisado','Regresión','Series de tiempo'],c:1,e:'Sin variable objetivo conocida, el algoritmo encuentra estructura por sí mismo.'},
+    {q:'¿Qué minimiza el criterio de mínimos cuadrados?',o:['La suma de los errores','La suma de los errores al cuadrado','El error máximo','La media de los datos'],c:1,e:'Se elevan al cuadrado para penalizar más los desvíos grandes y evitar que se cancelen positivos y negativos.'},
+    {q:'La regresión logística modela directamente:',o:['La clase predicha','La probabilidad de pertenecer a una clase','El valor esperado de una variable continua','La varianza del error'],c:1,e:'La función logística comprime el resultado al intervalo (0,1), interpretable como probabilidad.'},
+    {q:'En k-means, el algoritmo converge cuando:',o:['Se alcanzan 100 iteraciones','Ningún punto cambia de cluster','Los datos se normalizan','k es igual a n'],c:1,e:'La convergencia se define por estabilidad en las asignaciones.'}
+  ]},
+  c10:{label:'Cap. 10 — Evaluación', questions:[
+    {q:'Un modelo con desempeño excelente en entrenamiento y pobre en prueba tiene:',o:['Subajuste','Sobreajuste','Sesgo de muestreo','Multicolinealidad'],c:1,e:'Sobreajuste: memorizó el ruido del entrenamiento en vez de aprender el patrón.'},
+    {q:'Si solo el 1% de las transacciones son fraude, un modelo que nunca predice fraude tiene:',o:['99% de exactitud y es inútil','1% de exactitud','Recall perfecto','Precisión perfecta'],c:0,e:'Es la paradoja de la exactitud: con clases desbalanceadas, accuracy no informa nada.'},
+    {q:'Si un falso negativo es muy costoso (ej: no detectar un fraude), se debe priorizar:',o:['Precisión','Recall','Exactitud','Especificidad'],c:1,e:'Recall mide qué proporción de los positivos reales se logró detectar.'},
+    {q:'Bajar el umbral de decisión en un clasificador normalmente:',o:['Sube recall y baja precisión','Sube ambas','Baja ambas','No afecta ninguna'],c:0,e:'Con umbral bajo se marcan más positivos: se detectan más casos reales pero aumentan las falsas alarmas.'},
+    {q:'El R² indica:',o:['El error promedio del modelo','La proporción de varianza de Y explicada por el modelo','La correlación entre residuos','El número de variables óptimo'],c:1,e:'R² compara error cuadrático con una referencia basada en la media; puede ser negativo en test y no demuestra causalidad.'}
+  ]},
+  c11:{label:'Cap. 11 — De datos a decisiones', questions:[
+    {q:'¿Qué diferencia a un insight de una simple información?',o:['Tiene más decimales','Es un patrón interpretado con una implicancia accionable','Siempre viene de un modelo predictivo','Se presenta en un gráfico'],c:1,e:'El insight conecta el hallazgo con una acción posible; la información solo organiza el dato.'},
+    {q:'Al presentar resultados a una audiencia no técnica conviene:',o:['Empezar por la metodología','Empezar por la conclusión','Mostrar el código','Detallar los hiperparámetros'],c:1,e:'La audiencia decide si sigue escuchando en los primeros 30 segundos: la conclusión va primero.'},
+    {q:'Excluir la variable "género" de un modelo garantiza que no habrá sesgo de género:',o:['Verdadero','Falso, porque variables proxy pueden reintroducirlo indirectamente','Verdadero solo en regresión','Depende del tamaño muestral'],c:1,e:'Variables correlacionadas (comuna, tipo de trabajo, historial) pueden actuar como proxy.'},
+    {q:'La pregunta de cierre de todo proyecto de analytics debería ser:',o:['¿Qué R² alcanzamos?','¿Qué decisión concreta cambia como resultado de este análisis?','¿Cuántas variables usamos?','¿Qué algoritmo es más nuevo?'],c:1,e:'Si no hay respuesta clara a esa pregunta, el proyecto todavía no está terminado.'}
+  ]}
+};
+let activeKey='all', queue=[], current=0, score=0, answered=false;
+function buildQueue(k){ if(k==='all'){ let a=[]; Object.values(BANK).forEach(t=>a=a.concat(t.questions)); return a; } return BANK[k].questions; }
+function renderMenu(){
+  const total = Object.values(BANK).reduce((a,t)=>a+t.questions.length,0);
+  let h = `<button class="primary" style="width:100%;margin-bottom:8px;" onclick="startQuiz('all')">Rendir completo — ${total} preguntas</button>`;
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;">';
+  Object.keys(BANK).forEach(k=>{ h += `<button style="width:100%;" onclick="startQuiz('${k}')">${BANK[k].label} (${BANK[k].questions.length})</button>`; });
+  h += '</div>';
+  $('quiz-root').innerHTML = h;
+}
+function startQuiz(k){ activeKey=k; queue=buildQueue(k); current=0; score=0; answered=false; renderQ(); }
+function renderQ(){
+  if (current>=queue.length){ $('quiz-root').innerHTML = renderResult(); return; }
+  const it = queue[current];
+  $('quiz-root').innerHTML = `
+    <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-soft);">
+      <span>Pregunta ${current+1} de ${queue.length}</span><span>Correctas: ${score}</span></div>
+    <div class="ptrack"><div class="pfill" style="width:${(current/queue.length)*100}%"></div></div>
+    <p style="font-weight:600;color:var(--petrol-900);margin-bottom:1rem;">${it.q}</p>
+    <div id="options" style="display:flex;flex-direction:column;gap:8px;"></div>
+    <div id="feedback" role="status" aria-live="polite" style="margin-top:1rem;color:var(--ink-soft);"></div>
+    <div id="next-wrap" style="margin-top:1rem;"></div>`;
+  const w = $('options');
+  it.o.forEach((o,i)=>{ const b=document.createElement('button'); b.textContent=o; b.onclick=()=>pick(i); w.appendChild(b); });
+}
+function pick(i){
+  if (answered) return; answered=true;
+  const it = queue[current];
+  document.querySelectorAll('#options button').forEach((b,idx)=>{
+    b.disabled=true;
+    if (idx===it.c){ b.style.borderColor='var(--green)'; b.style.background='var(--green-soft)'; b.style.color='var(--green)'; }
+    else if (idx===i){ b.style.borderColor='var(--red)'; b.style.background='var(--red-soft)'; b.style.color='var(--red)'; }
+  });
+  if (i===it.c) score++;
+  $('feedback').textContent = (i===it.c ? 'Correcto. ' : 'Revisa tu respuesta. ') + it.e;
+  const nb = document.createElement('button');
+  nb.className='primary'; nb.textContent = current===queue.length-1?'Ver resultado':'Siguiente';
+  nb.onclick = ()=>{ current++; answered=false; renderQ(); };
+  $('next-wrap').appendChild(nb);
+}
+function renderResult(){
+  const pct = Math.round((score/queue.length)*100);
+  let msg = pct<50 ? 'Conviene repasar los capítulos correspondientes.' : pct<85 ? 'Buen nivel, con espacio para reforzar.' : 'Dominio sólido de los contenidos.';
+  return `<div style="text-align:center;padding:1.5rem 0;">
+    <p style="font-size:12.5px;color:var(--ink-soft);">${BANK[activeKey]?BANK[activeKey].label:'Evaluación completa'}</p>
+    <p style="font-size:36px;font-weight:700;color:var(--petrol-900);margin:.3rem 0;">${score} / ${queue.length}</p>
+    <p style="color:var(--ink-soft);margin-bottom:1.2rem;">${pct}% — ${msg}</p>
+    <button class="primary" onclick="startQuiz('${activeKey}')">Repetir</button>
+    <button onclick="renderMenu()" style="margin-left:8px;">Elegir otro capítulo</button></div>`;
+}
+renderMenu();
+</script>
+<script>
+
+const FBA_VENTAS = [{"Fecha": "2025-01-03", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1508970.0}, {"Fecha": "2025-01-03", "Region": "Norte", "Producto": "C", "Unidades": 6.0, "Monto": 2339940.0}, {"Fecha": "2025-01-04", "Region": "Norte", "Producto": "A", "Unidades": 1.0, "Monto": 529990.0}, {"Fecha": "2025-01-05", "Region": "Centro", "Producto": "A", "Unidades": 2.0, "Monto": 1059980.0}, {"Fecha": "2025-01-05", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 379980.0}, {"Fecha": "2025-01-05", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1109970.0}, {"Fecha": "2025-01-05", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 379980.0}, {"Fecha": "2025-01-07", "Region": "Norte", "Producto": "B", "Unidades": 3.0, "Monto": 1214970.0}, {"Fecha": "2025-01-08", "Region": "Centro", "Producto": "D", "Unidades": 3.0, "Monto": 569970.0}, {"Fecha": "2025-01-09", "Region": "Sur", "Producto": "C", "Unidades": 4.0, "Monto": 1559960.0}, {"Fecha": "2025-01-09", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 189990.0}, {"Fecha": "2025-01-10", "Region": "Sur", "Producto": "B", "Unidades": 3.0, "Monto": 1280970.0}, {"Fecha": "2025-01-10", "Region": "Norte", "Producto": "D", "Unidades": 3.0, "Monto": 599970.0}, {"Fecha": "2025-01-13", "Region": "Centro", "Producto": "C", "Unidades": 4.0, "Monto": 1479960.0}, {"Fecha": "2025-01-13", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-01-15", "Region": "Norte", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-01-16", "Region": "Centro", "Producto": "C", "Unidades": 6.0, "Monto": 2339940.0}, {"Fecha": "2025-01-17", "Region": "Centro", "Producto": "D", "Unidades": 4.0, "Monto": 799960.0}, {"Fecha": "2025-01-18", "Region": "Sur", "Producto": "C", "Unidades": 2.0, "Monto": 701980.0}, {"Fecha": "2025-01-23", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-01-24", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-01-25", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-01-26", "Region": "Norte", "Producto": "B", "Unidades": 6.0, "Monto": 2699940.0}, {"Fecha": "2025-01-26", "Region": "Norte", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-01-26", "Region": "Norte", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-01-27", "Region": "Centro", "Producto": "B", "Unidades": 5.0, "Monto": 2249950.0}, {"Fecha": "2025-01-29", "Region": "Centro", "Producto": "B", "Unidades": 1.0, "Monto": 426990.0}, {"Fecha": "2025-01-30", "Region": "Norte", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-01-30", "Region": "Centro", "Producto": "D", "Unidades": 3.0, "Monto": 599970.0}, {"Fecha": "2025-02-01", "Region": "Norte", "Producto": "A", "Unidades": 2.0, "Monto": 953980.0}, {"Fecha": "2025-02-01", "Region": "Norte", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-02-01", "Region": "Norte", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-02-02", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-02-03", "Region": "Norte", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-02-03", "Region": "Norte", "Producto": "C", "Unidades": 1.0, "Monto": 369990.0}, {"Fecha": "2025-02-04", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-02-04", "Region": "Sur", "Producto": "A", "Unidades": 2.0, "Monto": 1059980.0}, {"Fecha": "2025-02-04", "Region": "Sur", "Producto": "B", "Unidades": 3.0, "Monto": 1349970.0}, {"Fecha": "2025-02-06", "Region": "Norte", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-02-07", "Region": "Sur", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-02-09", "Region": "Centro", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-02-09", "Region": "Centro", "Producto": "B", "Unidades": 2.0, "Monto": 899980.0}, {"Fecha": "2025-02-10", "Region": "Sur", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-02-10", "Region": "Norte", "Producto": "C", "Unidades": 3.0, "Monto": 1052970.0}, {"Fecha": "2025-02-12", "Region": "Sur", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-02-12", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-02-12", "Region": "Norte", "Producto": "D", "Unidades": 1.0, "Monto": 189990.0}, {"Fecha": "2025-02-13", "Region": "Sur", "Producto": "A", "Unidades": 5.0, "Monto": 2514950.0}, {"Fecha": "2025-02-14", "Region": "Sur", "Producto": "A", "Unidades": 4.0, "Monto": 2119960.0}, {"Fecha": "2025-02-14", "Region": "Sur", "Producto": "C", "Unidades": 2.0, "Monto": 701980.0}, {"Fecha": "2025-02-15", "Region": "Norte", "Producto": "C", "Unidades": 5.0, "Monto": 1949950.0}, {"Fecha": "2025-02-15", "Region": "Centro", "Producto": "C", "Unidades": 6.0, "Monto": 2219940.0}, {"Fecha": "2025-02-16", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-02-19", "Region": "Norte", "Producto": "D", "Unidades": 3.0, "Monto": 599970.0}, {"Fecha": "2025-02-20", "Region": "Centro", "Producto": "D", "Unidades": 3.0, "Monto": 599970.0}, {"Fecha": "2025-02-20", "Region": "Centro", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-02-20", "Region": "Sur", "Producto": "C", "Unidades": 2.0, "Monto": 701980.0}, {"Fecha": "2025-02-23", "Region": "Sur", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-02-23", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-02-23", "Region": "Sur", "Producto": "A", "Unidades": 1.0, "Monto": 529990.0}, {"Fecha": "2025-02-24", "Region": "Norte", "Producto": "A", "Unidades": 5.0, "Monto": 2649950.0}, {"Fecha": "2025-02-24", "Region": "Norte", "Producto": "A", "Unidades": 5.0, "Monto": 2649950.0}, {"Fecha": "2025-02-24", "Region": "Norte", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-02-25", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1109970.0}, {"Fecha": "2025-02-26", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-02-26", "Region": "Centro", "Producto": "A", "Unidades": 1.0, "Monto": 529990.0}, {"Fecha": "2025-02-27", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-02-27", "Region": "Sur", "Producto": "B", "Unidades": 2.0, "Monto": 809980.0}, {"Fecha": "2025-02-28", "Region": "Sur", "Producto": "A", "Unidades": 1.0, "Monto": 529990.0}, {"Fecha": "2025-03-03", "Region": "Centro", "Producto": "B", "Unidades": 2.0, "Monto": 853980.0}, {"Fecha": "2025-03-03", "Region": "Norte", "Producto": "B", "Unidades": 2.0, "Monto": 899980.0}, {"Fecha": "2025-03-04", "Region": "Centro", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-03-06", "Region": "Norte", "Producto": "C", "Unidades": 2.0, "Monto": 739980.0}, {"Fecha": "2025-03-08", "Region": "Sur", "Producto": "C", "Unidades": 1.0, "Monto": 369990.0}, {"Fecha": "2025-03-08", "Region": "Sur", "Producto": "C", "Unidades": 1.0, "Monto": 369990.0}, {"Fecha": "2025-03-10", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-03-12", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-03-12", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 359980.0}, {"Fecha": "2025-03-13", "Region": "Sur", "Producto": "A", "Unidades": 1.0, "Monto": 529990.0}, {"Fecha": "2025-03-13", "Region": "Centro", "Producto": "C", "Unidades": 4.0, "Monto": 1479960.0}, {"Fecha": "2025-03-16", "Region": "Sur", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-03-18", "Region": "Centro", "Producto": "B", "Unidades": 2.0, "Monto": 809980.0}, {"Fecha": "2025-03-18", "Region": "Centro", "Producto": "C", "Unidades": 4.0, "Monto": 1559960.0}, {"Fecha": "2025-03-19", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-03-20", "Region": "Norte", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-03-20", "Region": "Sur", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-03-22", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-03-23", "Region": "Sur", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-03-24", "Region": "Sur", "Producto": "D", "Unidades": 3.0, "Monto": 599970.0}, {"Fecha": "2025-03-24", "Region": "Sur", "Producto": "D", "Unidades": 3.0, "Monto": 569970.0}, {"Fecha": "2025-03-26", "Region": "Sur", "Producto": "B", "Unidades": 2.0, "Monto": 899980.0}, {"Fecha": "2025-03-27", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-03-27", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-03-30", "Region": "Norte", "Producto": "B", "Unidades": 1.0, "Monto": 426990.0}, {"Fecha": "2025-03-30", "Region": "Sur", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-04-02", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1430970.0}, {"Fecha": "2025-04-02", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1508970.0}, {"Fecha": "2025-04-03", "Region": "Sur", "Producto": "C", "Unidades": 2.0, "Monto": 739980.0}, {"Fecha": "2025-04-04", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1508970.0}, {"Fecha": "2025-04-04", "Region": "Sur", "Producto": "B", "Unidades": 4.0, "Monto": 1707960.0}, {"Fecha": "2025-04-04", "Region": "Sur", "Producto": "A", "Unidades": 1.0, "Monto": 502990.0}, {"Fecha": "2025-04-08", "Region": "Norte", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-04-08", "Region": "Sur", "Producto": "D", "Unidades": 1.0, "Monto": 189990.0}, {"Fecha": "2025-04-08", "Region": "Centro", "Producto": "D", "Unidades": 3.0, "Monto": 599970.0}, {"Fecha": "2025-04-08", "Region": "Centro", "Producto": "A", "Unidades": 1.0, "Monto": 529990.0}, {"Fecha": "2025-04-09", "Region": "Norte", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-04-09", "Region": "Sur", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-04-09", "Region": "Sur", "Producto": "C", "Unidades": 3.0, "Monto": 1052970.0}, {"Fecha": "2025-04-10", "Region": "Sur", "Producto": "A", "Unidades": 5.0, "Monto": 2649950.0}, {"Fecha": "2025-04-11", "Region": "Sur", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-04-11", "Region": "Sur", "Producto": "B", "Unidades": 3.0, "Monto": 1214970.0}, {"Fecha": "2025-04-11", "Region": "Sur", "Producto": "A", "Unidades": 2.0, "Monto": 1005980.0}, {"Fecha": "2025-04-13", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-04-14", "Region": "Sur", "Producto": "A", "Unidades": 4.0, "Monto": 2119960.0}, {"Fecha": "2025-04-15", "Region": "Sur", "Producto": "C", "Unidades": 1.0, "Monto": 389990.0}, {"Fecha": "2025-04-16", "Region": "Centro", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-04-17", "Region": "Sur", "Producto": "C", "Unidades": 4.0, "Monto": 1559960.0}, {"Fecha": "2025-04-18", "Region": "Sur", "Producto": "A", "Unidades": 1.0, "Monto": 529990.0}, {"Fecha": "2025-04-19", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-04-19", "Region": "Sur", "Producto": "B", "Unidades": 2.0, "Monto": 899980.0}, {"Fecha": "2025-04-19", "Region": "Sur", "Producto": "B", "Unidades": 2.0, "Monto": 853980.0}, {"Fecha": "2025-04-21", "Region": "Centro", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-04-25", "Region": "Centro", "Producto": "B", "Unidades": 6.0, "Monto": 2699940.0}, {"Fecha": "2025-04-26", "Region": "Centro", "Producto": "D", "Unidades": 5.0, "Monto": 999950.0}, {"Fecha": "2025-04-26", "Region": "Norte", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-04-28", "Region": "Norte", "Producto": "C", "Unidades": 4.0, "Monto": 1559960.0}, {"Fecha": "2025-05-01", "Region": "Norte", "Producto": "D", "Unidades": 2.0, "Monto": 379980.0}, {"Fecha": "2025-05-01", "Region": "Centro", "Producto": "C", "Unidades": 6.0, "Monto": 2219940.0}, {"Fecha": "2025-05-02", "Region": "Sur", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-05-02", "Region": "Centro", "Producto": "B", "Unidades": 2.0, "Monto": 853980.0}, {"Fecha": "2025-05-03", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-05-03", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1109970.0}, {"Fecha": "2025-05-03", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-05-05", "Region": "Norte", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-05-06", "Region": "Centro", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-05-06", "Region": "Centro", "Producto": "B", "Unidades": 4.0, "Monto": 1799960.0}, {"Fecha": "2025-05-09", "Region": "Norte", "Producto": "B", "Unidades": 2.0, "Monto": 899980.0}, {"Fecha": "2025-05-10", "Region": "Sur", "Producto": "D", "Unidades": 1.0, "Monto": 179990.0}, {"Fecha": "2025-05-12", "Region": "Sur", "Producto": "D", "Unidades": 3.0, "Monto": 599970.0}, {"Fecha": "2025-05-13", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-05-14", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-05-16", "Region": "Sur", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-05-17", "Region": "Sur", "Producto": "C", "Unidades": 4.0, "Monto": 1559960.0}, {"Fecha": "2025-05-17", "Region": "Centro", "Producto": "B", "Unidades": 3.0, "Monto": 1349970.0}, {"Fecha": "2025-05-18", "Region": "Sur", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-05-19", "Region": "Norte", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-05-21", "Region": "Norte", "Producto": "B", "Unidades": 3.0, "Monto": 1349970.0}, {"Fecha": "2025-05-21", "Region": "Centro", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-05-24", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-06-01", "Region": "Centro", "Producto": "A", "Unidades": 2.0, "Monto": 1059980.0}, {"Fecha": "2025-06-03", "Region": "Centro", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-06-06", "Region": "Sur", "Producto": "A", "Unidades": 2.0, "Monto": 1059980.0}, {"Fecha": "2025-06-09", "Region": "Sur", "Producto": "A", "Unidades": 4.0, "Monto": 2119960.0}, {"Fecha": "2025-06-11", "Region": "Centro", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-06-12", "Region": "Centro", "Producto": "A", "Unidades": 5.0, "Monto": 2384950.0}, {"Fecha": "2025-06-13", "Region": "Sur", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-06-13", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-06-14", "Region": "Centro", "Producto": "D", "Unidades": 6.0, "Monto": 1199940.0}, {"Fecha": "2025-06-15", "Region": "Sur", "Producto": "B", "Unidades": 2.0, "Monto": 899980.0}, {"Fecha": "2025-06-15", "Region": "Norte", "Producto": "C", "Unidades": 2.0, "Monto": 779980.0}, {"Fecha": "2025-06-16", "Region": "Norte", "Producto": "C", "Unidades": 4.0, "Monto": 1559960.0}, {"Fecha": "2025-06-17", "Region": "Sur", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-06-18", "Region": "Centro", "Producto": "D", "Unidades": 3.0, "Monto": 569970.0}, {"Fecha": "2025-06-19", "Region": "Sur", "Producto": "D", "Unidades": 3.0, "Monto": 569970.0}, {"Fecha": "2025-06-20", "Region": "Norte", "Producto": "B", "Unidades": 2.0, "Monto": 853980.0}, {"Fecha": "2025-06-20", "Region": "Sur", "Producto": "B", "Unidades": 6.0, "Monto": 2699940.0}, {"Fecha": "2025-06-21", "Region": "Centro", "Producto": "D", "Unidades": 2.0, "Monto": 399980.0}, {"Fecha": "2025-06-21", "Region": "Sur", "Producto": "B", "Unidades": 6.0, "Monto": 2699940.0}, {"Fecha": "2025-06-21", "Region": "Sur", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-06-22", "Region": "Sur", "Producto": "A", "Unidades": 2.0, "Monto": 953980.0}, {"Fecha": "2025-06-23", "Region": "Centro", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-06-24", "Region": "Norte", "Producto": "D", "Unidades": 1.0, "Monto": 179990.0}, {"Fecha": "2025-06-25", "Region": "Centro", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-06-26", "Region": "Norte", "Producto": "D", "Unidades": 1.0, "Monto": 199990.0}, {"Fecha": "2025-06-26", "Region": "Norte", "Producto": "C", "Unidades": 3.0, "Monto": 1169970.0}, {"Fecha": "2025-06-26", "Region": "Centro", "Producto": "B", "Unidades": 1.0, "Monto": 449990.0}, {"Fecha": "2025-06-26", "Region": "Sur", "Producto": "A", "Unidades": 1.0, "Monto": 476990.0}, {"Fecha": "2025-06-29", "Region": "Norte", "Producto": "A", "Unidades": 3.0, "Monto": 1589970.0}, {"Fecha": "2025-06-30", "Region": "Sur", "Producto": "A", "Unidades": 2.0, "Monto": 953980.0}, {"Fecha": "2025-06-30", "Region": "Norte", "Producto": "C", "Unidades": 4.0, "Monto": 1559960.0}];
+const fbaEsc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+for(const [id,campo] of [['fba-region','Region'],['fba-producto','Producto']]){
+ for(const v of [...new Set(FBA_VENTAS.map(r=>r[campo]))].sort()){const o=document.createElement('option');o.value=v;o.textContent=v;$(id).appendChild(o);}
+}
+function fbaSeleccion(){
+ const region=$('fba-region').value,producto=$('fba-producto').value,trimestre=Number($('fba-trimestre').value);
+ return FBA_VENTAS.filter(r=>(region==='Todas'||r.Region===region)&&(producto==='Todos'||r.Producto===producto)&&(!trimestre||Math.ceil(Number(r.Fecha.slice(5,7))/3)===trimestre));
+}
+function fbaResumen(rows){const ingreso=rows.reduce((s,r)=>s+r.Monto,0),unidades=rows.reduce((s,r)=>s+r.Unidades,0);return {n:rows.length,ingreso,unidades,ticket:rows.length?ingreso/rows.length:NaN,precio:unidades?ingreso/unidades:NaN};}
+function fbaRender(){
+ const rows=fbaSeleccion(),m=fbaResumen(rows);window.FBA_ULTIMO_RESUMEN=m;
+ $('fba-kpis').innerHTML=[['Transacciones',m.n],['Unidades',m.unidades],['Ingreso',fmt(m.ingreso)],['Ticket',fmt(m.ticket)],['Precio por unidad',fmt(m.precio)]].map(([k,v])=>`<div class="stat"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+ const grupos={};for(const r of rows){if(!grupos[r.Producto])grupos[r.Producto]={ingreso:0,n:0};grupos[r.Producto].ingreso+=r.Monto;grupos[r.Producto].n++;}
+ $('fba-tabla').innerHTML='<table><caption>Agregado por producto de la selección</caption><thead><tr><th>Producto</th><th>Ingreso</th><th>Operaciones</th></tr></thead><tbody>'+Object.entries(grupos).sort().map(([k,v])=>`<tr><td>${fbaEsc(k)}</td><td>${fmt(v.ingreso)}</td><td>${v.n}</td></tr>`).join('')+'</tbody></table>';
+ $('fba-filtro-nota').textContent=rows.length?'Totales calculados sobre transacciones seleccionadas. No hay margen observado en el archivo.':'Selección sin registros: el ticket y el precio por unidad quedan indefinidos.';
+ fbaSensibilidad();
+}
+function fbaDelta(R,g,d,m,C=0){return R*((1+g)*(m-d)-m)-C;}
+function fbaSensibilidad(){
+ const g=Number($('fba-crecimiento').value)/100,d=Number($('fba-descuento').value)/100,m=Number($('fba-margen').value)/100;
+ $('fba-g').textContent=(g*100).toFixed(0)+'%';$('fba-d').textContent=(d*100).toFixed(0)+'%';$('fba-m').textContent=(m*100).toFixed(0)+'%';
+ const R=fbaResumen(fbaSeleccion()).ingreso,delta=fbaDelta(R,g,d,m);
+ $('fba-sensibilidad').textContent=`Ingreso base filtrado: ${fmt(R)}. Contribución incremental hipotética: ${fmt(delta)}. `+(m>d?`Crecimiento de equilibrio: ${(100*d/(m-d)).toFixed(1)}%.`:'El descuento consume el margen unitario supuesto.');
+}
+['fba-region','fba-producto','fba-trimestre'].forEach(id=>$(id).addEventListener('change',fbaRender));
+['fba-crecimiento','fba-descuento','fba-margen'].forEach(id=>$(id).addEventListener('input',fbaSensibilidad));
+fbaRender();
+BANK.c14={label:'Cap. 14 — Herramientas',questions:[
+ {q:'Una búsqueda añade dos filas de catálogo por cada producto. ¿Qué se debe revisar?',o:['El color del gráfico','La unicidad y cardinalidad de la clave','Solo la media','El número de decimales'],c:1,e:'Una unión no validada puede multiplicar transacciones e inflar los ingresos.'},
+ {q:'El ticket general se calcula como:',o:['Promedio simple de tickets de grupos de cualquier tamaño','Ingreso total dividido por transacciones totales','Ingreso dividido por unidades','Mayor venta observada'],c:1,e:'El denominador del ticket es el número de transacciones, no unidades ni número de grupos.'},
+ {q:'Una tabla dinámica muestra conteo de Monto cuando necesitamos ingresos. ¿Qué cambiar?',o:['El título solamente','La agregación a suma y comprobar el total','La moneda sin revisar datos','Eliminar categorías pequeñas'],c:1,e:'La operación debe responder a la definición del indicador y reconciliarse con una suma independiente.'}
+]};
+BANK.c15={label:'Cap. 15 — Casos y decisión',questions:[
+ {q:'Con margen 30% y descuento 5%, sin costo fijo, el crecimiento de equilibrio es:',o:['5%','10%','20%','30%'],c:2,e:'g = d/(m−d) = 0,05/0,25 = 20%, manteniendo mezcla y costo variable unitario.'},
+ {q:'El archivo no contiene costos. ¿Qué puede afirmarse sobre el producto de mayor ingreso?',o:['Es el más rentable','Concentra más ingreso observado; su rentabilidad requiere costos','Tiene mayor efecto causal','Conviene descontarlo siempre'],c:1,e:'Ingresos y utilidad son magnitudes diferentes. Un margen supuesto debe identificarse como escenario.'}
+]};
+GLOS.push(['Business Intelligence','Integración, indicadores y reporting que pueden apoyar procesos de Business Analytics.'],
+ ['Big Data','Desafíos de escala, velocidad y variedad que se justifican por los datos y la tarea.'],
+ ['Grano','Unidad que representa cada fila: transacción, cliente o cliente-mes, por ejemplo.'],
+ ['Cardinalidad de una unión','Relación de claves entre tablas; validarla evita multiplicar registros por accidente.'],
+ ['Ticket medio','Ingreso total dividido por el número de transacciones del universo definido.']);
+renderMenu();renderGlos();
+
+</script>
+</body>
+</html>

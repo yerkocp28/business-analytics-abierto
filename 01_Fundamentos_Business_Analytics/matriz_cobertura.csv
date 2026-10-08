@@ -1,0 +1,31 @@
+﻿criterio_o_tema,nivel,contenido,qmd_ancla,html_ancla,notebook,notebook_ancla,evidencia
+1.1,nucleo,"BA, BI, Big Data y modelos",sec-negocio,c1,notebooks/FBA_01_negocio_datos.ipynb,negocio,"Distinguir concepto, pregunta y tarea"
+1.2,nucleo,Casos empresariales y pertinencia,sec-casos,c15,notebooks/FBA_03_herramientas_caso_integrador.ipynb,caso-integrador,Justificar una aplicación sectorial
+1.3,nucleo,Impacto en decisiones,sec-negocio,c15,notebooks/FBA_01_negocio_datos.ipynb,negocio,Valor incremental con supuestos explícitos
+1.4,nucleo,"Limitaciones, desafíos y ética",sec-etica,c11,notebooks/FBA_01_negocio_datos.ipynb,etica,Separar evidencia de hipótesis y revisar sesgos
+2.1,nucleo,"Tendencias, correlaciones y agrupamientos",sec-visualizacion,c6,notebooks/FBA_02_exploracion_visual.ipynb,visualizacion,Identificar al menos dos patrones
+2.2,nucleo,Significado de patrones,sec-relaciones,c7,notebooks/FBA_02_exploracion_visual.ipynb,relaciones,Contraejemplo no lineal e identidad contable
+2.3,nucleo,Organización visual coherente,sec-visualizacion,c6,notebooks/FBA_02_exploracion_visual.ipynb,comunicacion-visual,"Grano, período, unidades y denominadores"
+2.4,nucleo,"Barras, líneas e histogramas",sec-visualizacion,c6,notebooks/FBA_02_exploracion_visual.ipynb,visualizacion,Tablero con gráficos pertinentes
+2.5,nucleo,Relevancia para decisiones,sec-casos,c15,notebooks/FBA_02_exploracion_visual.ipynb,comunicacion-visual,Interpretación y explicación alternativa
+3.1,nucleo,Comparación de herramientas básicas,sec-herramientas,c14,notebooks/FBA_03_herramientas_caso_integrador.ipynb,herramientas,Equivalencias Excel y pandas; extensión SQL
+3.2,nucleo,"Funciones, filtros, cálculos y tendencias",sec-herramientas,c14,notebooks/FBA_03_herramientas_caso_integrador.ipynb,tablas-dinamicas,Agregado reconciliado y filtro conjunto
+3.3,nucleo,Selección y organización de datos,sec-datos,c3,notebooks/FBA_03_herramientas_caso_integrador.ipynb,herramientas,Definición de universo y período
+3.4,nucleo,Interpretación contextual,sec-casos,c15,notebooks/FBA_03_herramientas_caso_integrador.ipynb,caso-integrador,Informe condicionado a la evidencia
+3.5,nucleo,Propuesta de solución fundamentada,sec-casos,c15,notebooks/FBA_03_herramientas_caso_integrador.ipynb,sensibilidad,Campaña hipotética y punto de equilibrio
+3.6,nucleo,Comunicación estructurada,sec-etica,c11,notebooks/FBA_03_herramientas_caso_integrador.ipynb,caso-integrador,Informe de una página y rúbrica formativa
+T01,apoyo_nucleo,Cuatro tipos de analytics,sec-negocio,c2,notebooks/FBA_01_negocio_datos.ipynb,negocio,Clasificación de preguntas
+T02,apoyo_nucleo,"Tipos, escalas y gestión",sec-datos,c3,notebooks/FBA_01_negocio_datos.ipynb,tipos-datos,Diccionario y contrato de datos
+T03,apoyo_nucleo,Calidad y transformación,sec-datos,c3,notebooks/FBA_01_negocio_datos.ipynb,calidad,"Copia defectuosa, bitácora y reconciliación"
+T04,apoyo_nucleo,CRISP-DM,sec-crisp,c4,notebooks/FBA_01_negocio_datos.ipynb,crisp,Entregables por fase
+T05,apoyo_nucleo,"Centro, dispersión, posición y forma",sec-descriptiva,c5,notebooks/FBA_02_exploracion_visual.ipynb,descriptiva,"Resumen, cuantiles, asimetría y curtosis"
+T06,apoyo_nucleo,"Búsquedas, cardinalidad y SQL",sec-herramientas,c14,notebooks/FBA_03_herramientas_caso_integrador.ipynb,busquedas-sql,Clave duplicada detectada; SQL=pandas
+P01,profundizacion,Probabilidad condicional y Bayes,sec-probabilidad,c8,notebooks/FBA_04_probabilidad_simulacion.ipynb,probabilidad,Prevalencia y valor predictivo
+P02,profundizacion,Distribuciones discretas y continuas,sec-probabilidad,c8,notebooks/FBA_04_probabilidad_simulacion.ipynb,distribuciones,"Binomial, Poisson, uniforme, exponencial y normal"
+P03,profundizacion,Normal y estandarización,sec-normal,c8,notebooks/FBA_04_probabilidad_simulacion.ipynb,normal,Área de intervalo
+P04,profundizacion,TCL y Monte Carlo,sec-simulacion,c8,notebooks/FBA_04_probabilidad_simulacion.ipynb,simulacion,Medias exponenciales y error estándar
+P05,profundizacion,Regresión lineal,sec-modelos,c9,notebooks/FBA_05_modelos_evaluacion.ipynb,regresion,"Ajuste, residuos y error de test"
+P06,profundizacion,"Logística, árbol, KNN y bosque",sec-modelos,c9,notebooks/FBA_05_modelos_evaluacion.ipynb,clasificacion,Pipelines y comparación contra base
+P07,profundizacion,"Partición, fuga y sobreajuste",sec-evaluacion,c10,notebooks/FBA_05_modelos_evaluacion.ipynb,sobreajuste,Separación 60/20/20 y complejidad
+P08,profundizacion,"Métricas, matriz y umbral",sec-evaluacion,c10,notebooks/FBA_05_modelos_evaluacion.ipynb,evaluacion,Costo de errores y test reservado
+P09,profundizacion,"K-means, escala e interpretación",sec-clustering,c9,notebooks/FBA_05_modelos_evaluacion.ipynb,clustering,Perfiles e inercia con k variable

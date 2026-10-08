@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Analytics · material docente abierto</title>
+<meta name="description" content="Guías interactivas, manuales y notebooks para cuatro cursos de Business Analytics. Yerko Carreño Pérez. CC BY-NC-SA 4.0.">
+<style>
+:root{--fondo:#f4f2ec;--papel:#fffdf8;--tinta:#1d2a2c;--suave:#5b6a6c;--linea:#ddd6c8;--marca:#12393f;--acento:#b9852a;--enlace:#0f5f69;}
+@media (prefers-color-scheme:dark){:root{--fondo:#111a1c;--papel:#182427;--tinta:#e9ecea;--suave:#a6b3b3;--linea:#2c3b3e;--marca:#0b2226;--acento:#d6a54b;--enlace:#7cc6cf;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--enlace)}
+a:focus-visible{outline:3px solid var(--acento);outline-offset:2px}
+header{background:var(--marca);color:#f3efe4;padding:48px 16px 40px}
+.ancho{max-width:1080px;margin:0 auto}
+.etiqueta{letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--acento);margin:0 0 10px}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 14px}
+.bajada{max-width:720px;color:#d7dcd9;margin:0}
+.acciones{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.boton{display:inline-block;padding:10px 16px;border-radius:6px;text-decoration:none;font-weight:600;border:1px solid #f3efe4;color:#f3efe4}
+.boton.lleno{background:var(--acento);border-color:var(--acento);color:#1b1a16}
+main{padding:32px 16px 48px}
+h2{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:24px;margin:8px 0 16px}
+.cursos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.curso{background:var(--papel);border:1px solid var(--linea);border-top:4px solid var(--acento);border-radius:8px;padding:20px;display:flex;flex-direction:column}
+.curso h3{margin:0 0 6px;font-size:19px;line-height:1.3}
+.curso p{margin:0 0 14px;color:var(--suave);font-size:14.5px}
+.curso ul{list-style:none;padding:0;margin:auto 0 0;display:grid;gap:6px}
+.curso li a{text-decoration:none;font-weight:600}
+.curso li a:hover{text-decoration:underline}
+.nota{font-size:13px;color:var(--suave)}
+.bloques{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:40px}
+.bloques section{background:var(--papel);border:1px solid var(--linea);border-radius:8px;padding:20px}
+.bloques h2{font-size:20px;margin-top:0}
+code{background:var(--fondo);padding:1px 5px;border-radius:4px;font-size:14px}
+footer{border-top:1px solid var(--linea);padding:20px 16px;color:var(--suave);font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="ancho">
+    <p class="etiqueta">Material docente abierto · edición 2026</p>
+    <h1>Business Analytics: de la pregunta de negocio a la decisión</h1>
+    <p class="bajada">Cuatro cursos encadenados con guía interactiva, manual científico y laboratorios en Python. Para pregrado, con profundizaciones para postgrado. Todos los casos son empresas ficticias con datos simulados.</p>
+    <div class="acciones">
+      <a class="boton lleno" href="https://github.com/yerkocp28/business-analytics-abierto/archive/refs/heads/main.zip">Descargar todo (ZIP)</a>
+      <a class="boton" href="https://github.com/yerkocp28/business-analytics-abierto">Repositorio en GitHub</a>
+    </div>
+  </div>
+</header>
+<main><div class="ancho">
+  <h2>Cursos</h2>
+  <div class="cursos">
+    <article class="curso">
+      <h3>Fundamentos de Business Analytics</h3>
+      <p>Datos, decisiones, análisis visual y herramientas básicas. Profundización en probabilidad y modelos.</p>
+      <ul>
+        <li><a href="01_Fundamentos_Business_Analytics/guia_maestra_ba.html">Guía maestra interactiva</a></li>
+        <li><a href="01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.pdf">Manual científico (PDF)</a></li>
+        <li><a href="01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.html">Manual para leer en línea</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/tree/main/01_Fundamentos_Business_Analytics/notebooks">5 notebooks de laboratorio</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/blob/main/01_Fundamentos_Business_Analytics/COBERTURA.md">Cobertura: 15 criterios</a></li>
+      </ul>
+    </article>
+    <article class="curso">
+      <h3>Estadística Aplicada a Business Analytics</h3>
+      <p>Muestreo, probabilidad, intervalos, regresión, contrastes, series de tiempo y comunicación de la incertidumbre.</p>
+      <ul>
+        <li><a href="02_Estadistica_Business_Analytics/guia_maestra_eba.html">Guía maestra interactiva</a></li>
+        <li><a href="02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.pdf">Manual científico (PDF)</a></li>
+        <li><a href="02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.html">Manual para leer en línea</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/tree/main/02_Estadistica_Business_Analytics/notebooks">8 notebooks de laboratorio</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/blob/main/02_Estadistica_Business_Analytics/COBERTURA.md">Cobertura: 12 criterios y 17 contenidos</a></li>
+      </ul>
+    </article>
+    <article class="curso">
+      <h3>Modelos Predictivos para los Negocios</h3>
+      <p>Regresión y clasificación, validación sin fugas, umbral por costo, calibración, riesgo de modelo y pronóstico.</p>
+      <ul>
+        <li><a href="03_Modelos_Predictivos_Negocios/guia_maestra_mpn.html">Guía maestra interactiva</a></li>
+        <li><a href="03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.pdf">Manual científico (PDF)</a></li>
+        <li><a href="03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.html">Manual para leer en línea</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/tree/main/03_Modelos_Predictivos_Negocios/notebooks">7 notebooks de laboratorio</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/blob/main/03_Modelos_Predictivos_Negocios/COBERTURA.md">Cobertura: 15 criterios</a></li>
+      </ul>
+    </article>
+    <article class="curso">
+      <h3>Analítica Estratégica de Datos</h3>
+      <p>Proceso analítico, KPIs y tableros, optimización, decisiones bajo incertidumbre, Monte Carlo y comunicación ejecutiva.</p>
+      <ul>
+        <li><a href="04_Analitica_Estrategica_Datos/guia_maestra_aed.html">Guía maestra interactiva</a></li>
+        <li><a href="04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.pdf">Manual científico (PDF)</a></li>
+        <li><a href="04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.html">Manual para leer en línea</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/tree/main/04_Analitica_Estrategica_Datos/notebooks">8 notebooks de laboratorio</a></li>
+        <li><a href="https://github.com/yerkocp28/business-analytics-abierto/blob/main/04_Analitica_Estrategica_Datos/COBERTURA.md">Cobertura: 13 criterios</a></li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="bloques">
+    <section>
+      <h2>Laboratorios en Python</h2>
+      <p>Descargue el repositorio y, desde su carpeta raíz, con Python 3.12:</p>
+      <p><code>python -m venv .venv</code><br><code>pip install -r requirements.txt</code><br><code>jupyter lab</code></p>
+      <p class="nota">Active el entorno antes de instalar (<code>.venv\Scripts\activate</code> en Windows; <code>source .venv/bin/activate</code> en macOS o Linux).</p>
+    </section>
+    <section>
+      <h2>Datos de los casos</h2>
+      <p>FinCordillera, QuillayMarket, PulpaLenga, CasaPeumo, BoldoNet y ComercioSur son empresas ficticias. Sus datos se generan con un script documentado de semilla fija.</p>
+      <p><a href="https://github.com/yerkocp28/business-analytics-abierto/blob/main/_transversal/datos/README.md">Diccionario de datos</a></p>
+    </section>
+    <section>
+      <h2>Licencia y cita</h2>
+      <p>Textos, guías, notebooks y datos: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">CC BY-NC-SA 4.0</a>. Código: MIT.</p>
+      <p class="nota">Carreño Pérez, Y. (2026). <em>Business Analytics: material docente abierto</em> [Material docente]. https://github.com/yerkocp28/business-analytics-abierto</p>
+    </section>
+  </div>
+</div></main>
+<footer>
+  <div class="ancho">Yerko Carreño Pérez · Material independiente: no representa a ninguna institución ni reemplaza los programas oficiales de un curso.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Además de requirements.txt: reconstruir manuales y guías y ejecutar las verificaciones.
+# Requiere también Quarto CLI (https://quarto.org) y, para las pruebas de navegador, `playwright install chrome`.
+-r requirements.txt
+nbclient==0.11.0
+nbformat==5.11.1
+beautifulsoup4==4.15.0
+pymupdf==1.28.2
+playwright==1.63.0

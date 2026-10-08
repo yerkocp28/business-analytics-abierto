@@ -1,0 +1,644 @@
+---
+title: "Fundamentos de Business Analytics"
+subtitle: "Manual científico y técnico para la docencia"
+author: "Yerko Carreño Pérez"
+date: 2026-10-08
+lang: es
+toc: true
+toc-depth: 2
+number-sections: true
+bibliography: referencias.bib
+link-citations: true
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  error: false
+  cache: false
+  daemon: false
+format:
+  typst:
+    papersize: a4
+    fontsize: 10.5pt
+    mainfont: Cambria
+    margin:
+      x: 2.2cm
+      y: 2.1cm
+    keep-typ: false
+  html:
+    theme: default
+    embed-resources: true
+    code-fold: true
+    toc-location: left
+    html-math-method: mathml
+    css: manual.css
+---
+
+```{python}
+#| label: configuracion
+from pathlib import Path
+import sys
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+from scipy import stats
+RAIZ = next(p for p in (Path.cwd(), *Path.cwd().parents) if (p / "_transversal" / "datos").is_dir())
+sys.path.insert(0, str(RAIZ / "01_Fundamentos_Business_Analytics" / "reproducibilidad"))
+from fba_recursos import ventas, resumen_ventas
+df = ventas()
+plt.rcParams.update({"figure.figsize": (7,3.4), "font.size": 10,
+                     "axes.spines.top": False, "axes.spines.right": False})
+def tabla(frame):
+    display(Markdown(frame.to_markdown(index=False, floatfmt=".2f")))
+```
+
+# Propósito, alcance y forma de uso {.unnumbered #sec-alcance}
+
+Este manual desarrolla una ruta desde una pregunta de negocio hasta una recomendación sustentada en datos. Integra lenguaje conceptual, formulación matemática, ejemplos reproducibles y criterios para discutir supuestos. Es material propio para usar en clase y como referencia posterior; no reemplaza el programa oficial de ningún curso.
+
+El núcleo sigue tres resultados de aprendizaje de un curso introductorio de Business Analytics: conceptos de analítica, patrones visuales y herramientas básicas aplicadas a problemas simulados. La guía añade probabilidad y modelos predictivos como **profundización**: sirven para preparar preguntas y conectar asignaturas, sin convertirlos automáticamente en exigencias evaluativas del curso introductorio.
+
+**Tres recursos complementarios.** La [guía maestra interactiva](../guia_maestra_ba.html) facilita explorar conceptos durante una explicación; este QMD y su PDF desarrollan fundamentos, supuestos y ejercicios; los cinco notebooks permiten inspeccionar y modificar cálculos. La guía funciona localmente sin internet. Los notebooks necesitan un entorno Python con kernel activo. Las tablas y figuras calculadas de este manual se reconstruyen durante su renderización.
+
+**Qué significa rigor en Fundamentos.** No depende de presentar más algoritmos. Requiere definir la unidad de análisis, elegir una medida pertinente, comprobar datos, distinguir descripción de causalidad, explicitar incertidumbre y separar observación de supuesto. Una tabla sencilla que cumple esas condiciones puede sostener una discusión de alto nivel.
+
+**Evaluación.** Los ejercicios y rúbricas de este manual son formativos. Cada docente debe comunicar las ponderaciones y reglas de evaluación vigentes en su curso.
+
+| Ruta | Alcance | Evidencia de aprendizaje |
+|---|---|---|
+| Núcleo U1 | Negocio, datos, gestión y límites | Pregunta defendible y auditoría básica |
+| Núcleo U2 | Descripción, visualización y patrones | Dos patrones explicados sin sobreinterpretarlos |
+| Núcleo U3 | Herramientas y aplicación | Análisis reconciliado y propuesta de solución |
+| Profundización | Probabilidad, modelos y evaluación | Discusión de supuestos y demostraciones controladas |
+
+**Convenciones.** Los casos son docentes; las simulaciones se identifican como tales. «Moneda del caso» evita asignar una unidad no documentada. Un porcentaje siempre declara base y período. Un resultado numérico mostrado sin un margen observado no se denomina utilidad. El acceso a datos reales requeriría revisar su procedencia y condiciones de uso.
+
+# Analítica y decisiones empresariales {#sec-negocio}
+
+## BA, BI y Big Data
+
+Business Analytics (BA) organiza datos y métodos alrededor de una decisión. Business Intelligence (BI) aporta integración, reporting e indicadores para comprender el funcionamiento del negocio. Ambos conceptos se superponen: un dashboard puede ser un insumo de una decisión analítica o quedarse en monitoreo descriptivo. La distinción no depende del software usado.
+
+Big Data describe situaciones donde volumen, velocidad, variedad u otras características complican la captura, procesamiento y gestión con los recursos habituales. La necesidad técnica se justifica por cargas y restricciones concretas, no por una etiqueta. Para 180 transacciones, una hoja de cálculo o pandas suele ser suficiente como entorno de aprendizaje. Aprender una arquitectura distribuida sin necesitarla no mejora la validez del análisis.
+
+Un modelo es una representación deliberadamente simplificada. Una tasa, una tabla de escenarios, una regresión y una regla de negocio son modelos con supuestos diferentes. La pregunta relevante es qué conserva esa representación y qué deja fuera. Una restricción operativa omitida puede invalidar una recomendación aunque el cálculo sea correcto.
+
+## Cuatro preguntas, cuatro alcances
+
+| Tipo | Pregunta orientadora | Producto posible | Límite habitual |
+|---|---|---|---|
+| Descriptivo | ¿Qué ocurrió? | Tabla, gráfico, KPI | No identifica por sí solo causas |
+| Diagnóstico | ¿Qué explicaciones investigar? | Desagregación, cohortes, hipótesis | Asociación no prueba una causa |
+| Predictivo | ¿Qué resultado es probable? | Pronóstico y evaluación | Puede degradarse fuera del contexto observado |
+| Prescriptivo | ¿Qué acción elegir? | Comparación de alternativas | Depende de costos, efectos y restricciones |
+
+No hay una jerarquía automática de valor. Un conteo confiable puede resolver una decisión mejor que un modelo sofisticado. Tampoco los cuatro enfoques son etapas obligatorias: se selecciona el mínimo análisis suficiente para responder una pregunta con consecuencias conocidas.
+
+## Formular una decisión verificable
+
+Una ficha útil especifica: decisor, acción posible, población o unidad, horizonte, indicador de resultado, alternativa de comparación, restricciones y evidencia requerida. «Analizar clientes» no identifica una decisión. «Comparar estrategias de contacto para clientes elegibles durante el próximo mes, con capacidad de 200 contactos y costo máximo definido» sí delimita un problema.
+
+Separar **objetivo de negocio**, **pregunta analítica** y **tarea técnica** evita sustituciones. Reducir abandono es un objetivo; identificar quién puede responder a una acción es una pregunta; ajustar un clasificador de abandono es una tarea que podría no responderla. Riesgo de un evento y efecto de una intervención no son la misma magnitud.
+
+### Ejemplo resuelto: valor incremental
+
+En un caso ficticio de retención, sean $p_0$ y $p_1$ las probabilidades de abandono sin y con intervención, $L$ la pérdida por abandono y $c$ el costo de actuar. Si la intervención solo modifica esa probabilidad y el costo es conocido, la mejora esperada frente a no actuar es
+
+$$
+\Delta V=(p_0-p_1)L-c.
+$$
+
+Con $p_0=0{,}20$, $p_1=0{,}12$, $L=600$ y $c=30$, el resultado es $18$ unidades monetarias por persona. Con costo $60$, baja a $-12$. Ambas cifras están condicionadas al supuesto sobre el efecto causal. No basta predecir correctamente quién abandonará para conocer $p_1$.
+
+**Actividad de aula.** Identifica qué dato permitiría refutar el supuesto de eficacia. Una respuesta sólida propone medir resultados comparables entre alternativas, controlar cómo se asignan y considerar consecuencias distintas del abandono. La acción elegida debe poder revisarse cuando cambien esas condiciones.
+
+**Notebook asociado:** 01, negocio y datos.
+
+# Datos, medición y gestión {#sec-datos}
+
+## Población, muestra y grano
+
+La población es el conjunto sobre el que se desea concluir; el archivo disponible puede ser una muestra, un censo de un período o una selección administrativa. Un censo de transacciones de enero a junio no es un censo de futuras transacciones. Definir la cobertura impide extender conclusiones fuera del alcance.
+
+El **grano** indica qué representa cada fila. En QuillayMarket es una transacción; sumar registros mide transacciones, no clientes. Sin una clave de cliente no se puede estimar directamente frecuencia de compra por persona. Si una venta tiene varias líneas de producto, el grano sería distinto y exigiría otra definición de ticket.
+
+| Variable del caso | Significado | Operación justificada |
+|---|---|---|
+| ID_Venta | Identificador de transacción | Unicidad, conteo de operaciones |
+| Fecha | Fecha registrada | Orden y diferencias temporales |
+| Region, Producto | Categorías nominales | Frecuencias, grupos y comparaciones |
+| Unidades | Conteo vendido | Suma y promedio con unidad definida |
+| Precio_Unitario | Precio de cada unidad | Media ponderada según pregunta |
+| Monto | Unidades por precio | Suma de ingreso registrado |
+
+## Escalas de medición
+
+Una escala nominal distingue categorías; una ordinal añade orden. En una escala de intervalo las diferencias tienen sentido con un cero convencional; en una de razón existe cero sustantivo y los cocientes son interpretables. Una temperatura de 20 °C no es el doble de calor que 10 °C; un monto de 20 unidades monetarias sí duplica uno de 10 en el mismo contexto y moneda.
+
+La clasificación orienta operaciones, pero no las autoriza mecánicamente. En una escala de razón pueden existir distribuciones para las cuales una media no resume adecuadamente el patrón. Con ítems ordinales, justificar un tratamiento numérico requiere explicitar supuestos y distinguir un ítem de una escala compuesta validada. Codificar categorías como 1, 2 y 3 no crea distancias observadas.
+
+## Estructura, ciclo de vida y procedencia
+
+Los datos estructurados se organizan en tablas con esquema; los semiestructurados pueden usar claves anidadas, como JSON; textos e imágenes necesitan otras representaciones. La estructura de almacenamiento no determina la calidad ni el contenido conceptual. Un campo de texto puede representar una categoría o una narrativa libre.
+
+Un ciclo reproducible conserva originales, registra transformaciones y produce una tabla analítica con diccionario. Para integrar fuentes se documentan claves, cardinalidad, período, moneda, unidad y fecha de extracción. Una unión de muchas transacciones con una dimensión de productos debe ser muchos-a-uno. Si el catálogo contiene dos filas por producto, una unión sin validación puede duplicar ingresos.
+
+**Gestión mínima.** Establecer responsable del dato, versión, ubicación, permisos y retención. Registrar cambios de definición de un KPI. Separar dato bruto de resultado derivado. Compartir el mínimo de variables necesario para la finalidad docente. Una carpeta llamada «privada» no implementa permisos de acceso.
+
+## Contratos y calidad
+
+Un contrato de datos combina esquema, reglas de dominio y relaciones entre campos. En el caso utilizado: clave única, fechas válidas, unidades positivas y consistencia $Monto=Unidades\times Precio$. Los faltantes se investigan por variable y grupo; eliminarlos por comodidad puede cambiar la composición del archivo. Una anomalía según RIC o un valor extremo no es automáticamente un error.
+
+```{python}
+#| label: contrato-quillaymarket
+contrato = pd.DataFrame({
+    "Control": ["Transacciones", "Claves únicas", "Montos ausentes", "Monto = unidades × precio"],
+    "Resultado": [str(len(df)), str(df.ID_Venta.nunique()), str(df.Monto.isna().sum()),
+                  str(np.allclose(df.Monto, df.Unidades*df.Precio_Unitario))]
+})
+tabla(contrato)
+```
+
+**Ejemplo de limpieza defendible.** Se añade a una copia una fila exactamente repetida con el mismo identificador, un monto vacío y una categoría con espacios. Se documenta retirar la copia, reconstruir el monto mediante la identidad contable y normalizar la categoría con un diccionario. Esa operación no autoriza aplicar el mismo tratamiento a otra base: debe verificarse la semántica del identificador y el origen del faltante.
+
+**Ejercicio.** ¿Qué ocurre si se cambia la moneda de una sola fila sin registrarlo? El esquema puede seguir siendo válido, pero los agregados dejan de tener unidad coherente. Una auditoría técnica debe incorporar conocimiento del negocio.
+
+**Notebook asociado:** 01, tipos, calidad y bitácora.
+
+# CRISP-DM y razonamiento reproducible {#sec-crisp}
+
+CRISP-DM organiza el trabajo en seis fases iterativas: comprensión del negocio, comprensión de datos, preparación, modelamiento, evaluación y despliegue [@ibm_crisp]. En un curso introductorio, una tabla dinámica validada puede ser el artefacto analítico suficiente; el proceso no obliga a usar aprendizaje automático.
+
+| Fase | Pregunta de revisión | Evidencia que conviene conservar |
+|---|---|---|
+| Negocio | ¿Qué decisión cambiará? | Objetivo, alternativas y restricciones |
+| Datos | ¿Qué representan las filas? | Inventario, diccionario y cobertura |
+| Preparación | ¿Qué transformaciones se hicieron? | Bitácora y controles antes/después |
+| Modelamiento | ¿El método responde a la pregunta? | Código, fórmulas y comparación simple |
+| Evaluación | ¿El resultado es consistente y útil? | Reconciliación, supuestos y límites |
+| Despliegue | ¿Quién actuará y cuándo revisará? | Responsable, KPI y seguimiento |
+
+La reproducibilidad tiene niveles. Repetir un cálculo con el mismo archivo comprueba consistencia computacional. Reproducir una conclusión con otra muestra exige condiciones adicionales. Un archivo ejecutable puede contener una pregunta equivocada; una justificación conceptual correcta puede fallar por rutas rotas. Se revisan ambos planos.
+
+El presente paquete conserva el CSV original, usa semillas en simulaciones y evita descargas durante los ejercicios. Sus versiones de paquetes se registran en un lock. El proceso de actualización requiere ejecutar nuevamente los notebooks y regenerar el PDF si cambia un dato, una fórmula o una dependencia relevante.
+
+**Discusión.** Una caída de ventas aparece justo después de cambiar el sistema de registro. Antes de explicar una reacción de clientes, revise si cambió la cobertura o la definición de venta. Regresar desde evaluación a comprensión de datos es una corrección del razonamiento, no un retroceso improductivo.
+
+# Descripción estadística con interpretación {#sec-descriptiva}
+
+## Centro y dispersión
+
+Para valores $x_1,\ldots,x_n$, la media y la varianza muestral son
+
+$$
+\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i,
+\qquad
+s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2.
+$$
+
+La corrección $n-1$ produce un estimador insesgado de la varianza bajo muestreo independiente de una población con varianza finita. No hace a todos los estadísticos insesgados ni corrige automáticamente un muestreo sesgado. Si se describe como población el conjunto finito completo disponible, dividir por $n$ responde a otro objetivo legítimo. Declare cuál utiliza.
+
+La desviación $s$ recupera las unidades de $x$; la varianza usa unidades al cuadrado. La mediana depende del orden y resiste mejor un extremo aislado que la media. Para la muestra $10,12,13,14,15,16,17,18,20,25$, la media es 16 y la mediana 15,5. Si 25 cambia a 150, la media pasa a 28,5 mientras la mediana permanece igual. Ninguno de esos resultados determina si 150 es un error.
+
+## Posición, robustez y convenciones
+
+Los cuantiles separan posiciones de una distribución. Su cálculo en muestras pequeñas depende de la convención de interpolación: diferencias pequeñas entre programas no necesariamente son fallos. Esta edición usa cuantiles lineales de pandas y la misma regla en JavaScript. El rango intercuartílico es $RIC=Q_{0,75}-Q_{0,25}$.
+
+Las cercas $Q_1-1{,}5RIC$ y $Q_3+1{,}5RIC$ ayudan a señalar observaciones inusuales en un boxplot. Un dato fuera de las cercas puede revelar un error, una transacción legítima o una mezcla de procesos. Investigue fuente y contexto antes de modificarlo; documente cualquier exclusión y compare resultados con y sin ella.
+
+El coeficiente de variación $CV=s/\bar{x}$ expresa dispersión relativa, pero requiere una escala de razón y una media positiva lejos de cero para una interpretación usual. Comparar CV de temperaturas en °C o de resultados centrados cerca de cero puede carecer de sentido. No se convierte en una medida universal por no tener unidades.
+
+## Forma, asimetría y curtosis
+
+La asimetría se relaciona con el tercer momento estandarizado. La curtosis usa el cuarto y es sensible a extremos; el exceso resta 3 para comparar con la normal. Es mejor discutir comportamiento de colas y observaciones influyentes que reducir curtosis a «altura del pico». Existen versiones poblacionales y ajustes muestrales que deben distinguirse [@nist_shape].
+
+La coincidencia de media y mediana no demuestra simetría ni normalidad. Una mezcla de dos grupos puede compartir ese centro y esconder patrones relevantes. Por eso conviene presentar resumen numérico, histograma y contexto juntos. Los siguientes valores se calculan directamente del caso:
+
+```{python}
+#| label: resumen-descriptivo
+x = df.Monto
+resumen = pd.DataFrame({
+    "Medida": ["Media", "Mediana", "SD muestral", "Q1", "Q3", "RIC", "Asimetría ajustada", "Exceso de curtosis ajustado"],
+    "Valor": [x.mean(), x.median(), x.std(ddof=1), x.quantile(.25), x.quantile(.75),
+              x.quantile(.75)-x.quantile(.25), x.skew(), x.kurt()]
+})
+tabla(resumen)
+```
+
+**Ejercicio resuelto.** Si el objetivo es presupuestar un total, la media y el número de operaciones permiten reconstruirlo. Si interesa describir una transacción típica en una distribución asimétrica, mediana y RIC pueden aportar una lectura más estable. La medida se elige por la pregunta; no existe una que sea siempre superior.
+
+**Notebook asociado:** 02, descripción y efecto de extremos.
+
+# Visualización, patrones y comunicación {#sec-visualizacion}
+
+## Elegir la representación
+
+Un gráfico responde una pregunta. La tabla conserva precisión; las barras comparan categorías; la línea muestra orden temporal; el histograma revela distribución numérica; el boxplot resume grupos; el diagrama de dispersión muestra pares; el mapa de calor representa una tabla mediante color. Combinar gráficos es útil cuando cada uno aporta una lectura distinta.
+
+| Pregunta | Representación | Comprobación necesaria |
+|---|---|---|
+| ¿Qué región registra más ingreso? | Barras ordenadas | Misma unidad y período |
+| ¿Cómo evoluciona el ingreso mensual? | Línea | Orden de fechas y cobertura |
+| ¿Cómo se distribuyen los montos? | Histograma | Bordes e interpretación de frecuencia |
+| ¿Cómo difieren montos entre productos? | Boxplot | Tamaños, escalas y observaciones extremas |
+| ¿Se relacionan unidades e ingreso? | Dispersión | Grano, identidad contable y factores omitidos |
+| ¿Dónde se concentra cada producto? | Mapa de calor | Leyenda, escala y denominadores |
+
+Las barras codifican longitud: un origen truncado exagera diferencias. En una línea puede ser legítimo mostrar un rango acotado si se declara y la tarea lo justifica. El color debe acompañarse con etiquetas, posición o símbolos; una diferencia importante no debería depender solo de distinguir rojo y verde. En una exposición, pruebe tamaño de texto y contraste en el dispositivo real.
+
+## Tendencias, agrupamientos y alternativas
+
+Un crecimiento agregado puede deberse a más operaciones, cambios de precio o mezcla. Para investigarlo, se descompone el indicador. Con seis meses de datos puede describirse evolución en ese semestre; no queda demostrada una pauta anual. Tampoco un agrupamiento visual acredita segmentos estables: podría responder a una escala o a una fuente de datos distinta.
+
+```{python}
+#| label: fig-patrones
+#| fig-cap: "Caso QuillayMarket: dos lecturas del mismo archivo. Totales por producto y evolución mensual; no representan evidencia causal."
+#| fig-width: 8
+#| fig-height: 3.6
+fig, axes = plt.subplots(1,2,figsize=(8,3.6))
+df.groupby("Producto").Monto.sum().sort_values().plot.barh(ax=axes[0],color="#175159")
+axes[0].set(xlabel="Ingreso (moneda del caso)",ylabel="Producto",title="Ingreso por producto")
+mensual=df.set_index("Fecha").Monto.resample("MS").sum(min_count=1)
+axes[1].plot(mensual.index,mensual,marker="o",color="#6b3a5b")
+axes[1].set(xlabel="Mes",ylabel="Ingreso",title="Evolución enero–junio 2025")
+axes[1].tick_params(axis="x",rotation=40)
+plt.tight_layout(); plt.show()
+```
+
+Para informar un hallazgo incluya período, unidad y comparación. «El producto X concentra una fracción del ingreso registrado» describe evidencia; «porque nuestros clientes prefieren X» introduce una explicación no medida. Una comunicación profesional separa ambas y propone cómo investigar la segunda.
+
+## La agregación puede cambiar la historia
+
+En una tabla sintética, el canal A obtiene 9 éxitos de 10 en el segmento fácil y 27 de 90 en el difícil. B obtiene 72 de 90 y 2 de 10, respectivamente. A supera a B dentro de cada segmento: 90% frente a 80%, y 30% frente a 20%. Sin embargo, en el agregado A obtiene 36% y B 74%. La mezcla de segmentos explica la reversión.
+
+La lección no es que toda comparación segmentada sea causalmente correcta. Debe justificarse por qué se segmenta y qué variables intervienen en la asignación. La primera comprobación aritmética es conservar numeradores y denominadores; promediar porcentajes sin pesos responde una pregunta distinta.
+
+**Actividad para clase.** Entregue un gráfico sin título ni denominador. Pida a un grupo redactar una conclusión y a otro cuestionarla. Evalúe si la revisión identifica ambigüedades de grano, período, escala y alternativa explicativa.
+
+**Notebook asociado:** 02, tablero visual, tabla de mezcla y comunicación.
+
+# Relación entre variables {#sec-relaciones}
+
+La covarianza mide variación conjunta y depende de las unidades. La correlación de Pearson la estandariza:
+
+$$
+s_{xy}=\frac{\sum_i(x_i-\bar{x})(y_i-\bar{y})}{n-1},
+\qquad r=\frac{s_{xy}}{s_xs_y}.
+$$
+
+Si alguna desviación es cero, $r$ queda indefinido. Cuando existe, se encuentra entre −1 y 1 y resume asociación lineal. La magnitud «fuerte» o «débil» necesita contexto, tamaño de muestra y propósito; no hay umbrales universales. Spearman evalúa asociación monótona mediante rangos, con sus propias limitaciones.
+
+Un gráfico de dispersión permite examinar formas, cambios de variabilidad y puntos influyentes; una asociación visible no demuestra una relación causal [@nist_scatter]. Conviene acompañar un coeficiente con el gráfico y la pregunta de negocio. En el caso QuillayMarket, la relación entre unidades y monto incluye la identidad contable que define el monto.
+
+```{python}
+#| label: fig-no-lineal
+#| fig-cap: "Contraejemplo construido: y=x² depende totalmente de x y tiene correlación lineal prácticamente cero en este dominio simétrico."
+xx=np.linspace(-2,2,101)
+fig,ax=plt.subplots()
+ax.scatter(xx,xx**2,color="#175159",s=15)
+ax.set(xlabel="x",ylabel="x²",title=f"r = {np.corrcoef(xx,xx**2)[0,1]:.4f}")
+plt.tight_layout();plt.show()
+```
+
+En una regresión simple por mínimos cuadrados con intercepto, evaluada sobre el mismo conjunto con variabilidad, $R^2=r^2$. Esta igualdad no se traslada sin condiciones a una regresión sin intercepto, a modelos arbitrarios ni a una evaluación fuera de muestra. No describa $r^2$ como «porcentaje causado» por una variable.
+
+**Ejercicio.** Un dashboard muestra correlación entre inversión y ventas. Identifique tres explicaciones: efecto de inversión, inversión dirigida a mercados ya grandes y una tercera variable que aumenta ambas. La recomendación debe indicar qué evidencia adicional distinguiría esas alternativas.
+
+# Hojas de cálculo, pandas y consultas {#sec-herramientas}
+
+## Un mismo problema en dos herramientas
+
+El objetivo es que la elección de herramienta preserve la definición del cálculo. En una hoja de cálculo, convertir el rango en tabla aporta referencias estructuradas y expansión consistente. En pandas, una tabla tiene columnas, tipos y operaciones explícitas. SQL resulta útil cuando el dato reside en una base y se debe filtrar o agregar allí.
+
+| Tarea | Hoja de cálculo | pandas |
+|---|---|---|
+| Sumar ingreso | SUMA de Monto | `df.Monto.sum()` |
+| Calcular media | PROMEDIO de Monto | `df.Monto.mean()` |
+| Dispersión muestral | DESVEST.M | `df.Monto.std(ddof=1)` |
+| Condición | SI | `np.where(condicion, a, b)` |
+| Agregación con criterios | SUMAR.SI.CONJUNTO | Filtro y suma |
+| Recuperar atributo | BUSCARX con clave | `merge` y validación de cardinalidad |
+| Tabla dinámica | Filas, columnas y valores | `pivot_table` |
+
+Las funciones de búsqueda pueden devolver una coincidencia aunque la clave no sea única. El contrato de unicidad debe comprobarse aparte. Los separadores y nombres de funciones cambian con idioma y configuración de Excel; el libro original del curso permite ver ejemplos en contexto.
+
+## Laboratorio guiado de hoja de cálculo
+
+1. Abra el libro de herramientas de FBA S09 y ubique `Datos_Ventas`. Identifique encabezados, notas y las 180 transacciones; no incluya las filas de título como observaciones.
+2. Verifique la tabla `Ventas`, los tipos de fecha y número, y la igualdad entre monto, unidades y precio.
+3. Filtre el segundo trimestre usando fechas desde 1 de abril inclusive hasta 1 de julio exclusivo. Ese intervalo evita omitir horas si posteriormente el campo incluye hora.
+4. Inserte una tabla dinámica con región en filas, producto en columnas y suma de monto en valores. Compruebe que no esté contando montos.
+5. Calcule total, número de operaciones, unidades, ticket y precio ponderado. Compare los totales con los resultados Python del notebook 03.
+6. Cambie un filtro y explique qué cambia en el denominador. Restaure la selección inicial y documente el procedimiento.
+
+Una herramienta no debe considerarse validada porque devuelve un número. La comparación entre un agregado y una suma independiente, o entre SQL y pandas, permite detectar errores de filtro, tipo o cardinalidad. El notebook 03 realiza esa reconciliación con aserciones.
+
+## Filtros y tablas dinámicas
+
+La condición «producto A y región Norte» exige conjunción. Un «o» selecciona un universo más grande. La tabla dinámica aplica una función de agregación a las celdas; elegir suma, media o conteo cambia la pregunta. `pivot_table` ofrece esa operación en pandas [@pandas_pivot].
+
+```{python}
+#| label: tabla-q2
+q2=df.loc[df.Fecha.ge("2025-04-01") & df.Fecha.lt("2025-07-01")].copy()
+agrupado=q2.groupby("Producto").agg(Ingreso=("Monto","sum"),Operaciones=("ID_Venta","size"),Unidades=("Unidades","sum"))
+agrupado["Ticket"]=agrupado.Ingreso/agrupado.Operaciones
+tabla(agrupado.reset_index())
+assert np.isclose(agrupado.Ingreso.sum(),q2.Monto.sum())
+```
+
+El ticket agregado se calcula como ingreso total dividido por operaciones totales. También se obtiene como promedio de tickets de grupo ponderado por número de operaciones. El precio medio por unidad pondera de otra manera: ingreso dividido por unidades. Evite usar ambos nombres de forma intercambiable.
+
+## Fragmento técnico reproducible
+
+```python
+q2 = df.loc[(df.Fecha >= "2025-04-01") & (df.Fecha < "2025-07-01")]
+tabla = q2.pivot_table(index="Region", columns="Producto",
+                      values="Monto", aggfunc="sum", fill_value=0)
+assert np.isclose(tabla.to_numpy().sum(), q2.Monto.sum())
+```
+
+El fragmento depende de `df` definido en el laboratorio; el notebook completo contiene carga, contrato, contexto y resultados. Un extracto no reemplaza el archivo reproducible. Para una selección vacía, el ingreso puede sumar cero mientras el ticket queda indefinido: no existe una transacción promedio observada.
+
+**Notebook asociado:** 03, filtros, búsquedas, SQL y reconciliación.
+
+# Casos sectoriales y propuesta de solución {#sec-casos}
+
+## Cómo transferir un método sin transferir supuestos
+
+Una tasa puede servir en banca, logística o salud, pero cambian denominador, horizonte y consecuencias. La transferencia exige redefinirlos. En banca, comparar atraso entre cosechas con distinta maduración confunde exposición temporal; en logística, comparar rutas sin considerar distancias puede ocultar composición; en salud, comparar espera sin considerar prioridad clínica puede producir una decisión inapropiada.
+
+| Contexto | Pregunta inicial | Dato relevante | Advertencia interpretativa |
+|---|---|---|---|
+| Retail | ¿Qué surtido revisar? | Ventas, stock, costos | Venta observada no es demanda total |
+| Banca | ¿Qué cartera revisar? | Atraso por cohorte y exposición | Definiciones y maduración importan |
+| Logística | ¿Qué ruta requiere atención? | Entregas y tiempos por ruta | Comparar servicios equivalentes |
+| Salud | ¿Dónde investigar ausentismo? | Citas y estados con contexto | Equidad y prioridad no son accesorios |
+| SaaS | ¿En qué cohorte aumenta salida? | Base elegible, altas y bajas | Distinguir tasa de clientes y tasa de ingresos |
+| Consultoría | ¿Dónde asignar capacidad? | Horas, demanda y competencias | Promedio de utilización no mide calidad |
+
+## Caso integrador QuillayMarket
+
+La tarea consiste en seleccionar un foco de revisión para el segundo trimestre. Primero se reconcilian ventas; luego se calculan ingreso, operaciones y unidades; finalmente se examina la composición por región y producto. Las conclusiones se limitan a este archivo docente y período. Como no se dispone de margen observado, no se declara cuál producto es más rentable.
+
+```{python}
+#| label: indicadores-caso
+indicadores=resumen_ventas(q2)
+tabla(pd.DataFrame({"Indicador":list(indicadores),"Valor":list(indicadores.values())}))
+```
+
+Una entrega defendible contiene una recomendación proporcional a la evidencia. Por ejemplo, priorizar una revisión de costos y disponibilidad en el producto con mayor ingreso observado; definir un piloto si esa revisión lo justifica; y monitorear contribución, unidades y calidad de servicio. La observación inicial puede orientar dónde investigar sin justificar todavía una campaña amplia.
+
+## Sensibilidad y punto de equilibrio
+
+Sea $R$ el ingreso base, $m$ el margen de contribución supuesto, $d$ el descuento proporcional sobre precio, $g$ el crecimiento de unidades y $C$ el costo fijo. Si se conserva mezcla y costo variable unitario, la contribución incremental es
+
+$$
+\Delta\Pi=R\{(1+g)(m-d)-m\}-C.
+$$
+
+Sin costo fijo y con $m>d$, el crecimiento de equilibrio resulta
+
+$$
+g^*=\frac{d}{m-d}.
+$$
+
+Con $m=0{,}30$ y $d=0{,}05$, se necesita 20% más unidades para preservar contribución. Un crecimiento de 10% no basta. Si $m\leq d$, el margen unitario posterior no es positivo bajo este modelo; aumentar volumen no resuelve la pérdida del modo supuesto. Capacidad, canibalización, devoluciones y cambios de mezcla requerirían extender el cálculo.
+
+**Actividad con solución.** Proponga una campaña y describa qué cifras son observadas y cuáles son supuestas. La solución debe separar ingreso histórico de margen hipotético, y efecto esperado de efecto medido. La sensibilidad ayuda a identificar qué supuesto conviene investigar primero.
+
+# Comunicación, ética y evaluación formativa {#sec-etica}
+
+## De la evidencia a una explicación breve
+
+Un informe puede estructurarse en seis partes: pregunta; dato y cobertura; control de calidad; hallazgos; recomendación condicionada; plan de seguimiento. Un gráfico no lleva toda la explicación: el texto debe señalar qué comparación importa y qué interpretación sería excesiva. Informe también un resultado que debilite su recomendación, si existe.
+
+La incertidumbre se comunica con el nivel que la evidencia permite. No todos los análisis de este curso requieren un intervalo estadístico formal. Sí requieren reconocer límites de período, representatividad, medición y causalidad. Mostrar muchos decimales no compensa una definición ambigua de indicador.
+
+## Consideraciones éticas
+
+Defina finalidad antes de recopilar datos. Evite incorporar identificadores cuando no son necesarios para aprender el método. Revise representatividad, diferencias de error entre grupos y mecanismos de revisión humana cuando una decisión afecte a personas. Quitar una columna sensible no elimina sus sustitutas; una combinación de variables puede recuperar parte de esa información.
+
+Al usar IA para programar o redactar, conserve responsabilidad por la evidencia. Verifique operaciones, fuentes, unidades y alcance de las conclusiones. No atribuya a un libro una afirmación solo porque aparece en un texto generado. Identifique asistencia en el proceso conforme a los acuerdos del curso y evite cargar datos personales o institucionales fuera de los entornos autorizados.
+
+## Rúbrica de práctica
+
+| Dimensión | Peso formativo | Evidencia esperada |
+|---|---:|---|
+| Pregunta y grano | 20% | Decisión concreta, unidad y horizonte |
+| Calidad y reconciliación | 25% | Contratos, bitácora y total independiente |
+| Análisis y gráficos | 25% | Dos patrones, unidades y técnica pertinente |
+| Decisión y límites | 20% | Alternativas, supuestos y condición de revisión |
+| Comunicación y reproducción | 10% | Entrega clara que otra persona puede ejecutar |
+
+Esta ponderación describe un ejercicio de práctica; no se presenta como regla institucional. Una evaluación sumativa requiere conciliar instrumentos, criterios y ponderaciones vigentes antes de distribuirla.
+
+**Pregunta de cierre.** ¿Qué decisión concreta cambia después del análisis y bajo qué condición dejaría de sostenerse? La respuesta conecta resultado y responsabilidad. Si no puede responderse, conviene revisar la pregunta inicial antes de agregar complejidad técnica.
+
+# Profundización: probabilidad y simulación {#sec-probabilidad}
+
+## Incertidumbre y probabilidad condicional
+
+Para eventos $A$ y $B$ con $P(B)>0$, $P(A\mid B)=P(A\cap B)/P(B)$. La independencia requiere $P(A\cap B)=P(A)P(B)$. No debe confundirse con ausencia de correlación lineal. Para una variable discreta, el valor esperado $E[X]=\sum_x xP(X=x)$ resume la media bajo repetición del mecanismo, no un resultado garantizado.
+
+El teorema de Bayes permite invertir una condición:
+
+$$
+P(A\mid B)=\frac{P(B\mid A)P(A)}{P(B\mid A)P(A)+P(B\mid A^c)P(A^c)}.
+$$
+
+En una alerta ficticia con prevalencia 2%, sensibilidad 90% y especificidad 95%, el valor predictivo positivo es $0{,}018/(0{,}018+0{,}049)\approx26{,}87\%$. El denominador incluye falsas alertas en el grupo mayoritario. La cifra ilustra una propiedad probabilística; no valida un sistema de decisiones real.
+
+## Distribuciones y dominios
+
+| Modelo | Variable y parámetros | Media | Varianza | Condición de interpretación |
+|---|---|---|---|---|
+| Bernoulli | Evento, $p$ | $p$ | $p(1-p)$ | Dos resultados definidos |
+| Binomial | Éxitos en $n$ ensayos | $np$ | $np(1-p)$ | Independencia y probabilidad constante |
+| Poisson | Conteos, intensidad $\lambda$ | $\lambda$ | $\lambda$ | Exposición y proceso compatibles |
+| Uniforme | Continua en $[a,b]$ | $(a+b)/2$ | $(b-a)^2/12$ | Densidad constante en el intervalo |
+| Exponencial | Espera, tasa $\lambda$ | $1/\lambda$ | $1/\lambda^2$ | Tasa constante y falta de memoria |
+| Normal | Continua, $\mu,\sigma^2$ | $\mu$ | $\sigma^2$ | Soporte en toda la recta |
+
+Elegir una distribución exige considerar soporte y mecanismo. Un monto no negativo puede tener asimetría incompatible con una aproximación normal cercana al cero. Un conteo con variación muy superior a su media invita a revisar una Poisson simple. Los simuladores del notebook 04 usan implementaciones documentadas en SciPy [@scipy_stats].
+
+## Normal y estandarización {#sec-normal}
+
+Para $X\sim N(\mu,\sigma^2)$ y $\sigma>0$, $Z=(X-\mu)/\sigma\sim N(0,1)$. Si $\Phi$ es su función acumulada,
+
+$$
+P(a\leq X\leq b)=\Phi\left(\frac{b-\mu}{\sigma}\right)-\Phi\left(\frac{a-\mu}{\sigma}\right).
+$$
+
+En una normal, los intervalos de una, dos y tres desviaciones alrededor de la media contienen aproximadamente 68,27%, 95,45% y 99,73%. Esas proporciones no son una regla general para cualquier dato. Estandarizar cambia localización y escala; no vuelve normal una distribución asimétrica.
+
+```{python}
+#| label: fig-normal
+#| fig-cap: "Normal construida N(100,15²). El área sombreada entre 85 y 115 es aproximadamente 0,6827."
+xx=np.linspace(40,160,500); yy=stats.norm.pdf(xx,loc=100,scale=15)
+fig,ax=plt.subplots()
+ax.plot(xx,yy,color="#175159")
+ax.fill_between(xx,0,yy,where=(xx>=85)&(xx<=115),alpha=.5,color="#c8951b")
+ax.set(xlabel="Valor",ylabel="Densidad")
+plt.tight_layout();plt.show()
+```
+
+## Medias muestrales y Monte Carlo {#sec-simulacion}
+
+Bajo independencia, distribución común y varianza finita, el teorema central del límite ofrece una aproximación normal para la media estandarizada al crecer la muestra. El error estándar de la media es $\sigma/\sqrt{n}$ bajo esas condiciones. No afirma que los datos originales se vuelvan normales ni que un tamaño fijo garantice la aproximación.
+
+Una simulación Monte Carlo repite un mecanismo especificado y observa resultados. Para medias de una exponencial con media 3, el notebook compara la desviación observada entre 3.000 medias con $3/\sqrt{n}$. Una semilla fija permite reproducir el experimento, pero no convierte los supuestos en verdaderos. Para series dependientes o eventos extremos, el mecanismo de simulación requiere más cuidado.
+
+**Ejercicio resuelto.** Si el tamaño muestral aumenta de 25 a 100 bajo el mismo mecanismo independiente, el error estándar se reduce a la mitad. Un intervalo de predicción individual conserva la variabilidad entre observaciones y no se estrecha de la misma manera que un intervalo para la media.
+
+**Notebook asociado:** 04, probabilidad y simulación. Este capítulo es una profundización; no crea material de una asignatura independiente de Estadística.
+
+# Profundización: modelos predictivos y agrupamiento {#sec-modelos}
+
+## Regresión lineal
+
+En regresión se predice una magnitud; en clasificación una categoría o su probabilidad. Clustering busca una partición sin variable objetivo. El tipo de tarea surge de la pregunta y de la variable respuesta. La selección de método debe considerar calidad del dato, cantidad de observaciones, interpretación, costos y condiciones de implementación. ISLP ofrece una referencia de mayor alcance para continuar el estudio [@islp2023].
+
+Para $Y=\beta_0+\beta_1X+\varepsilon$, mínimos cuadrados minimiza $\sum_i(y_i-\hat y_i)^2$. Cuando existe variabilidad en $X$,
+
+$$
+\hat\beta_1=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}{\sum_i(x_i-\bar x)^2},
+\qquad \hat\beta_0=\bar y-\hat\beta_1\bar x.
+$$
+
+La recta ajustada existe bajo condiciones algebraicas sencillas; interpretar inferencias sobre sus parámetros exige supuestos adicionales. Una pendiente observacional no es un efecto de intervenir. Revisar residuos ayuda a detectar estructura omitida, variabilidad no constante u observaciones influyentes. Extrapolar más allá del rango de entrenamiento aumenta el riesgo de una representación inadecuada.
+
+## Clasificación: familias y supuestos
+
+La regresión logística vincula una combinación lineal con la probabilidad mediante $p(x)=1/(1+e^{-\eta(x)})$. La regla final agrega un umbral; ese umbral no tiene por qué ser 0,5 cuando los costos son diferentes. K vecinos más cercanos clasifica según vecindad y depende fuertemente de escala y distancia. Un árbol divide el espacio en reglas; un bosque agrega árboles para reducir variabilidad bajo su diseño.
+
+| Método | Aporte docente | Riesgo o revisión |
+|---|---|---|
+| Logística | Relacionar predictores y probabilidad | Escala, especificación y calibración |
+| KNN | Entender vecindad | Escalas y elección de vecinos |
+| Árbol | Reglas y complejidad | Inestabilidad y sobreajuste |
+| Bosque | Agregación de árboles | Interpretación y complejidad innecesaria |
+| Base simple | Establecer comparación mínima | No omitirla por ser poco sofisticada |
+
+El notebook 05 usa una base de 950 clientes simulados. El identificador se excluye de predictores y los datos se separan antes de aprender imputaciones, escalas o categorías. La comparación con un clasificador base impide confundir una métrica alta por prevalencia con utilidad incremental.
+
+## Clustering y escala {#sec-clustering}
+
+K-means busca minimizar
+
+$$
+\sum_{i=1}^{n}\lVert x_i-\mu_{c_i}\rVert^2,
+$$
+
+donde $c_i$ identifica el cluster asignado y $\mu_{c_i}$ su centroide. Alterna asignación y actualización. La inicialización puede producir soluciones distintas; conviene repetir inicios y documentar la semilla. La distancia depende de la escala: ingreso expresado en pesos puede dominar edad si no se transforma de forma justificada.
+
+La inercia no aumenta al disponer de más clusters, por lo que minimizarla sin penalización favorece demasiados grupos. Una solución útil requiere tamaño, estabilidad, interpretación y finalidad. La silueta aporta una comparación geométrica, no demuestra que los grupos sean segmentos naturales. Los números de las etiquetas son arbitrarios.
+
+**Ejercicio.** Cambie $k$ entre 2 y 6 y describa qué perfil permanece y cuál desaparece. Proponga un criterio de negocio para escoger una partición y una comprobación de estabilidad. Una respuesta profesional reconoce que distintos objetivos pueden justificar distintas particiones.
+
+# Profundización: evaluación y decisiones con modelos {#sec-evaluacion}
+
+## Separación de entrenamiento, validación y test
+
+Entrenamiento ajusta parámetros; validación orienta elección de modelo, hiperparámetros y umbral; test estima desempeño después de congelar esas decisiones. La partición 60/20/20 del notebook es una elección didáctica, no un porcentaje universal. Los datos temporales requieren respetar tiempo y los datos repetidos de una persona pueden exigir separación por grupos.
+
+La fuga de información aparece cuando una transformación o decisión utiliza datos que debían permanecer reservados. Los pipelines ajustan las transformaciones con entrenamiento y las aplican a otros conjuntos; no corrigen automáticamente una mala partición o una variable que contiene información futura [@sklearn_pitfalls].
+
+Una gran diferencia entre rendimiento de entrenamiento y validación sugiere revisar complejidad, variabilidad y cambio de distribución. No es una prueba inequívoca de una sola causa. Conviene comparar contra una base simple y analizar errores antes de añadir sofisticación.
+
+## Métricas de regresión
+
+$$
+MAE=\frac{1}{n}\sum_i|y_i-\hat y_i|,
+\qquad RMSE=\sqrt{\frac{1}{n}\sum_i(y_i-\hat y_i)^2}.
+$$
+
+RMSE penaliza más los errores grandes; ambas métricas conservan la unidad de respuesta. Para un conjunto con respuesta no constante,
+
+$$
+R^2=1-\frac{\sum_i(y_i-\hat y_i)^2}{\sum_i(y_i-\bar y)^2}.
+$$
+
+En test puede ser negativo: la predicción resulta peor, en error cuadrático, que usar la media de ese conjunto como referencia. Un valor alto no demuestra causalidad ni elimina errores relevantes para una decisión. Para respuestas constantes el denominador es cero y el software requiere convenciones que deben revisarse.
+
+## Clasificación, umbral y costo
+
+Declare primero la clase positiva. Si el evento es abandono, TP detecta un abandono, FP alerta a una persona que no abandona, FN omite un abandono y TN identifica una no ocurrencia. Luego
+
+$$
+Precision=\frac{TP}{TP+FP},\quad
+Recall=\frac{TP}{TP+FN},\quad
+F_1=\frac{2TP}{2TP+FP+FN}.
+$$
+
+Accuracy divide aciertos entre todas las observaciones. En clases desbalanceadas puede favorecer una regla que ignore la minoría. Las métricas con denominador cero necesitan una convención explícita; no se debe presentar esa situación como una precisión observada perfecta. ROC-AUC y AP evalúan ordenamiento con distintas ponderaciones; la calibración probabilística es otra propiedad [@sklearn_metrics].
+
+Con costos $c_{FN}$ y $c_{FP}$, una función didáctica es
+
+$$
+L(t)=\frac{c_{FN}FN(t)+c_{FP}FP(t)}{n}.
+$$
+
+El notebook selecciona modelo según AP en validación y umbral según esta pérdida, con costos hipotéticos 5 y 1. Después consulta test una vez. Seleccionar el umbral sobre test y reportarlo allí contaminaría la evaluación. Los costos deben revisarse con quien toma la decisión; no se infieren de la matriz.
+
+**Ejemplo resuelto.** Para TN=90, FP=10, FN=20, TP=30, se obtiene accuracy=0,80, precision=0,75, recall=0,60 y F1=$2/3$. Con los costos anteriores, la pérdida media es $110/150$. La cifra no equivale a una probabilidad ni a un porcentaje de clientes correctamente atendidos.
+
+**Notebook asociado:** 05, modelos, umbral y evaluación final.
+
+# Ruta de doce semanas y actividades {#sec-ruta}
+
+La secuencia siguiente organiza las tres unidades en doce semanas y propone cómo usar los recursos de esta colección. Es una propuesta ajustable, no una calendarización oficial.
+
+| Semana | Foco del núcleo | Preparación y evidencia |
+|---|---|---|
+| 01 | BA, BI, Big Data y preguntas | Guía c1–c2; ficha de decisión |
+| 02 | Datos, gestión y casos | Guía c3–c4; notebook 01 |
+| 03 | Impacto, límites y responsabilidad | Decisión con sensibilidad; debate |
+| 04 | Integración U1 | Ejercicio conceptual y retroalimentación |
+| 05 | Visualización y pertinencia | Guía c5–c6; notebook 02 |
+| 06 | Identificación de patrones | Dos patrones y explicaciones alternativas |
+| 07 | Organización y comunicación visual | Gráficos comparables; denominadores |
+| 08 | Integración U2 | Revisión crítica de una visualización |
+| 09 | Herramientas, funciones y tablas | Guía c14; notebook 03; libro Excel |
+| 10 | Selección de datos y método | Reconciliación de filtros y totales |
+| 11 | Casos sectoriales y comunicación | Informe de una página |
+| 12 | Integración U3 | Presentación y discusión de supuestos |
+
+Los notebooks 04 y 05 pueden usarse como demostración adicional o trabajo optativo según el grupo. Para docentes de postgrado ofrecen puntos de partida —incertidumbre, validación, efectos y costos— que deben ampliarse con bibliografía y exigencias apropiadas; no se afirma que esta edición introductoria constituya por sí sola un curso de postgrado.
+
+## Guion de una sesión de 90 minutos
+
+Reserve 10 minutos para una pregunta de decisión, 20 para conceptos y supuestos, 25 para una exploración guiada, 20 para trabajo en parejas y 15 para comunicar un hallazgo y un límite. Antes de mover un control del simulador, pida anticipar el resultado. Después, exija explicar qué cambió y qué permaneció constante. Los minutos son una sugerencia de uso, no una duración oficial del programa.
+
+## Autoevaluación con retroalimentación
+
+1. **¿Un identificador numérico se debe promediar?** No: su escala conceptual es nominal y el promedio carece del significado buscado.
+2. **¿Más filas garantizan representatividad?** No: un sesgo de selección puede persistir con gran tamaño.
+3. **¿Media igual a mediana prueba normalidad?** No: múltiples formas pueden compartir ese centro.
+4. **¿Qué comprueba la suma de una tabla dinámica?** Consistencia del agregado con el universo filtrado, no toda la calidad de origen.
+5. **¿Una asociación indica dónde intervenir?** Sugiere hipótesis; una recomendación causal necesita evidencia adicional.
+6. **¿Por qué usar una muestra de test?** Para evaluar decisiones que no se eligieron observando sus resultados.
+7. **¿Todo aumento de ventas mejora contribución?** No: descuentos, costos y mezcla pueden invertir el efecto.
+8. **¿Qué vuelve defendible un informe?** Pregunta clara, evidencia verificable, método pertinente, límites y una acción revisable.
+
+# Glosario de consulta {#sec-glosario}
+
+| Término | Definición operativa |
+|---|---|
+| Grano | Unidad representada por cada registro |
+| KPI | Indicador vinculado a un objetivo y definición de seguimiento |
+| Denominador | Base respecto de la cual se calcula una proporción o promedio |
+| Sesgo de selección | Diferencia sistemática entre el proceso que genera datos y la población objetivo |
+| Cuantil | Valor que delimita una posición acumulada según una convención |
+| RIC | Distancia entre tercer y primer cuartil |
+| Correlación | Medida de asociación; Pearson resume el componente lineal |
+| Causalidad | Relación entre una intervención o cambio y su efecto bajo supuestos identificables |
+| Parámetro | Cantidad del modelo que se estima o especifica |
+| Hiperparámetro | Configuración que gobierna el ajuste y se selecciona con desarrollo |
+| Fuga de información | Uso de información que no estaría disponible en el escenario de evaluación o decisión |
+| Calibración | Correspondencia entre probabilidades predichas y frecuencias observadas |
+| Umbral | Corte que convierte una puntuación en una decisión |
+| Sensibilidad | En clasificación: recall; en escenarios: cambio de resultado al variar un supuesto |
+| Reproducibilidad | Capacidad de reconstruir el cálculo con fuentes y procedimiento identificados |
+
+# Referencias {.unnumbered}

@@ -1,0 +1,410 @@
+---
+title: "Analítica Estratégica de Datos"
+subtitle: "Procesos, decisiones y comunicación · Manual científico y técnico"
+author: "Yerko Carreño Pérez"
+date: 2026-10-08
+lang: es
+toc: true
+toc-depth: 2
+number-sections: true
+bibliography: referencias.bib
+link-citations: true
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  error: false
+  cache: false
+  daemon: false
+format:
+  typst:
+    papersize: a4
+    fontsize: 10.5pt
+    mainfont: Cambria
+    margin:
+      x: 2.2cm
+      y: 2.1cm
+  html:
+    theme: default
+    embed-resources: true
+    toc-location: left
+    html-math-method: mathml
+    css: manual.css
+---
+
+```{python}
+#| label: configuracion
+from pathlib import Path
+import sys
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+RAIZ=next(p for p in (Path.cwd(),*Path.cwd().parents) if (p/'_transversal/datos').is_dir())
+sys.path.insert(0,str(RAIZ/'04_Analitica_Estrategica_Datos/reproducibilidad'))
+from aed_recursos import casapeumo, indicadores, boldonet, plan_produccion, decision, solar, resumen_solar, ALTERNATIVAS, PAGOS
+ventas,tablas,auditoria=casapeumo()
+plt.rcParams.update({'figure.figsize':(7,3.2),'font.size':10,'axes.spines.top':False,'axes.spines.right':False})
+def tabla(df): display(Markdown(df.to_markdown(index=False,floatfmt='.3f')))
+```
+
+# Alcance y recorrido docente {#sec-alcance}
+
+Este material propio desarrolla una pregunta central: **¿cómo convertir evidencia analítica en una decisión viable, evaluable y comunicable?** Su núcleo sigue los tres resultados de aprendizaje de un curso de Analítica Estratégica de Datos: diseñar el proceso, proponer soluciones bajo restricciones y justificar decisiones. El prerrequisito es Modelos Predictivos en Negocios. Aquí los modelos se usan para decidir; su estudio exhaustivo pertenece al curso previo.
+
+El conjunto combina este manual, una guía maestra HTML para explorar escenarios y ocho notebooks para inspeccionar los cálculos. La guía y el HTML de lectura funcionan sin conexión; modificar notebooks requiere Python y kernel activo. Las tablas y figuras de este manual se calculan durante la construcción.
+
+## Ruta de doce semanas
+
+| Semana | Pregunta de clase | Evidencia que produce el estudiante | Notebook |
+|---|---|---|---|
+| 1 | ¿Qué decisión requiere evidencia? | Ficha de problema y proceso | 01 |
+| 2 | ¿Qué datos son confiables y pertinentes? | Contrato y bitácora de calidad | 01 |
+| 3 | ¿Qué patrón vale la pena investigar? | Resumen, dispersión y límites | 02 |
+| 4 | ¿Qué técnica responde la pregunta? | Comparación y validación | 02 |
+| 5 | ¿Cómo visualizar para actuar? | Modelo dimensional y tablero | 03 |
+| 6 | ¿Cómo medir impacto y calidad? | Fichas de KPI y cohortes | 03 |
+| 7 | ¿Qué combinación es factible? | Formulación y sensibilidad | 04 |
+| 8 | ¿Qué alternativa elegir bajo incertidumbre? | Matriz, árbol y valor de información | 05 |
+| 9 | ¿La propuesta soporta escenarios adversos? | SolarSur: simulación y costo-beneficio | 06 |
+| 10 | ¿Cómo conectar evidencia y decisión? | Argumento ejecutivo | 07 |
+| 11 | ¿Cómo implementar y aprender? | Diseño del piloto y seguimiento | 07 |
+| 12 | ¿Cómo defender la propuesta? | Memo, presentación y apéndice | 07 |
+
+El notebook 08 amplía optimización no lineal, riesgo de cola y decisiones secuenciales. Es una ruta para profundizar o adaptar a postgrado, no una nueva exigencia del curso ni una certificación automática de nivel. La adaptación debe considerar inferencia, álgebra lineal, optimización y experiencia de programación.
+
+## Evaluación
+
+Los ejercicios y rúbricas de esta edición son formativos. Cada docente define las ponderaciones y reglas de evaluación vigentes en su curso.
+
+El **laboratorio SolarSur** cubre la semana 9 con enunciado, cálculo, sensibilidad, solución orientadora y rúbrica formativa.
+
+# De la estrategia al proceso analítico {#sec-proceso}
+
+## Decisión, objetivo y tarea técnica
+
+Un objetivo expresa un resultado deseado; una decisión define una acción entre alternativas; una tarea técnica produce un insumo. «Reducir abandono» es un objetivo; «ofrecer acompañamiento a una población elegible con capacidad limitada» es una decisión; «estimar riesgo de abandono» es una tarea. Confundirlos permite obtener un buen clasificador que no mejora la intervención.
+
+Una ficha de decisión define decisor, población, horizonte, acciones disponibles, alternativa base, indicador de resultado, restricciones y evidencia necesaria. Debe señalar qué resultado haría cambiar la recomendación. En un banco, por ejemplo, probabilidad de incumplimiento, pérdida y efecto de una acción de cobranza son magnitudes distintas: ordenar por riesgo no basta para maximizar recuperación incremental. El ejemplo es conceptual; no usa datos bancarios reales ni prescribe una política crediticia.
+
+La analítica descriptiva resume; la diagnóstica organiza hipótesis; la predictiva estima resultados no observados; la prescriptiva compara acciones bajo objetivos y restricciones. No forman una escalera obligatoria. Un resumen confiable puede resolver el problema y un modelo complejo puede ser irrelevante. La elección depende del costo del error y de la evidencia disponible.
+
+## Proceso y entregables
+
+El proceso conecta comprensión del negocio, comprensión de datos, preparación, análisis/modelación, evaluación e implementación. Se itera cuando aparece una incompatibilidad entre pregunta y fuente. Cada fase necesita un producto revisable: ficha, diccionario, bitácora, resultados, contraste y plan de seguimiento. Entregar solo gráficos omite el razonamiento que los hace útiles.
+
+En CasaPeumo, el objetivo docente es investigar deterioro de servicio sin sacrificar contribución. Los datos permiten describir ingreso, margen bruto, canal, región y reclamos. No contienen un experimento que identifique el efecto de una mejora logística. El producto correcto es una hipótesis priorizada y un piloto diseñado, no una afirmación causal.
+
+**Actividad de clase.** Redacte una pregunta accionable para un gerente de operaciones y otra para un directorio. Ambas deben compartir la misma base de evidencia. Solución orientadora: operaciones define un protocolo y excepciones; dirección decide financiar un piloto sujeto a capacidad y un criterio de continuidad. No cambian las cifras al cambiar la audiencia.
+
+# Calidad, procedencia y gobierno de datos {#sec-calidad}
+
+## Unidad, clave y contrato
+
+La unidad de análisis determina qué representa una fila. En CasaPeumo una fila depurada es una venta, mientras Marketing y Metas tienen grano mensual. Unir hechos de granos diferentes puede multiplicar importes. La clave debe ser única donde corresponda; el tipo, dominio, unidad y regla de nulidad deben documentarse. «No hay nulos» no demuestra calidad si la fuente omite clientes o mezcla períodos.
+
+El contrato de CasaPeumo exige identificador único, unidades positivas, descuento entre 0 y 1 y dimensiones con relación muchos-a-uno. El ingreso se deriva como unidades por precio por uno menos descuento; el costo es unidades por costo unitario. El margen bruto resta costo al ingreso. No se denomina utilidad neta porque faltan gastos de estructura y otros conceptos.
+
+```{python}
+#| label: auditoria-casapeumo
+tabla(pd.DataFrame({'control':list(auditoria),'conteo':list(auditoria.values())}))
+assert len(ventas)==675
+assert np.isclose(ventas.Margen.sum(),ventas.Ingreso.sum()-ventas.Costo.sum())
+```
+
+Se retiran cinco duplicados exactos en memoria, se normalizan canales conocidos y se conserva «Sin información» para segmento ausente. Si una misma clave tiene contenidos conflictivos, la carga debe detenerse y escalar el problema. Las ventas anteriores a la fecha de alta se marcan: podrían indicar una fecha administrativa de migración, por lo que no se corrigen inventando otra fecha. Se mantienen para conciliación monetaria y se excluyen de conclusiones sobre antigüedad.
+
+La sensibilidad a una regla de depuración forma parte del análisis. Si excluir registros cambia la recomendación, hay que presentar ambos escenarios y conseguir evidencia para escoger la regla. La limpieza no debe optimizar el indicador deseado.
+
+## Cohortes y censura administrativa
+
+BoldoNet fija el corte en 2026-08-05. La edad de cohorte es corte menos fecha de ingreso; no se usa la fecha del sistema. Días de permanencia puede ser corto por abandono, incluso cuando el cliente pertenece a una cohorte madura. Para retención a 90 días se seleccionan cohortes que pudieron completar esa ventana y se reporta la disponibilidad del estado.
+
+Sean $M$ clientes maduros, $O$ maduros con estado válido y $A$ retenidos entre los observados. La tasa observada es $A/O$. Si se desconoce el estado de $M-O$, los límites extremos por faltantes son:
+
+$$\frac{A}{M}\le p_{\mathrm{retención}}\le\frac{A+M-O}{M}.$$
+
+Estos límites no son intervalos de confianza: expresan ignorancia sobre los faltantes. La retención observada puede ser sesgada si falta información selectivamente. Un seguimiento incompleto también exige revisar censura y definición del evento antes de aplicar métodos de supervivencia.
+
+```{python}
+#| label: cohortes-boldonet
+clientes,ac=boldonet()
+m=clientes.loc[clientes.maduro];o=clientes.loc[clientes.elegible_kpi]
+a=int(o['Estado_90_días'].eq('Activo').sum());faltan=len(m)-len(o)
+tabla(pd.DataFrame([{'maduros':len(m),'observados':len(o),'retenidos':a,'tasa_observada':a/len(o),
+                    'limite_inferior':a/len(m),'limite_superior':(a+faltan)/len(m)}]))
+```
+
+## Gobierno y juicio profesional
+
+Documente fuente declarada, fecha de extracción, dueño, finalidad, acceso, retención y transformaciones. La representatividad exige un marco de referencia: BoldoNet no entrega la composición total de cartera, por lo que solo puede describirse la cobertura disponible. Un promedio calculable no implica que represente al universo.
+
+Una política docente de IA útil pide declarar asistencia recibida, verificar fórmulas/citas, reproducir resultados y explicar personalmente la decisión. Las evaluaciones deben especificar qué ayuda se permite. No introduzca datos personales o empresariales reales en servicios externos sin la autorización correspondiente. Esta pauta de trabajo no sustituye reglas institucionales.
+
+# Descripción y selección de técnicas {#sec-tecnicas}
+
+## Distribuciones y comparación
+
+La media resume nivel; la mediana, posición central robusta; desviación e intervalo intercuartílico, dispersión. Un percentil requiere definir población y período. En distribuciones asimétricas, informe más que un promedio. Dos canales con ticket parecido pueden diferir en frecuencia de ventas, margen y cola de demoras. Un valor atípico se investiga: podría ser error, evento importante o mezcla de poblaciones.
+
+Para comparar grupos, distinga composición y cambio dentro de grupos. Una mejora agregada puede deberse a que aumentó la participación de un segmento de alto margen. La agregación puede ocultar o revertir asociaciones. Por eso el análisis describe tanto totales como estratos relevantes y evita afirmar que el canal «causa» el desempeño.
+
+```{python}
+#| label: tabla-canales
+canales=ventas.groupby('Canal').agg(ventas=('IdVenta','size'),ingreso=('Ingreso','sum'),margen=('Margen','sum'))
+canales['margen_pct']=100*canales.margen/canales.ingreso
+tabla(canales.reset_index())
+fig,ax=plt.subplots();ax.hist(ventas.Ingreso,bins=24,color='#176b78')
+ax.set(xlabel='Ingreso por venta (UM del caso)',ylabel='Frecuencia',title='CasaPeumo: distribución del ticket')
+plt.show()
+```
+
+## Regresión y clasificación
+
+Una regresión lineal plantea $Y=\beta_0+X^T\beta+\epsilon$. Para interpretar coeficientes hay que revisar especificación, dependencia, colinealidad y relación entre error y regresores. Para predecir se evalúa desempeño fuera de muestra con una pérdida alineada al negocio. Un ajuste alto no prueba causalidad. Predecir ingreso con los mismos factores usados para calcularlo puede ser una tautología contable.
+
+La logística modela $p(x)=1/[1+\exp(-\beta_0-x^T\beta)]$. Sus probabilidades requieren evaluar calibración y discriminación, además de prevalencia y disponibilidad de atributos. AUC describe ordenamiento; Brier promedia $(p_i-y_i)^2$. La utilidad de una decisión necesita costos y efectos, no solo una métrica predictiva.
+
+En el notebook 02 se separa entrenamiento de prueba y se ajusta escalado solo en entrenamiento mediante un pipeline; esta práctica evita que el preprocesamiento use información reservada [@sklearn]. La regresión temporal usa semanas iniciales para entrenar y finales para evaluar, con comparación ingenua. Un conjunto de seis meses, como CasaPeumo, permite describir tendencia corta, pero no estimar de forma fiable estacionalidad anual.
+
+## Segmentación y tendencias
+
+K-means minimiza $\sum_i\|z_i-\mu_{c_i}\|^2$, donde la escala de $z_i$ determina la geometría. Estandarizar frecuencia e ingresos evita dominancia por unidades, pero no resuelve sesgo, variables irrelevantes o formas no esféricas. Evalúe tamaños, estabilidad, interpretación y capacidad de actuar sobre cada grupo. Una buena silhouette no demuestra valor comercial.
+
+El cambio relativo $(y_t-y_{t-1})/y_{t-1}$ no está definido si la base es cero y puede ser engañoso con bases pequeñas. Compare períodos equivalentes y descomponga ingreso en número de ventas por ticket. Series con tendencia, autocorrelación o quiebres necesitan validación temporal y modelos adecuados; la línea que une seis puntos es descriptiva.
+
+**Ejercicio resuelto.** Elegir técnica para tres preguntas: distribución de demora → descriptivos y percentiles; probabilidad de incumplir plazo → clasificación evaluada temporalmente; asignación de turnos → optimización con tiempos/capacidad y costos. El pronóstico de demanda es un insumo de la asignación, no la asignación misma.
+
+# KPIs, visualización y herramientas {#sec-kpis}
+
+## Definir antes de calcular
+
+Una ficha de KPI incluye propósito, fórmula, unidad, denominador, período, fuente, meta, dueño y acción. Combine indicadores de resultado (margen, retención), implementación (adopción del protocolo) y protección (calidad, tiempos o servicio). Cumplir implementación no garantiza impacto.
+
+Para ventas $i$ con ingresos $R_i$ y margen $G_i$, el margen global es:
+
+$$m=\frac{\sum_i G_i}{\sum_i R_i}=\sum_i\frac{R_i}{\sum_jR_j}\frac{G_i}{R_i}.$$
+
+La igualdad requiere ingresos positivos para interpretar los pesos. Dos ventas de 100 y 900 con márgenes 50 y 90 tienen tasas 50% y 10%; el promedio simple da 30%, pero el negocio tiene 14%. La diferencia refleja otra ponderación, no redondeo.
+
+Reclamos por mil usa ventas con reclamo sobre ventas y mantiene la misma ventana. Si hubiera varios reclamos por venta, contar reclamos mediría intensidad de reclamo y no proporción de ventas afectadas. Ticket es ingreso por venta; precio medio por unidad tiene otro denominador. En BoldoNet, costo por participante usa solo costos válidos y reporta las exclusiones.
+
+## Modelo dimensional y Power BI
+
+El modelo estrella distingue dimensiones para filtrar y hechos para agregar [@powerbi]. En el caso, Clientes, Productos y Calendario filtran Ventas. Marketing y Metas son hechos mensuales: no se deben unir fila a fila con cada venta. Una dimensión mensual única permite alinear períodos sin duplicar metas. Si una meta pertenece al negocio total, no se aplica a un canal sin una regla de asignación.
+
+La receta docente de Power Query es importar las hojas, declarar tipos, conservar una consulta original, depurar duplicados exactos, normalizar canales y crear dimensiones con claves únicas. Se validan integridad referencial y cardinalidades. El filtro simple de dimensión a hecho evita ambigüedades frecuentes; las excepciones requieren justificación.
+
+Medidas DAX propuestas:
+
+```text
+Ingresos = SUM(Ventas[Ingreso])
+Margen bruto = SUM(Ventas[Margen])
+Margen % = DIVIDE([Margen bruto], [Ingresos])
+Ventas únicas = DISTINCTCOUNT(Ventas[IdVenta])
+Ticket = DIVIDE([Ingresos], [Ventas únicas])
+```
+
+`DIVIDE` permite tratar denominadores cero sin confundir ausencia con un valor económico observado [@dax]. Las medidas responden al contexto de filtro; las columnas calculadas tienen valor por fila. En Excel se usan tablas, fórmulas estructuradas y tablas dinámicas, cuidando la misma razón de sumas. El notebook contrasta agregados pandas con SQL. La receta DAX/Excel es transferible, pero esta edición no entrega ni afirma haber ejecutado un archivo PBIX.
+
+## Diseño visual para decidir
+
+Cada gráfico responde una pregunta. Barras comparan categorías; líneas, evolución; distribución, heterogeneidad; dispersión, asociación. Incluya unidad, período, fuente y tamaño cuando sea relevante. Las barras comienzan en cero, las escalas de comparaciones deben ser consistentes y el color tiene apoyo textual. Muestre faltantes y bases pequeñas. Evite gráficos decorativos que impidan comparar.
+
+El tablero interactivo de la guía filtra ventas depuradas por canal y región. Su agregado se contrasta con Python. Una tarjeta informa margen bruto, no rentabilidad integral. Al no haber observaciones debe mostrar «sin datos», no un resultado de cero que pueda interpretarse como desempeño medido.
+
+# Estrategias y restricciones empresariales {#sec-estrategias}
+
+Una estrategia basada en datos necesita coherencia entre objetivo y mecanismo de acción. Aumentar contactos puede subir costos sin reducir abandono si se contacta a quienes habrían permanecido de todos modos. La formulación incremental compara intervenir y no intervenir sobre la misma población y horizonte.
+
+Las restricciones pueden ser financieras, temporales, tecnológicas, operativas o de elegibilidad. Distinga restricciones duras de preferencias blandas. Una capacidad física no puede compensarse con una buena puntuación en satisfacción; un objetivo aspiracional puede incluir penalización por incumplimiento si el decisor lo acepta. Toda restricción necesita fuente, unidad y responsable.
+
+Una matriz de factibilidad registra presupuesto, personal, plazo, integración, calidad de fuente, dependencias y riesgos de implementación. La solución óptima del modelo no garantiza que la organización tenga permisos, capacidades o datos para implementarla. Un piloto reversible puede ser preferible a un despliegue completo cuando el efecto es incierto.
+
+# Optimización lineal y entera {#sec-optimizacion}
+
+## Formulación y solución geométrica
+
+Caso docente: cantidades divisibles A y B, contribución 40 y 30 UM, capacidad 100 horas y 90 unidades de material:
+
+$$\max 40A+30B\quad\text{s.a.}\quad2A+B\le100,\quad A+2B\le90,\quad A,B\ge0.$$
+
+Las rectas activas se intersectan en $(110/3,80/3)$ y dan contribución $6800/3$. Comparar con los demás vértices confirma el resultado. La programación lineal supone aditividad, proporcionalidad y divisibilidad; lotes o inversiones discretas requieren otra formulación. SciPy recibe una minimización, por lo que se usa el negativo del beneficio [@scipy_lp].
+
+```{python}
+#| label: solucion-lineal
+res=plan_produccion();assert res.success and np.allclose(res.x,[110/3,80/3])
+tabla(pd.DataFrame([{'A':res.x[0],'B':res.x[1],'contribucion_UM':-res.fun,
+                    'holgura_horas':res.ineqlin.residual[0],'holgura_material':res.ineqlin.residual[1]}]))
+x=np.linspace(0,60,240);y=np.maximum(0,np.minimum(100-2*x,(90-x)/2))
+fig,ax=plt.subplots();ax.plot(x,100-2*x,label='Horas');ax.plot(x,(90-x)/2,label='Material')
+ax.fill_between(x,0,y,where=(100-2*x>=0)&(90-x>=0),alpha=.15,color='#176b78')
+ax.scatter(*res.x,color='#a47732',s=70);ax.set(xlim=(0,60),ylim=(0,100),xlabel='Cantidad A',ylabel='Cantidad B');ax.legend();plt.show()
+```
+
+## Sensibilidad y dualidad
+
+En la base óptima, el valor marginal de una hora es $50/3$ UM y de una unidad de material $20/3$ UM. Se comprueba perturbando una capacidad en 0.01 y reoptimizando. Los precios sombra son locales: al cambiar la base, no se mantienen necesariamente. Comprar 100 horas adicionales a 15 UM/hora no se justifica extrapolando el precio marginal de la primera hora.
+
+La dualidad conecta restricciones y valor del recurso; para una exposición más profunda de convexidad y condiciones de optimalidad se recomienda @boyd. Una interpretación económica exige verificar unidades y qué costos están incluidos. Un marginal negativo del problema de minimización del beneficio negado debe cambiar de signo antes de interpretarse como contribución.
+
+## Decisiones indivisibles y estados del solver
+
+Para proyectos con $x_i\in\{0,1\}$, maximize beneficio sujeto a presupuesto. Redondear el resultado continuo puede violar presupuesto o perder optimalidad. El notebook 04 usa `milp` y verifica tres proyectos por enumeración independiente [@scipy_milp]. Reporta brecha del solver y restricciones, no solo la selección.
+
+Antes de usar una solución, distinga óptimo, inviable, no acotado y terminación por límite. Si es inviable, revise requisitos y capacidades; si no está acotado, revise restricciones faltantes. No interprete un vector ausente o parcial como recomendación. Al implementar, compruebe también restricciones que quedaron fuera del modelo.
+
+# Árboles, matrices y alternativas {#sec-decision}
+
+## Valor esperado y criterios de riesgo
+
+La matriz docente usa pagos netos en kUM: no actuar [0,0], expandir [-20,80], piloto [15,45], para estados bajo y alto. Con probabilidad alta $p$, los valores esperados son 0, $-20+100p$ y $15+30p$. La indiferencia expansión/piloto está en $p=0.5$. Probabilidades y pagos son supuestos de discusión, no estimaciones observacionales.
+
+Un árbol de decisión combina nodos de acción y azar con secuencia temporal. Se resuelve desde los resultados hacia la raíz. No debe confundirse con un árbol predictivo, cuyo objetivo es aproximar una variable respuesta. El valor esperado supone neutralidad al riesgo; maximin prioriza el peor pago y minimax regret la mayor oportunidad perdida. Esos criterios pueden elegir acciones diferentes sin que exista un error aritmético.
+
+```{python}
+#| label: decision-evpi
+ev,evpi=decision(.4)
+tabla(pd.DataFrame({'alternativa':ALTERNATIVAS,'bajo':PAGOS[:,0],'alto':PAGOS[:,1],'EV':ev}))
+assert np.allclose(ev,[0,20,27]) and np.isclose(evpi,14)
+display(Markdown(f'Con estos supuestos el piloto tiene EV = **{ev.max():.0f} kUM** y el valor de información perfecta es **{evpi:.0f} kUM**.'))
+```
+
+## Valor de información
+
+$$EVPI=\sum_s p_s\max_aV(a,s)-\max_a\sum_s p_sV(a,s).$$
+
+Con información perfecta se elige una acción distinta para cada estado; sin ella se decide antes. Por eso EVPI es no negativo y representa una cota superior del valor bruto de información dentro de este modelo. Un estudio imperfecto exige posteriores por Bayes, optimización condicionada a la señal y descuento de su costo. El notebook calcula una señal de sensibilidad/especificidad 0.8 y comprueba $0\le EVSI\le EVPI$.
+
+## Multicriterio
+
+Cuando hay objetivos no monetarios se puede construir una matriz con criterios, anclajes y pesos explícitos. La suma ponderada $S(a)=\sum_jw_jz_{aj}$ exige pesos no negativos que sumen uno y escalas de preferencia comparables. No basta normalizar números para volverlos intercambiables. Restricciones obligatorias se verifican antes de puntuar y criterios redundantes pueden contar dos veces la misma preferencia.
+
+Explore pesos alternativos y identifique umbrales donde cambia el ranking. Si una pequeña variación invierte la recomendación, muestre la fragilidad. No cambie pesos después de ver el ranking para favorecer una acción preseleccionada.
+
+# Costo-beneficio y simulación SolarSur {#sec-simulacion}
+
+## Comparación incremental y descuento
+
+Beneficio neto es beneficios menos costos del mismo horizonte y base. ROI requiere explicitar denominador; beneficio/costo divide beneficios por costos positivos; payback indica tiempo de recuperación, pero puede ignorar flujos posteriores y descuento. VAN incorpora el valor temporal según la tasa elegida. No sume una razón con un importe ni mezcle flujos nominales con tasa real.
+
+Para SolarSur se supone inversión inicial 250 kUM, horizonte cinco años, producción media 1000 MWh anuales, precio medio 100 UM/MWh y costo operativo 30 kUM/año. Se omiten deuda, impuestos, inflación y valor residual. El caso es ficticio y enseña método, no evalúa una inversión real.
+
+$$VAN=-250+\sum_{t=1}^5\frac{Q_tP_t/1000-30}{(1+r)^t}.$$
+
+La división por 1000 convierte UM en kUM. «No invertir» tiene VAN incremental cero, sin atribuirle costos o beneficios no modelados. Una recomendación debe comparar alternativas bajo la misma información.
+
+## Distribuciones y dependencia
+
+La producción y el precio son lognormales: $Q=1000e^{0.12Z_1-0.12^2/2}$ y $P=100e^{0.20Z_2-0.20^2/2}$. Los normales latentes tienen correlación $\rho=-0.25$. La corrección de media evita confundir parámetro logarítmico con media monetaria. Los shocks persisten en los cinco años: esto induce dependencia temporal perfecta dentro del escenario, un supuesto que debe discutirse.
+
+La correlación de los normales no es idéntica a la de las variables transformadas. Para estas lognormales, $E[QP]=E[Q]E[P]e^{\rho\sigma_Q\sigma_P}$. De ahí se deriva una media analítica del VAN que contrasta con Monte Carlo. Una simulación que ignora correlaciones puede distorsionar riesgo aun cuando cada distribución marginal parezca razonable.
+
+```{python}
+#| label: solarsur-resultados
+sim=solar();rs=resumen_solar(sim)
+tabla(pd.DataFrame([rs]))
+analitico=-250+(100*np.exp(-.25*.12*.20)-30)*sum(1/1.1**t for t in range(1,6))
+assert abs(rs['VAN_medio']-analitico)<5*rs['SE_media']
+fig,ax=plt.subplots();ax.hist(sim.VAN,bins=45,color='#176b78');ax.axvline(0,color='#ab4141',label='Pérdida')
+ax.set(xlabel='VAN (kUM)',ylabel='Escenarios',title='SolarSur: incertidumbre bajo supuestos');ax.legend();plt.show()
+```
+
+## Convergencia y error numérico
+
+Para escenarios independientes, $SE(\bar V)=s/\sqrt{N}$. La media más/menos 1.96 errores estándar es una aproximación de precisión Monte Carlo, no un rango de resultados del proyecto. Los percentiles 5 y 95 responden otra pregunta: dispersión bajo el modelo. El error de una probabilidad estimada se aproxima por $\sqrt{\hat p(1-\hat p)/N}$, con precauciones cerca de los extremos.
+
+Una semilla y un generador local hacen reproducible la simulación en el entorno congelado [@numpy]. La reproducibilidad no demuestra validez económica. NIST discute la necesidad de consistencia y evaluación de precisión en análisis Monte Carlo [@nist_mc]. Además del ruido numérico, hay incertidumbre sobre parámetros, forma de distribución, horizonte y mecanismo causal. Aumentar N no elimina esas fuentes.
+
+```{python}
+#| label: convergencia
+tabla(pd.DataFrame([{'N':n,**resumen_solar(solar(n=n))} for n in [1000,5000,20000]]))
+```
+
+## Sensibilidad y factibilidad de la propuesta
+
+Compare escenarios de precio, tasa y correlación. Use números aleatorios comunes para aislar el efecto del cambio paramétrico. Verifique propiedades: al aumentar precio manteniendo los mismos shocks, el VAN aumenta en todos los escenarios del caso. Con los mismos parámetros y semilla, los resultados deben repetirse. Estas pruebas complementan el contraste analítico.
+
+Un VAN esperado positivo no basta si la exposición excede un límite del decisor o si faltan recursos. Un umbral como P(VAN<0) ≤ 25% se usa aquí solo como preferencia supuesta; no es una norma institucional o financiera. Si no cumple, explore contrato de precio, menor escala o aplazamiento sin alterar el umbral a conveniencia.
+
+**Entrega S09.** Dos páginas con alternativa base, flujos/unidades, fuentes o supuestos, distribución de VAN, error MC, sensibilidad, restricciones y recomendación condicionada. La rúbrica formativa asigna 25% a formulación, 25% a calidad/supuestos, 25% a validación/sensibilidad y 25% a propuesta/factibilidad. El notebook incluye solución orientadora y autoevaluación.
+
+# Comunicación e implementación {#sec-comunicacion}
+
+## Del hallazgo al argumento
+
+Un argumento ejecutivo conecta problema, evidencia, mecanismo propuesto, alternativas, recursos y seguimiento. «El canal tiene más reclamos» es un hallazgo descriptivo; «cambiar el protocolo reducirá reclamos» es una hipótesis causal. La conexión debe explicitarse, no esconderse en una diapositiva. Persuadir responsablemente incluye reconocer qué evidencia falta y qué haría descartar la propuesta.
+
+Estructura de cinco diapositivas: decisión solicitada; evidencia clave con base y período; alternativas comparables; piloto y recursos; criterios de seguimiento y suspensión. El apéndice contiene contrato, transformaciones, fórmulas, sensibilidad y fuentes. El memo de una página debe poder entenderse sin ejecutar código y debe coincidir con los resultados reproducibles.
+
+Para dirección se enfatizan impacto, costo, exposición y decisión requerida. Para operaciones se traducen en protocolo, responsables, capacidades y excepciones. Para un equipo técnico se agregan linaje, errores, validación y monitoreo. Adaptar lenguaje no autoriza cambiar cifras u omitir límites materiales.
+
+## Pilotos y evaluación de impacto
+
+Un piloto separa implementación de efecto. Defina población, unidad de asignación, tratamiento, control, horizonte y KPI principal antes de observar resultados. La aleatorización individual puede ser incorrecta si la intervención se aplica a toda una sucursal o si hay contagio entre unidades: en ese caso debe considerarse diseño por conglomerados y su efecto sobre precisión.
+
+Ejemplo supuesto: 5000 pedidos, tasa de reclamo 8%, reducción relativa 20%, costo por reclamo 20 UM y costo fijo del piloto 1000 UM. La reducción absoluta es 1.6 puntos porcentuales. Se esperan 80 reclamos evitados y beneficio neto 600 UM; esos resultados dependen del efecto supuesto, todavía no medido. El umbral de equilibrio es reducción relativa 12.5%.
+
+El notebook aproxima tamaño de muestra de dos proporciones con grupos independientes, alfa bilateral 5% y potencia 80%. Es una herramienta de planificación bajo supuestos, no una promesa de significación. Pérdidas de seguimiento, multiplicidad y correlación intragrupo requieren ajustes. Un resultado no significativo con muestra pequeña no demuestra equivalencia.
+
+## Caso integrador y seguimiento
+
+CasaPeumo integra los tres RA: proceso con auditoría, comparación factible y comunicación. BoldoNet añade madurez y calidad de KPI. El embudo digital permite discutir distintas tasas: compras/sesiones y compras/inicios de pago son tasas distintas y no se suman entre segmentos.
+
+La entrega final incluye memo, cinco diapositivas, notebook ejecutado y ficha de KPI. La defensa debe responder por qué se usa ese denominador, qué fuente es más débil, qué alternativa se descartó, quién implementa, qué recursos necesita y qué resultado suspende la acción. Los cambios de definición durante el seguimiento se versionan: no se redefine éxito después de ver el resultado.
+
+**Rúbrica formativa del integrador.** Proceso y calidad 25%; pertinencia del análisis 20%; alternativas y factibilidad 25%; comunicación y seguimiento 20%; reproducibilidad 10%. No reemplaza ponderaciones institucionales pendientes de conciliación.
+
+# Profundización técnica {#sec-profundizacion}
+
+## Optimización no lineal y condiciones
+
+El notebook 08 usa demanda $q(p)=\max(0,120-2p)$, costo 15 y precio entre 15 y 60. La contribución $(p-15)(120-2p)$ es cóncava en ese dominio, con óptimo analítico 37.5. Solver, derivada y malla coinciden. En problemas no convexos, diferentes puntos iniciales pueden revelar óptimos locales; no demuestran que el mejor encontrado sea global.
+
+En asignación media-varianza se minimiza $\lambda w^T\Sigma w/2-\mu^Tw$ con pesos no negativos que suman uno. Una covarianza positiva semidefinida asegura convexidad del término cuadrático. Los parámetros del ejemplo son sintéticos. La sensibilidad a estimación, colas y costos debe estudiarse antes de trasladar la lógica a otro contexto. La formulación ilustra optimización; no recomienda activos.
+
+## Colas y decisiones robustas
+
+Defina pérdida $L=-VAN$. VaR al 95% es el percentil 95 de pérdida. En una distribución continua, CVaR resume la cola superior más allá del cuantil; con masas discretas se pondera la observación del umbral para completar el 5%. En la muestra de 10000 se promedian los 500 peores valores. Un valor alto de CVaR significa exposición adversa, no una predicción puntual.
+
+La robustez estudia si una decisión conserva atractivo bajo variaciones justificadas. No equivale a escoger siempre el peor caso imaginable. Especifique conjunto de escenarios, criterio de decisión y costo de conservadurismo. Cambiar estructura de dependencia es distinto de repetir la misma simulación con otra semilla.
+
+## Aprendizaje por refuerzo y límites
+
+Un bandido equilibra explorar acciones y explotar recompensas aprendidas; un proceso de decisión de Markov añade estados y transiciones. El notebook compara UCB en 30 semillas y muestra percentiles del arrepentimiento esperado en un entorno sintético. Una sola trayectoria no basta para afirmar superioridad. El arrepentimiento se calcula con medias verdaderas conocidas solo porque se controla el simulador.
+
+La ecuación de Bellman $Q^*(s,a)=E[r+\gamma\max_{a'}Q^*(s',a')\mid s,a]$ caracteriza decisiones secuenciales con descuento. El ejercicio de dos estados resuelve planificación con transiciones conocidas. Aprender de datos necesitaría exploración, evaluación de política y control de sesgos; no se debe denominar a esa planificación «política aprendida de clientes». @sutton desarrolla el marco general. El material ofrece un puente técnico, no justificación para desplegar acciones experimentales sin diseño.
+
+# Ejercicios de referencia y respuestas {#sec-ejercicios}
+
+1. **Calidad.** Hay dos registros con misma clave y fecha, pero costos distintos. ¿Cuál conservar? Ninguno se decide por conveniencia; marcar conflicto y consultar fuente. La regla automática de «último» no resuelve un empate contradictorio.
+2. **KPI.** Dos segmentos tienen tasas 20% y 40%, con bases 900 y 100. Tasa agregada: $(180+40)/1000=22\%$, no 30%. Declarar bases y período.
+3. **Causalidad.** Participantes del programa tienen mayor retención. ¿Demuestra efecto? No: selección y diferencias iniciales pueden explicarlo. Diseñar contrafactual o experimento.
+4. **Optimización.** ¿Redondear una solución continua produce un plan entero óptimo? No. Resolver restricciones enteras y verificar factibilidad y brecha.
+5. **Información.** Un estudio cuesta 16 kUM con EVPI 14. ¿Conviene por el valor de información del modelo? No, incluso información perfecta no cubre ese costo; revisar si existen otros beneficios omitidos.
+6. **Simulación.** Un intervalo MC estrecho y percentiles de VAN amplios, ¿se contradicen? No: alta precisión sobre una distribución de resultados dispersa.
+7. **Comunicación.** ¿Qué falta si una presentación solo muestra la opción elegida? Alternativa base, criterios de descarte, incertidumbre, restricciones, dueño y plan de evaluación.
+8. **Profundización.** Un solver convergió, ¿se validó el modelo? No: convergencia aborda un problema numérico; especificación y pertinencia requieren evidencia independiente.
+
+# Glosario y mantenimiento {#sec-glosario}
+
+| Término | Definición operativa |
+|---|---|
+| Grano | Qué representa cada fila y con qué claves |
+| Cohorte madura | Población que pudo completar la ventana de seguimiento |
+| KPI | Indicador definido y vinculado a una decisión/responsable |
+| Contrafactual | Resultado que habría ocurrido bajo otra acción |
+| Factibilidad | Cumplimiento de restricciones declaradas |
+| Precio sombra | Sensibilidad marginal del óptimo a un recurso |
+| EVPI | Valor bruto de información perfecta en el modelo |
+| VAN | Valor presente de flujos incrementales menos inversión |
+| Error Monte Carlo | Variabilidad numérica de una estimación simulada |
+| Robustez | Estabilidad de la decisión ante cambios justificados |
+| Guardarraíl | Indicador o regla que limita efectos adversos |
+| Linaje | Registro de fuentes, transformaciones y versiones |
+
+Para mantener esta edición, modifique el QMD y regenere PDF/HTML; edite los notebooks como fuentes de laboratorio; reconstruya los datos embebidos de la guía al cambiar una fuente y ejecute las comprobaciones. La validación técnica y la cobertura documentada complementan, pero no sustituyen, la revisión de pares.
+
+# Referencias {.unnumbered #sec-referencias}
+
+Las referencias primarias externas apoyan métodos y herramientas; las explicaciones, ejemplos y ejercicios de esta edición son elaboración propia. Los enlaces bibliográficos requieren conexión al consultarlos.

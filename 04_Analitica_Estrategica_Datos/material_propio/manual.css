@@ -1,0 +1,1 @@
+:root{--aed:#124d59;--gold:#976b29}body{color:#20323a;line-height:1.75}h1,h2,h3{color:var(--aed)}a{color:#136d7c}blockquote{border-left:4px solid var(--gold);padding-left:1rem}table{font-size:.91rem}pre{border-radius:8px}code{overflow-wrap:anywhere}img{max-width:100%}@media print{a{color:inherit}} 

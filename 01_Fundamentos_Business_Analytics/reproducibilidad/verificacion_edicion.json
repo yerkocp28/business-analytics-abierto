@@ -1,0 +1,53 @@
+{
+  "edicion": "2026-10-08",
+  "notebooks": [
+    {
+      "nombre": "FBA_01_negocio_datos.ipynb",
+      "celdas_codigo": 7,
+      "widgets": 27,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "FBA_02_exploracion_visual.ipynb",
+      "celdas_codigo": 8,
+      "widgets": 31,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "FBA_03_herramientas_caso_integrador.ipynb",
+      "celdas_codigo": 8,
+      "widgets": 40,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "FBA_04_probabilidad_simulacion.ipynb",
+      "celdas_codigo": 6,
+      "widgets": 48,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "FBA_05_modelos_evaluacion.ipynb",
+      "celdas_codigo": 8,
+      "widgets": 35,
+      "resultado": "OK"
+    }
+  ],
+  "html": {
+    "enlaces_locales_verificados": 92,
+    "javascript": "OK",
+    "uso_sin_red": "OK",
+    "filtros_contrastados_python": "OK",
+    "simuladores_y_quiz": "OK",
+    "movil_sin_desbordamiento": "OK"
+  },
+  "pdf": {
+    "paginas": 19,
+    "caracteres_extraidos": 55248,
+    "resultado": "OK"
+  },
+  "cobertura": {
+    "criterios_oficiales": 15,
+    "filas_temas": 30,
+    "anclas_y_rutas": "OK"
+  }
+}

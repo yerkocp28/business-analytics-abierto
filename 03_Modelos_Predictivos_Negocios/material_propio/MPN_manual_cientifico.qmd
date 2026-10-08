@@ -1,0 +1,663 @@
+---
+title: "Modelos Predictivos en Negocios"
+subtitle: "Manual científico y técnico para la docencia"
+author: "Yerko Carreño Pérez"
+date: 2026-10-08
+lang: es
+toc: true
+toc-depth: 2
+number-sections: true
+bibliography: referencias.bib
+link-citations: true
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  error: false
+  cache: false
+  daemon: false
+format:
+  typst:
+    papersize: a4
+    fontsize: 10.5pt
+    mainfont: Cambria
+    margin:
+      x: 2.2cm
+      y: 2.1cm
+    keep-typ: false
+  html:
+    theme: default
+    embed-resources: true
+    code-fold: true
+    toc-location: left
+    html-math-method: mathml
+    css: manual.css
+---
+
+```{python}
+#| label: configuracion
+from pathlib import Path
+import sys
+import warnings
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+RAIZ = next(p for p in (Path.cwd(), *Path.cwd().parents) if (p / "_transversal" / "datos").is_dir())
+sys.path.insert(0, str(RAIZ / "03_Modelos_Predictivos_Negocios" / "reproducibilidad"))
+import mpn_recursos as mr
+from mpn_recursos import SEMILLA
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.dummy import DummyClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import StratifiedKFold, cross_val_predict
+from sklearn.metrics import roc_auc_score, average_precision_score
+plt.rcParams.update({"figure.figsize": (7, 3.4), "font.size": 10,
+                     "axes.spines.top": False, "axes.spines.right": False})
+def tabla(frame, decimales=3, indice=True):
+    display(Markdown(frame.to_markdown(index=indice, floatfmt=f".{decimales}f")))
+```
+
+# Propósito, alcance y forma de uso {.unnumbered #sec-alcance}
+
+Este manual desarrolla el recorrido completo de un modelo predictivo en una organización: desde la decisión que
+se quiere mejorar hasta la comunicación de resultados, sus límites y su monitoreo. Integra formulación matemática,
+supuestos, ejemplos calculados con los casos docentes del repositorio y criterios para discutir resultados. Es
+material propio; no reemplaza el programa oficial de ningún curso.
+
+**Resultados de aprendizaje.** El material se organiza en tres resultados y quince criterios de evaluación. La tabla indica su distribución en una ruta extendida de doce semanas; la ruta intensiva de cinco semanas se presenta a continuación.
+
+| RA | Resultado de aprendizaje | Criterios | Semanas |
+|---|---|---|---|
+| RA1 | Explica las técnicas principales del modelamiento predictivo, con ejemplos en contextos de negocio | CE 1.1–1.4 | 1–2 |
+| RA2 | Construye modelos predictivos simples con datos históricos y software especializado | CE 2.1–2.6 | 3–7 |
+| RA3 | Evalúa la efectividad de los modelos con métricas clave para proponer mejoras | CE 3.1–3.5 | 8–12 |
+
+**Tres recursos complementarios.** La [guía maestra interactiva](../guia_maestra_mpn.html) sirve para explicar y
+experimentar en clase; este manual desarrolla fundamentos y supuestos; los siete notebooks permiten inspeccionar y
+modificar cada cálculo. Las tablas y figuras de este documento se recalculan al renderizarlo, con las mismas
+funciones que usan los notebooks.
+
+**Qué significa rigor en esta asignatura.** No depende del número de algoritmos. Exige formular la decisión,
+comprobar que cada variable exista al momento de predecir, separar datos para aprender, decidir y evaluar, comparar
+contra una línea base, declarar supuestos de costo, cuantificar incertidumbre y comunicar límites. Un modelo simple
+que cumple esas condiciones vale más que uno sofisticado que no las cumple.
+
+| Ruta | Alcance | Evidencia de aprendizaje |
+|---|---|---|
+| Núcleo U1 | Problema predictivo, técnicas, aplicaciones y límites | Formulación defendible y explicación sin tecnicismos |
+| Núcleo U2 | CRISP-DM, preparación, regresión y clasificación | Modelo funcional, validado y comparado con una línea base |
+| Núcleo U3 | Métricas, umbral, costos, calibración, limitaciones y comunicación | Evaluación honesta, ficha del modelo y recomendaciones |
+| Profundización | Validación temporal, pronóstico, recalibración, riesgo de modelo | Discusión de supuestos y diseño de validación |
+
+**Convenciones.** FinCordillera, QuillayMarket y PulpaLenga son empresas ficticias con datos simulados del repositorio.
+Los costos son supuestos docentes declarados. «Entrenamiento», «validación» y «prueba» designan conjuntos con
+funciones distintas que nunca se intercambian.
+
+
+## Ruta intensiva de cinco semanas {#sec-ruta-intensiva}
+
+En la ruta intensiva, RA1 ocupa las semanas 1–2, RA2 las semanas 3–4 y RA3 la semana 5. Se introduce temprano una métrica para que cada entrenamiento tenga un propósito. Usar FinCordillera para clasificación y QuillayMarket para regresión reduce cambios de contexto. Las series temporales quedan como profundización: el criterio CE2.3 admite regresión lineal **o** series, y la ruta prioriza el entrenamiento de regresión.
+
+| Semana | Núcleo de la sesión | Evidencia y notebook |
+|---|---|---|
+| 1 | Diagnóstico Python, objetivo, clasificación/regresión y referencia | NB01: contrato, línea base y fuga |
+| 2 | Lineal simple/múltiple, logística, árbol y fundamento de red neuronal | NB01 técnicas/red; NB03 MCO y NB04 logística/árbol como demostración. Evaluación 1 |
+| 3 | CRISP-DM, limpieza, partición, selección de algoritmo y clasificación | NB02 y NB04: pipeline, entrenamiento y sobreajuste |
+| 4 | Matriz de confusión, métricas, validación y costos | NB05: métricas y umbral. Evaluación 2 |
+| 5 | Entrenamiento de regresión, MAE/RMSE/R², límites y comunicación | NB03 y NB06: comparación, ficha y mejoras. Evaluación 3 |
+
+No exigir leer los siete notebooks completos antes de la primera sesión. Seleccionar los bloques enlazados por la ruta; regularización, conformal, recalibración avanzada, PSI y pronóstico se consultan después del núcleo. El manual conserva las explicaciones técnicas para referencia. La ruta no comprime mecánicamente doce semanas en cinco: prioriza el núcleo.
+
+El fundamento de redes neuronales cubre la explicación pedida en CE1.1; entrenar una red profunda no se agrega como obligación. Las ponderaciones y fechas de evaluación corresponden a cada curso.
+
+# El problema predictivo {#sec-problema}
+
+## De la decisión a Y = f(X) + ε
+
+Un modelo predictivo supone que un resultado de negocio $Y$ se relaciona con información disponible $X$:
+
+$$Y = f(X) + \varepsilon, \qquad E[\varepsilon \mid X]=0, \qquad \operatorname{Var}(\varepsilon)=\sigma^2.$$
+
+$f$ es desconocida y se estima con datos históricos. Antes de cualquier algoritmo se declaran cinco elementos: la
+**variable objetivo** (qué se predice y cómo se mide), la **unidad** (qué representa una fila), el **horizonte**
+(cuánto antes se predice), la **decisión** que cambia con la predicción y el **costo** de cada tipo de error. Una
+formulación incompleta produce modelos técnicamente correctos que no se pueden usar.
+
+## Error reducible e irreducible
+
+Para un estimador $\hat f$ y una observación nueva en $x$, el error cuadrático esperado se descompone en
+
+$$E\big[(Y-\hat f(x))^2\big] = \big(f(x)-E[\hat f(x)]\big)^2 + \operatorname{Var}\big(\hat f(x)\big) + \sigma^2 .$$
+
+El primer término es el **sesgo** al cuadrado (el modelo es demasiado rígido), el segundo la **varianza** (el modelo
+cambia mucho con la muestra) y el tercero el **error irreducible**. @fig-sesgo-varianza lo muestra con un mecanismo
+simulado: el error en entrenamiento baja siempre al aumentar la complejidad; el de observaciones nuevas baja y luego
+sube, y nunca cruza de forma sostenida el piso $\sigma^2$.
+
+```{python}
+#| label: fig-sesgo-varianza
+#| fig-cap: "Simulación con mecanismo conocido (demanda curva según precio, σ = 12). El error en entrenamiento disminuye con el grado; en datos nuevos aparece el compromiso sesgo–varianza. La línea discontinua es σ²."
+def f_verdadera(p): return 260 - 22 * p + 0.6 * p ** 2
+g = np.random.default_rng(SEMILLA)
+x = g.uniform(5, 15, 60); y = f_verdadera(x) + g.normal(0, 12, 60)
+g2 = np.random.default_rng(SEMILLA + 1)
+xn = g2.uniform(5, 15, 4000); yn = f_verdadera(xn) + g2.normal(0, 12, 4000)
+z = lambda v: (v - 10) / 5
+grados = range(1, 11)
+ent, nue = [], []
+for k in grados:
+    c = np.polyfit(z(x), y, k)
+    ent.append(np.mean((np.polyval(c, z(x)) - y) ** 2)); nue.append(np.mean((np.polyval(c, z(xn)) - yn) ** 2))
+fig, ax = plt.subplots()
+ax.plot(grados, ent, marker="o", label="entrenamiento"); ax.plot(grados, nue, marker="o", label="observaciones nuevas")
+ax.axhline(144, ls="--", color="grey", label="σ² = 144")
+ax.set(xlabel="grado del polinomio", ylabel="error cuadrático medio"); ax.legend(); plt.show()
+```
+
+## Línea base y fuga de información
+
+Una **línea base** es la regla más simple razonable: clase mayoritaria, promedio histórico o «el mismo mes del año
+anterior». Un modelo aporta valor solo si la supera en la métrica que importa y en datos no usados para aprender.
+En FinCordillera, declarar que nadie abandona logra una accuracy de 72% sin detectar ningún caso: accuracy no puede ser
+la métrica guía cuando la decisión trata del evento minoritario.
+
+Una **fuga de información** ocurre cuando el modelo usa datos que no existirán al decidir: variables registradas
+después del evento, totales que incluyen el futuro o transformaciones ajustadas con todos los datos. Su síntoma es
+un desempeño excelente en validación y un fracaso en operación [@sklearn_pitfalls]. La prueba práctica es preguntar,
+para cada variable, cuándo se registra y quién la registra.
+
+# Técnicas y aplicaciones en negocios {#sec-tecnicas}
+
+## Familias de modelos
+
+| Técnica | Principio | Fortalezas | Limitaciones |
+|---|---|---|---|
+| Regresión lineal | $\hat y = \beta_0 + x^\top\beta$ por mínimos cuadrados | Interpretable, rápida, referencia obligada | Supone forma lineal; sensible a extremos |
+| Regresión logística | Modela $\log\frac{p}{1-p}$ como función lineal | Probabilidades y razones de chances | Fronteras lineales salvo transformaciones |
+| Árbol de decisión | Particiones recursivas que reducen impureza | Reglas legibles, no linealidades | Alta varianza; inestable |
+| Bosque aleatorio | Promedio de árboles con remuestreo | Buen desempeño con poco ajuste | Menos explicable; calibración variable |
+| KNN | Promedio de los $k$ casos más cercanos | Sin forma funcional | Depende de la escala y de la dimensión |
+| Redes neuronales | Composición de transformaciones no lineales | Patrones complejos con muchos datos | Datos, cómputo y explicabilidad exigentes |
+| Series de tiempo | Tendencia, estacionalidad y dependencia temporal | Respeta el orden del tiempo | Supone estabilidad del proceso |
+
+La elección se justifica por el tipo de $Y$, el volumen de datos, la necesidad de explicar cada decisión a un
+cliente o regulador y el costo de los errores; no por popularidad [@islp2023; @shmueli2019].
+
+## Aplicaciones sectoriales y sus límites
+
+| Sector | Problema | Tipo | Límite que conviene declarar |
+|---|---|---|---|
+| Banca | Abandono, fraude, riesgo de crédito | Clasificación | Eventos raros, sesgo por segmento, regulación |
+| Retail | Demanda por categoría y mes | Regresión / series | Estacionalidad, promociones, quiebres de stock |
+| Industria | Defectos por lote, consumo energético | Clasificación / regresión | Cambios de materia prima o sensores |
+| Recursos humanos | Rotación voluntaria | Clasificación | Variables sensibles y decisiones sobre personas |
+| Salud | Reingresos, demanda de camas | Clasificación / series | Consecuencias graves de falsos negativos |
+
+Un modelo **reduce** incertidumbre; no la elimina. Supone que el futuro se parece al pasado en lo relevante y que
+los datos representan a la población sobre la que se decidirá. Cuando esas condiciones cambian —una pandemia, un
+nuevo competidor, otro proveedor— el modelo debe revisarse.
+
+## Explicar sin tecnicismos
+
+Una explicación para audiencias no técnicas declara qué decisión mejora, en cuánto y con qué incertidumbre. «El
+modelo tiene AUC 0,80» no es un mensaje; «si contactamos al 20% de clientes con mayor riesgo, alcanzamos cerca de
+40% de los abandonos del período» sí lo es. Conviene evitar términos sin traducir, mostrar una sola cifra clave por
+idea y anticipar la pregunta «¿y si cambia la situación?».
+
+
+## Red neuronal: principio con un cálculo transparente {#sec-red-neuronal}
+
+Una red compone transformaciones: $h=\operatorname{ReLU}(W_1x+b_1)$ y $p=\sigma(\langle w_2,h\rangle+b_2)$. ReLU devuelve $\max(0,z)$ y la sigmoide transforma un puntaje en un número entre cero y uno. En aprendizaje supervisado los pesos se ajustan minimizando una pérdida, por ejemplo entropía cruzada para una etiqueta binaria, mediante gradientes y regularización. La composición permite fronteras no lineales; también agrega parámetros y riesgo de sobreajuste.
+
+En el notebook 01, dos entradas docentes escaladas (reclamos y antigüedad) pasan por dos unidades ocultas con pesos fijados expresamente. Para $x=(0,0)$, sesgos ocultos $(-.2,.1)$, pesos de salida $(1.5,-.8)$ y sesgo final $-.5$, resulta $h=(0,.1)$ y $p=\sigma(-.58)\approx.359$. Es una demostración de propagación, **no un modelo entrenado ni una probabilidad bancaria validada**. Mover las entradas permite observar qué cambia y qué permanece.
+
+Una aplicación posible es priorizar revisión de clientes con patrones de interacción complejos. Antes de elegir una red se compara con logística o árbol usando el mismo diseño de validación, escala aprendida solo en entrenamiento y métricas de negocio. Más capas no garantizan más valor; tamaño de datos, costo, estabilidad, calibración y explicabilidad condicionan la elección. Explíquelo a gerencia como combinaciones de señales aprendidas, no como una imitación literal del cerebro.
+
+# CRISP-DM y preparación de datos {#sec-crisp}
+
+## Fases con entregables
+
+CRISP-DM organiza un proyecto en seis fases iterativas: comprensión del negocio, comprensión de los datos,
+preparación, modelamiento, evaluación y despliegue [@chapman2000]. Su valor práctico aparece cuando cada fase deja
+un **entregable revisable** y un **criterio de salida**: ficha del problema, contrato de datos, pipeline,
+comparación contra línea base, informe de evaluación y plan de monitoreo.
+
+## Calidad de datos y mecanismos de vacíos
+
+| Mecanismo | Definición | Consecuencia | Tratamiento |
+|---|---|---|---|
+| MCAR | El vacío no depende de nada | Pérdida de eficiencia, sin sesgo | Imputación simple con estadísticos de entrenamiento |
+| MAR | Depende de variables observadas | Sesgo en casos completos | Imputación condicional e indicador de vacío |
+| MNAR | Depende del valor faltante | Sesgo que los datos no pueden corregir solos | Indicador, fuente alternativa y declaración del sesgo |
+
+Los valores extremos se clasifican antes de tratarlos: un error de digitación se corrige en origen; un extremo
+legítimo se conserva y, si conviene, se transforma. La mediana es robusta a extremos; la media no.
+
+## Partición y pipeline
+
+Se usan tres conjuntos con funciones distintas: **entrenamiento** para ajustar parámetros y transformaciones,
+**validación** para comparar modelos y elegir hiperparámetros, umbral y costos, y **prueba** para una única
+evaluación final. Con pocos datos, la validación cruzada de $k$ pliegues dentro del entrenamiento sustituye a una
+validación fija. Si los datos tienen orden temporal se particiona por tiempo; si una entidad aparece varias veces,
+por grupos.
+
+Toda transformación aprendida de los datos —imputación, escalamiento, selección de variables— se ajusta **dentro**
+de un pipeline, con las filas de entrenamiento de cada pliegue. Seleccionar variables con todas las filas y luego
+validar produce desempeños ficticios incluso con ruido puro [@esl2009, sección 7.10.2].
+
+# Regresión {#sec-regresion}
+
+## Estimación por mínimos cuadrados
+
+Con $X$ de dimensión $n\times p$ (incluida la columna de unos), el estimador de mínimos cuadrados ordinarios es
+
+$$\hat\beta = (X^\top X)^{-1}X^\top y, \qquad \widehat{\operatorname{Var}}(\hat\beta) = \hat\sigma^2 (X^\top X)^{-1},
+\qquad \hat\sigma^2 = \frac{\sum_i e_i^2}{n-p}.$$
+
+Cada coeficiente es el cambio esperado en $Y$ por unidad de la variable, **manteniendo las demás constantes** y en
+el rango observado. No es un efecto causal salvo diseño experimental. Las variables categóricas entran como
+indicadores con una categoría de referencia.
+
+```{python}
+#| label: tbl-mco
+#| tbl-cap: "QuillayMarket · regresión de unidades vendidas estimada con entrenamiento. Precio en miles de CLP y marketing en cientos de miles; categoría de referencia: Alimentos."
+from scipy import stats
+dem = mr.quillaymarket_demanda()
+Xd = dem.drop(columns=["registro_id", "ventas_unidades"]); yd = dem["ventas_unidades"]
+Xde, Xdv, Xdt, yde, ydv, ydt = mr.particion_tres(Xd, yd, estratificar=False)
+def diseno(m, mes_cat=False, cols=None):
+    # La referencia se elimina solo al ajustar; al predecir se alinean todas las categorías.
+    d = pd.get_dummies(m, columns=["categoria_producto"] + (["mes"] if mes_cat else []), drop_first=cols is None, dtype=float)
+    d["precio_miles"] = d.pop("precio_promedio_clp") / 1000
+    d["marketing_100mil"] = d.pop("inversion_marketing_clp") / 1e5
+    return d if cols is None else d.reindex(columns=cols, fill_value=0.0)
+D = diseno(Xde)
+A = np.column_stack([np.ones(len(D)), D.to_numpy(float)])
+b, *_ = np.linalg.lstsq(A, yde.to_numpy(float), rcond=None)
+e = yde.to_numpy(float) - A @ b; gl = len(yde) - A.shape[1]
+ee = np.sqrt(np.diag(e @ e / gl * np.linalg.inv(A.T @ A)))
+t_ = b / ee
+tabla(pd.DataFrame({"coeficiente": b, "error estándar": ee, "t": t_, "p": 2 * stats.t.sf(np.abs(t_), gl)},
+                   index=["intercepto"] + list(D.columns)))
+```
+
+## Estacionalidad e ingeniería de variables
+
+Representar el mes como número supone una recta de enero a diciembre. Con indicadores por mes, el modelo estima un
+nivel propio para cada mes y capta el alza de noviembre y diciembre. @tbl-estacionalidad compara ambas
+especificaciones en validación: una variable bien representada mejora más que un algoritmo más complejo.
+
+```{python}
+#| label: tbl-estacionalidad
+#| tbl-cap: "QuillayMarket · validación. Mes como número frente a mes como categoría."
+filas = {}
+for nombre, cat in [("mes como número", False), ("mes como categoría", True)]:
+    De_ = diseno(Xde, cat); Dv_ = diseno(Xdv, cat, De_.columns)
+    filas[nombre] = mr.metricas_regresion(ydv, LinearRegression().fit(De_, yde).predict(Dv_))
+tabla(pd.DataFrame(filas).T, 2)
+```
+
+## Diagnóstico y regularización
+
+Los residuos de un buen modelo no muestran estructura respecto de la predicción, el tiempo o los grupos. La
+normalidad importa para intervalos paramétricos, no para la calidad predictiva.
+
+Con muchas variables correlacionadas, la regularización estabiliza los coeficientes. Ridge minimiza
+$\sum_i (y_i-x_i^\top\beta)^2 + \alpha\sum_j\beta_j^2$ y encoge todos los coeficientes; Lasso usa la penalización
+$\alpha\sum_j|\beta_j|$ y puede anular algunos, lo que equivale a seleccionar variables. Las variables se estandarizan
+antes de penalizar y $\alpha$ se elige con validación cruzada en entrenamiento [@islp2023, capítulo 6].
+
+## Predicciones con intervalo
+
+Una predicción puntual sin rango invita a decisiones frágiles. El **intervalo conformal dividido** usa los residuos
+absolutos de un conjunto de calibración: con $q$ igual a su cuantil de orden $\lceil (n+1)(1-\alpha)\rceil/n$, el
+intervalo $\hat y \pm q$ cubre al menos $1-\alpha$ de casos nuevos **intercambiables** con los de calibración, si el
+modelo se mantiene fijo [@angelopoulos2021]. No protege contra extrapolación ni cambios del proceso, y su cobertura
+debe verificarse en prueba. Si el modelo se reestima después de calcular el cuantil, la garantía deja de
+aplicarse exactamente; el notebook 03 informa la cobertura observada junto con su error estándar.
+
+# Clasificación {#sec-clasificacion}
+
+## Regresión logística
+
+$$\log\frac{p(x)}{1-p(x)} = \beta_0 + x^\top\beta, \qquad p(x)=\frac{1}{1+e^{-(\beta_0+x^\top\beta)}}.$$
+
+$e^{\beta_j}$ es la **razón de chances**: el factor por el que se multiplican las chances del evento cuando $x_j$ sube
+una unidad, con lo demás fijo. Si la probabilidad base es 20% (chances 0,25) y la razón de chances es 2, las
+chances pasan a 0,5 y la probabilidad a 33%, no a 40%.
+
+## Árboles, bosques y vecinos
+
+Un árbol elige en cada nodo la división que más reduce la impureza; con el índice de Gini, $G=1-\sum_k p_k^2$. Es
+legible e inestable. Un bosque promedia árboles entrenados con muestras bootstrap y subconjuntos de variables, lo que
+reduce varianza. KNN predice con los $k$ vecinos más cercanos: sin estandarizar, la variable de mayor escala domina
+la distancia. Para interpretar modelos complejos se prefiere la **importancia por permutación** medida en validación.
+
+```{python}
+#| label: tbl-clasificacion
+#| tbl-cap: "FinCordillera · comparación en validación de modelos ajustados con entrenamiento."
+banco = mr.fincordillera_clientes()
+Xb = banco.drop(columns=["cliente_id", "churn"]); yb = banco["churn"]
+num = Xb.select_dtypes("number").columns.tolist(); cat = ["region"]
+Xbe, Xbv, Xbt, ybe, ybv, ybt = mr.particion_tres(Xb, yb)
+modelos = {"Línea base (prevalencia)": (DummyClassifier(strategy="prior"), True),
+           "Logística": (LogisticRegression(max_iter=2000), True),
+           "KNN sin escalar": (KNeighborsClassifier(25), False),
+           "KNN estandarizado": (KNeighborsClassifier(25), True),
+           "Bosque aleatorio": (RandomForestClassifier(n_estimators=300, min_samples_leaf=10, random_state=SEMILLA, n_jobs=1), False)}
+filas = {}
+for nombre, (est, escalar) in modelos.items():
+    m = Pipeline([("prep", mr.preprocesador(num, cat, escalar=escalar)), ("m", est)]).fit(Xbe, ybe)
+    p = m.predict_proba(Xbv)[:, 1]
+    r = mr.ks_gini(ybv, p) if np.ptp(p) > 0 else {"KS": 0.0, "AUC": 0.5, "Gini": 0.0}
+    r.update({"AP": average_precision_score(ybv, p), "Brier": mr.brier(ybv, p)})
+    filas[nombre] = r
+tabla(pd.DataFrame(filas).T[["AUC", "Gini", "KS", "AP", "Brier"]])
+```
+
+La logística compite con el bosque y es explicable: con relaciones mayoritariamente monótonas, un modelo simple bien
+especificado es difícil de superar. KNN sin escalar casi no supera al azar porque el ingreso domina la distancia.
+
+# Validación y selección de modelos {#sec-validacion}
+
+## Esquemas de validación
+
+| Esquema | Cuándo usarlo | Riesgo si se usa mal |
+|---|---|---|
+| Entrenamiento / validación / prueba | Datos suficientes; decisiones de umbral y costos | Validación pequeña produce decisiones ruidosas |
+| $k$ pliegues estratificados | Comparar especificaciones con su variabilidad | Fugas si la preparación ocurre fuera del pipeline |
+| Validación anidada | Estimar el desempeño del procedimiento completo de selección | Costo computacional |
+| Origen móvil | Datos temporales | Una partición aleatoria mezcla pasado y futuro |
+| Por grupos | Una entidad con varias filas | Optimismo por filas casi repetidas |
+
+Una diferencia entre modelos menor que la desviación estándar entre pliegues no justifica preferir uno por
+desempeño: deciden la interpretabilidad, el costo de operación o la robustez.
+
+## Hiperparámetros y complejidad
+
+Los hiperparámetros (profundidad, $C$, $\alpha$, $k$) se eligen con búsqueda en grilla y validación cruzada dentro
+del entrenamiento. La brecha entre el desempeño de entrenamiento y el de validación es una señal compatible con
+sobreajuste; también puede deberse a particiones distintas o deriva. Un modelo que no supera a la línea base no
+debe pasar a la fase de evaluación.
+
+# Métricas de evaluación {#sec-metricas}
+
+## Regresión
+
+| Métrica | Definición | Lectura |
+|---|---|---|
+| MAE | $\frac1n\sum\lvert y_i-\hat y_i\rvert$ | Error típico en unidades; robusto |
+| RMSE | $\sqrt{\frac1n\sum (y_i-\hat y_i)^2}$ | Penaliza errores grandes |
+| $R^2$ | $1-\frac{\sum(y_i-\hat y_i)^2}{\sum(y_i-\bar y)^2}$ | Comparación con la media; puede ser negativo fuera de muestra |
+| MAPE | $\frac{100}{n}\sum\lvert (y_i-\hat y_i)/y_i\rvert$ | Indefinido con ceros; asimétrico |
+| Sesgo | $\frac1n\sum(\hat y_i-y_i)$ | Error sistemático: comprar de menos o de más |
+
+## Clasificación y ordenamiento
+
+Con la matriz de confusión (VP, FP, FN, VN): precisión $=\frac{VP}{VP+FP}$, recall $=\frac{VP}{VP+FN}$ y
+$F_1=\frac{2PR}{P+R}$. Accuracy engaña con clases desbalanceadas. Las métricas que no dependen del umbral describen
+el **ordenamiento**: ROC-AUC es la probabilidad de que un positivo reciba mayor puntaje que un negativo; la
+precisión promedio (AP) resume la curva precisión–recall y su referencia es la prevalencia, por lo que es más
+informativa con eventos raros [@saito2015]. En riesgo de crédito se usan KS —máxima distancia entre las
+distribuciones acumuladas de puntaje de positivos y negativos— y Gini $=2\,\text{AUC}-1$ [@siddiqi2006]. El puntaje
+de Brier $\frac1n\sum(p_i-y_i)^2$ evalúa la calidad de las probabilidades.
+
+## Ejemplo: lectura crítica de métricas
+
+Quince casos ficticios con valores reales y predichos permiten practicar la lectura de métricas. @tbl-s8 calcula
+las métricas habituales y agrega el sesgo, que suele omitirse.
+
+```{python}
+#| label: tbl-s8
+#| tbl-cap: "Quince casos ficticios · métricas de ventas y de abandono."
+s8r = [95, 140, 185, 230, 260, 175, 210, 255, 300, 340, 380, 410, 445, 470, 520]
+s8p = [88, 121, 168, 199, 236, 160, 184, 226, 271, 301, 345, 368, 402, 431, 468]
+cr = [1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1]; cp = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+reg = mr.metricas_regresion(s8r, s8p); cla = mr.metricas_umbral(cr, cp, .5)
+tabla(pd.DataFrame({"métrica": ["MAE", "RMSE", "R²", "sesgo medio", "precisión abandono", "recall abandono"],
+                    "valor": [reg["MAE"], reg["RMSE"], reg["R2"], reg["sesgo_medio"], cla["precision"], cla["recall"]]}), 3, False)
+```
+
+El $R^2$ es alto, pero las quince predicciones de ventas están bajo el valor real: el sesgo llevaría a comprar menos
+inventario del necesario. En abandono, la precisión perfecta convive con un recall bajo. Ninguna métrica aislada
+describe el desempeño.
+
+# Umbral, costos y calibración {#sec-umbral}
+
+## El umbral como decisión económica
+
+Un clasificador probabilístico **ordena**; el umbral convierte el orden en acción. Sean $c_{FN}$ y $c_{FP}$ los
+costos de un falso negativo y de un falso positivo. Si la probabilidad $p$ está calibrada, actuar tiene un costo
+esperado $(1-p)\,c_{FP}$ y no actuar $p\,c_{FN}$. Conviene actuar cuando
+
+$$p > t^* = \frac{c_{FP}}{c_{FP}+c_{FN}} ,$$
+
+un resultado clásico del aprendizaje sensible a costos [@elkan2001]. En PulpaLenga, con $c_{FN}=800$ y
+$c_{FP}=90$ miles de CLP, $t^*\approx0{,}10$. El umbral convencional 0,5 corresponde a costos iguales.
+
+```{python}
+#| label: fig-umbral
+#| fig-cap: "PulpaLenga · costo medio por lote según umbral, con predicciones fuera de pliegue en entrenamiento + validación. La línea discontinua marca t* = 90/890."
+cal = mr.celulosa_calidad()
+Xc = mr.desvios_pulpa(cal); yc = cal["defecto"]
+desv = [c for c in Xc.columns if c.startswith("desv_")] + ["humedad_madera_pct", "velocidad_linea_m_min"]
+Xce, Xcv, Xct, yce, ycv, yct = mr.particion_tres(Xc, yc)
+Xdev, ydev = pd.concat([Xce, Xcv]), pd.concat([yce, ycv])
+log_c = Pipeline([("e", StandardScaler()), ("m", LogisticRegression(max_iter=2000, C=10))])
+p_oof = cross_val_predict(log_c, Xdev[desv], ydev, cv=StratifiedKFold(5, shuffle=True, random_state=SEMILLA),
+                          method="predict_proba")[:, 1]
+tab = mr.tabla_umbrales(ydev, p_oof, 800, 90)
+tab = tab[tab["umbral"].between(0, 1)]
+u_oof = float(tab.loc[tab["costo_medio"].idxmin(), "umbral"])
+fig, ax = plt.subplots()
+ax.plot(tab["umbral"], tab["costo_medio"], color="#b03a2e")
+ax.axvline(90 / 890, ls="--", color="grey"); ax.axvline(.5, ls=":", color="grey")
+ax.set(xlabel="umbral", ylabel="costo medio por lote (miles de CLP)"); plt.show()
+```
+
+```{python}
+#| label: tbl-politicas
+#| tbl-cap: "PulpaLenga · prueba consultada una vez. Modelo y umbrales fijados antes de mirar la prueba."
+m_final = log_c.fit(Xce[desv], yce)
+pt = m_final.predict_proba(Xct[desv])[:, 1]
+pol = {"umbral fuera de pliegue": mr.metricas_umbral(yct, pt, u_oof, 800, 90),
+       "umbral teórico t*": mr.metricas_umbral(yct, pt, 90 / 890, 800, 90),
+       "umbral 0,5": mr.metricas_umbral(yct, pt, .5, 800, 90),
+       "inspeccionar todo": mr.metricas_umbral(yct, np.ones(len(yct)), .5, 800, 90),
+       "no inspeccionar": mr.metricas_umbral(yct, np.zeros(len(yct)), .5, 800, 90)}
+pol = pd.DataFrame(pol).T
+pol["costo total (miles CLP)"] = (pol["costo_medio"] * len(yct)).round().astype(int)
+for c in ["TP", "FN", "FP"]:
+    pol[c] = pol[c].astype(int)
+tabla(pol[["umbral", "TP", "FN", "FP", "recall", "precision", "costo total (miles CLP)"]], 2)
+```
+
+La cercanía del umbral elegido fuera de pliegue a $t^*$ es compatible con esa regla de decisión, pero **no demuestra calibración**. Distintas distribuciones de probabilidades pueden tener el mismo umbral óptimo; se requieren diagramas de confiabilidad, puntajes probabilísticos y evaluación independiente. Elegir el umbral o comparar modelos **con la prueba** —como hacía la versión original del
+notebook de PulpaLenga— hace que el costo informado sea optimista, porque la prueba participó en la decisión.
+
+## Calibración
+
+Un modelo está calibrado si, entre los casos con probabilidad estimada cercana a $p$, la frecuencia observada es
+cercana a $p$. Se revisa con un diagrama de confiabilidad y puntajes probabilísticos como Brier, que resume calidad probabilística y no aísla solo calibración. Ponderar clases puede alterar intercepto, coeficientes y orden; no garantiza una mera traslación del puntaje. Platt o isotónica buscan mejorar la escala y requieren evaluación independiente; un ensamble de calibración cruzada también puede modificar el orden [@niculescu2005; @sklearn_calibration]. La regla $t^*$ presupone probabilidades calibradas y la estructura de costos declarada.
+
+## Eventos raros
+
+Con prevalencias bajas, accuracy es casi inútil y las métricas se vuelven inestables: con 30 fraudes en 1.200
+transacciones, una prueba del 20% contendría unos seis casos. Conviene usar predicciones fuera de pliegue,
+intervalos bootstrap para AP y, sobre todo, más casos etiquetados y mejores variables. Ponderar clases cambia el
+umbral efectivo; no crea información.
+
+# Limitaciones, estabilidad y gobierno del modelo {#sec-limitaciones}
+
+## Dónde puede fallar un modelo
+
+| Limitación | Cómo se detecta | Respuesta |
+|---|---|---|
+| Desempeño desigual por grupo | Métricas y calibración por segmento con intervalos | Revisar datos del grupo, recalibrar o restringir el uso |
+| Inestabilidad | Coeficientes y métricas bajo remuestreo bootstrap | No basar recomendaciones en efectos de signo incierto |
+| Deriva | PSI de variables y del puntaje; tasa predicha frente a observada | Investigar la causa; recalibrar o reentrenar |
+| Supuestos de costo inciertos | Sensibilidad del umbral a $c_{FN}/c_{FP}$ | Acordar rangos con finanzas; elegir reglas robustas |
+| Confusión entre predicción y causa | El modelo no identifica efectos de intervenciones | Pilotos con grupo de control |
+
+## Estabilidad poblacional
+
+El Population Stability Index compara la distribución de una variable entre una población de referencia ($e_k$) y
+una nueva ($a_k$) en tramos $k$:
+
+$$\text{PSI}=\sum_k (a_k-e_k)\ln\frac{a_k}{e_k}.$$
+
+Una convención habitual en riesgo de crédito —no un estándar universal— lee PSI < 0,10 como estable, 0,10–0,25 como
+cambio moderado y > 0,25 como cambio significativo [@siddiqi2006]. El PSI detecta cambios de distribución, no sus
+causas ni la pérdida de desempeño, que solo se mide cuando llegan etiquetas.
+
+## Riesgo de modelo y obligaciones
+
+La gestión del riesgo de modelos exige desarrollo documentado, **validación independiente**, monitoreo y un
+inventario con responsables [@sr117]. En Chile, el tratamiento de datos personales para construir y aplicar
+modelos queda sujeto a la Ley 21.719 [@ley21719]: finalidad declarada, minimización, seguridad y derechos de los
+titulares, con especial cuidado en decisiones automatizadas que afectan a personas. Revisar el desempeño por grupos
+es, además, una exigencia ética cuando el modelo prioriza o excluye clientes.
+
+# Comunicación y mejora continua {#sec-comunicacion}
+
+## Ficha del modelo
+
+Una ficha del modelo (*model card*) documenta propósito, usos no permitidos, datos, variables, evaluación,
+limitaciones, monitoreo y responsables [@mitchell2019]. Es el insumo de un comité de riesgo y la memoria del
+proyecto. El notebook 06 la genera a partir de las cifras calculadas.
+
+## Mensajes por audiencia
+
+La estructura **Situación–Complicación–Resolución** ordena el mensaje. Al directorio se le habla de decisión,
+impacto e incertidumbre; a una gerencia comercial, de umbral, alcance y supuestos de campaña; a un comité técnico,
+de métricas, validación, estabilidad y monitoreo. Siempre se declaran el horizonte, el conjunto en que se midió cada
+cifra y lo que el modelo no hace.
+
+## Recomendaciones de mejora
+
+Cada recomendación responde a una limitación observada con **evidencia**, **acción** y **métrica de verificación**.
+«Mejorar el modelo» no es una recomendación; «recalibrar por región porque la probabilidad media difiere de la tasa
+observada, y verificar con Brier por región en el próximo trimestre» sí lo es.
+
+## Lectura crítica de informes
+
+Un buen informe de modelo tiene resumen ejecutivo con cifras, fases CRISP-DM, criterios técnicos y de negocio y un
+umbral económico. Antes de tomarlo como referencia conviene revisar que el umbral se calibre fuera de la prueba,
+que se informe la incertidumbre, que se evalúe por segmento y que los datos y el código permitan reproducirlo. El
+notebook 06 aplica esa lista a un informe ficticio.
+
+# Profundización: pronóstico de series de tiempo {#sec-series}
+
+Una serie mensual combina tendencia, estacionalidad y ruido. Las referencias mínimas son el pronóstico **ingenuo**
+y el **ingenuo estacional**. Una regresión con tendencia lineal y meses como indicadores es un primer modelo
+interpretable; Holt-Winters y SARIMA son extensiones [@fpp3]. La evaluación usa **origen móvil**: con historia hasta
+$T$ se pronostica $T+1,\dots,T+h$ y se avanza. El MASE divide el MAE del método por el MAE del ingenuo estacional
+en la muestra de entrenamiento; MASE < 1 indica mejora [@hyndman2006]. Los intervalos empíricos por horizonte se
+calculan con errores de origen móvil y su cobertura se verifica en orígenes posteriores; con pocas observaciones
+tienden a ser estrechos.
+
+# Ejercicios resueltos y preguntas de discusión {#sec-ejercicios}
+
+**1. Formulación.** Una cadena de farmacias quiere «usar datos para el stock». Formula un problema predictivo.
+*Respuesta:* $Y$ = unidades vendidas por producto y local en la próxima semana; unidad producto-local-semana;
+horizonte de una semana; decisión: reposición; métrica guía: MAE en unidades y sesgo, porque el quiebre de stock
+y el sobrestock tienen costos distintos. Variables: ventas rezagadas, promociones planificadas, estacionalidad.
+
+**2. Sesgo y varianza.** Un árbol sin límite de profundidad logra $R^2=0{,}99$ en entrenamiento y $0{,}55$ en
+validación; una regresión lineal logra $0{,}80$ y $0{,}78$. *Respuesta:* el árbol tiene alta varianza (sobreajuste).
+Se prefiere la lineal o un árbol podado; la brecha entrenamiento–validación es la señal.
+
+**3. Razón de chances.** En una logística, el coeficiente de «retrasos de pago» es $0{,}40$ por retraso. La
+probabilidad de abandono de un cliente es 0,25. ¿Cuál es con un retraso más? *Respuesta:* chances $=0{,}25/0{,}75=1/3$;
+nuevas chances $=e^{0{,}40}/3\approx0{,}497$; probabilidad $=0{,}497/1{,}497\approx0{,}33$.
+
+**4. Métricas.** Con VP = 30, FP = 20, FN = 10 y VN = 140: accuracy $=170/200=0{,}85$; precisión $=30/50=0{,}60$;
+recall $=30/40=0{,}75$; $F_1=2(0{,}6)(0{,}75)/1{,}35\approx0{,}667$. Con $c_{FN}=5$ y $c_{FP}=1$, el costo medio es
+$(5\cdot10+20)/200=0{,}35$.
+
+**5. Umbral óptimo.** Un falso negativo de fraude cuesta 200 mil CLP y bloquear una transacción legítima, 10 mil.
+*Respuesta:* $t^*=10/210\approx0{,}048$: con probabilidades calibradas, conviene revisar toda transacción con riesgo
+superior a 4,8%. Si la capacidad del equipo de revisión es limitada, el umbral efectivo lo fija esa restricción.
+
+**6. Calibración.** Un modelo tiene AUC 0,85 y entre los clientes con probabilidad estimada 0,40 abandona el 20%.
+*Respuesta:* ordena bien pero sobrestima: no es correcto comunicar «riesgo de 40%». Se recalibra (Platt o isotónica)
+con validación cruzada y se verifica con el puntaje de Brier.
+
+**7. Validación temporal.** ¿Por qué no usar validación cruzada aleatoria para pronosticar ventas mensuales?
+*Respuesta:* porque se entrenaría con meses posteriores a los que se pronostican: el error estimado sería optimista.
+Se usa origen móvil.
+
+**8. PSI.** Un tramo pasa de 20% a 30% de la población. Su contribución al PSI es
+$(0{,}30-0{,}20)\ln(0{,}30/0{,}20)\approx0{,}041$. Si otros tramos aportan 0,08 en total, el PSI de 0,121 indica cambio
+moderado: se investiga la causa antes de recalibrar.
+
+**9. Discusión.** Un modelo de abandono mejora cuando incluye «región». ¿Es aceptable usarlo para decidir a quién
+ofrecer un beneficio? *Orientación:* depende de la finalidad, de si la región actúa como sustituto de una
+característica protegida y de la calibración por grupo; la decisión requiere revisión ética y documentación.
+
+**10. Discusión.** El informe de un proveedor reporta AUC 0,95 «en datos de prueba» y un umbral optimizado. ¿Qué
+preguntas harías? *Orientación:* ¿cómo se particionó? ¿Se eligieron modelo y umbral sin la prueba? ¿Hay variables
+posteriores al evento? ¿Cuál es la línea base? ¿Cómo varía por segmento y en el tiempo?
+
+# Rúbrica formativa y ruta de doce semanas {#sec-ruta}
+
+## Rúbrica formativa de un proyecto predictivo
+
+| Dimensión | Logrado | En desarrollo | Inicial |
+|---|---|---|---|
+| Formulación (CE 1.2–1.3, 2.1) | $Y$, unidad, horizonte, decisión y costos explícitos | Falta un elemento | Problema vago o sin decisión |
+| Datos y preparación (CE 2.1–2.2) | Contrato, mecanismos de vacíos y pipeline sin fugas | Preparación correcta sin documentar | Preparación fuera del pipeline o con fugas |
+| Modelamiento (CE 2.3–2.4) | Línea base, al menos dos familias y validación adecuada | Un modelo con validación | Sin línea base ni validación |
+| Evaluación (CE 3.1–3.2) | Métricas pertinentes, umbral por costo, prueba consultada una vez | Métricas correctas sin umbral económico | Solo accuracy o evaluación en entrenamiento |
+| Limitaciones y mejoras (CE 3.3, 3.5) | Segmentos, estabilidad y recomendaciones verificables | Limitaciones genéricas | Sin análisis crítico |
+| Comunicación (CE 1.4, 3.4) | Mensaje por audiencia con incertidumbre y ficha | Mensaje claro sin incertidumbre | Jerga sin decisión |
+
+La rúbrica es formativa: no reemplaza las ponderaciones ni los instrumentos institucionales vigentes.
+
+## Ruta sugerida
+
+| Semana | Unidad | Tema | Recurso principal |
+|---|---|---|---|
+| 1 | U1 | Problema predictivo, error reducible e irreducible | Notebook 01 · guía cap. 1 |
+| 2 | U1 | Técnicas, aplicaciones, límites y fuga | Notebook 01 · guía cap. 2 |
+| 3 | U2 | CRISP-DM, calidad de datos y pipeline | Notebook 02 · guía cap. 3 |
+| 4 | U2 | Regresión múltiple y estacionalidad | Notebook 03 · guía cap. 4 |
+| 5 | U2 | Clasificación: logística, árboles, KNN y bosques | Notebook 04 · guía cap. 5 |
+| 6 | U2 | Regularización y modelos no lineales | Notebook 03 · guía cap. 6 |
+| 7 | U2 | Validación cruzada e hiperparámetros | Notebook 05 · guía cap. 7 |
+| 8 | U3 | Métricas de regresión y clasificación · laboratorio S8 | Notebook 05 · guía cap. 8 |
+| 9 | U3 | Curvas ROC/PR, umbral y costos | Notebook 05 · guía cap. 9 |
+| 10 | U3 | Calibración, eventos raros y prueba final | Notebook 05 · guía cap. 9 |
+| 11 | U3 | Limitaciones, estabilidad, deriva y riesgo de modelo | Notebook 06 · guía cap. 10 |
+| 12 | U3 | Ficha del modelo, recomendaciones y comunicación | Notebook 06 · guía cap. 11 |
+| Profundización | — | Pronóstico de series de tiempo | Notebook 07 · guía cap. 16 |
+
+# Glosario {#sec-glosario}
+
+| Término | Definición |
+|---|---|
+| AP (precisión promedio) | Resumen de la curva precisión–recall; su referencia es la prevalencia |
+| AUC | Probabilidad de que un positivo reciba mayor puntaje que un negativo |
+| Brier | Error cuadrático medio de las probabilidades estimadas |
+| Calibración | Concordancia entre probabilidades estimadas y frecuencias observadas |
+| Deriva | Cambio en la distribución de las variables o en la relación con el resultado |
+| Fuga de información | Uso de datos no disponibles al momento de decidir |
+| Gini | $2\,\text{AUC}-1$ en el contexto de puntajes de riesgo |
+| Hiperparámetro | Parámetro fijado antes de entrenar que controla la complejidad |
+| KS | Máxima distancia entre distribuciones acumuladas de puntaje de positivos y negativos |
+| Línea base | Regla simple que un modelo debe superar |
+| MASE | Error absoluto escalado por el ingenuo estacional |
+| PSI | Índice de estabilidad poblacional |
+| Razón de chances | Factor multiplicativo de las chances por unidad de una variable |
+| Regularización | Penalización de coeficientes para reducir varianza |
+| Umbral | Punto de corte que convierte probabilidades en acciones |
+| Validación cruzada | Rotación de pliegues para estimar el desempeño con su variabilidad |
+
+# Referencias {.unnumbered}
+
+::: {#refs}
+:::

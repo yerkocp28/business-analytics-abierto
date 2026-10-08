@@ -1,0 +1,33 @@
+﻿criterio_o_tema,nivel,contenido,RA,qmd_ancla,html_ancla,notebook,notebook_ancla,evidencia
+1.1,criterio,Características del problema,RA1,sec-problema,sec-problema,notebooks/EBA_01_problema_descripcion_muestreo.ipynb,problema,"Contrato con unidad, población, estimando y decisión"
+1.2,criterio,Seleccionar y justificar método,RA1,sec-problema,sec-problema,notebooks/EBA_01_problema_descripcion_muestreo.ipynb,muestreo,Justificar método según diseño y tipo de variable
+1.3,criterio,Aplicar correctamente el método,RA1,sec-intervalos,sec-intervalos,notebooks/EBA_03_estimacion_intervalos.ipynb,estimacion,"Cálculo, supuesto e interpretación del intervalo"
+1.4,criterio,Regresión y correlación,RA1,sec-regresion,sec-regresion,notebooks/EBA_04_correlacion_regresion.ipynb,regresion,"Modelo simple y múltiple, coeficientes, diagnóstico"
+2.1,criterio,Interpretar medidas estadísticas,RA2,sec-descripcion,sec-descripcion,notebooks/EBA_01_problema_descripcion_muestreo.ipynb,descripcion,"Centro, dispersión y probabilidades con unidades"
+2.2,criterio,Contextualizar resultados,RA2,sec-contrastes,sec-contrastes,notebooks/EBA_05_hipotesis_anova.ipynb,welch,Diferencia de minutos y mínimo práctico
+2.3,criterio,Implicancias prácticas,RA2,sec-comunicacion,sec-comunicacion,notebooks/EBA_08_integrador_comunicacion.ipynb,evidencia,Beneficio esperado e incertidumbre
+2.4,criterio,Riesgos y limitaciones,RA2,sec-contrastes,sec-contrastes,notebooks/EBA_05_hipotesis_anova.ipynb,decision,"Supuestos, costo y límites de la recomendación"
+3.1,criterio,Analizar al menos dos herramientas gráficas,RA3,sec-herramientas,sec-herramientas,notebooks/EBA_07_visualizacion_herramientas.ipynb,herramientas,Comparar Python y Excel con criterios explícitos
+3.2,criterio,Usar funciones básicas de herramientas,RA3,sec-herramientas,sec-herramientas,notebooks/EBA_07_visualizacion_herramientas.ipynb,excel,Libro con fórmulas/gráfico y conciliación contra Python
+3.3,criterio,Interpretar en contexto empresarial,RA3,sec-comunicacion,sec-comunicacion,notebooks/EBA_08_integrador_comunicacion.ipynb,comunicar,"Figura con efecto, intervalo y umbral práctico"
+3.4,criterio,Comunicar hallazgos y solución,RA3,sec-comunicacion,sec-comunicacion,notebooks/EBA_08_integrador_comunicacion.ipynb,rubrica,"Memo, tablero, defensa y plan de piloto"
+M01,contenido_minimo,Introducción a estadística aplicada en negocios,RA1,sec-problema,sec-problema,notebooks/EBA_01_problema_descripcion_muestreo.ipynb,problema,Problema ComercioSur y estimando
+M02,contenido_minimo,Clasificación de métodos descriptivos e inferenciales,RA1,sec-problema,sec-problema,notebooks/EBA_01_problema_descripcion_muestreo.ipynb,descripcion,Elegir entre resumen y generalización
+M03,contenido_minimo,Muestreo y representatividad,RA1,sec-muestreo,sec-muestreo,notebooks/EBA_01_problema_descripcion_muestreo.ipynb,muestreo,"Aleatorio, estratificado ponderado, conveniencia y error"
+M04,contenido_minimo,Probabilidades,RA1,sec-probabilidad,sec-probabilidad,notebooks/EBA_02_probabilidad_bayes_distribuciones.ipynb,eventos,"Reglas de unión, intersección y condicional"
+M05,contenido_minimo,Teorema de Bayes,RA1,sec-bayes,sec-bayes,notebooks/EBA_02_probabilidad_bayes_distribuciones.ipynb,bayes,Alerta y tasa base con frecuencias
+M06,contenido_minimo,Tipos de distribuciones,RA1,sec-distribuciones,sec-distribuciones,notebooks/EBA_02_probabilidad_bayes_distribuciones.ipynb,discretas,Bernoulli/binomial/Poisson y continuas en bloque siguiente
+M07,contenido_minimo,Regresión y correlación,RA1,sec-regresion,sec-regresion,notebooks/EBA_04_correlacion_regresion.ipynb,correlacion,Pearson/Spearman y modelos simple/múltiple
+M08,contenido_minimo,ANOVA,RA2,sec-anova,sec-anova,notebooks/EBA_05_hipotesis_anova.ipynb,anova,"F clásico/Welch, eta² y Holm"
+M09,contenido_minimo,Comparación de medias y test de hipótesis,RA2,sec-contrastes,sec-contrastes,notebooks/EBA_05_hipotesis_anova.ipynb,hipotesis,"Una/dos medias, pareado y proporciones"
+M10,contenido_minimo,Modelos de series de tiempo,RA2,sec-series,sec-series,notebooks/EBA_06_series_tiempo.ipynb,modelos,"Ingenuos, SES, Holt, ARIMA y validación temporal"
+M11,contenido_minimo,Aplicación en contextos empresariales,RA2,sec-comunicacion,sec-comunicacion,notebooks/EBA_08_integrador_comunicacion.ipynb,evidencia,"Campañas: efecto, incertidumbre y costo"
+M12,contenido_minimo,Limitaciones y riesgos de decisiones estadísticas,RA2,sec-contrastes,sec-contrastes,notebooks/EBA_05_hipotesis_anova.ipynb,decision,No rechazo no prueba igualdad; análisis y sensibilidad
+M13,contenido_minimo,Diseño de visualizaciones efectivas,RA3,sec-visualizacion,sec-visualizacion,notebooks/EBA_07_visualizacion_herramientas.ipynb,dashboard,Distribución y medias con intervalos
+M14,contenido_minimo,"Herramientas Excel, Power BI, Python",RA3,sec-herramientas,sec-herramientas,notebooks/EBA_07_visualizacion_herramientas.ipynb,herramientas,"Python ejecutado, libro Excel y receta Power BI"
+M15,contenido_minimo,Presentar datos a públicos no técnicos,RA3,sec-comunicacion,sec-comunicacion,notebooks/EBA_08_integrador_comunicacion.ipynb,comunicar,"Memo sin jerga, con efecto y límite"
+M16,contenido_minimo,Dashboards y reportes empresariales,RA3,sec-visualizacion,sec-visualizacion,notebooks/EBA_07_visualizacion_herramientas.ipynb,dashboard,"Filtro, población y denominador conciliados"
+M17,contenido_minimo,Evaluación de impacto de visualizaciones,RA3,sec-visualizacion,sec-visualizacion,notebooks/EBA_07_visualizacion_herramientas.ipynb,impacto,"Protocolo A/B de comprensión, aciertos y tiempo"
+A01,apoyo,Suavizamiento y ARIMA,RA2,sec-series,sec-series,notebooks/EBA_06_series_tiempo.ipynb,modelos,"Modelos ajustados, convergencia, intervalos y límites"
+A02,apoyo,Medias y proporciones; errores I/II,RA2,sec-contrastes,sec-contrastes,notebooks/EBA_05_hipotesis_anova.ipynb,proporciones,"Contrastes, conteos y potencia simulada"
+A03,apoyo_nucleo,Intervalos y bootstrap,RA2,sec-intervalos,sec-intervalos,notebooks/EBA_03_estimacion_intervalos.ipynb,bootstrap,Distinguir incertidumbre y dispersión

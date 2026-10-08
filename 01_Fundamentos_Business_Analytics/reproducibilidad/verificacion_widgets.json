@@ -1,0 +1,27 @@
+[
+  {
+    "cambios_de_control": 6,
+    "autoevaluacion": "OK",
+    "notebook": "FBA_01_negocio_datos.ipynb"
+  },
+  {
+    "cambios_de_control": 6,
+    "autoevaluacion": "OK",
+    "notebook": "FBA_02_exploracion_visual.ipynb"
+  },
+  {
+    "cambios_de_control": 12,
+    "autoevaluacion": "OK",
+    "notebook": "FBA_03_herramientas_caso_integrador.ipynb"
+  },
+  {
+    "cambios_de_control": 12,
+    "autoevaluacion": "OK",
+    "notebook": "FBA_04_probabilidad_simulacion.ipynb"
+  },
+  {
+    "cambios_de_control": 6,
+    "autoevaluacion": "OK",
+    "notebook": "FBA_05_modelos_evaluacion.ipynb"
+  }
+]

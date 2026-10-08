@@ -1,0 +1,12 @@
+# Entornos y cachés locales
+.venv*/
+.cache-fba/
+__pycache__/
+.ipynb_checkpoints/
+.quarto/
+_freeze/
+*_files/
+# Salidas que generan los notebooks al ejecutarse
+salidas/
+*.png
+!*/reproducibilidad/capturas/*.png

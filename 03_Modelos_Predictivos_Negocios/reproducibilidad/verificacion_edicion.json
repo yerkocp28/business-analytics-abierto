@@ -1,0 +1,69 @@
+{
+  "edicion": "2026-10-08",
+  "notebooks": [
+    {
+      "nombre": "MPN_01_problema_predictivo.ipynb",
+      "celdas_codigo": 9,
+      "widgets": 34,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "MPN_02_crisp_preparacion.ipynb",
+      "celdas_codigo": 8,
+      "widgets": 24,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "MPN_03_regresion_demanda.ipynb",
+      "celdas_codigo": 11,
+      "widgets": 43,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "MPN_04_clasificacion_abandono.ipynb",
+      "celdas_codigo": 11,
+      "widgets": 40,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "MPN_05_validacion_evaluacion.ipynb",
+      "celdas_codigo": 13,
+      "widgets": 34,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "MPN_06_limitaciones_comunicacion.ipynb",
+      "celdas_codigo": 9,
+      "widgets": 31,
+      "resultado": "OK"
+    },
+    {
+      "nombre": "MPN_07_pronostico_demanda.ipynb",
+      "celdas_codigo": 6,
+      "widgets": 24,
+      "resultado": "OK"
+    }
+  ],
+  "html": {
+    "enlaces_locales_verificados": 106,
+    "javascript": "OK",
+    "uso_sin_red": "OK",
+    "umbral_contrastado_python": "OK",
+    "auc_contrastado_sklearn": "OK",
+    "escenarios_contrastados_sklearn": "OK",
+    "calculadoras": "OK",
+    "datos_incrustados_actualizados": "OK",
+    "simuladores_y_quiz": "OK",
+    "movil_sin_desbordamiento": "OK"
+  },
+  "cobertura": {
+    "criterios_oficiales": 15,
+    "filas_temas": 30,
+    "anclas_y_rutas": "OK"
+  },
+  "pdf": {
+    "paginas": 16,
+    "caracteres_extraidos": 46169,
+    "resultado": "OK"
+  }
+}

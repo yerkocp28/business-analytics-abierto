@@ -1,0 +1,63 @@
+[
+  {
+    "cambios_de_control": 8,
+    "autoevaluacion": "OK",
+    "notebook": "MPN_01_problema_predictivo.ipynb",
+    "funciones": [
+      "explorar_ruido",
+      "explorar_red"
+    ]
+  },
+  {
+    "cambios_de_control": 4,
+    "autoevaluacion": "OK",
+    "notebook": "MPN_02_crisp_preparacion.ipynb",
+    "funciones": [
+      "explorar_imputacion"
+    ]
+  },
+  {
+    "cambios_de_control": 14,
+    "autoevaluacion": "OK",
+    "notebook": "MPN_03_regresion_demanda.ipynb",
+    "funciones": [
+      "explorar_regularizacion",
+      "explorar_escenario"
+    ]
+  },
+  {
+    "cambios_de_control": 12,
+    "autoevaluacion": "OK",
+    "notebook": "MPN_04_clasificacion_abandono.ipynb",
+    "funciones": [
+      "explorar_sigmoide",
+      "explorar_campania"
+    ]
+  },
+  {
+    "cambios_de_control": 8,
+    "autoevaluacion": "OK",
+    "notebook": "MPN_05_validacion_evaluacion.ipynb",
+    "funciones": [
+      "explorar_complejidad",
+      "explorar_umbral"
+    ]
+  },
+  {
+    "cambios_de_control": 6,
+    "autoevaluacion": "OK",
+    "notebook": "MPN_06_limitaciones_comunicacion.ipynb",
+    "funciones": [
+      "explorar_deriva",
+      "explorar_mensaje"
+    ]
+  },
+  {
+    "cambios_de_control": 4,
+    "autoevaluacion": "OK",
+    "notebook": "MPN_07_pronostico_demanda.ipynb",
+    "funciones": [
+      "explorar_pronostico"
+    ]
+  }
+]

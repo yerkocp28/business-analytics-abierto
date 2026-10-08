@@ -1,0 +1,413 @@
+---
+title: "Estadística Aplicada a Business Analytics"
+subtitle: "Método, incertidumbre y decisiones · Manual científico y técnico"
+author: "Yerko Carreño Pérez"
+date: 2026-10-08
+lang: es
+toc: true
+toc-depth: 2
+number-sections: true
+bibliography: referencias.bib
+link-citations: true
+jupyter: python3
+execute:
+  echo: false
+  warning: false
+  error: false
+  cache: false
+  daemon: false
+format:
+  typst:
+    papersize: a4
+    fontsize: 10.5pt
+    mainfont: Cambria
+    margin:
+      x: 2.2cm
+      y: 2.1cm
+  html:
+    theme: default
+    embed-resources: true
+    toc-location: left
+    html-math-method: mathml
+    css: manual.css
+---
+
+```{python}
+#| label: configuracion
+from pathlib import Path
+import sys
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+from IPython.display import display, Markdown
+RAIZ=next(p for p in (Path.cwd(),*Path.cwd().parents) if (p/'_transversal/datos').is_dir())
+sys.path.insert(0,str(RAIZ/'02_Estadistica_Business_Analytics/reproducibilidad'))
+from eba_recursos import *
+df=pedidos()
+plt.rcParams.update({'figure.figsize':(7,3.2),'font.size':10,'axes.spines.top':False,'axes.spines.right':False})
+def tabla(x):display(Markdown(x.to_markdown(index=False,floatfmt='.3f')))
+```
+
+# Propósito y recorrido {#sec-ruta}
+
+**Pregunta central: ¿qué permite concluir la evidencia, con qué incertidumbre y para qué decisión?** Este material propio desarrolla 17 contenidos mínimos y 12 criterios de evaluación de un curso de Estadística Aplicada a Business Analytics. El prerrequisito es Fundamentos de Business Analytics. Aquí se profundiza en selección de métodos, inferencia e interpretación; el entrenamiento exhaustivo de algoritmos se trabaja en Modelos Predictivos.
+
+El curso define tres resultados: **RA1**, seleccionar y aplicar métodos; **RA2**, interpretar resultados para decidir; **RA3**, elaborar informes y visualizaciones con software. El manual desarrolla fundamentos y casos calculados; la guía maestra presenta los mismos capítulos con experimentos interactivos; ocho notebooks permiten inspeccionar y modificar los cálculos. Se evita mantener tres temarios independientes: la guía incorpora el contenido renderizado de esta fuente QMD.
+
+## Ruta propuesta de doce semanas
+
+Esta secuencia de doce semanas es una propuesta docente ajustable, no una calendarización oficial.
+
+| Semana | Pregunta y contenido | Laboratorio | Evidencia mínima |
+|---|---|---|---|
+| 1 | ¿Qué queremos estimar? Problema, variables y descripción | 01 | Contrato de análisis y resumen |
+| 2 | ¿A quién representan los datos? Muestreo y precisión | 01 | Diseño, sesgo y tamaño |
+| 3 | ¿Cómo razonar con incertidumbre? Probabilidad y Bayes | 02 | Tabla de frecuencias y posterior |
+| 4 | ¿Qué distribución es plausible? Discretas, continuas y simulación | 02 | Modelo, cálculo y supuesto |
+| 5 | ¿Cuánto puede variar una estimación? Intervalos | 03 | Efecto, incertidumbre y población |
+| 6 | ¿Qué relación podemos interpretar? Correlación y regresión | 04 | Coeficientes, diagnóstico y límite |
+| 7 | ¿Los grupos difieren de forma relevante? Contrastes | 05 | Diferencia, IC, p y costo |
+| 8 | ¿Qué campaña conviene? ANOVA, multiplicidad y riesgos | 05 | Comparaciones y decisión condicionada |
+| 9 | ¿Cómo pronosticar el próximo período? Series y ARIMA | 06 | Referencias, validación y límites |
+| 10 | ¿Qué debe mostrar un gráfico? Diseño y herramientas | 07 | Python y Excel conciliados |
+| 11 | ¿El tablero mejora la comprensión? Dashboard e impacto | 07 | Protocolo de evaluación visual |
+| 12 | ¿Cómo defender una recomendación? Integración | 08 | Memo, notebook, tablero y defensa |
+
+Una sesión de referencia de 90 minutos distribuye 10 en recuperación de conocimientos, 15 en una idea y su supuesto, 20 en un ejemplo resuelto, 30 en una modificación del caso y 15 en discusión y salida individual. Las duraciones son orientativas; series de tiempo y regresión pueden requerir una segunda sesión o preparación previa. Antes de clase: leer una sección y contestar tres preguntas. Después: explicar un resultado distinto al del ejemplo. El docente usa el mismo caso para dedicar tiempo al razonamiento y no a aprender un negocio nuevo cada semana.
+
+**Profundización separada:** derivar HC3, estudiar no inferioridad, bootstrap por conglomerados, selección SARIMA y modelos jerárquicos. No se agregan como exigencias mínimas. Los mecanismos, supuestos y diagnósticos del núcleo sí son obligatorios para una interpretación válida.
+
+## Evaluación y normas del curso
+
+Las rúbricas y ejercicios de este manual son formativos y no constituyen un reglamento. El docente debe usar la calendarización, las ponderaciones y las normas vigentes de su sección.
+
+# Formular y seleccionar métodos {#sec-problema}
+
+Una decisión empresarial no es todavía una pregunta estadística. «Mejorar atención» se transforma en «estimar la diferencia del tiempo medio de atención entre B y A para pedidos futuros comparables». Se define la **unidad de análisis**, la población, la variable, el período, el parámetro o estimando, la precisión necesaria y la acción que cambiaría con el resultado. Distinguir una variable de respuesta de una variable explicativa evita modelar la columna equivocada.
+
+**ComercioSur** es una empresa ficticia. Los datos nuevos se generan con semilla fija y se documentan en el diccionario del curso: marco de 5.000 pedidos, muestra aleatoria simple de 600, serie mensual de 72 observaciones y 80 mediciones pareadas. Cada pedido corresponde a un cliente distinto. Campaña A/B/C se asigna aleatoriamente; canal Web/Tienda es observacional. Ticket se expresa en miles de unidades monetarias (UM) y atención en minutos. La serie mensual es un conjunto independiente: no se inventan fechas para unirla a pedidos.
+
+El marco finito permite conocer un parámetro y estudiar cómo cambia su estimación. El análisis operativo generaliza hacia **pedidos futuros**, una superpoblación: esa generalización añade estabilidad del proceso e independencia como supuestos. Una estimación de la media del marco no es automáticamente un pronóstico del próximo mes.
+
+| Objetivo | Variable / diseño | Método inicial | Pregunta de control |
+|---|---|---|---|
+| Describir | Numérica o categórica | Cuantiles, media, dispersión, frecuencias | ¿Qué representa una fila? |
+| Estimar un promedio | Numérica, unidades independientes | Media e IC t | ¿Población finita o futura? |
+| Estimar una proporción | Binaria | Proporción e IC de Wilson | ¿Está definido el denominador? |
+| Comparar dos medias | Grupos independientes | Welch | ¿Hay repetición de clientes? |
+| Comparar antes/después | Mismas unidades | t sobre diferencias | ¿Existe control concurrente? |
+| Comparar varias medias | Factor con tres o más niveles | ANOVA / Welch y contrastes | ¿Qué familia se controla? |
+| Examinar relaciones | Respuesta numérica y covariables | Correlación, regresión | ¿Asociación o efecto causal? |
+| Pronosticar | Observaciones ordenadas en el tiempo | Referencias, suavizamiento, ARIMA | ¿Qué horizonte se evaluó? |
+
+Descriptiva resume lo observado; inferencial extiende conclusiones bajo un diseño y un modelo. Un censo puede describir sin error de muestreo, pero conserva posibles errores de medición. Una muestra grande puede ser precisa respecto de una población mal definida. La elección eficiente comienza por el objetivo y el diseño, no por buscar una función que entregue un p pequeño.
+
+**Ejercicio resuelto 1.** Un registro de transacciones tiene diez compras por persona. Para estudiar satisfacción por cliente, tratar cada compra como independiente da demasiado peso a compradores frecuentes y subestima incertidumbre. Solución: definir el cliente como unidad, agregar de forma pertinente o usar un modelo que represente dependencia. Para estudiar tiempo de transacción, las compras siguen siendo unidades, pero la dependencia dentro del cliente debe considerarse.
+
+# Descripción, calidad y gráficos exploratorios {#sec-descripcion}
+
+Para $n$ observaciones numéricas, la media es $\bar x=n^{-1}\sum x_i$ y la varianza muestral $s^2=(n-1)^{-1}\sum(x_i-\bar x)^2$. La desviación estándar $s$ vuelve a las unidades originales. Se reserva $\sigma$ para la desviación poblacional o parámetro del modelo y $s$ para su estimación muestral: esta convención explícita evita confundir notaciones entre cursos. La mediana divide los datos ordenados; el rango intercuartílico $Q_{.75}-Q_{.25}$ describe la mitad central con menor sensibilidad a extremos. Un promedio de tasas sin ponderar puede ser erróneo: la tasa total de resolución es total resuelto dividido por total de pedidos, no la media simple de tasas de grupos de tamaños distintos.
+
+En ComercioSur el ticket es asimétrico, por construcción. La media representa gasto esperado por pedido y ayuda a presupuestar; la mediana describe un pedido central. Ninguna es universalmente superior. Reportar ambas con cuartiles evita esconder colas. El coeficiente de variación $s/\bar x$ solo tiene interpretación adecuada con escala de razón y media positiva lejos de cero; no comparar variables con ceros arbitrarios mediante ese cociente.
+
+```{python}
+#| label: resumen-comerciosur
+tabla(df.groupby('campana').agg(n=('id','size'),media_min=('tiempo_min','mean'),sd_min=('tiempo_min','std'),ticket_mediano_mil=('ticket_mil','median'),resolucion=('resuelto','mean')).reset_index())
+fig,ax=plt.subplots(1,2,figsize=(9,3))
+ax[0].hist(df.ticket_mil,bins=25,color='#087f8c');ax[0].set(xlabel='Ticket (miles de UM)',ylabel='Pedidos')
+for g,x in df.groupby('campana'):ax[1].scatter(x.ticket_mil,x.tiempo_min,s=8,alpha=.35,label=g)
+ax[1].set(xlabel='Ticket (miles de UM)',ylabel='Tiempo (min)');ax[1].legend(title='Campaña');plt.tight_layout();plt.show()
+```
+
+Antes de resumir: verificar tipos, clave única, unidades, rangos, vacíos y denominadores. Un faltante no es un cero. Un extremo puede ser un error de unidad, un caso válido raro o un cambio operativo; se investiga y registra la decisión. La imputación indiscriminada a la media reduce artificialmente dispersión. El notebook introduce errores en una copia y conserva el original para hacer visible ese razonamiento.
+
+**Ejercicio resuelto 2.** Dos sucursales atienden 10 y 90 casos, con 9 y 45 resueltos. Las tasas son 90% y 50%; su media simple es 70%, pero la tasa total es 54/100=54%. Para una decisión sobre todos los casos se usa 54%; para describir una sucursal elegida al azar, la pregunta es distinta. Siempre nombrar la unidad y ponderación.
+
+# Muestreo, representatividad y precisión {#sec-muestreo}
+
+**Muestreos probabilísticos:** aleatorio simple asigna probabilidades conocidas de inclusión; estratificado selecciona dentro de grupos definidos para asegurar precisión por grupo; por conglomerados selecciona grupos completos y suele introducir dependencia. Sistemático selecciona cada $k$-ésimo elemento desde un arranque aleatorio y exige vigilar periodicidad. **No probabilísticos:** conveniencia, respuesta voluntaria, cuotas sin selección aleatoria, juicio experto y bola de nieve. Pueden servir para exploración o poblaciones de acceso difícil, pero no heredan las garantías del diseño probabilístico: aumentar su tamaño no corrige automáticamente selección. Tener cuotas similares a la población no equivale a muestreo estratificado aleatorio.
+
+Para estratos $h$ con pesos poblacionales $W_h=N_h/N$, el estimador de media es $\hat\mu=\sum_h W_h\bar x_h$. Si se toma igual cantidad de Web y Tienda pero el marco tiene proporciones distintas, la media sin ponderar cambia el estimando. Con selección aleatoria sin reemplazo dentro de cada estrato, su varianza estimada es $\sum_h W_h^2(1-n_h/N_h)s_h^2/n_h$. Los pesos se basan en un marco defendible, no se escogen para conseguir el resultado deseado.
+
+En muestreo aleatorio simple sin reemplazo, usando $S^2$ con denominador $N-1$ en una población finita:
+
+$$\operatorname{SE}(\bar X)=\frac{S}{\sqrt n}\sqrt{1-\frac nN}.$$
+
+Para planificación aproximada de una proporción con margen absoluto $e$, confianza $1-\alpha$ y proporción anticipada $p$:
+
+$$n_0=\frac{z_{1-\alpha/2}^2p(1-p)}{e^2},\qquad n=\left\lceil\frac{n_0}{1+(n_0-1)/N}\right\rceil.$$
+
+Es una aproximación de diseño bajo muestreo aleatorio simple; no es una garantía para diseños complejos ni un cálculo de potencia de dos grupos. Si no hay información de $p$, .5 maximiza la varianza binomial. Para una tasa esperada de respuesta $r$, se planifican $\lceil n/r\rceil$ invitaciones y se verifica factibilidad. La inflación compensa cantidad de respuestas, no sesgo de no respuesta.
+
+```{python}
+#| label: plan-muestral
+tabla(pd.DataFrame([{'margen':e,**tamano_muestra(error=e,respuesta=.8)} for e in [.03,.05,.08]]))
+```
+
+**Ejercicio resuelto 3.** Reducir el margen de 5 a 2,5 puntos porcentuales requiere aproximadamente cuadruplicar $n_0$ antes de la corrección finita, pues $n_0$ depende de $e^{-2}$. Es una relación de precisión bajo el mismo diseño, no una garantía de representatividad. Registrar marco, selección, no respuesta, exclusiones y pesos hace defendible la muestra.
+
+# Probabilidad y eventos {#sec-probabilidad}
+
+Un evento es un conjunto de resultados posibles; $P(A)$ está entre cero y uno. Las reglas esenciales son complemento, unión y probabilidad condicionada:
+
+$$P(A^c)=1-P(A),\quad P(A\cup B)=P(A)+P(B)-P(A\cap B),\quad P(A\mid B)=\frac{P(A\cap B)}{P(B)},\quad P(B)>0.$$
+
+Independencia significa $P(A\cap B)=P(A)P(B)$; no es lo mismo que exclusión mutua. Si dos eventos de probabilidad positiva no pueden ocurrir juntos, conocer uno informa sobre el otro. La asignación aleatoria de campaña independiza tratamiento de características previas en el mecanismo experimental; no obliga a que tratamiento y resultado sean independientes.
+
+Para una variable aleatoria discreta $X$, $E[X]=\sum_x xP(X=x)$ y $\operatorname{Var}(X)=E[(X-E[X])^2]$. Valor esperado pondera resultados; no significa que el resultado esperado vaya a ocurrir en un caso individual. Una decisión puede necesitar también dispersión, colas y capacidad operativa.
+
+**Ejercicio resuelto 4.** Un servicio gana 20 UM con probabilidad .8 y pierde 50 UM con probabilidad .2: valor esperado $20(.8)-50(.2)=6$ UM. El promedio positivo no elimina un 20% de pérdidas ni restricciones de liquidez. Para agregar operaciones, la independencia entre pérdidas importa tanto como su media.
+
+# Bayes y tasas base {#sec-bayes}
+
+Bayes permite actualizar una probabilidad previa al observar evidencia:
+
+$$P(R\mid +)=\frac{P(+\mid R)P(R)}{P(+\mid R)P(R)+P(+\mid R^c)P(R^c)}.$$
+
+En una alerta de riesgo, sensibilidad es $P(+\mid R)$, especificidad es $P(-\mid R^c)$ y prevalencia es $P(R)$. El valor predictivo positivo $P(R\mid +)$ depende de las tres. No confundir la tasa de falsos positivos entre casos sin riesgo con la fracción de falsas alertas entre todas las alertas.
+
+**Ejercicio resuelto 5.** Con 2% de riesgo, sensibilidad 90% y especificidad 95%, entre 10.000 casos se esperan 200 con riesgo. Habrá 180 alertas verdaderas y 490 falsas; 180/670≈26,9% de alertas corresponden a riesgo. Las frecuencias naturales hacen visible el denominador. No significa que el sistema sea inútil: su utilidad depende de revisión, costo y consecuencias de cada error.
+
+```{python}
+#| label: bayes-tasas
+tabla(pd.DataFrame([{'prevalencia':p,**bayes(p,.9,.95)} for p in [.005,.02,.10]]))
+```
+
+Si cambia la población de uso, la prevalencia puede cambiar y la precisión de las alertas también, incluso manteniendo sensibilidad y especificidad. En un negocio real estas últimas también pueden variar. No transferir un resultado de muestra equilibrada artificialmente sin considerar la tasa base de despliegue.
+
+# Distribuciones y simulación {#sec-distribuciones}
+
+Una distribución es un modelo de variación, no una etiqueta elegida por el nombre de una columna. Identificar soporte, unidad, mecanismo, parámetros y supuestos permite verificar si el modelo es razonable.
+
+| Modelo | Soporte y parámetros | Media / varianza | Aplicación y límite |
+|---|---|---|---|
+| Bernoulli | 0/1; $p$ | $p$ / $p(1-p)$ | Resolución individual |
+| Binomial | 0 a $n$; $n,p$ | $np$ / $np(1-p)$ | Éxitos con ensayos independientes y p común |
+| Poisson | Conteos no negativos; $\lambda$ | $\lambda$ / $\lambda$ | Llegadas con tasa estable; vigilar sobredispersión |
+| Uniforme | $[a,b]$ | $(a+b)/2$ / $(b-a)^2/12$ | Idealización acotada con igual densidad |
+| Normal | Recta real; $\mu,\sigma$ | $\mu$ / $\sigma^2$ | Ruido simétrico; puede dar valores imposibles si escala inadecuada |
+| Exponencial | No negativos; tasa $\lambda$ | $1/\lambda$ / $1/\lambda^2$ | Espera sin memoria bajo un proceso compatible |
+
+La función de masa asigna probabilidad a valores discretos; la densidad continua se integra sobre intervalos. Para una variable continua, $P(X=x)=0$ aunque su densidad en $x$ sea alta. Estandarizar una normal produce $Z=(X-\mu)/\sigma$; no transforma una distribución arbitraria en normal.
+
+**Ejercicio resuelto 6.** Con $X\sim\operatorname{Binomial}(20,.8)$, $P(X\ge18)=\sum_{k=18}^{20}\binom{20}{k}.8^k.2^{20-k}$. En software se usa `binom.sf(17,20,.8)`, que incluye 18, 19 y 20. Para $T\sim N(40,7^2)$, $P(T>50)=1-\Phi((50-40)/7)$. Revisar el límite inclusivo evita errores de una unidad en conteos.
+
+```{python}
+#| label: probabilidades-calculadas
+tabla(pd.DataFrame({'pregunta':['Al menos 18 éxitos de 20','Más de 8 llegadas, tasa 5','Tiempo normal sobre 50 min','Espera exponencial sobre 10, media 5'],'probabilidad':[stats.binom.sf(17,20,.8),stats.poisson.sf(8,5),stats.norm.sf(50,40,7),stats.expon.sf(10,scale=5)]}))
+```
+
+La simulación reproduce un mecanismo supuesto. Una semilla fija permite comparar implementaciones; no convierte el mecanismo en verdad. El teorema central del límite explica una aproximación de la distribución de una media bajo condiciones, no la normalidad de los datos individuales. Con colas extremas, dependencia o varianza no finita, la aproximación habitual puede fallar.
+
+# Estimación e intervalos {#sec-intervalos}
+
+Un **parámetro** describe una población; un **estimador** es una regla aplicada a una muestra. Su error estándar mide variabilidad entre muestras; la desviación estándar describe variabilidad de observaciones. Para una media independiente con varianza desconocida, el intervalo t clásico es:
+
+$$\bar x\pm t_{1-\alpha/2,n-1}\frac{s}{\sqrt n}.$$
+
+Su cobertura es exacta bajo muestreo independiente normal; en otros casos puede ser una aproximación. Repetir el procedimiento produce una proporción de intervalos que contienen al parámetro fijo. Un intervalo observado no contiene 95% de los pedidos ni implica una probabilidad frecuentista posterior de 95% sobre el parámetro. Un intervalo estrecho tampoco corrige sesgo [@nist_intervalos].
+
+Para una proporción $\hat p=k/n$, el intervalo de Wilson evita varios problemas del intervalo simétrico normal, especialmente cerca de 0 o 1:
+
+$$\frac{\hat p+z^2/(2n)\ \pm\ z\sqrt{\hat p(1-\hat p)/n+z^2/(4n^2)}}{1+z^2/n}.$$
+
+Aquí $z=z_{1-\alpha/2}$ y el modelo es binomial. No se debe usar como si manejara dependencia, pesos complejos o selección informativa. Si no hay eventos, el límite superior sigue siendo positivo: ausencia observada no prueba riesgo cero.
+
+```{python}
+#| label: intervalos-comerciosur
+tabla(pd.DataFrame([{'campana':g,**ic_media(x.tiempo_min)} for g,x in df.groupby('campana')]))
+k=int(df.resuelto.sum());li,ls=wilson(k,len(df))
+display(Markdown(f'Resolución global: **{k}/{len(df)} = {k/len(df):.1%}**; IC Wilson 95% **[{li:.1%}, {ls:.1%}]**. Mezcla de campañas del caso simulado.'))
+```
+
+**Bootstrap:** remuestrear unidades independientes con reemplazo aproxima incertidumbre desde la distribución empírica. El notebook obtiene un intervalo percentil para la media del ticket y lo contrasta con t. No reproduce valores ausentes de la muestra, no arregla confusión y necesita adaptar la unidad de remuestreo cuando hay clientes repetidos o dependencia temporal.
+
+**Ejercicio resuelto 7.** Con $n=100$, media 40 y $s=10$, el error estándar es 1 y el IC t de 95% aproximadamente [38,02;41,98]. Para un pedido individual, la variación típica es del orden de 10 minutos, no de 1. Aumentar n reduce incertidumbre de la media; no reduce por sí mismo la variabilidad del servicio.
+
+# Correlación y regresión {#sec-regresion}
+
+Pearson cuantifica asociación lineal mediante $r=\sum(x_i-\bar x)(y_i-\bar y)/\sqrt{\sum(x_i-\bar x)^2\sum(y_i-\bar y)^2}$. Spearman aplica correlación a rangos y detecta asociación monótona. Un valor cercano a cero no descarta una relación no lineal. Valores extremos, mezclas de segmentos y rango restringido pueden cambiar ambas medidas; el gráfico de dispersión precede a la interpretación.
+
+La regresión lineal representa $Y=X\beta+\varepsilon$. Mínimos cuadrados estima $\hat\beta=\arg\min_b\|Y-Xb\|^2$; si las columnas son linealmente independientes, $(X^TX)^{-1}X^TY$ expresa su solución algebraica. La implementación usa descomposiciones numéricas, evitando invertir matrices innecesariamente. En regresión simple, $\hat\beta_1=\sum(x_i-\bar x)(y_i-\bar y)/\sum(x_i-\bar x)^2$.
+
+En ComercioSur se modela tiempo con ticket, canal y campaña. Un coeficiente de campaña compara contra A manteniendo las otras variables constantes. Para sostener una lectura causal se necesita además el diseño de asignación y sus supuestos; incluir variables en una fórmula no los reemplaza. El coeficiente de canal es asociativo porque canal no se asignó aleatoriamente.
+
+```{python}
+#| label: regresion-calculada
+import statsmodels.formula.api as smf
+modelo=smf.ols('tiempo_min ~ ticket_mil + C(canal) + C(campana)',data=df).fit()
+rob=modelo.get_robustcov_results(cov_type='HC3')
+tabla(pd.DataFrame({'termino':modelo.params.index,'coeficiente':rob.params,'SE_HC3':rob.bse,'li':rob.conf_int()[:,0],'ls':rob.conf_int()[:,1]}))
+fig,ax=plt.subplots(1,2,figsize=(9,3))
+ax[0].scatter(modelo.fittedvalues,modelo.resid,s=8);ax[0].axhline(0,color='red');ax[0].set(xlabel='Ajustados (min)',ylabel='Residuos (min)')
+stats.probplot(modelo.resid,plot=ax[1]);plt.tight_layout();plt.show()
+```
+
+## Diagnóstico e interpretación
+
+Examinar residuos contra ajustados y tiempo, valores influyentes, colinealidad y plausibilidad del promedio condicional. Un patrón sistemático puede indicar estructura omitida; un abanico, varianza no constante. Un gráfico Q–Q informa sobre forma residual. Los diagnósticos son evidencia, no una certificación mecánica del modelo [@nist_modelos].
+
+HC3 ofrece errores estándar de coeficientes robustos frente a ciertas formas de heterocedasticidad en muestras independientes. No elimina sesgo por variable omitida, error de medición o dependencia. El notebook distingue esos intervalos de los **intervalos clásicos de predicción**, que requieren una especificación adecuada de la varianza residual.
+
+Para regresión simple homocedástica normal, en un valor $x_0$ el IC de la media incorpora $s_e\sqrt{1/n+(x_0-\bar x)^2/\sum(x_i-\bar x)^2}$; el intervalo individual agrega 1 dentro de la raíz. La observación nueva tiene variación residual adicional. Lejos del rango observado ambos pueden dar una sensación engañosa de precisión porque no representan incertidumbre sobre la forma del modelo.
+
+**Ejercicio resuelto 8.** Un coeficiente de ticket de −0,02 significa −0,02 minutos por cada mil UM adicionales, condicionado a las otras variables del modelo. No significa −2%, ni que subir precios cause menor atención. $R^2=1-\operatorname{SSE}/\operatorname{SST}$ describe ajuste respecto de una media; no prueba causalidad ni precisión futura. Modelos Predictivos retoma esta distinción con validación fuera de muestra.
+
+# Contrastes, magnitud y decisión {#sec-contrastes}
+
+Se especifican hipótesis, estimando, resultado principal, contraste bilateral o unilateral, nivel $\alpha$ y regla de análisis antes de ver los resultados. Error tipo I es rechazar una hipótesis nula verdadera; tipo II es no rechazarla bajo una alternativa concreta. La potencia $1-\beta$ depende de esa alternativa, tamaño, variabilidad y diseño. Planificar potencia requiere un efecto mínimo defendible, no el efecto más favorable observado.
+
+El valor p cuantifica incompatibilidad de los datos con un modelo nulo mediante una estadística de contraste. No es la probabilidad de que la hipótesis sea verdadera ni mide el tamaño o importancia del efecto. Una decisión necesita contexto y evidencia más amplia [@asa]. Reportar p junto con efecto, intervalo, diseño y costo ayuda a evitar conclusiones binarias.
+
+## Una media, dos medias y datos pareados
+
+Una media: $t=(\bar x-\mu_0)/(s/\sqrt n)$. Dos grupos independientes con varianzas posiblemente distintas: el contraste de Welch usa
+
+$$t=\frac{\bar x_B-\bar x_A}{\sqrt{s_B^2/n_B+s_A^2/n_A}},\qquad
+\nu=\frac{(s_B^2/n_B+s_A^2/n_A)^2}{(s_B^2/n_B)^2/(n_B-1)+(s_A^2/n_A)^2/(n_A-1)}.$$
+
+El IC es diferencia ± $t_{1-\alpha/2,\nu}$ por su error estándar. La documentación de SciPy permite calcular el contraste y su intervalo con `equal_var=False` [@scipy_t]. La elección entre datos independientes y pareados proviene del diseño: para antes/después de las mismas unidades se calcula $d_i=x_{i,después}-x_{i,antes}$ y se contrasta su media, conservando el emparejamiento [@nist_t].
+
+```{python}
+#| label: comparacion-b-a
+a=df.loc[df.campana.eq('A'),'tiempo_min'];b=df.loc[df.campana.eq('B'),'tiempo_min']
+tabla(pd.DataFrame([welch(b,a)]))
+```
+
+**Ejercicio resuelto 9.** Si B−A se estima en −4 minutos con IC [−6;−2], hay evidencia de una reducción, pero el intervalo incluye mejoras inferiores al umbral práctico de 3 minutos. La decisión depende del riesgo aceptable de no lograr esa meta. No informar «está probado que ahorra al menos tres».
+
+## Proporciones, equivalencia y análisis múltiples
+
+Una proporción puede contrastarse con la binomial exacta. Para dos proporciones y suficientes éxitos/fracasos, la aproximación normal usa proporción combinada bajo $H_0:p_A=p_B$ para el error estándar del contraste; el intervalo de diferencia emplea estimaciones separadas. Con conteos pequeños se requieren métodos apropiados, no forzar la aproximación. El notebook ejecuta ambas tareas y comprueba sus conteos.
+
+No rechazo no prueba igualdad. Equivalencia o no inferioridad requieren márgenes previamente justificados y procedimientos específicos. Tampoco conviene buscar repetidamente resultados favorables en muchos indicadores o cortes. Definir una familia de hipótesis, separar confirmación de exploración y ajustar comparaciones reduce interpretaciones oportunistas.
+
+**De estadística a operación:** con ahorro de $\Delta$ minutos, valor por minuto $v$ y costo incremental $c$, beneficio supuesto es $v\Delta-c$. El intervalo transformado representa incertidumbre estadística si $v,c$ se tratan como constantes; sensibilidad económica explora qué ocurre si no lo son. Capacidad, implementación, servicio y riesgo pueden modificar la recomendación.
+
+# ANOVA y comparación de campañas {#sec-anova}
+
+Para $k$ grupos, ANOVA contrasta $H_0:\mu_1=\cdots=\mu_k$. La suma de cuadrados total se descompone en variación entre grupos y dentro de ellos:
+
+$$SS_T=\sum_{j,i}(y_{ij}-\bar y)^2=SS_B+SS_W,\quad
+SS_B=\sum_j n_j(\bar y_j-\bar y)^2,\quad
+F=\frac{SS_B/(k-1)}{SS_W/(N-k)}.$$
+
+El contraste clásico supone independencia, errores normales dentro de grupos y varianzas comunes; la versión de Welch permite varianzas distintas [@scipy_f]. La asignación y unidad importan: varias mediciones del mismo individuo no se convierten en independientes por pasarlas a ANOVA. El gráfico residual y conocimiento del proceso acompañan al contraste; una prueba de normalidad no debe actuar como selector automático de métodos.
+
+```{python}
+#| label: anova-comerciosur
+tabla(pd.DataFrame([anova(df)]))
+tabla(comparar_medias(df))
+```
+
+$\eta^2=SS_B/SS_T$ cuantifica la fracción descriptiva de variación atribuida a las medias de grupo en esta muestra. No informa por sí sola qué diferencia es relevante para negocio. Rechazo global indica que no todas las medias son iguales; no identifica qué pares difieren ni cuál acción maximiza beneficio.
+
+Para los tres pares A–B, A–C y B–C, esta edición usa contrastes de Welch con ajuste de Holm. Ordenados los valores p de menor a mayor, se comparan con $\alpha/(m-i+1)$ de forma secuencial; la implementación entrega valores p ajustados monótonos. Los IC individuales mostrados al lado **no son simultáneos**. El caso integrador predefine otra familia, B−A y C−A, y ajusta esos dos contrastes. Documentar la familia evita cambiarla después del resultado.
+
+**Ejercicio resuelto 10.** Con valores p .01, .03 y .04, Holm produce .03, .06 y .06. Con $\alpha=.05$ solo el primer contraste se rechaza. No es correcto afirmar tres diferencias significativas por leer los valores sin ajuste. El tamaño de los efectos y la decisión práctica deben informarse aunque un contraste no se rechace.
+
+# Series de tiempo y modelos de pronóstico {#sec-series}
+
+Una serie ordena observaciones por fecha y frecuencia. Revisar huecos, duplicados, cambios de medición, tendencia y estacionalidad antes de ajustar. La media móvil de orden $k$ suaviza al promediar los últimos $k$ datos disponibles; una media centrada usa valores futuros y no se puede emplear como si estuviera disponible en tiempo real.
+
+El ingenuo pronostica el último dato. El ingenuo estacional copia el último valor de la misma estación. Suavizamiento exponencial simple actualiza nivel $\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}$ y pronostica nivel constante; Holt añade tendencia. Un $\alpha$ grande reacciona rápido y también puede seguir ruido. La elección depende del patrón y del horizonte, no de preferir automáticamente la curva más suave.
+
+ARIMA$(p,d,q)$ combina autorregresión, diferenciación y media móvil de innovaciones. Con operador de rezago $B$, una forma sin regresores es $\phi(B)w_t=c+\theta(B)\varepsilon_t$. donde $w_t$ es la serie tras $d$ diferencias. $p$ y $q$ son órdenes de dependencia, $d$ indica diferencias. La parte estacionaria requiere raíces apropiadas y un proceso razonablemente estable; diferenciar en exceso puede introducir estructura artificial. ARIMA no significa «cualquier línea que proyecta».
+
+El laboratorio ajusta SES, Holt y ARIMA(1,1,0) además de referencias ingenuas y media móvil. ARIMA(1,1,0), sin término determinista en el ajuste, representa $\Delta y_t=\phi\Delta y_{t-1}+\varepsilon_t$. No incorpora la estacionalidad anual de ComercioSur: permite discutir por qué un modelo sencillo mal especificado puede perder contra una referencia. SARIMA añade factores estacionales $(P,D,Q)_m$; su selección detallada es profundización, no necesaria para ejecutar el núcleo. La API usada explicita órdenes y términos [@arima].
+
+## Evaluación temporal y error
+
+Se separan 36 meses iniciales, 24 para validación con origen móvil y 12 de prueba sellada. Los orígenes de validación usan 36, 42 y 48 meses observados; cada uno genera doce predicciones sin ver su futuro. Se selecciona por MAE medio sobre esos horizontes y se evalúa un pronóstico anual final, con la misma tarea. Las ventanas se superponen: sus errores son dependientes y no se presentan como réplicas independientes. Tres orígenes permiten una comparación docente, pero una aplicación necesita más historia para evaluar estabilidad.
+
+$$\operatorname{MAE}=\frac1H\sum|e_h|,\quad
+\operatorname{RMSE}=\sqrt{\frac1H\sum e_h^2},\quad
+\operatorname{MASE}=\frac{H^{-1}\sum|e_h|}{(T-m)^{-1}\sum_{t=m+1}^{T}|y_t-y_{t-m}|}.$$
+
+La escala de MASE se calcula en entrenamiento, con $m=12$ para estacionalidad mensual. Si la escala es cero, el indicador no está definido y debe informarse. MAE y RMSE conservan unidades; MAPE falla con ceros y puede distorsionar comparaciones. La evaluación debe reflejar la tarea futura [@fpp].
+
+```{python}
+#| label: serie-referencia
+y=serie();train=y.iloc[:60];test=y.iloc[60:];pred=train.iloc[-12:].to_numpy()
+e=test.to_numpy()-pred;escala=np.abs(train.to_numpy()[12:]-train.to_numpy()[:-12]).mean()
+tabla(pd.DataFrame([{'referencia_prefijada':'Ingenuo estacional','MAE':np.abs(e).mean(),'RMSE':np.sqrt(np.mean(e**2)),'MASE':np.abs(e).mean()/escala}]))
+plt.plot(y.index,y,label='Observado');plt.plot(test.index,pred,label='Referencia estacional');plt.axvline(test.index[0],color='gray',linestyle='--');plt.ylabel('Unidades');plt.legend();plt.show()
+```
+
+Los intervalos ARIMA del notebook son condicionales al modelo; revisan convergencia y residuos, pero no incluyen toda la incertidumbre de selección, cambio de régimen o decisiones futuras. Una cobertura observada sobre doce meses es descriptiva y muy imprecisa. **Ejercicio resuelto 11:** una promoción futura desconocida al origen no puede incluirse como variable observada en validación; sería fuga de información. Se utiliza un plan disponible, escenarios o un pronóstico separado de esa variable.
+
+# Visualización para comprender y actuar {#sec-visualizacion}
+
+Cada gráfico debe responder una pregunta. Histograma para distribución, barras para comparar cantidades por categoría, dispersión para relaciones, línea para evolución temporal, puntos con intervalos para estimaciones e incertidumbre. Una tabla pequeña puede ser mejor para consultar valores exactos. No se pretende que todos los gráficos del análisis exploratorio pasen al informe ejecutivo.
+
+Diseño efectivo: unidades visibles, título que describa el resultado sin exagerarlo, orden significativo, fuentes y período, contraste legible y codificación redundante cuando el color identifica grupos. Evitar 3D, doble eje sin necesidad, áreas que deforman comparaciones y ejes cortados en barras de magnitudes. En gráficos de puntos con intervalos puede usarse una escala centrada en el rango relevante si se explicita: su interpretación no depende de longitud desde cero como las barras.
+
+Un dashboard combina indicador, contexto, comparación y acción. Para ComercioSur: tamaño de muestra, tiempo medio, tasa resuelta, distribución e incertidumbre por campaña. El filtro de canal cambia la población; mostrarlo evita comparar una tarjeta filtrada con un gráfico global. Una tasa necesita numerador y denominador. Una tarjeta sin horizonte o unidad produce certezas ambiguas.
+
+```{python}
+#| label: grafico-decision
+r=pd.DataFrame([{'campana':g,**ic_media(x.tiempo_min)} for g,x in df.groupby('campana')])
+plt.errorbar(r.campana,r.media,yerr=[r.media-r.li,r.ls-r.media],fmt='o',capsize=6,color='#087f8c')
+plt.ylabel('Tiempo medio e IC individual 95% (min)');plt.xlabel('Campaña');plt.title('ComercioSur · comparación simulada');plt.show()
+```
+
+**Evaluar impacto de una visualización:** definir usuarios, tarea y respuesta correcta; asignar aleatoriamente dos diseños con los mismos datos; medir aciertos como resultado principal y tiempo como secundario; evaluar si aumenta sobreconfianza. Prefijar qué mejora sería útil. Más clics o una valoración estética alta no demuestran mejores decisiones ni impacto económico. Un piloto de usabilidad permite mejorar el diseño antes de estudiar impacto comercial.
+
+# Herramientas: Python, Excel y Power BI {#sec-herramientas}
+
+CE3.1 exige analizar al menos dos herramientas gráficas y CE3.2 usarlas funcionalmente. La ruta trabaja **Python y Excel** con la misma tabla y agregados; incorpora Power BI como práctica adicional alineada al programa. El notebook 07 ejecuta Python y construye un libro con datos, valores calculados, fórmulas y gráfico. Las fórmulas del libro requieren recálculo en Excel: escribir un archivo no equivale a haber probado su motor de cálculo. No se entrega un PBIX ni se afirma una prueba de Power BI Desktop.
+
+| Herramienta | Ventaja para este caso | Restricción | Evidencia de uso |
+|---|---|---|---|
+| Python | Cálculos trazables, intervalos y pruebas | Entorno y programación | Notebook ejecutado y tablero con filtros |
+| Excel | Inspección y trabajo cotidiano del analista | Cambios manuales y recálculo | Libro, fórmulas, gráfico y tabla dinámica de práctica |
+| Power BI | Modelo y filtros de reporte | Instalación y configuración según entorno | Receta y cifras de conciliación; práctica en Desktop |
+
+## Receta Excel
+
+Abrir `EBA_tablero_excel.xlsx`. La hoja Pedidos contiene 600 filas; Resumen_valores permite contrastar números sin depender del recálculo. La hoja Formulas usa `COUNTIF` y `AVERAGEIF`, almacenadas con nombres internacionales en el archivo. En Excel, crear una tabla dinámica desde Pedidos: campaña en filas, recuento de id y promedio de tiempo en valores, canal como filtro. Confirmar que Excel utilice **promedio**, no suma, para tiempo; el tipo de resumen cambia la pregunta [@excel].
+
+Crear barras desde los promedios, eje desde cero, unidades minutos y título con filtro aplicado. Comparar Todos/Web/Tienda contra Python. Para tasa de resolución, usar promedio de la variable binaria o suma dividida por conteo; no promediar tasas agregadas sin ponderar. Conservar n al lado de cada tasa. El documento de reproducción distingue cifras verificadas de interacción pendiente en la aplicación de escritorio.
+
+## Receta Power BI
+
+Importar `comerciosur_pedidos.csv`, comprobar tipos y una fila por id. Crear medidas `Pedidos = COUNTROWS(Pedidos)`, `Tiempo medio = AVERAGE(Pedidos[tiempo_min])` y `Resueltos % = DIVIDE(SUM(Pedidos[resuelto]), [Pedidos])`; formatear esta última como porcentaje. Incorporar tarjetas, barras por campaña y segmentador canal. Unidades, contexto de filtro y comprobación contra la tabla de Python forman parte de la actividad [@powerbi].
+
+Looker y otras plataformas de reporte se abordan como comparación: conectar tabla limpia, definir agregaciones, filtrar y conciliar; no se exige ejecutar una tercera plataforma. Para evitar repetición, primero se enseña qué significa el indicador y después cómo expresarlo en cada herramienta.
+
+# Comunicar, integrar y evaluar {#sec-comunicacion}
+
+Una explicación para audiencia no técnica conserva el razonamiento: problema, evidencia, incertidumbre, consecuencia y siguiente acción. Sustituir jerga no equivale a ocultar supuestos. «El efecto es estadísticamente significativo» es insuficiente; «estimamos una reducción de cuatro minutos, con un intervalo compatible con reducciones entre dos y seis, y el costo del piloto es…» permite discutir una decisión. Los números de esa frase son ilustrativos; el informe del caso debe usar la salida calculada.
+
+El integrador fija tiempo como resultado principal y los contrastes B−A/C−A antes del análisis; ajusta esa familia con Holm. Toma como hipótesis docentes costo B=.5, C=1 UM por pedido y valor del minuto=.2 UM. Debe revisar también resolución y límites de generalización. No observar una diferencia significativa de resolución **no prueba** que no haya deterioro: no inferioridad exige margen y precisión apropiados.
+
+## Entrega y evaluación formativa
+
+Entregar un notebook que ejecute desde cero, un memo de una página, un tablero con filtros comprobados, una versión Excel conciliada y una exposición de cinco minutos. El memo contiene decisión, población, efecto con unidades e intervalo, costo supuesto, limitación decisiva y condición de piloto. El apéndice conserva datos, método, versión y supuestos.
+
+| Dimensión | Evidencia para nivel 3 | Máximo |
+|---|---|---|
+| Pregunta y diseño | Unidad, estimando, población y asignación justificados | 3 |
+| Método | Técnica y supuestos conectados con la pregunta | 3 |
+| Reproducción | Datos trazables, ejecución completa y agregados conciliados | 3 |
+| Interpretación | Efecto, IC, magnitud práctica y límites | 3 |
+| Visualización | Dos herramientas, filtros, unidades e incertidumbre | 3 |
+| Comunicación | Acción condicionada y plan de seguimiento | 3 |
+
+Escala: 0 ausente; 1 con errores relevantes; 2 correcto pero sin conectar con la decisión; 3 correcto, justificado y con límites. Total 18 puntos **formativos**, sin inventar una escala de notas ni reemplazar instrumentos institucionales.
+
+**Ejercicio resuelto 12.** Un informe solo presenta p=.02, sin efecto ni población. Para corregirlo se pide diferencia y unidades, intervalo, diseño, supuestos, criterio práctico y acción condicionada. No basta agregar más decimales. Una recomendación orientadora para ComercioSur es estudiar un piloto de la campaña con beneficio defendible, revisar resolución y comprobar estabilidad; el resultado simulado no autoriza despliegue en una empresa real.
+
+## Errores que debe poder detectar el estudiante
+
+Confundir SD con SE; usar 95% como probabilidad de hipótesis; atribuir causalidad a correlación; interpretar p>.05 como igualdad; promediar porcentajes sin denominadores; usar ANOVA para datos pareados como si fueran independientes; escoger contrastes después del resultado; mezclar meses al azar; trasladar intervalos fuera del rango; afirmar que una herramienta fue ejecutada cuando solo se escribió una receta.
+
+La revisión académica debe mirar explicaciones y decisiones, además de ejecución. La matriz de cobertura enlaza cada mínimo y cada criterio con capítulo y actividad; las pruebas automáticas comprueban resultados e interfaces, pero no equivalen a aprobación curricular o a demostrar una mejora de aprendizaje. Para medir esa mejora, el docente puede comparar una tarea diagnóstica y una final con rúbrica estable, registrar errores recurrentes y revisar la secuencia siguiente.
+
+# Referencias {#sec-referencias .unnumbered}
+
+Las fuentes técnicas citadas respaldan métodos y herramientas. Las explicaciones, ejemplos y ejercicios son elaboración propia de esta colección.
+
+::: {#refs}
+:::
