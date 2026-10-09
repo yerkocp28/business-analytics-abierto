@@ -1,0 +1,246 @@
+{
+  "fecha_utc": "2026-10-09T13:43:32.954610+00:00",
+  "enlaces_locales_y_anclas": 662,
+  "modulos_coherentes": 28,
+  "pdf": [
+    {
+      "curso": "FBA",
+      "paginas": 19,
+      "texto_fuera_pagina": 0
+    },
+    {
+      "curso": "EBA",
+      "paginas": 15,
+      "texto_fuera_pagina": 0
+    },
+    {
+      "curso": "MPN",
+      "paginas": 16,
+      "texto_fuera_pagina": 0
+    },
+    {
+      "curso": "AED",
+      "paginas": 14,
+      "texto_fuera_pagina": 0
+    }
+  ],
+  "pantallas": [
+    {
+      "pagina": "index.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "index.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "index.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "index.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/guia_maestra_ba.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/guia_maestra_ba.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/guia_maestra_ba.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/guia_maestra_ba.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 3
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 3
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 3
+    },
+    {
+      "pagina": "01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 3
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/guia_maestra_eba.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/guia_maestra_eba.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/guia_maestra_eba.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/guia_maestra_eba.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 4
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/guia_maestra_mpn.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/guia_maestra_mpn.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/guia_maestra_mpn.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/guia_maestra_mpn.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 2
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 2
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 2
+    },
+    {
+      "pagina": "03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 2
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/guia_maestra_aed.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/guia_maestra_aed.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/guia_maestra_aed.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/guia_maestra_aed.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 0
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.html",
+      "ancho": 320,
+      "desborde_px": 0,
+      "figuras": 3
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.html",
+      "ancho": 390,
+      "desborde_px": 0,
+      "figuras": 3
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.html",
+      "ancho": 768,
+      "desborde_px": 0,
+      "figuras": 3
+    },
+    {
+      "pagina": "04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.html",
+      "ancho": 1440,
+      "desborde_px": 0,
+      "figuras": 3
+    }
+  ],
+  "alcance": "Comprobación funcional y accesibilidad básica; no certifica conformidad WCAG completa."
+}

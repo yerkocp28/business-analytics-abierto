@@ -1,3 +1,4 @@
+import os
 """Comprobaciones de la edición MPN: notebooks, cobertura, guía interactiva contra Python y PDF."""
 from pathlib import Path
 import csv
@@ -93,7 +94,7 @@ def verificar_guia():
     estacional = LinearRegression().fit(De, ye)
     resultado = {}
     with sync_playwright() as pw:
-        navegador = pw.chromium.launch(channel="chrome", headless=True)
+        navegador = pw.chromium.launch(channel=os.environ.get("BA_BROWSER_CHANNEL","chrome"), headless=True)
         pagina = navegador.new_page(viewport={"width": 1440, "height": 1000}, device_scale_factor=1)
         errores, red = [], []
         pagina.on("pageerror", lambda e: errores.append(str(e)))

@@ -6,7 +6,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_01_proceso_calidad.ipynb",
       "resultado": "OK",
       "celdas_codigo": 6,
-      "segundos": 5.03,
+      "segundos": 4.36,
       "cambios_controles": 2,
       "autoevaluacion": "OK"
     },
@@ -14,7 +14,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_02_tecnicas_analiticas.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 6.52,
+      "segundos": 5.72,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
@@ -22,7 +22,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_03_kpis_dashboard.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 5.76,
+      "segundos": 7.81,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
@@ -30,7 +30,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_04_optimizacion_restricciones.ipynb",
       "resultado": "OK",
       "celdas_codigo": 6,
-      "segundos": 4.7,
+      "segundos": 5.48,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
@@ -38,7 +38,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_05_alternativas_decision.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 3.78,
+      "segundos": 3.52,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
@@ -46,7 +46,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_06_solarsur_monte_carlo.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 4.97,
+      "segundos": 7.75,
       "cambios_controles": 6,
       "autoevaluacion": "OK"
     },
@@ -54,7 +54,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_07_comunicacion_integracion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 5.34,
+      "segundos": 4.86,
       "cambios_controles": 6,
       "autoevaluacion": "OK"
     },
@@ -62,7 +62,7 @@
       "archivo": "04_Analitica_Estrategica_Datos/notebooks/AED_08_profundizacion_prescriptiva.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 5.58,
+      "segundos": 4.2,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     }

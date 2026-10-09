@@ -16,6 +16,8 @@ def main():
         # El notebook 07 escribe su libro en salidas/ (excluida de Git); la edición publica esa versión.
         shutil.copy2(C.parent/'salidas'/'EBA_tablero_excel.xlsx',C/'material_propio'/'EBA_tablero_excel.xlsx')
     run([quarto,'render',str(C/'material_propio/EBA_manual_cientifico.qmd'),'--to','all'])
-    script('construir_guia.py');script('verificar_edicion.py')
-    print('Edición construida y verificada. Revisar cambios antes de actualizar hashes del catálogo.')
+    script('construir_guia.py')
+    run([sys.executable,str(C.parent/'_transversal/construir_interfaz.py'),'--curso','EBA'])
+    script('verificar_edicion.py')
+    print('Edición construida y verificada. Revise los cambios y la evidencia antes de publicar.')
 if __name__=='__main__':main()

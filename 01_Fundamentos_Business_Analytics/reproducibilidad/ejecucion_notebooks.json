@@ -6,35 +6,35 @@
       "archivo": "01_Fundamentos_Business_Analytics/notebooks/FBA_01_negocio_datos.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 2.73,
+      "segundos": 7.23,
       "widgets_guardados": true
     },
     {
       "archivo": "01_Fundamentos_Business_Analytics/notebooks/FBA_02_exploracion_visual.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 4.3,
+      "segundos": 9.88,
       "widgets_guardados": true
     },
     {
       "archivo": "01_Fundamentos_Business_Analytics/notebooks/FBA_03_herramientas_caso_integrador.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 1.95,
+      "segundos": 2.86,
       "widgets_guardados": true
     },
     {
       "archivo": "01_Fundamentos_Business_Analytics/notebooks/FBA_04_probabilidad_simulacion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 6,
-      "segundos": 3.22,
+      "segundos": 7.17,
       "widgets_guardados": true
     },
     {
       "archivo": "01_Fundamentos_Business_Analytics/notebooks/FBA_05_modelos_evaluacion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 6.59,
+      "segundos": 8.3,
       "widgets_guardados": true
     }
   ]

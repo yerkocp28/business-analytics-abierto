@@ -17,6 +17,9 @@ Abra Jupyter desde la raíz del repositorio o desde una subcarpeta: los notebook
 
 ## Reconstruir y verificar la edición
 
+Para reconstruir los cuatro cursos y sus rutas compartidas, use la [guía de mantenimiento](../../MANTENIMIENTO.md) y `python _transversal/construir_todo.py`. Si modifica `_transversal/rutas.py`, regenere las fuentes antes de construir un curso por separado.
+
+
 Requiere además `pip install -r requirements-dev.txt`, `playwright install chrome` y [Quarto CLI](https://quarto.org).
 
 ```bash
@@ -25,7 +28,7 @@ python 02_Estadistica_Business_Analytics/reproducibilidad/construir.py
 
 | Script | Función |
 |---|---|
-| [construir.py](construir.py) | Reconstruye la edición completa; con `--solo-render` solo regenera el manual |
+| [construir.py](construir.py) | Reconstruye la edición completa; con `--solo-render` reconstruye manuales y guía, y valida las salidas existentes |
 | [construir_guia.py](construir_guia.py) | Genera la guía HTML a partir de su plantilla o del manual |
 | [ejecutar_notebooks.py](ejecutar_notebooks.py) | Ejecuta cada notebook en un kernel nuevo, prueba controles y autoevaluaciones y guarda las salidas |
 | [generar_datos.py](generar_datos.py) | Regenera los datos simulados del caso con semilla fija |

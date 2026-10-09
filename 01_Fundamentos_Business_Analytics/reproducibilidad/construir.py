@@ -26,9 +26,9 @@ def main():
         run([sys.executable,CURSO/'reproducibilidad/verificar_widgets.py'])
         run([sys.executable,CURSO/'reproducibilidad/datos_guia.py'])
     run([quarto,'render',CURSO/'material_propio/FBA_manual_cientifico.qmd','--to','all'])
-    if not args.solo_render:
-        run([sys.executable,CURSO/'reproducibilidad/verificar_edicion.py'])
-    print('Construcción terminada. Revise las salidas y actualice las huellas del catálogo si publica una nueva revisión.')
+    run([sys.executable, CURSO.parent / '_transversal/construir_interfaz.py', '--curso', 'FBA'])
+    run([sys.executable, CURSO / 'reproducibilidad/verificar_edicion.py'])
+    print('Construcción terminada. Revise las salidas y la evidencia de ejecución antes de publicar.')
 
 
 if __name__=='__main__':

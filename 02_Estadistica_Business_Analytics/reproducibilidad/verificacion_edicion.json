@@ -47,7 +47,7 @@
     "criterios": 12,
     "minimos": 17,
     "filas": 32,
-    "enlaces_html": 79
+    "enlaces_html": 152
   },
   "calculos": "Bayes, IC t, Wilson, Holm, ANOVA y agregados Excel verificados con casos independientes.",
   "guia": {
@@ -60,7 +60,7 @@
   },
   "manual": {
     "paginas": 15,
-    "caracteres": 44171,
+    "caracteres": 46222,
     "formulas_mathml": 112
   }
 }

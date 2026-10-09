@@ -10,3 +10,4 @@ _freeze/
 salidas/
 *.png
 !*/reproducibilidad/capturas/*.png
+!verificacion/capturas/*.png

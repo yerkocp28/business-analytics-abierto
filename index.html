@@ -12,6 +12,10 @@
 body{margin:0;background:var(--fondo);color:var(--tinta);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 a{color:var(--enlace)}
 a:focus-visible{outline:3px solid var(--acento);outline-offset:2px}
+.saltar{position:fixed;top:-100px;left:12px;background:var(--papel);padding:12px;z-index:50}.saltar:focus{top:10px}
+main{overflow-wrap:anywhere}.curso,.bloques section{min-width:0}
+.recorrido{background:var(--papel);border:1px solid var(--linea);border-radius:8px;padding:20px;margin-bottom:28px}
+.recorrido p:last-child{margin-bottom:0}
 header{background:var(--marca);color:#f3efe4;padding:48px 16px 40px}
 .ancho{max-width:1080px;margin:0 auto}
 .etiqueta{letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--acento);margin:0 0 10px}
@@ -38,6 +42,7 @@ footer{border-top:1px solid var(--linea);padding:20px 16px;color:var(--suave);fo
 </style>
 </head>
 <body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
 <header>
   <div class="ancho">
     <p class="etiqueta">Material docente abierto · edición 2026</p>
@@ -49,13 +54,19 @@ footer{border-top:1px solid var(--linea);padding:20px 16px;color:var(--suave);fo
     </div>
   </div>
 </header>
-<main><div class="ancho">
+<main id="contenido"><div class="ancho">
+  <section class="recorrido" aria-labelledby="empezar">
+    <h2 id="empezar">Elige por dónde empezar</h2>
+    <p><strong>Primera aproximación:</strong> Fundamentos → Estadística → Modelos Predictivos → Analítica Estratégica. Si ya dominas un tema, revisa el objetivo y el criterio de logro de cada módulo antes de avanzar.</p>
+    <p><strong>Para estudiar:</strong> anticipa, ejecuta, cambia una condición y explica. <strong>Para preparar clases:</strong> cada ruta conecta la guía, el fundamento científico y el laboratorio; distingue el núcleo de la profundización.</p>
+  </section>
   <h2>Cursos</h2>
   <div class="cursos">
     <article class="curso">
       <h3>Fundamentos de Business Analytics</h3>
       <p>Datos, decisiones, análisis visual y herramientas básicas. Profundización en probabilidad y modelos.</p>
       <ul>
+        <li><a href="01_Fundamentos_Business_Analytics/guia_maestra_ba.html#ruta-aprendizaje">Empezar la ruta de 5 módulos</a></li>
         <li><a href="01_Fundamentos_Business_Analytics/guia_maestra_ba.html">Guía maestra interactiva</a></li>
         <li><a href="01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.pdf">Manual científico (PDF)</a></li>
         <li><a href="01_Fundamentos_Business_Analytics/material_propio/FBA_manual_cientifico.html">Manual para leer en línea</a></li>
@@ -67,6 +78,7 @@ footer{border-top:1px solid var(--linea);padding:20px 16px;color:var(--suave);fo
       <h3>Estadística Aplicada a Business Analytics</h3>
       <p>Muestreo, probabilidad, intervalos, regresión, contrastes, series de tiempo y comunicación de la incertidumbre.</p>
       <ul>
+        <li><a href="02_Estadistica_Business_Analytics/guia_maestra_eba.html#ruta-aprendizaje">Empezar la ruta de 8 módulos</a></li>
         <li><a href="02_Estadistica_Business_Analytics/guia_maestra_eba.html">Guía maestra interactiva</a></li>
         <li><a href="02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.pdf">Manual científico (PDF)</a></li>
         <li><a href="02_Estadistica_Business_Analytics/material_propio/EBA_manual_cientifico.html">Manual para leer en línea</a></li>
@@ -78,6 +90,7 @@ footer{border-top:1px solid var(--linea);padding:20px 16px;color:var(--suave);fo
       <h3>Modelos Predictivos para los Negocios</h3>
       <p>Regresión y clasificación, validación sin fugas, umbral por costo, calibración, riesgo de modelo y pronóstico.</p>
       <ul>
+        <li><a href="03_Modelos_Predictivos_Negocios/guia_maestra_mpn.html#ruta-aprendizaje">Empezar la ruta de 7 módulos</a></li>
         <li><a href="03_Modelos_Predictivos_Negocios/guia_maestra_mpn.html">Guía maestra interactiva</a></li>
         <li><a href="03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.pdf">Manual científico (PDF)</a></li>
         <li><a href="03_Modelos_Predictivos_Negocios/material_propio/MPN_manual_cientifico.html">Manual para leer en línea</a></li>
@@ -89,6 +102,7 @@ footer{border-top:1px solid var(--linea);padding:20px 16px;color:var(--suave);fo
       <h3>Analítica Estratégica de Datos</h3>
       <p>Proceso analítico, KPIs y tableros, optimización, decisiones bajo incertidumbre, Monte Carlo y comunicación ejecutiva.</p>
       <ul>
+        <li><a href="04_Analitica_Estrategica_Datos/guia_maestra_aed.html#ruta-aprendizaje">Empezar la ruta de 8 módulos</a></li>
         <li><a href="04_Analitica_Estrategica_Datos/guia_maestra_aed.html">Guía maestra interactiva</a></li>
         <li><a href="04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.pdf">Manual científico (PDF)</a></li>
         <li><a href="04_Analitica_Estrategica_Datos/material_propio/AED_manual_cientifico.html">Manual para leer en línea</a></li>
@@ -99,10 +113,11 @@ footer{border-top:1px solid var(--linea);padding:20px 16px;color:var(--suave);fo
   </div>
 
   <div class="bloques">
-    <section>
+    <section id="laboratorios">
       <h2>Laboratorios en Python</h2>
+      <p>La guía y sus simuladores funcionan en el navegador, también sin conexión. Los controles de los notebooks necesitan Jupyter y un kernel de Python: descarga la colección completa para disponer de sus datos y funciones.</p>
       <p>Descargue el repositorio y, desde su carpeta raíz, con Python 3.12:</p>
-      <p><code>python -m venv .venv</code><br><code>pip install -r requirements.txt</code><br><code>jupyter lab</code></p>
+      <ol><li><code>python -m venv .venv</code></li><li>Activa el entorno con el comando correspondiente a tu sistema.</li><li><code>python -m pip install -r requirements.txt</code></li><li><code>jupyter lab</code></li></ol>
       <p class="nota">Active el entorno antes de instalar (<code>.venv\Scripts\activate</code> en Windows; <code>source .venv/bin/activate</code> en macOS o Linux).</p>
     </section>
     <section>

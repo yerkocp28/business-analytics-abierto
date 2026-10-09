@@ -1,6 +1,6 @@
 # Modelos Predictivos para los Negocios
 
-[Volver al inicio](../README.md) · [Cobertura curricular](COBERTURA.md) · [Reproducción y pruebas](reproducibilidad/README.md) · [Datos compartidos](../_transversal/datos/README.md)
+[Volver al inicio](../README.md) · [Ruta por módulo](RUTA_APRENDIZAJE.md) · [Cobertura curricular](COBERTURA.md) · [Reproducción y pruebas](reproducibilidad/README.md) · [Datos compartidos](../_transversal/datos/README.md)
 
 **Edición 2026.** Tres unidades (U1 S01–S02, U2 S03–S07, U3 S08–S12) con profundización en pronóstico de series de tiempo. Los 15 criterios de evaluación se vinculan con actividades concretas. Además de la ruta de doce semanas hay una [ruta intensiva de cinco semanas](RUTA_INTENSIVA.md).
 

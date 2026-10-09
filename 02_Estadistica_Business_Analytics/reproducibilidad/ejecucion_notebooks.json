@@ -6,7 +6,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_01_problema_descripcion_muestreo.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 5.92,
+      "segundos": 5.69,
       "cambios_controles": 6,
       "autoevaluacion": "OK"
     },
@@ -14,7 +14,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_02_probabilidad_bayes_distribuciones.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 6.81,
+      "segundos": 5.3,
       "cambios_controles": 8,
       "autoevaluacion": "OK"
     },
@@ -22,7 +22,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_03_estimacion_intervalos.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 6.48,
+      "segundos": 4.97,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
@@ -30,7 +30,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_04_correlacion_regresion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 7.02,
+      "segundos": 7.77,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
@@ -38,7 +38,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_05_hipotesis_anova.ipynb",
       "resultado": "OK",
       "celdas_codigo": 9,
-      "segundos": 3.97,
+      "segundos": 3.67,
       "cambios_controles": 8,
       "autoevaluacion": "OK"
     },
@@ -46,7 +46,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_06_series_tiempo.ipynb",
       "resultado": "OK",
       "celdas_codigo": 9,
-      "segundos": 7.42,
+      "segundos": 8.08,
       "cambios_controles": 2,
       "autoevaluacion": "OK"
     },
@@ -54,7 +54,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_07_visualizacion_herramientas.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 5.66,
+      "segundos": 6.44,
       "cambios_controles": 2,
       "autoevaluacion": "OK"
     },
@@ -62,7 +62,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_08_integrador_comunicacion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 3.97,
+      "segundos": 3.66,
       "cambios_controles": 2,
       "autoevaluacion": "OK"
     }

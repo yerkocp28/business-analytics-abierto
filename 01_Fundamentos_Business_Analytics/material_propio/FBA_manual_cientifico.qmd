@@ -20,7 +20,6 @@ format:
   typst:
     papersize: a4
     fontsize: 10.5pt
-    mainfont: Cambria
     margin:
       x: 2.2cm
       y: 2.1cm
@@ -31,7 +30,10 @@ format:
     code-fold: true
     toc-location: left
     html-math-method: mathml
-    css: manual.css
+    css:
+      - manual.css
+      - ../../_transversal/interfaz/manual.css
+    include-after-body: ../../_transversal/interfaz/manual.html
 ---
 
 ```{python}
@@ -73,6 +75,25 @@ El núcleo sigue tres resultados de aprendizaje de un curso introductorio de Bus
 | Profundización | Probabilidad, modelos y evaluación | Discusión de supuestos y demostraciones controladas |
 
 **Convenciones.** Los casos son docentes; las simulaciones se identifican como tales. «Moneda del caso» evita asignar una unidad no documentada. Un porcentaje siempre declara base y período. Un resultado numérico mostrado sin un margen observado no se denomina utilidad. El acceso a datos reales requeriría revisar su procedencia y condiciones de uso.
+
+<!-- BA_APRENDIZAJE_INICIO -->
+## Objetivos y evidencias por módulo {#sec-aprendizaje}
+
+**Preparación de entrada:** Porcentajes, lectura de tablas y operaciones básicas; Python se introduce con ejemplos.
+
+Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del grupo. Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. La profundización se consulta después del núcleo.
+
+**NB01 · Pregunta de negocio y datos (Núcleo).** Formular una decisión con unidad de análisis, variable y regla de calidad. **Evidencia:** Entregar una ficha con pregunta, unidad, fuente, decisión y dos límites.
+
+**NB02 · Exploración y comunicación visual (Núcleo).** Elegir un resumen y un gráfico coherentes con la pregunta y el denominador. **Evidencia:** Presentar un gráfico con unidad, período, población y una interpretación verificable.
+
+**NB03 · Herramientas y caso integrador (Núcleo).** Reproducir un indicador con filtros, agregaciones y una unión validada. **Evidencia:** Entregar cálculo conciliado, control de cardinalidad y recomendación con sensibilidad.
+
+**NB04 · Probabilidad y simulación (Profundización).** Explicar una probabilidad condicionada y la variación de una estimación. **Evidencia:** Dibujar una tabla de frecuencias y explicar el efecto de n sin confundir sesgo con precisión.
+
+**NB05 · Puente hacia modelos predictivos (Profundización).** Comparar un modelo con una referencia usando datos reservados. **Evidencia:** Informar partición, referencia, métrica, costo y un límite de generalización.
+
+<!-- BA_APRENDIZAJE_FIN -->
 
 # Analítica y decisiones empresariales {#sec-negocio}
 
@@ -253,6 +274,7 @@ Un crecimiento agregado puede deberse a más operaciones, cambios de precio o me
 
 ```{python}
 #| label: fig-patrones
+#| fig-alt: "QuillayMarket: barras de ingreso por producto y línea de ingreso mensual. Son agregados descriptivos de las mismas ventas; no identifican causas."
 #| fig-cap: "Caso QuillayMarket: dos lecturas del mismo archivo. Totales por producto y evolución mensual; no representan evidencia causal."
 #| fig-width: 8
 #| fig-height: 3.6
@@ -293,6 +315,7 @@ Un gráfico de dispersión permite examinar formas, cambios de variabilidad y pu
 
 ```{python}
 #| label: fig-no-lineal
+#| fig-alt: "Dispersión en forma de U de y igual a x al cuadrado. Hay dependencia determinista aunque la correlación lineal es aproximadamente cero."
 #| fig-cap: "Contraejemplo construido: y=x² depende totalmente de x y tiene correlación lineal prácticamente cero en este dominio simétrico."
 xx=np.linspace(-2,2,101)
 fig,ax=plt.subplots()
@@ -474,6 +497,7 @@ En una normal, los intervalos de una, dos y tres desviaciones alrededor de la me
 
 ```{python}
 #| label: fig-normal
+#| fig-alt: "Densidad normal con media 100 y desviación 15. El área entre 85 y 115 representa aproximadamente el 68,27 por ciento de la distribución."
 #| fig-cap: "Normal construida N(100,15²). El área sombreada entre 85 y 115 es aproximadamente 0,6827."
 xx=np.linspace(40,160,500); yy=stats.norm.pdf(xx,loc=100,scale=15)
 fig,ax=plt.subplots()

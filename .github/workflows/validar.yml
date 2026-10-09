@@ -1,0 +1,41 @@
+name: Validar colección abierta
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  construir:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    env:
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: utf-8
+      BA_BROWSER_CHANNEL: chromium
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.10.18'
+      - name: Instalar entorno y navegador
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m ipykernel install --sys-prefix --name python3
+          python -m playwright install chromium
+      - name: Ejecutar notebooks, construir manuales y comprobar interfaces
+        run: python _transversal/construir_todo.py
+      - name: Conservar evidencia
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencia-validacion
+          include-hidden-files: true
+          path: |
+            verificacion/
+            .cache-fba/verificacion/

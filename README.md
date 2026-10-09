@@ -11,6 +11,7 @@ Cada curso tiene el mismo formato:
 - **Notebooks de laboratorio** (Jupyter): cálculos que se pueden modificar, controles interactivos y una autoevaluación por notebook.
 - **Matriz de cobertura**: vincula cada criterio de evaluación con un capítulo, una sección del manual y una actividad del notebook.
 - **Reproducibilidad**: scripts que reconstruyen el material y comprueban sus resultados.
+- **Ruta de aprendizaje por módulo**: objetivo, preparación, ejemplo, práctica y criterio de logro coherentes entre guía, manual y notebook.
 
 | Curso | Guía | Manual | Notebooks | Cobertura |
 |---|---|---|--:|---|
@@ -36,7 +37,13 @@ pip install -r requirements.txt
 jupyter lab
 ```
 
-Abra Jupyter desde la raíz del repositorio o desde una subcarpeta: los notebooks ubican los datos en `_transversal/datos`. Para reconstruir manuales y guías y repetir las verificaciones, vea la carpeta `reproducibilidad/` de cada curso. Antes de publicar cambios, ejecute `python _transversal/verificar_publico.py`: comprueba enlaces, notebooks ejecutados, metadatos y que no se incluya material institucional.
+Abra Jupyter desde la raíz del repositorio o desde una subcarpeta: los notebooks ubican los datos en `_transversal/datos`. Las salidas guardadas permiten consultar los ejemplos; los controles de los notebooks necesitan un kernel activo. Las guías HTML incluyen simuladores que sí funcionan directamente en el navegador.
+
+## Mantener y comprobar
+
+La [guía de mantenimiento](MANTENIMIENTO.md) documenta qué fuentes editar, cómo preparar el entorno de construcción y cómo validar la colección con `python _transversal/construir_todo.py`. Incluye reconstrucción de manuales, ejecución de laboratorios, controles de contenido y pruebas de las nueve páginas principales en cuatro tamaños de pantalla.
+
+Consulte el [informe de mejoras y alcance de la revisión](docs/mejoras_publico_2026-10-09_analisis_codex.md), la [evidencia de interfaz](verificacion/interfaz.json) y el [resultado de la última verificación global](verificacion/ultima_ejecucion.json). El flujo de GitHub Actions ejecuta las comprobaciones en cada cambio a `main` y solicitud de incorporación.
 
 ## Datos
 

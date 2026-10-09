@@ -20,7 +20,6 @@ format:
   typst:
     papersize: a4
     fontsize: 10.5pt
-    mainfont: Cambria
     margin:
       x: 2.2cm
       y: 2.1cm
@@ -29,7 +28,10 @@ format:
     embed-resources: true
     toc-location: left
     html-math-method: mathml
-    css: manual.css
+    css:
+      - manual.css
+      - ../../_transversal/interfaz/manual.css
+    include-after-body: ../../_transversal/interfaz/manual.html
 ---
 
 ```{python}
@@ -82,6 +84,31 @@ Una sesión de referencia de 90 minutos distribuye 10 en recuperación de conoci
 
 Las rúbricas y ejercicios de este manual son formativos y no constituyen un reglamento. El docente debe usar la calendarización, las ponderaciones y las normas vigentes de su sección.
 
+<!-- BA_APRENDIZAJE_INICIO -->
+## Objetivos y evidencias por módulo {#sec-aprendizaje}
+
+**Preparación de entrada:** Fundamentos: variables, gráficos y porcentajes; lectura y ejecución básica de Python.
+
+Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del grupo. Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. La profundización se consulta después del núcleo.
+
+**NB01 · Problema, descripción y muestreo (Núcleo).** Definir población y estimando y justificar a quién representa la muestra. **Evidencia:** Entregar contrato de análisis con población, diseño, estimando y fuentes de sesgo.
+
+**NB02 · Probabilidad, Bayes y distribuciones (Núcleo).** Construir un modelo probabilístico cuyo soporte y supuestos sean explícitos. **Evidencia:** Calcular e interpretar el posterior 180/670 y explicar por qué no equivale a sensibilidad.
+
+**NB03 · Estimación e intervalos (Núcleo).** Elegir un intervalo según el parámetro, la población y el diseño. **Evidencia:** Reportar estimación, intervalo, unidad, población objetivo y condiciones de validez.
+
+**NB04 · Correlación y regresión (Núcleo).** Interpretar coeficientes condicionados y evaluar diagnósticos del modelo. **Evidencia:** Justificar especificación, interpretar un coeficiente y señalar un límite causal.
+
+**NB05 · Contrastes, ANOVA y decisión (Núcleo).** Elegir un contraste y comunicar efecto, incertidumbre y relevancia práctica. **Evidencia:** Entregar diferencia, IC, p, ajuste por multiplicidad y una decisión condicionada.
+
+**NB06 · Series y pronóstico (Núcleo).** Comparar pronósticos con igual horizonte y orden temporal preservado. **Evidencia:** Dibujar las ventanas y explicar métrica, referencia y dependencia entre errores solapados.
+
+**NB07 · Visualización y herramientas (Núcleo).** Conciliar un indicador entre herramientas y diseñar un tablero interpretable. **Evidencia:** Entregar un tablero con unidades, filtros y totales conciliados; identificar qué se ejecutó.
+
+**NB08 · Integrador y comunicación (Núcleo).** Defender una recomendación con efecto, incertidumbre y costo. **Evidencia:** Entregar memo, cálculo, gráfico y defensa con población, sensibilidad y siguiente evidencia.
+
+<!-- BA_APRENDIZAJE_FIN -->
+
 # Formular y seleccionar métodos {#sec-problema}
 
 Una decisión empresarial no es todavía una pregunta estadística. «Mejorar atención» se transforma en «estimar la diferencia del tiempo medio de atención entre B y A para pedidos futuros comparables». Se define la **unidad de análisis**, la población, la variable, el período, el parámetro o estimando, la precisión necesaria y la acción que cambiaría con el resultado. Distinguir una variable de respuesta de una variable explicativa evita modelar la columna equivocada.
@@ -113,6 +140,7 @@ En ComercioSur el ticket es asimétrico, por construcción. La media representa 
 
 ```{python}
 #| label: resumen-comerciosur
+#| fig-alt: "ComercioSur: histograma del ticket y dispersión entre ticket y tiempo por campaña. Comparar forma, valores extremos y superposición de grupos."
 tabla(df.groupby('campana').agg(n=('id','size'),media_min=('tiempo_min','mean'),sd_min=('tiempo_min','std'),ticket_mediano_mil=('ticket_mil','median'),resolucion=('resuelto','mean')).reset_index())
 fig,ax=plt.subplots(1,2,figsize=(9,3))
 ax[0].hist(df.ticket_mil,bins=25,color='#087f8c');ax[0].set(xlabel='Ticket (miles de UM)',ylabel='Pedidos')
@@ -235,6 +263,7 @@ En ComercioSur se modela tiempo con ticket, canal y campaña. Un coeficiente de 
 
 ```{python}
 #| label: regresion-calculada
+#| fig-alt: "Diagnóstico de regresión: residuos frente a valores ajustados y gráfico cuantil normal de los residuos. Buscar patrones y desviaciones que limiten la interpretación."
 import statsmodels.formula.api as smf
 modelo=smf.ols('tiempo_min ~ ticket_mil + C(canal) + C(campana)',data=df).fit()
 rob=modelo.get_robustcov_results(cov_type='HC3')
@@ -313,7 +342,7 @@ Una serie ordena observaciones por fecha y frecuencia. Revisar huecos, duplicado
 
 El ingenuo pronostica el último dato. El ingenuo estacional copia el último valor de la misma estación. Suavizamiento exponencial simple actualiza nivel $\ell_t=\alpha y_t+(1-\alpha)\ell_{t-1}$ y pronostica nivel constante; Holt añade tendencia. Un $\alpha$ grande reacciona rápido y también puede seguir ruido. La elección depende del patrón y del horizonte, no de preferir automáticamente la curva más suave.
 
-ARIMA$(p,d,q)$ combina autorregresión, diferenciación y media móvil de innovaciones. Con operador de rezago $B$, una forma sin regresores es $\phi(B)w_t=c+\theta(B)\varepsilon_t$. donde $w_t$ es la serie tras $d$ diferencias. $p$ y $q$ son órdenes de dependencia, $d$ indica diferencias. La parte estacionaria requiere raíces apropiadas y un proceso razonablemente estable; diferenciar en exceso puede introducir estructura artificial. ARIMA no significa «cualquier línea que proyecta».
+ARIMA$(p,d,q)$ combina autorregresión, diferenciación y media móvil de innovaciones. Con operador de rezago $B$, una forma sin regresores es $\phi(B)w_t=c+\theta(B)\varepsilon_t$, donde $w_t$ es la serie tras $d$ diferencias. $p$ y $q$ son órdenes de dependencia, $d$ indica diferencias. La parte estacionaria requiere raíces apropiadas y un proceso razonablemente estable; diferenciar en exceso puede introducir estructura artificial. ARIMA no significa «cualquier línea que proyecta».
 
 El laboratorio ajusta SES, Holt y ARIMA(1,1,0) además de referencias ingenuas y media móvil. ARIMA(1,1,0), sin término determinista en el ajuste, representa $\Delta y_t=\phi\Delta y_{t-1}+\varepsilon_t$. No incorpora la estacionalidad anual de ComercioSur: permite discutir por qué un modelo sencillo mal especificado puede perder contra una referencia. SARIMA añade factores estacionales $(P,D,Q)_m$; su selección detallada es profundización, no necesaria para ejecutar el núcleo. La API usada explicita órdenes y términos [@arima].
 
@@ -329,6 +358,7 @@ La escala de MASE se calcula en entrenamiento, con $m=12$ para estacionalidad me
 
 ```{python}
 #| label: serie-referencia
+#| fig-alt: "Demanda mensual observada y referencia estacional en los doce meses de prueba. La línea vertical separa el período reservado de los datos de entrenamiento."
 y=serie();train=y.iloc[:60];test=y.iloc[60:];pred=train.iloc[-12:].to_numpy()
 e=test.to_numpy()-pred;escala=np.abs(train.to_numpy()[12:]-train.to_numpy()[:-12]).mean()
 tabla(pd.DataFrame([{'referencia_prefijada':'Ingenuo estacional','MAE':np.abs(e).mean(),'RMSE':np.sqrt(np.mean(e**2)),'MASE':np.abs(e).mean()/escala}]))
@@ -347,6 +377,7 @@ Un dashboard combina indicador, contexto, comparación y acción. Para ComercioS
 
 ```{python}
 #| label: grafico-decision
+#| fig-alt: "Tiempo medio por campaña con intervalos individuales del 95 por ciento. Los intervalos describen medias; no son intervalos simultáneos ni distribuciones de pedidos."
 r=pd.DataFrame([{'campana':g,**ic_media(x.tiempo_min)} for g,x in df.groupby('campana')])
 plt.errorbar(r.campana,r.media,yerr=[r.media-r.li,r.ls-r.media],fmt='o',capsize=6,color='#087f8c')
 plt.ylabel('Tiempo medio e IC individual 95% (min)');plt.xlabel('Campaña');plt.title('ComercioSur · comparación simulada');plt.show()

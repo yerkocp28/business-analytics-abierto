@@ -19,8 +19,9 @@ def main():
     if not args.solo_render:script('ejecutar_notebooks.py')
     script('construir_guia.py')
     subprocess.run([quarto,'render',str(CURSO/'material_propio/AED_manual_cientifico.qmd'),'--to','all'],cwd=RAIZ,env=env,check=True)
+    subprocess.run([sys.executable,str(RAIZ/'_transversal/construir_interfaz.py'),'--curso','AED'],cwd=RAIZ,env=env,check=True)
     script('verificar_edicion.py')
-    print('Edición verificada. Revise resultados y actualice el catálogo conservando hashes originales.')
+    print('Edición verificada. Revise resultados y evidencia antes de publicar.')
 
 
 if __name__=='__main__':main()

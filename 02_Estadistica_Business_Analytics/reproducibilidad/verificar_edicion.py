@@ -1,3 +1,4 @@
+import os
 """Pruebas de contenido, integridad, cálculos y guía offline de EBA."""
 from pathlib import Path
 import csv, hashlib, json, re
@@ -58,7 +59,7 @@ def main():
     assert load_workbook(archivo,data_only=False)['Formulas']['C2'].value.startswith('=AVERAGEIF')
     result['calculos']='Bayes, IC t, Wilson, Holm, ANOVA y agregados Excel verificados con casos independientes.'
     with sync_playwright() as pw:
-        browser=pw.chromium.launch(channel='chrome',headless=True);page=browser.new_page(viewport={'width':1440,'height':1000});errors=[];requests=[]
+        browser=pw.chromium.launch(channel=os.environ.get('BA_BROWSER_CHANNEL','chrome'),headless=True);page=browser.new_page(viewport={'width':1440,'height':1000});errors=[];requests=[]
         page.on('pageerror',lambda e:errors.append(str(e)))
         def route(r):
             if r.request.url.startswith(('http:','https:')):requests.append(r.request.url);r.abort()

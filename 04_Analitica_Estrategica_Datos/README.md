@@ -1,6 +1,6 @@
 # Analítica Estratégica de Datos
 
-[Volver al inicio](../README.md) · [Cobertura curricular](COBERTURA.md) · [Reproducción y pruebas](reproducibilidad/README.md)
+[Volver al inicio](../README.md) · [Ruta por módulo](RUTA_APRENDIZAJE.md) · [Cobertura curricular](COBERTURA.md) · [Reproducción y pruebas](reproducibilidad/README.md)
 
 **Edición 2026.** Tres unidades y doce semanas conectadas con 13 criterios de evaluación. La edición distingue núcleo y profundización. Los casos son ficticios y sus datos, simulados.
 

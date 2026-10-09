@@ -1,6 +1,6 @@
 # Estadística Aplicada a Business Analytics
 
-[Inicio](../README.md) · [Cobertura](COBERTURA.md) · [Reproducibilidad](reproducibilidad/README.md) · [Datos y diccionario](datos/README.md)
+[Inicio](../README.md) · [Ruta por módulo](RUTA_APRENDIZAJE.md) · [Cobertura](COBERTURA.md) · [Reproducibilidad](reproducibilidad/README.md) · [Datos y diccionario](datos/README.md)
 
 **Edición 2026.** 12 criterios de evaluación y 17 contenidos mínimos. Un caso simulado común, ComercioSur, conecta métodos, incertidumbre, decisión y comunicación. La secuencia propuesta tiene doce semanas y es ajustable.
 

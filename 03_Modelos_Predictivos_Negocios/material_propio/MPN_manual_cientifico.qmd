@@ -20,7 +20,6 @@ format:
   typst:
     papersize: a4
     fontsize: 10.5pt
-    mainfont: Cambria
     margin:
       x: 2.2cm
       y: 2.1cm
@@ -31,7 +30,10 @@ format:
     code-fold: true
     toc-location: left
     html-math-method: mathml
-    css: manual.css
+    css:
+      - manual.css
+      - ../../_transversal/interfaz/manual.css
+    include-after-body: ../../_transversal/interfaz/manual.html
 ---
 
 ```{python}
@@ -114,6 +116,29 @@ No exigir leer los siete notebooks completos antes de la primera sesión. Selecc
 
 El fundamento de redes neuronales cubre la explicación pedida en CE1.1; entrenar una red profunda no se agrega como obligación. Las ponderaciones y fechas de evaluación corresponden a cada curso.
 
+<!-- BA_APRENDIZAJE_INICIO -->
+## Objetivos y evidencias por módulo {#sec-aprendizaje}
+
+**Preparación de entrada:** Python básico, tablas, probabilidad e interpretación de regresión; diagnóstico en NB01.
+
+Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del grupo. Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. La profundización se consulta después del núcleo.
+
+**NB01 · Problema predictivo (Núcleo).** Definir objetivo, horizonte, disponibilidad de variables y referencia. **Evidencia:** Entregar ficha de problema, referencia y justificación de una técnica; explicar la red mínima.
+
+**NB02 · Preparación sin fuga (Núcleo).** Construir un pipeline que aprenda transformaciones solo con entrenamiento. **Evidencia:** Demostrar separación de datos, contrato de variables y transformaciones ajustadas sin prueba.
+
+**NB03 · Regresión de demanda (Núcleo).** Comparar regresión y alternativas con referencia e incertidumbre de predicción. **Evidencia:** Reportar MAE/RMSE, referencia, diagnóstico y diferencia entre IC de media e intervalo predictivo.
+
+**NB04 · Clasificación de abandono (Núcleo).** Evaluar discriminación y una campaña con probabilidades y costos explícitos. **Evidencia:** Justificar modelo y política con métricas fuera de muestra y límites de utilidad.
+
+**NB05 · Validación, métricas y umbral (Núcleo).** Seleccionar modelo y umbral sin reutilizar la prueba para decidir. **Evidencia:** Documentar selección, datos reservados y costo; no inferir calibración por coincidencia de umbrales.
+
+**NB06 · Limitaciones y comunicación (Núcleo).** Construir una ficha de modelo con seguimiento, responsables y condiciones de uso. **Evidencia:** Entregar ficha con evidencia, incertidumbre, umbral de revisión y propuesta de mejora.
+
+**NB07 · Pronóstico de demanda (Profundización).** Evaluar una serie mediante orígenes móviles y referencias comparables. **Evidencia:** Explicar horizonte, cobertura observada, referencia y límites de cambios del proceso.
+
+<!-- BA_APRENDIZAJE_FIN -->
+
 # El problema predictivo {#sec-problema}
 
 ## De la decisión a Y = f(X) + ε
@@ -140,6 +165,7 @@ sube, y nunca cruza de forma sostenida el piso $\sigma^2$.
 
 ```{python}
 #| label: fig-sesgo-varianza
+#| fig-alt: "Error cuadrático medio de entrenamiento y de observaciones nuevas según grado polinomial; la referencia horizontal es la varianza del ruido, 144."
 #| fig-cap: "Simulación con mecanismo conocido (demanda curva según precio, σ = 12). El error en entrenamiento disminuye con el grado; en datos nuevos aparece el compromiso sesgo–varianza. La línea discontinua es σ²."
 def f_verdadera(p): return 260 - 22 * p + 0.6 * p ** 2
 g = np.random.default_rng(SEMILLA)
@@ -441,6 +467,7 @@ $c_{FP}=90$ miles de CLP, $t^*\approx0{,}10$. El umbral convencional 0,5 corresp
 
 ```{python}
 #| label: fig-umbral
+#| fig-alt: "Costo medio por lote en PulpaLenga según umbral. Comparar el umbral económico 90 dividido por 890 y el umbral 0,5 usando predicciones fuera de pliegue."
 #| fig-cap: "PulpaLenga · costo medio por lote según umbral, con predicciones fuera de pliegue en entrenamiento + validación. La línea discontinua marca t* = 90/890."
 cal = mr.celulosa_calidad()
 Xc = mr.desvios_pulpa(cal); yc = cal["defecto"]
@@ -516,11 +543,17 @@ causas ni la pérdida de desempeño, que solo se mide cuando llegan etiquetas.
 
 ## Riesgo de modelo y obligaciones
 
-La gestión del riesgo de modelos exige desarrollo documentado, **validación independiente**, monitoreo y un
-inventario con responsables [@sr117]. En Chile, el tratamiento de datos personales para construir y aplicar
-modelos queda sujeto a la Ley 21.719 [@ley21719]: finalidad declarada, minimización, seguridad y derechos de los
-titulares, con especial cuidado en decisiones automatizadas que afectan a personas. Revisar el desempeño por grupos
-es, además, una exigencia ética cuando el modelo prioriza o excluye clientes.
+Como referencia internacional, la guía estadounidense SR 26-2 del 17 de abril de 2026
+recomienda gestión proporcional al riesgo, desarrollo documentado, validación y seguimiento
+[@sr262]. Reemplazó SR 11-7; esta última se conserva como antecedente histórico, no como
+referencia vigente. El alcance depende del tipo y tamaño de la entidad y del uso del modelo;
+esta guía de supervisión estadounidense no se convierte automáticamente en una obligación chilena.
+
+En Chile, la edición de octubre de 2026 distingue el marco vigente de protección de datos y la
+transición general de la Ley 21.719 al **1 de diciembre de 2026** [@ley21719]. Al aplicar un caso,
+se debe comprobar la disposición y fecha que corresponden. Declarar finalidad, población,
+datos utilizados, medidas de protección y límites ayuda a evaluar el uso del modelo; revisar
+desempeño por grupos permite discutir consecuencias de priorizar o excluir personas.
 
 # Comunicación y mejora continua {#sec-comunicacion}
 

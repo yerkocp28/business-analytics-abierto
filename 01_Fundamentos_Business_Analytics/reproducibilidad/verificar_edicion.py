@@ -1,3 +1,4 @@
+import os
 """Comprobaciones de publicación local: notebooks, datos, HTML interactivo y PDF."""
 from pathlib import Path
 import csv
@@ -67,7 +68,7 @@ def main():
     df=ventas()
     q2=df[df.Fecha.dt.quarter.eq(2)]
     with sync_playwright() as p:
-        browser=p.chromium.launch(channel='chrome',headless=True)
+        browser=p.chromium.launch(channel=os.environ.get('BA_BROWSER_CHANNEL','chrome'),headless=True)
         page=browser.new_page(viewport={'width':1440,'height':1000},device_scale_factor=1)
         errores=[];network=[]
         page.on('pageerror',lambda error:errores.append(str(error)))

@@ -20,7 +20,6 @@ format:
   typst:
     papersize: a4
     fontsize: 10.5pt
-    mainfont: Cambria
     margin:
       x: 2.2cm
       y: 2.1cm
@@ -29,7 +28,10 @@ format:
     embed-resources: true
     toc-location: left
     html-math-method: mathml
-    css: manual.css
+    css:
+      - manual.css
+      - ../../_transversal/interfaz/manual.css
+    include-after-body: ../../_transversal/interfaz/manual.html
 ---
 
 ```{python}
@@ -78,6 +80,31 @@ El notebook 08 amplía optimización no lineal, riesgo de cola y decisiones secu
 Los ejercicios y rúbricas de esta edición son formativos. Cada docente define las ponderaciones y reglas de evaluación vigentes en su curso.
 
 El **laboratorio SolarSur** cubre la semana 9 con enunciado, cálculo, sensibilidad, solución orientadora y rúbrica formativa.
+
+<!-- BA_APRENDIZAJE_INICIO -->
+## Objetivos y evidencias por módulo {#sec-aprendizaje}
+
+**Preparación de entrada:** Descriptiva, probabilidad y lectura de modelos; programación lineal se introduce con dos variables.
+
+Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del grupo. Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. La profundización se consulta después del núcleo.
+
+**NB01 · Proceso y calidad (Núcleo).** Diseñar un proceso con entregables y reglas de calidad que cambian la decisión. **Evidencia:** Entregar contrato, auditoría, denominadores y registro de exclusiones reproducible.
+
+**NB02 · Selección de técnicas (Núcleo).** Elegir técnica según pregunta, respuesta, estructura y decisión. **Evidencia:** Justificar técnica, referencia, validación y una implicación práctica que no confunda asociación y efecto.
+
+**NB03 · KPIs y dashboard (Núcleo).** Definir y conciliar una medida con grano, unidad, denominador y responsable. **Evidencia:** Entregar ficha de KPI y tablero con fuente, población, período y acción ante desviaciones.
+
+**NB04 · Optimización y restricciones (Núcleo).** Formular y resolver una decisión factible e interpretar sensibilidad local. **Evidencia:** Presentar variables, objetivo, restricciones, solución, holguras y una decisión de capacidad.
+
+**NB05 · Alternativas e información (Núcleo).** Comparar acciones bajo riesgo y valorar información antes de pagar por ella. **Evidencia:** Entregar matriz de pagos, alternativa, sensibilidad y cota del costo de información.
+
+**NB06 · SolarSur y Monte Carlo (Núcleo).** Comparar proyectos con flujos, dependencia y precisión numérica explícitos. **Evidencia:** Informar VAN, pérdida, SE de la media, supuestos y sensibilidad de una recomendación.
+
+**NB07 · Integración e implementación (Núcleo).** Defender una alternativa y diseñar el piloto que evaluará su efecto. **Evidencia:** Entregar memo con alternativas, factibilidad, incertidumbre, piloto, responsable y criterio de revisión.
+
+**NB08 · Profundización prescriptiva (Profundización).** Analizar sensibilidad, colas y aprendizaje secuencial sin extrapolar garantías. **Evidencia:** Defender supuestos, criterio de riesgo, comparación independiente y límite de transferencia.
+
+<!-- BA_APRENDIZAJE_FIN -->
 
 # De la estrategia al proceso analítico {#sec-proceso}
 
@@ -151,6 +178,7 @@ Para comparar grupos, distinga composición y cambio dentro de grupos. Una mejor
 
 ```{python}
 #| label: tabla-canales
+#| fig-alt: "CasaPeumo: histograma del ingreso por venta para observar asimetría, concentración y valores extremos antes de resumir el ticket."
 canales=ventas.groupby('Canal').agg(ventas=('IdVenta','size'),ingreso=('Ingreso','sum'),margen=('Margen','sum'))
 canales['margen_pct']=100*canales.margen/canales.ingreso
 tabla(canales.reset_index())
@@ -233,6 +261,7 @@ Las rectas activas se intersectan en $(110/3,80/3)$ y dan contribución $6800/3$
 
 ```{python}
 #| label: solucion-lineal
+#| fig-alt: "Región factible delimitada por horas y material; el óptimo está en la intersección A igual a 110 tercios y B igual a 80 tercios."
 res=plan_produccion();assert res.success and np.allclose(res.x,[110/3,80/3])
 tabla(pd.DataFrame([{'A':res.x[0],'B':res.x[1],'contribucion_UM':-res.fun,
                     'holgura_horas':res.ineqlin.residual[0],'holgura_material':res.ineqlin.residual[1]}]))
@@ -247,6 +276,16 @@ ax.scatter(*res.x,color='#a47732',s=70);ax.set(xlim=(0,60),ylim=(0,100),xlabel='
 En la base óptima, el valor marginal de una hora es $50/3$ UM y de una unidad de material $20/3$ UM. Se comprueba perturbando una capacidad en 0.01 y reoptimizando. Los precios sombra son locales: al cambiar la base, no se mantienen necesariamente. Comprar 100 horas adicionales a 15 UM/hora no se justifica extrapolando el precio marginal de la primera hora.
 
 La dualidad conecta restricciones y valor del recurso; para una exposición más profunda de convexidad y condiciones de optimalidad se recomienda @boyd. Una interpretación económica exige verificar unidades y qué costos están incluidos. Un marginal negativo del problema de minimización del beneficio negado debe cambiar de signo antes de interpretarse como contribución.
+
+## Ejemplo desarrollado: ampliar capacidad
+
+Con material fijo en 90, pasar de 100 a 110 horas cambia la solución de
+$(110/3,80/3)$ a $(130/3,70/3)$; la contribución aumenta de $6800/3$ a $7300/3$ UM.
+Diez horas aportan $500/3$ UM: coincide con el precio sombra local $50/3$ UM por hora.
+Con 200 horas, la solución es $(90,0)$, la contribución es 3600 UM y sobran 20 horas.
+Extrapolar el marginal inicial hasta ese punto sobreestima el beneficio. **Práctica:**
+comparar 110, 180 y 200 horas, identificar la restricción activa y justificar el precio
+máximo de una hora adicional en cada escenario.
 
 ## Decisiones indivisibles y estados del solver
 
@@ -302,6 +341,7 @@ La correlación de los normales no es idéntica a la de las variables transforma
 
 ```{python}
 #| label: solarsur-resultados
+#| fig-alt: "Distribución simulada del VAN de SolarSur en miles de unidades monetarias. La línea en cero separa escenarios de pérdida de los de VAN positivo."
 sim=solar();rs=resumen_solar(sim)
 tabla(pd.DataFrame([rs]))
 analitico=-250+(100*np.exp(-.25*.12*.20)-30)*sum(1/1.1**t for t in range(1,6))

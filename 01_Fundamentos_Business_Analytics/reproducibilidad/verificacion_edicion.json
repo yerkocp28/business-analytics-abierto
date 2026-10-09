@@ -33,7 +33,7 @@
     }
   ],
   "html": {
-    "enlaces_locales_verificados": 92,
+    "enlaces_locales_verificados": 152,
     "javascript": "OK",
     "uso_sin_red": "OK",
     "filtros_contrastados_python": "OK",
@@ -42,7 +42,7 @@
   },
   "pdf": {
     "paginas": 19,
-    "caracteres_extraidos": 55248,
+    "caracteres_extraidos": 56904,
     "resultado": "OK"
   },
   "cobertura": {

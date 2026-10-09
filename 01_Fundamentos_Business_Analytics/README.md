@@ -1,6 +1,6 @@
 # Fundamentos de Business Analytics
 
-[Volver al inicio](../README.md) · [Cobertura curricular](COBERTURA.md) · [Reproducción y pruebas](reproducibilidad/README.md)
+[Volver al inicio](../README.md) · [Ruta por módulo](RUTA_APRENDIZAJE.md) · [Cobertura curricular](COBERTURA.md) · [Reproducción y pruebas](reproducibilidad/README.md)
 
 **Edición 2026.** Tres unidades —conceptos, análisis visual y herramientas— con profundizaciones de probabilidad y modelos. Los 15 criterios de evaluación se vinculan con actividades concretas. Los casos son ficticios y sus datos, simulados.
 

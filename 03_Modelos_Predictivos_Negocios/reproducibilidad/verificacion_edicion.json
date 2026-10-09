@@ -45,7 +45,7 @@
     }
   ],
   "html": {
-    "enlaces_locales_verificados": 106,
+    "enlaces_locales_verificados": 176,
     "javascript": "OK",
     "uso_sin_red": "OK",
     "umbral_contrastado_python": "OK",
@@ -63,7 +63,7 @@
   },
   "pdf": {
     "paginas": 16,
-    "caracteres_extraidos": 46169,
+    "caracteres_extraidos": 48607,
     "resultado": "OK"
   }
 }

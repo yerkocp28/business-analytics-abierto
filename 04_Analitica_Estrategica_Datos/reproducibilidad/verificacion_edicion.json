@@ -53,7 +53,7 @@
   "html": {
     "javascript": "OK",
     "sin_red": "OK",
-    "enlaces_locales": 89,
+    "enlaces_locales": 165,
     "filtros_contrastados_python": 16,
     "cambios_controles": 30,
     "quizzes": 8,
@@ -61,8 +61,8 @@
     "movil_390x844": "OK"
   },
   "pdf": {
-    "paginas": 13,
-    "caracteres_extraidos": 43423,
+    "paginas": 14,
+    "caracteres_extraidos": 46351,
     "resultado": "OK"
   },
   "cobertura": {

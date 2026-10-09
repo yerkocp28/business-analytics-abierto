@@ -1,3 +1,4 @@
+import os
 """Comprueba integridad, cobertura, cálculos, interacción sin red y presentación AED."""
 from pathlib import Path
 import csv
@@ -58,7 +59,7 @@ def main():
 
     df,_,_=casapeumo();filters=0;changes=0
     with sync_playwright() as p:
-        browser=p.chromium.launch(channel='chrome',headless=True)
+        browser=p.chromium.launch(channel=os.environ.get('BA_BROWSER_CHANNEL','chrome'),headless=True)
         page=browser.new_page(viewport={'width':1440,'height':1000})
         errors=[];network=[]
         page.on('pageerror',lambda e:errors.append(str(e)))
@@ -120,8 +121,8 @@ def main():
         page.locator('#simulacion').scroll_into_view_if_needed();page.screenshot(path=str(capturas/'guia_simulacion.png'))
         page.set_viewport_size({'width':390,'height':844});page.goto(guia.as_uri(),wait_until='load')
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2'),'Desbordamiento móvil'
-        page.locator('#menu').click();assert page.locator('#menu').get_attribute('aria-expanded')=='true'
-        page.locator('#menu').click();page.screenshot(path=str(capturas/'guia_movil.png'))
+        page.locator('#ba-menu').click();assert page.locator('#ba-menu').get_attribute('aria-expanded')=='true'
+        page.locator('#ba-menu').click();page.screenshot(path=str(capturas/'guia_movil.png'))
         page.set_viewport_size({'width':1440,'height':1000});page.goto(manual.as_uri(),wait_until='load')
         assert page.locator('math').count()>=10
         page.screenshot(path=str(capturas/'manual_html.png'))
@@ -137,7 +138,13 @@ def main():
     for term in ['SolarSur','BoldoNet','CasaPeumo','Bellman','Referencias','Glosario','Monte Carlo']:
         assert term.casefold() in text.casefold(),term
     assert not re.search(r'\[@[a-z_]+\]',text),'Citas sin resolver'
-    for i in [0,len(pdf)//2,len(pdf)-1]:pdf[i].get_pixmap(matrix=fitz.Matrix(1.2,1.2)).save(capturas/f'manual_pagina_{i+1:02}.png')
+    paginas_muestra = [0,len(pdf)//2,len(pdf)-1]
+    nombres_muestra = {f'manual_pagina_{i+1:02}.png' for i in paginas_muestra}
+    for anterior in capturas.glob('manual_pagina_*.png'):
+        if anterior.name not in nombres_muestra:
+            assert anterior.resolve().is_relative_to(capturas.resolve())
+            anterior.unlink()
+    for i in paginas_muestra:pdf[i].get_pixmap(matrix=fitz.Matrix(1.2,1.2)).save(capturas/f'manual_pagina_{i+1:02}.png')
     resultado['pdf']={'paginas':len(pdf),'caracteres_extraidos':len(text),'resultado':'OK'}
     pdf.close()
     (SALIDA/'verificacion_edicion.json').write_text(json.dumps(resultado,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

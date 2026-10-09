@@ -6,49 +6,49 @@
       "archivo": "03_Modelos_Predictivos_Negocios/notebooks/MPN_01_problema_predictivo.ipynb",
       "resultado": "OK",
       "celdas_codigo": 9,
-      "segundos": 3.81,
+      "segundos": 6.72,
       "widgets_guardados": true
     },
     {
       "archivo": "03_Modelos_Predictivos_Negocios/notebooks/MPN_02_crisp_preparacion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 3.8,
+      "segundos": 5.08,
       "widgets_guardados": true
     },
     {
       "archivo": "03_Modelos_Predictivos_Negocios/notebooks/MPN_03_regresion_demanda.ipynb",
       "resultado": "OK",
       "celdas_codigo": 11,
-      "segundos": 6.84,
+      "segundos": 6.42,
       "widgets_guardados": true
     },
     {
       "archivo": "03_Modelos_Predictivos_Negocios/notebooks/MPN_04_clasificacion_abandono.ipynb",
       "resultado": "OK",
       "celdas_codigo": 11,
-      "segundos": 10.62,
+      "segundos": 9.52,
       "widgets_guardados": true
     },
     {
       "archivo": "03_Modelos_Predictivos_Negocios/notebooks/MPN_05_validacion_evaluacion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 13,
-      "segundos": 12.88,
+      "segundos": 11.86,
       "widgets_guardados": true
     },
     {
       "archivo": "03_Modelos_Predictivos_Negocios/notebooks/MPN_06_limitaciones_comunicacion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 9,
-      "segundos": 20.05,
+      "segundos": 17.56,
       "widgets_guardados": true
     },
     {
       "archivo": "03_Modelos_Predictivos_Negocios/notebooks/MPN_07_pronostico_demanda.ipynb",
       "resultado": "OK",
       "celdas_codigo": 6,
-      "segundos": 5.44,
+      "segundos": 5.8,
       "widgets_guardados": true
     }
   ]

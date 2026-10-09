@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Guía maestra · Modelos Predictivos en Negocios</title>
 <style>
 :root{
@@ -198,48 +199,108 @@ table.data caption{caption-side:top;text-align:left;font-size:12.5px;color:var(-
 .lab input[type=checkbox]{accent-color:var(--gold);width:16px;height:16px;}
 @media(max-width:700px){.kf-lab{width:56px;}.kf-cell{font-size:9.5px;}}
 </style>
-</head>
-<body>
+<style data-ba-generado="" id="ba-estilo">/* Navegación, actividades y accesibilidad comunes. Sin fuentes ni servicios externos. */
+:root { --ba-ink: #143f49; --ba-line: #bed0d3; }
+[hidden] { display: none !important; }
+.ba-saltar { position: fixed; top: -100px; left: 12px; z-index: 100; background: white; color: #143f49; padding: 12px; }
+.ba-saltar:focus { top: 10px; }
+body :is(a,button,input,select,textarea,summary,[tabindex]):focus-visible { outline: 3px solid #bd7600; outline-offset: 3px; }
+main { min-width: 0; overflow-wrap: anywhere; }
+main :is(.grid2,.grid3) > * { min-width: 0; }
+main pre { max-width: 100%; overflow-x: auto; }
+.ba-math { display: inline-block; max-width: 100%; overflow-x: auto; vertical-align: middle; }
+.ba-math.ba-display { display: block; }
+.ba-display math { width: max-content; min-width: 100%; }
+main img { max-width: 100%; height: auto; }
+.ba-barra { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin: 0 0 1.5rem; padding: .8rem 0; border-bottom: 1px solid var(--ba-line); font: .9rem/1.5 system-ui,sans-serif; }
+.ba-barra a { color: #125865; }
+.ba-barra label { display: flex; align-items: center; gap: .45rem; margin: 0 0 0 auto; color: #17313e; }
+.ba-barra input[type=checkbox] { appearance: auto; width: 1.1rem; height: 1.1rem; margin: 0; }
+.ba-barra input[type=checkbox]::after { display: none; }
+#ba-menu { display: none; background: #fff; color: #143f49; border: 1px solid #bdcfd1; padding: .55rem .8rem; border-radius: .3rem; font: 1rem/1.3 system-ui,sans-serif; }
+aside #menu { display: none !important; }
+aside .ba-busqueda { display: block; padding: .6rem 1.2rem; color: #fff; font: .85rem/1.5 system-ui,sans-serif; }
+aside .ba-busqueda input { display: block; box-sizing: border-box; width: 100%; margin: .4rem 0 0; padding: .65rem; background: #fff; color: #17313e; border: 1px solid #adcbcf; border-radius: .3rem; font: 1rem/1.3 system-ui,sans-serif; }
+#ba-resultados { padding: 0 1.2rem .6rem; margin: 0; list-style: none; color: white; }
+#ba-resultados a { display: block; color: #fff; padding: .45rem 0; line-height: 1.4; font-size: .9rem; }
+#ba-conteo { color: #e1eff1; display: block; padding: 0 1.2rem; font-size: .85rem; }
+aside a[aria-current=location] { border-left: 3px solid #ffc562; background: #ffffff16; }
+.ba-ruta { margin: 2rem 0; padding: 1.25rem; border: 1px solid var(--ba-line); border-top: 4px solid #087f8c; border-radius: .5rem; background: #fff; color: #17313e; }
+.ba-ruta h2 { margin: 0 0 .65rem; color: #143f49; }
+.ba-modulos { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 1rem; }
+.ba-modulo { padding: 1rem; border: 1px solid #c7d7da; border-radius: .4rem; background: #f7faf9; min-width: 0; }
+.ba-modulo h3 { color: #143f49; margin: .4rem 0; font: 600 1.05rem/1.4 system-ui,sans-serif; }
+.ba-nivel { font: 600 .76rem/1.5 system-ui,sans-serif; letter-spacing: .04em; color: #684b00; }
+.ba-modulo p, .ba-modulo li, .ba-modulo dd { font-size: .94rem; line-height: 1.6; }
+.ba-modulo dl { margin: .7rem 0; }
+.ba-modulo dt { font-weight: 700; margin-top: .7rem; }
+.ba-modulo dd { margin: .2rem 0; }
+.ba-modulo summary { cursor: pointer; color: #125865; font-weight: 600; padding: .5rem 0; }
+.ba-recursos { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+.ba-recursos a, .ba-calendario button { display: inline-block; color: #125865; background: #fff; padding: .4rem .65rem; border: 1px solid #789ba1; border-radius: .3rem; text-decoration: none; font: .88rem/1.5 system-ui,sans-serif; }
+.ba-calendario button { cursor: pointer; margin: .3rem .3rem .3rem 0; }
+.ba-calendario button[aria-pressed=true] { background: #124559; color: white; }
+.ba-clase-objetivo { border-left: 4px solid #087f8c; padding: .7rem 1rem; margin: 1rem 0; background: #ecf4f3; color: #17313e; font-size: .95rem; }
+.ba-pasos { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1rem; margin-top: 1.5rem; border-top: 1px solid var(--ba-line); }
+.ba-pasos a { color: #125865; font: .9rem/1.5 system-ui,sans-serif; }
+.ba-actividad { margin: 1rem 0; padding: 1rem; background: #eef5f4; border-left: 4px solid #087f8c; }
+.ba-clase aside { display: none !important; }
+body.ba-clase { display: block !important; }
+.ba-clase main { max-width: 1120px !important; margin: 0 auto !important; width: 100%; font-size: 1.2rem; }
+.ba-clase .ba-barra { position: sticky; top: 0; z-index: 30; background: #fff; padding: .7rem; }
+@media(max-width:900px) {
+  body { display: block !important; }
+  body aside { width: 100% !important; height: auto !important; position: relative !important; max-height: none !important; padding-bottom: .8rem !important; }
+  aside .brand { padding-top: 1rem; padding-bottom: .7rem; }
+  #ba-menu { display: block; margin: .5rem 1.2rem; }
+  #ba-panel-indice { display: none; max-height: 65vh; overflow-y: auto; }
+  #ba-panel-indice.ba-abierto { display: block; }
+  #ba-panel-indice nav { display: block !important; max-height: none !important; height: auto !important; overflow: visible !important; }
+  body main { margin-left: 0 !important; max-width: 100%; padding: 1.2rem !important; }
+  .ba-modulos { grid-template-columns: 1fr; }
+  .ba-barra label { margin-left: 0; }
+  .ba-ruta { padding: 1rem; }
+}
+@media print { aside,.ba-barra,.ba-pasos,.ba-saltar { display: none !important; } .ba-modulos { display: block; } .ba-modulo { break-inside: avoid; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto !important; } *,*::before,*::after { transition: none !important; } }
+</style></head>
+<body><a class="ba-saltar" data-ba-generado="" href="#contenido">Saltar al contenido</a>
 <div class="shell">
-
 <aside>
-  <div class="brand">
-    <div class="uni">Colección abierta de Business Analytics</div>
-    <h1>Modelos Predictivos en Negocios</h1>
-    <div class="prof">Prof. Yerko Carreño · Guía maestra</div>
-  </div>
-  <nav id="nav" aria-label="Capítulos de la guía">
-    <a href="#inicio">Orientación y recursos</a>
-    <div class="grp">Unidad 1 · RA1</div>
-    <a href="#c1">1 · El problema predictivo</a>
-    <a href="#c2">2 · Técnicas, aplicaciones y límites</a>
-    <div class="grp">Unidad 2 · RA2</div>
-    <a href="#c3">3 · CRISP-DM y preparación</a>
-    <a href="#c4">4 · Regresión</a>
-    <a href="#c5">5 · Clasificación</a>
-    <a href="#c6">6 · Regularización</a>
-    <a href="#c7">7 · Validación y sobreajuste</a>
-    <div class="grp">Unidad 3 · RA3</div>
-    <a href="#c8">8 · Métricas de evaluación</a>
-    <a href="#c9">9 · Umbral, costos y calibración</a>
-    <a href="#c10">10 · Limitaciones y riesgo de modelo</a>
-    <a href="#c11">11 · Comunicación y ficha del modelo</a>
-    <div class="grp">Ruta y consulta</div>
-    <a href="#c12">12 · Ruta de doce semanas</a>
-    <a href="#c13">13 · Glosario</a>
-    <a href="#c14">14 · Autoevaluación</a>
-    <a href="#c15">15 · Referencias y ruta docente</a>
-    <div class="grp">Profundización</div>
-    <a href="#c16">16 · Pronóstico de series de tiempo</a>
-  </nav>
-</aside>
-
-<main>
-<div class="topbar">
-  <div style="font-size:12.5px;color:var(--ink-soft);">Edición integral · tres unidades y profundización · 08 oct 2026</div>
-  <label class="toggle"><input type="checkbox" id="clase-toggle"> Modo clase (texto grande)</label>
+<div class="brand">
+<div class="uni">Colección abierta de Business Analytics</div>
+<h1>Modelos Predictivos en Negocios</h1>
+<div class="prof">Prof. Yerko Carreño · Guía maestra</div>
 </div>
-
+<button aria-controls="ba-panel-indice" aria-expanded="false" data-ba-generado="" id="ba-menu" type="button">Mostrar índice</button><div id="ba-panel-indice"><label class="ba-busqueda" data-ba-generado="" for="ba-buscar">Buscar en el curso<input id="ba-buscar" placeholder="Concepto, método o actividad…" type="search"/></label><span aria-live="polite" data-ba-generado="" id="ba-conteo" role="status"></span><ul data-ba-generado="" hidden="" id="ba-resultados"></ul><nav aria-label="Capítulos de la guía" id="nav"><a data-ba-generado="" href="#ruta-aprendizaje">Ruta de aprendizaje</a>
+<a href="#inicio">Orientación y recursos</a>
+<div class="grp">Unidad 1 · RA1</div>
+<a href="#c1">1 · El problema predictivo</a>
+<a href="#c2">2 · Técnicas, aplicaciones y límites</a>
+<div class="grp">Unidad 2 · RA2</div>
+<a href="#c3">3 · CRISP-DM y preparación</a>
+<a href="#c4">4 · Regresión</a>
+<a href="#c5">5 · Clasificación</a>
+<a href="#c6">6 · Regularización</a>
+<a href="#c7">7 · Validación y sobreajuste</a>
+<div class="grp">Unidad 3 · RA3</div>
+<a href="#c8">8 · Métricas de evaluación</a>
+<a href="#c9">9 · Umbral, costos y calibración</a>
+<a href="#c10">10 · Limitaciones y riesgo de modelo</a>
+<a href="#c11">11 · Comunicación y ficha del modelo</a>
+<div class="grp">Ruta y consulta</div>
+<a href="#c12">12 · Ruta de doce semanas</a>
+<a href="#c13">13 · Glosario</a>
+<a href="#c14">14 · Autoevaluación</a>
+<a href="#c15">15 · Referencias y ruta docente</a>
+<div class="grp">Profundización</div>
+<a href="#c16">16 · Pronóstico de series de tiempo</a>
+</nav></div>
+</aside>
+<main id="contenido"><nav aria-label="Recursos del curso" class="ba-barra" data-ba-generado=""><a href="../index.html">Biblioteca</a><a href="#ruta-aprendizaje">Ruta de aprendizaje</a><a href="material_propio/MPN_manual_cientifico.pdf">Manual PDF</a><a href="material_propio/MPN_manual_cientifico.html">Manual HTML</a><label class="toggle"><input id="clase-toggle" type="checkbox"/> Modo clase (texto grande)</label></nav>
+<div class="topbar">
+<div style="font-size:12.5px;color:var(--ink-soft);">Edición integral · tres unidades y profundización · 08 oct 2026</div>
+</div>
 <section class="chapter" id="inicio">
 <div class="chapter-head"><div class="num">Edición docente · 2026</div><h2>Del dato histórico a una decisión que se puede defender</h2>
 <p class="sub">Guía para explicar, experimentar y volver a consultar. Recorre las tres unidades de la asignatura con casos chilenos simulados y simuladores que funcionan sin conexión.</p></div>
@@ -251,446 +312,449 @@ table.data caption{caption-side:top;text-align:left;font-size:12.5px;color:var(-
 <p>La <strong>ruta de doce semanas</strong> (capítulo 12) organiza cada sesión con objetivo, criterios, caso, notas docentes, cronograma de 90 minutos y preguntas gatillantes. El capítulo 16 es <strong>profundización</strong> para estudiantes avanzados y postgrado.</p>
 <div class="resource-links"><a href="material_propio/MPN_manual_cientifico.pdf">Manual científico · PDF</a><a href="material_propio/MPN_manual_cientifico.html">Manual de lectura · HTML</a><a href="material_propio/MPN_manual_cientifico.qmd">Fuente Quarto · QMD</a><a href="COBERTURA.md">Cobertura curricular</a></div>
 <table class="data"><caption>Laboratorios completos con kernel Python e ipywidgets</caption><tr><th>Notebook</th><th>Uso</th></tr>
-<tr><td><a href="notebooks/MPN_01_problema_predictivo.ipynb">01 · Problema predictivo</a></td><td>Núcleo U1; Y = f(X) + ε, línea base, fuga y técnicas</td></tr>
-<tr><td><a href="notebooks/MPN_02_crisp_preparacion.ipynb">02 · CRISP-DM y preparación</a></td><td>Núcleo U2; contrato de datos, vacíos, partición y pipeline</td></tr>
-<tr><td><a href="notebooks/MPN_03_regresion_demanda.ipynb">03 · Regresión de demanda</a></td><td>Núcleo U2; MCO, estacionalidad, Ridge/Lasso y escenarios con intervalo</td></tr>
-<tr><td><a href="notebooks/MPN_04_clasificacion_abandono.ipynb">04 · Clasificación de abandono</a></td><td>Núcleo U2; logística, árbol, KNN, bosque, KS/Gini y campaña</td></tr>
-<tr><td><a href="notebooks/MPN_05_validacion_evaluacion.ipynb">05 · Validación y evaluación</a></td><td>Núcleo U3; validación cruzada, umbral por costo, calibración y laboratorio S8</td></tr>
-<tr><td><a href="notebooks/MPN_06_limitaciones_comunicacion.ipynb">06 · Limitaciones y comunicación</a></td><td>Núcleo U3; segmentos, estabilidad, PSI, ficha del modelo y mensajes</td></tr>
-<tr><td><a href="notebooks/MPN_07_pronostico_demanda.ipynb">07 · Pronóstico de demanda</a></td><td>Profundización; series de tiempo con origen móvil</td></tr></table>
+<tr><td><a download="" href="notebooks/MPN_01_problema_predictivo.ipynb">01 · Problema predictivo</a></td><td>Núcleo U1; Y = f(X) + ε, línea base, fuga y técnicas</td></tr>
+<tr><td><a download="" href="notebooks/MPN_02_crisp_preparacion.ipynb">02 · CRISP-DM y preparación</a></td><td>Núcleo U2; contrato de datos, vacíos, partición y pipeline</td></tr>
+<tr><td><a download="" href="notebooks/MPN_03_regresion_demanda.ipynb">03 · Regresión de demanda</a></td><td>Núcleo U2; MCO, estacionalidad, Ridge/Lasso y escenarios con intervalo</td></tr>
+<tr><td><a download="" href="notebooks/MPN_04_clasificacion_abandono.ipynb">04 · Clasificación de abandono</a></td><td>Núcleo U2; logística, árbol, KNN, bosque, KS/Gini y campaña</td></tr>
+<tr><td><a download="" href="notebooks/MPN_05_validacion_evaluacion.ipynb">05 · Validación y evaluación</a></td><td>Núcleo U3; validación cruzada, umbral por costo, calibración y laboratorio S8</td></tr>
+<tr><td><a download="" href="notebooks/MPN_06_limitaciones_comunicacion.ipynb">06 · Limitaciones y comunicación</a></td><td>Núcleo U3; segmentos, estabilidad, PSI, ficha del modelo y mensajes</td></tr>
+<tr><td><a download="" href="notebooks/MPN_07_pronostico_demanda.ipynb">07 · Pronóstico de demanda</a></td><td>Profundización; series de tiempo con origen móvil</td></tr></table>
 <section class="chapter" id="ruta-intensiva"><h2>Ruta intensiva de cinco semanas</h2><p>Semana 1: diagnóstico Python/sklearn y problema (NB01). Semana 2: lineal simple/múltiple, árbol, logística y fundamento neuronal (NB01/03/04). Semana 3: CRISP-DM, preparación y entrenamiento de clasificación (NB02/04). Semana 4: confusión, métricas y validación (NB05). Semana 5: regresión, MAE/RMSE/R², límites y comunicación (NB03/06).</p><p>Una ruta con evaluaciones en las semanas 2, 4 y 5; cada curso define sus ponderaciones. <a href="RUTA_INTENSIVA.md">Bloques concretos y actividades</a>.</p><h3>Red neuronal con una cuenta visible</h3><p>Una capa ReLU combina señales; una sigmoide convierte el puntaje en un número entre 0 y 1. Con entradas cero, sesgos ocultos (−.2,.1), pesos de salida (1.5,−.8) y sesgo −.5: h=(0,.1), puntaje=−.58, salida≈.359. Pesos docentes fijados a mano: no es un modelo entrenado ni una probabilidad validada. Durante entrenamiento los pesos se ajustan por gradientes de una pérdida supervisada. La composición permite relaciones no lineales y agrega riesgo de sobreajuste.</p><p><a href="notebooks/MPN_01_problema_predictivo.ipynb#red-neuronal">Experimentar con la red mínima</a> · <a href="material_propio/MPN_manual_cientifico.html#sec-red-neuronal">Fundamento y límites</a>. Comparar con logística y árbol antes de aumentar complejidad.</p></section><div class="callout warn"><strong>Alcance de la edición</strong>Material propio para las semanas 1 a 12, con una <a href="RUTA_INTENSIVA.md">ruta intensiva</a> de cinco semanas. No establece ponderaciones ni reglas de evaluación. FinCordillera, QuillayMarket y PulpaLenga son empresas ficticias con datos simulados.</div>
-</section>
-
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#ruta-aprendizaje">Siguiente →: Tu recorrido de aprendizaje</a></nav></section><section class="ba-ruta" data-ba-generado="" id="ruta-aprendizaje"><h2>Tu recorrido de aprendizaje</h2><p><strong>Antes de empezar:</strong> Python básico, tablas, probabilidad e interpretación de regresión; diagnóstico en NB01.</p><p>Anticipa un resultado, ejecuta el ejemplo, cambia una condición y explica la decisión. Los tiempos son orientativos: ajusta la preparación y la práctica a tu diagnóstico.</p><div class="ba-calendario"><h3>Elige tu calendario</h3><button aria-pressed="false" data-ba-ruta="5" type="button">Intensivo · 5 semanas</button><button aria-pressed="true" data-ba-ruta="12" type="button">Extendido · 12 semanas</button><p data-ba-calendario="5" hidden="">Semana 1: problema y diagnóstico; 2: técnicas; 3: preparación y clasificación; 4: validación; 5: regresión y comunicación. <a href="#ruta-intensiva">Abrir planificación de cinco semanas</a>. Los módulos 01–06 son la referencia; seleccionar las actividades indicadas en esa planificación.</p><p data-ba-calendario="12">Distribuye preparación, modelos, evaluación y comunicación durante doce semanas. <a href="#c12">Abrir planificación de doce semanas</a>. El módulo 07 es profundización.</p></div><p class="ba-laboratorios">Los notebooks necesitan Jupyter y los datos de la colección. <a href="../index.html#laboratorios">Preparar los laboratorios</a>. La guía y sus simuladores se pueden usar directamente en el navegador.</p><div class="ba-modulos"><article class="ba-modulo" id="modulo-01"><span class="ba-nivel">Núcleo · 90–120 min orientativos</span>
+<h3>01 · Problema predictivo</h3><p><strong>Objetivo.</strong> Definir objetivo, horizonte, disponibilidad de variables y referencia.</p>
+<details><summary>Preparar, practicar y comprobar</summary><dl><dt>Preparación</dt><dd>Leer un DataFrame y distinguir respuesta numérica de categórica.</dd><dt>Ejemplo trabajado</dt><dd>FinCordillera: predecir abandono con información disponible antes de la decisión.</dd><dt>Tu práctica</dt><dd>Clasificar variables por momento de disponibilidad y explicar una fuga de información.</dd><dt>Criterio de logro</dt><dd>Entregar ficha de problema, referencia y justificación de una técnica; explicar la red mínima.</dd></dl></details>
+<div class="ba-recursos"><a href="#c1">Estudiar el tema</a><a download="" href="notebooks/MPN_01_problema_predictivo.ipynb">Notebook 01</a><a href="material_propio/MPN_manual_cientifico.html#sec-problema">Fundamento</a></div></article><article class="ba-modulo" id="modulo-02"><span class="ba-nivel">Núcleo · 90–120 min orientativos</span>
+<h3>02 · Preparación sin fuga</h3><p><strong>Objetivo.</strong> Construir un pipeline que aprenda transformaciones solo con entrenamiento.</p>
+<details><summary>Preparar, practicar y comprobar</summary><dl><dt>Preparación</dt><dd>Módulo 01; nulos, categorías y claves de datos.</dd><dt>Ejemplo trabajado</dt><dd>Imputar y escalar dentro de la validación en lugar de usar toda la tabla antes de dividir.</dd><dt>Tu práctica</dt><dd>Cambiar el mecanismo de valores ausentes y explicar el límite de la imputación.</dd><dt>Criterio de logro</dt><dd>Demostrar separación de datos, contrato de variables y transformaciones ajustadas sin prueba.</dd></dl></details>
+<div class="ba-recursos"><a href="#c3">Estudiar el tema</a><a download="" href="notebooks/MPN_02_crisp_preparacion.ipynb">Notebook 02</a><a href="material_propio/MPN_manual_cientifico.html#sec-crisp">Fundamento</a></div></article><article class="ba-modulo" id="modulo-03"><span class="ba-nivel">Núcleo · 90–120 min orientativos</span>
+<h3>03 · Regresión de demanda</h3><p><strong>Objetivo.</strong> Comparar regresión y alternativas con referencia e incertidumbre de predicción.</p>
+<details><summary>Preparar, practicar y comprobar</summary><dl><dt>Preparación</dt><dd>Módulos 01–02; coeficientes y errores de regresión.</dd><dt>Ejemplo trabajado</dt><dd>QuillayMarket: comparar mes numérico con codificación por categoría y revisar residuos.</dd><dt>Tu práctica</dt><dd>Modificar un escenario de precio; identificar extrapolación y límites del intervalo.</dd><dt>Criterio de logro</dt><dd>Reportar MAE/RMSE, referencia, diagnóstico y diferencia entre IC de media e intervalo predictivo.</dd></dl></details>
+<div class="ba-recursos"><a href="#c4">Estudiar el tema</a><a download="" href="notebooks/MPN_03_regresion_demanda.ipynb">Notebook 03</a><a href="material_propio/MPN_manual_cientifico.html#sec-regresion">Fundamento</a></div></article><article class="ba-modulo" id="modulo-04"><span class="ba-nivel">Núcleo · 90–120 min orientativos</span>
+<h3>04 · Clasificación de abandono</h3><p><strong>Objetivo.</strong> Evaluar discriminación y una campaña con probabilidades y costos explícitos.</p>
+<details><summary>Preparar, practicar y comprobar</summary><dl><dt>Preparación</dt><dd>Pipeline, probabilidad y matriz de confusión.</dd><dt>Ejemplo trabajado</dt><dd>FinCordillera: comparar logística, árbol, KNN escalado y bosque en validación.</dd><dt>Tu práctica</dt><dd>Cambiar presupuesto de contactos y comprobar cobertura de casos y costo de campaña.</dd><dt>Criterio de logro</dt><dd>Justificar modelo y política con métricas fuera de muestra y límites de utilidad.</dd></dl></details>
+<div class="ba-recursos"><a href="#c5">Estudiar el tema</a><a download="" href="notebooks/MPN_04_clasificacion_abandono.ipynb">Notebook 04</a><a href="material_propio/MPN_manual_cientifico.html#sec-clasificacion">Fundamento</a></div></article><article class="ba-modulo" id="modulo-05"><span class="ba-nivel">Núcleo · 90–120 min orientativos</span>
+<h3>05 · Validación, métricas y umbral</h3><p><strong>Objetivo.</strong> Seleccionar modelo y umbral sin reutilizar la prueba para decidir.</p>
+<details><summary>Preparar, practicar y comprobar</summary><dl><dt>Preparación</dt><dd>Módulos 02–04; costos de falsos positivos y negativos.</dd><dt>Ejemplo trabajado</dt><dd>PulpaLenga: fijar un umbral con predicciones fuera de pliegue y evaluar al final.</dd><dt>Tu práctica</dt><dd>Cambiar costos y revisar calibración; distinguir ordenamiento de calidad probabilística.</dd><dt>Criterio de logro</dt><dd>Documentar selección, datos reservados y costo; no inferir calibración por coincidencia de umbrales.</dd></dl></details>
+<div class="ba-recursos"><a href="#c8">Estudiar el tema</a><a download="" href="notebooks/MPN_05_validacion_evaluacion.ipynb">Notebook 05</a><a href="material_propio/MPN_manual_cientifico.html#sec-validacion">Fundamento</a></div></article><article class="ba-modulo" id="modulo-06"><span class="ba-nivel">Núcleo · 90–120 min orientativos</span>
+<h3>06 · Limitaciones y comunicación</h3><p><strong>Objetivo.</strong> Construir una ficha de modelo con seguimiento, responsables y condiciones de uso.</p>
+<details><summary>Preparar, practicar y comprobar</summary><dl><dt>Preparación</dt><dd>Métricas, calibración y evaluación por segmentos.</dd><dt>Ejemplo trabajado</dt><dd>Comparar estabilidad poblacional y desempeño por grupo; no interpretar PSI como causalidad.</dd><dt>Tu práctica</dt><dd>Redactar un mensaje ejecutivo y otro técnico para la misma señal de deterioro.</dd><dt>Criterio de logro</dt><dd>Entregar ficha con evidencia, incertidumbre, umbral de revisión y propuesta de mejora.</dd></dl></details>
+<div class="ba-recursos"><a href="#c10">Estudiar el tema</a><a download="" href="notebooks/MPN_06_limitaciones_comunicacion.ipynb">Notebook 06</a><a href="material_propio/MPN_manual_cientifico.html#sec-limitaciones">Fundamento</a></div></article><article class="ba-modulo" id="modulo-07"><span class="ba-nivel">Profundización · 90–120 min orientativos</span>
+<h3>07 · Pronóstico de demanda</h3><p><strong>Objetivo.</strong> Evaluar una serie mediante orígenes móviles y referencias comparables.</p>
+<details><summary>Preparar, practicar y comprobar</summary><dl><dt>Preparación</dt><dd>Validación temporal, tendencia, estacionalidad y MAE.</dd><dt>Ejemplo trabajado</dt><dd>QuillayMarket: comparar pronóstico estacional y modelo con variables temporales.</dd><dt>Tu práctica</dt><dd>Aumentar el horizonte y analizar cobertura y MASE sin ajustar con los meses de prueba.</dd><dt>Criterio de logro</dt><dd>Explicar horizonte, cobertura observada, referencia y límites de cambios del proceso.</dd></dl></details>
+<div class="ba-recursos"><a href="#c16">Estudiar el tema</a><a download="" href="notebooks/MPN_07_pronostico_demanda.ipynb">Notebook 07</a><a href="material_propio/MPN_manual_cientifico.html#sec-series">Fundamento</a></div></article></div></section>
 <!-- ============ 1 ============ -->
 <section class="chapter" id="c1">
-  <div class="chapter-head">
-    <div class="num">Capítulo 1 · Unidad 1 · CE 1.1–1.2</div>
-    <h2>El problema predictivo</h2>
-    <p class="sub">Antes del algoritmo: qué se predice, para qué decisión, con qué información disponible y con qué costo de equivocarse.</p>
-  </div>
-  <h3 class="sec">Estructura de un modelo predictivo</h3>
-  <div class="formula">Y = f(X) + ε<span class="note">Y: resultado de negocio · X: información disponible al decidir · f: relación desconocida que se estima · ε: lo que no se observa ni se puede anticipar (error irreducible).</span></div>
-  <div class="grid2">
-    <div class="tile"><span class="tag">Formulación</span><h4>Cinco elementos</h4><p>Variable objetivo, unidad de predicción, horizonte, decisión que cambia y costo de cada error.</p></div>
-    <div class="tile gold"><span class="tag">Valor</span><h4>Reducir incertidumbre</h4><p>Un modelo no elimina el riesgo: permite decidir mejor que sin él, y debe demostrarlo frente a una línea base.</p></div>
-  </div>
-  <h3 class="sec">Error reducible e irreducible</h3>
-  <div class="formula">E[(Y − f̂(x))²] = sesgo² + varianza + σ²<span class="note">El sesgo crece cuando el modelo es demasiado rígido; la varianza, cuando se adapta al ruido de la muestra. σ² es el piso: ni la f verdadera lo elimina.</span></div>
-  <div class="lab">
-    <div class="lab-h">Simulador · sesgo, varianza y ruido</div>
-    <div class="lab-s">Demanda semanal simulada que depende de forma curva del precio (mecanismo conocido). Cambia el grado del polinomio y el ruido; compara el error en entrenamiento (60 casos) y en 1.500 casos nuevos.</div>
-    <div class="row">
-      <div><label for="sv-grado">Grado del polinomio: <span id="sv-grado-val">2</span></label><input type="range" id="sv-grado" min="1" max="10" value="2" step="1"></div>
-      <div><label for="sv-sigma">Ruido σ: <span id="sv-sigma-val">12</span></label><input type="range" id="sv-sigma" min="2" max="40" value="12" step="1"></div>
-    </div>
-    <canvas role="img" aria-label="Gráfico del ajuste polinomial frente a la función verdadera" id="sv-canvas" width="640" height="260"></canvas>
-    <div class="stats" id="sv-stats"></div>
-    <div class="hint" id="sv-hint"></div>
-  </div>
-  <h3 class="sec">Línea base y fuga de información</h3>
-  <p>Una <strong>línea base</strong> es la regla más simple razonable: clase mayoritaria, promedio histórico o el mismo mes del año anterior. En FinCordillera, declarar que nadie abandona logra 72% de accuracy sin detectar ningún caso; por eso accuracy no sirve como métrica guía cuando la decisión trata del evento minoritario.</p>
-  <div class="callout key"><strong>Prueba de disponibilidad</strong>Para cada variable pregunta: ¿cuándo se registra y quién la registra? Si se conoce después del evento —fecha de cierre de cuenta, días de atraso al cierre del año—, su uso es una fuga: el modelo brillará en validación y fallará en operación.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 1 · Unidad 1 · CE 1.1–1.2</div>
+<h2>El problema predictivo</h2><div class="ba-clase-objetivo" data-ba-generado=""><strong>Al terminar:</strong> Definir objetivo, horizonte, disponibilidad de variables y referencia. <a href="#modulo-01">Ver práctica y criterio de logro</a></div>
+<p class="sub">Antes del algoritmo: qué se predice, para qué decisión, con qué información disponible y con qué costo de equivocarse.</p>
+</div>
+<h3 class="sec">Estructura de un modelo predictivo</h3>
+<div class="formula">Y = f(X) + ε<span class="note">Y: resultado de negocio · X: información disponible al decidir · f: relación desconocida que se estima · ε: lo que no se observa ni se puede anticipar (error irreducible).</span></div>
+<div class="grid2">
+<div class="tile"><span class="tag">Formulación</span><h4>Cinco elementos</h4><p>Variable objetivo, unidad de predicción, horizonte, decisión que cambia y costo de cada error.</p></div>
+<div class="tile gold"><span class="tag">Valor</span><h4>Reducir incertidumbre</h4><p>Un modelo no elimina el riesgo: permite decidir mejor que sin él, y debe demostrarlo frente a una línea base.</p></div>
+</div>
+<h3 class="sec">Error reducible e irreducible</h3>
+<div class="formula">E[(Y − f̂(x))²] = sesgo² + varianza + σ²<span class="note">El sesgo crece cuando el modelo es demasiado rígido; la varianza, cuando se adapta al ruido de la muestra. σ² es el piso: ni la f verdadera lo elimina.</span></div>
+<div class="lab">
+<div class="lab-h">Simulador · sesgo, varianza y ruido</div>
+<div class="lab-s">Demanda semanal simulada que depende de forma curva del precio (mecanismo conocido). Cambia el grado del polinomio y el ruido; compara el error en entrenamiento (60 casos) y en 1.500 casos nuevos.</div>
+<div class="row">
+<div><label for="sv-grado">Grado del polinomio: <span id="sv-grado-val">2</span></label><input id="sv-grado" max="10" min="1" step="1" type="range" value="2"/></div>
+<div><label for="sv-sigma">Ruido σ: <span id="sv-sigma-val">12</span></label><input id="sv-sigma" max="40" min="2" step="1" type="range" value="12"/></div>
+</div>
+<canvas aria-label="Gráfico del ajuste polinomial frente a la función verdadera" height="260" id="sv-canvas" role="img" width="640">Gráfico del ajuste polinomial frente a la función verdadera</canvas>
+<div class="stats" id="sv-stats"></div>
+<div class="hint" id="sv-hint"></div>
+</div>
+<h3 class="sec">Línea base y fuga de información</h3>
+<p>Una <strong>línea base</strong> es la regla más simple razonable: clase mayoritaria, promedio histórico o el mismo mes del año anterior. En FinCordillera, declarar que nadie abandona logra 72% de accuracy sin detectar ningún caso; por eso accuracy no sirve como métrica guía cuando la decisión trata del evento minoritario.</p>
+<div class="callout key"><strong>Prueba de disponibilidad</strong>Para cada variable pregunta: ¿cuándo se registra y quién la registra? Si se conoce después del evento —fecha de cierre de cuenta, días de atraso al cierre del año—, su uso es una fuga: el modelo brillará en validación y fallará en operación.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#ruta-aprendizaje">← Anterior: Tu recorrido de aprendizaje</a><a href="#c2">Siguiente →: Técnicas, aplicaciones y límites</a></nav></section>
 <!-- ============ 2 ============ -->
 <section class="chapter" id="c2">
-  <div class="chapter-head">
-    <div class="num">Capítulo 2 · Unidad 1 · CE 1.1–1.4</div>
-    <h2>Técnicas, aplicaciones y límites</h2>
-    <p class="sub">Elegir una técnica por el tipo de problema, los datos y la necesidad de explicar; reconocer dónde puede fallar.</p>
-  </div>
-  <table class="data">
-    <tr><th>Técnica</th><th>Principio</th><th>Fortaleza</th><th>Limitación</th></tr>
-    <tr><td><strong>Regresión lineal</strong></td><td>Combinación lineal por mínimos cuadrados</td><td>Interpretable; referencia obligada</td><td>Supone linealidad; sensible a extremos</td></tr>
-    <tr><td><strong>Regresión logística</strong></td><td>Log-chances lineales; probabilidad por sigmoide</td><td>Probabilidades y razones de chances</td><td>Fronteras lineales sin transformaciones</td></tr>
-    <tr><td><strong>Árbol de decisión</strong></td><td>Reglas «si–entonces» que reducen impureza</td><td>Reglas legibles; no linealidades</td><td>Inestable; sobreajusta</td></tr>
-    <tr><td><strong>Bosque aleatorio</strong></td><td>Promedio de árboles con remuestreo</td><td>Buen desempeño con poco ajuste</td><td>Menos explicable</td></tr>
-    <tr><td><strong>KNN</strong></td><td>Promedio de los casos más parecidos</td><td>Sin forma funcional</td><td>Depende de la escala</td></tr>
-    <tr><td><strong>Redes neuronales</strong></td><td>Composición de transformaciones no lineales</td><td>Patrones complejos con muchos datos</td><td>Datos, cómputo y explicabilidad</td></tr>
-    <tr><td><strong>Series de tiempo</strong></td><td>Tendencia, estacionalidad y dependencia</td><td>Respeta el orden temporal</td><td>Supone estabilidad del proceso</td></tr>
-  </table>
-  <div class="lab">
-    <div class="lab-h">Ejercicio · ¿qué tipo de problema es?</div>
-    <div class="lab-s">Elige el tipo para cada caso del universo del curso. La retroalimentación explica la variable objetivo y la unidad de predicción.</div>
-    <div id="tipos-root"></div>
-    <div class="stats" id="tipos-score"></div>
-  </div>
-  <h3 class="sec">Límites que conviene declarar</h3>
-  <ul class="bul">
-    <li><strong>Simplificación:</strong> no todas las variables relevantes son observables; ε absorbe percepción, competencia y shocks.</li>
-    <li><strong>Representatividad:</strong> datos sesgados producen modelos sesgados; el modelo hereda cómo se recolectaron los datos.</li>
-    <li><strong>Estabilidad:</strong> el modelo supone que el futuro se parece al pasado en lo relevante; requiere monitoreo.</li>
-    <li><strong>Predicción no es causalidad:</strong> saber quién se irá no dice qué acción lo retendrá; eso exige un piloto con control.</li>
-  </ul>
-  <div class="callout tip"><strong>Explicar sin tecnicismos (CE 1.4)</strong>«El modelo tiene AUC 0,80» no es un mensaje. «Si contactamos al 20% de clientes con mayor riesgo, alcanzamos cerca de 40% de los abandonos del período» sí lo es: conecta predicción, decisión e incertidumbre.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 2 · Unidad 1 · CE 1.1–1.4</div>
+<h2>Técnicas, aplicaciones y límites</h2>
+<p class="sub">Elegir una técnica por el tipo de problema, los datos y la necesidad de explicar; reconocer dónde puede fallar.</p>
+</div>
+<table class="data">
+<tr><th>Técnica</th><th>Principio</th><th>Fortaleza</th><th>Limitación</th></tr>
+<tr><td><strong>Regresión lineal</strong></td><td>Combinación lineal por mínimos cuadrados</td><td>Interpretable; referencia obligada</td><td>Supone linealidad; sensible a extremos</td></tr>
+<tr><td><strong>Regresión logística</strong></td><td>Log-chances lineales; probabilidad por sigmoide</td><td>Probabilidades y razones de chances</td><td>Fronteras lineales sin transformaciones</td></tr>
+<tr><td><strong>Árbol de decisión</strong></td><td>Reglas «si–entonces» que reducen impureza</td><td>Reglas legibles; no linealidades</td><td>Inestable; sobreajusta</td></tr>
+<tr><td><strong>Bosque aleatorio</strong></td><td>Promedio de árboles con remuestreo</td><td>Buen desempeño con poco ajuste</td><td>Menos explicable</td></tr>
+<tr><td><strong>KNN</strong></td><td>Promedio de los casos más parecidos</td><td>Sin forma funcional</td><td>Depende de la escala</td></tr>
+<tr><td><strong>Redes neuronales</strong></td><td>Composición de transformaciones no lineales</td><td>Patrones complejos con muchos datos</td><td>Datos, cómputo y explicabilidad</td></tr>
+<tr><td><strong>Series de tiempo</strong></td><td>Tendencia, estacionalidad y dependencia</td><td>Respeta el orden temporal</td><td>Supone estabilidad del proceso</td></tr>
+</table>
+<div class="lab">
+<div class="lab-h">Ejercicio · ¿qué tipo de problema es?</div>
+<div class="lab-s">Elige el tipo para cada caso del universo del curso. La retroalimentación explica la variable objetivo y la unidad de predicción.</div>
+<div id="tipos-root"></div>
+<div class="stats" id="tipos-score"></div>
+</div>
+<h3 class="sec">Límites que conviene declarar</h3>
+<ul class="bul">
+<li><strong>Simplificación:</strong> no todas las variables relevantes son observables; ε absorbe percepción, competencia y shocks.</li>
+<li><strong>Representatividad:</strong> datos sesgados producen modelos sesgados; el modelo hereda cómo se recolectaron los datos.</li>
+<li><strong>Estabilidad:</strong> el modelo supone que el futuro se parece al pasado en lo relevante; requiere monitoreo.</li>
+<li><strong>Predicción no es causalidad:</strong> saber quién se irá no dice qué acción lo retendrá; eso exige un piloto con control.</li>
+</ul>
+<div class="callout tip"><strong>Explicar sin tecnicismos (CE 1.4)</strong>«El modelo tiene AUC 0,80» no es un mensaje. «Si contactamos al 20% de clientes con mayor riesgo, alcanzamos cerca de 40% de los abandonos del período» sí lo es: conecta predicción, decisión e incertidumbre.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c1">← Anterior: El problema predictivo</a><a href="#c3">Siguiente →: CRISP-DM y preparación de datos</a></nav></section>
 <!-- ============ 3 ============ -->
 <section class="chapter" id="c3">
-  <div class="chapter-head">
-    <div class="num">Capítulo 3 · Unidad 2 · CE 2.1–2.2</div>
-    <h2>CRISP-DM y preparación de datos</h2>
-    <p class="sub">Cada fase deja un entregable revisable y un criterio de salida; toda transformación aprendida se ajusta dentro de un pipeline.</p>
-  </div>
-  <div class="lab">
-    <div class="lab-h">Recorrido · seis fases con entregables</div>
-    <div class="lab-s">Avanza por las fases con el caso FinCordillera (abandono trimestral).</div>
-    <div id="crisp-panel"></div>
-    <button class="ghost" id="crisp-prev" type="button">← Anterior</button><button id="crisp-next" type="button">Siguiente →</button>
-  </div>
-  <h3 class="sec">Calidad de datos: el mecanismo importa</h3>
-  <table class="data">
-    <tr><th>Mecanismo</th><th>Definición</th><th>Tratamiento razonable</th></tr>
-    <tr><td><strong>MCAR</strong></td><td>El vacío no depende de nada</td><td>Imputación simple con estadísticos de entrenamiento</td></tr>
-    <tr><td><strong>MAR</strong></td><td>Depende de variables observadas</td><td>Imputación condicional e indicador de vacío</td></tr>
-    <tr><td><strong>MNAR</strong></td><td>Depende del valor faltante (los ingresos altos se informan menos)</td><td>Indicador, fuente alternativa y declaración del sesgo</td></tr>
-  </table>
-  <div class="lab">
-    <div class="lab-h">Auditor de disponibilidad · ¿existe al momento de decidir?</div>
-    <div class="lab-s">Modelo de abandono que se ejecuta el último día de cada mes. Marca las variables que pueden usarse y comprueba.</div>
-    <div id="fuga-root"></div>
-    <button id="fuga-check" type="button">Comprobar</button>
-    <div class="hint" id="fuga-res" role="status" aria-live="polite"></div>
-  </div>
-  <div class="callout warn"><strong>Fuga en la preparación</strong>Seleccionar variables, imputar o escalar con todas las filas antes de validar contamina la validación. Con 2.000 variables de ruido puro, seleccionar 20 «mirando» todas las etiquetas produce un AUC de validación cruzada cercano a 0,8; dentro del pipeline vuelve a 0,5 (notebook 02).</div>
-  <div class="grid3">
-    <div class="tile"><span class="tag">60%</span><h4>Entrenamiento</h4><p>Ajusta parámetros y transformaciones.</p></div>
-    <div class="tile plum"><span class="tag">20%</span><h4>Validación</h4><p>Compara modelos; elige hiperparámetros, umbral y costos.</p></div>
-    <div class="tile gold"><span class="tag">20%</span><h4>Prueba</h4><p>Una sola evaluación final, con todo congelado.</p></div>
-  </div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 3 · Unidad 2 · CE 2.1–2.2</div>
+<h2>CRISP-DM y preparación de datos</h2><div class="ba-clase-objetivo" data-ba-generado=""><strong>Al terminar:</strong> Construir un pipeline que aprenda transformaciones solo con entrenamiento. <a href="#modulo-02">Ver práctica y criterio de logro</a></div>
+<p class="sub">Cada fase deja un entregable revisable y un criterio de salida; toda transformación aprendida se ajusta dentro de un pipeline.</p>
+</div>
+<div class="lab">
+<div class="lab-h">Recorrido · seis fases con entregables</div>
+<div class="lab-s">Avanza por las fases con el caso FinCordillera (abandono trimestral).</div>
+<div id="crisp-panel"></div>
+<button class="ghost" id="crisp-prev" type="button">← Anterior</button><button id="crisp-next" type="button">Siguiente →</button>
+</div>
+<h3 class="sec">Calidad de datos: el mecanismo importa</h3>
+<table class="data">
+<tr><th>Mecanismo</th><th>Definición</th><th>Tratamiento razonable</th></tr>
+<tr><td><strong>MCAR</strong></td><td>El vacío no depende de nada</td><td>Imputación simple con estadísticos de entrenamiento</td></tr>
+<tr><td><strong>MAR</strong></td><td>Depende de variables observadas</td><td>Imputación condicional e indicador de vacío</td></tr>
+<tr><td><strong>MNAR</strong></td><td>Depende del valor faltante (los ingresos altos se informan menos)</td><td>Indicador, fuente alternativa y declaración del sesgo</td></tr>
+</table>
+<div class="lab">
+<div class="lab-h">Auditor de disponibilidad · ¿existe al momento de decidir?</div>
+<div class="lab-s">Modelo de abandono que se ejecuta el último día de cada mes. Marca las variables que pueden usarse y comprueba.</div>
+<div id="fuga-root"></div>
+<button id="fuga-check" type="button">Comprobar</button>
+<div aria-live="polite" class="hint" id="fuga-res" role="status"></div>
+</div>
+<div class="callout warn"><strong>Fuga en la preparación</strong>Seleccionar variables, imputar o escalar con todas las filas antes de validar contamina la validación. Con 2.000 variables de ruido puro, seleccionar 20 «mirando» todas las etiquetas produce un AUC de validación cruzada cercano a 0,8; dentro del pipeline vuelve a 0,5 (notebook 02).</div>
+<div class="grid3">
+<div class="tile"><span class="tag">60%</span><h4>Entrenamiento</h4><p>Ajusta parámetros y transformaciones.</p></div>
+<div class="tile plum"><span class="tag">20%</span><h4>Validación</h4><p>Compara modelos; elige hiperparámetros, umbral y costos.</p></div>
+<div class="tile gold"><span class="tag">20%</span><h4>Prueba</h4><p>Una sola evaluación final, con todo congelado.</p></div>
+</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c2">← Anterior: Técnicas, aplicaciones y límites</a><a href="#c4">Siguiente →: Regresión</a></nav></section>
 <!-- ============ 4 ============ -->
 <section class="chapter" id="c4">
-  <div class="chapter-head">
-    <div class="num">Capítulo 4 · Unidad 2 · CE 2.3–2.6</div>
-    <h2>Regresión</h2>
-    <p class="sub">Estimar, interpretar con cautela, representar bien las variables y entregar predicciones con rango.</p>
-  </div>
-  <div class="formula">β̂ = (XᵀX)⁻¹ Xᵀy    Var(β̂) = σ̂² (XᵀX)⁻¹<span class="note">Cada coeficiente es un cambio esperado manteniendo lo demás constante, en el rango observado. No es un efecto causal sin diseño experimental.</span></div>
-  <p>En QuillayMarket, la promoción se asocia con unas 32 unidades adicionales por categoría-mes y cada mil pesos de precio con unas 8,5 unidades menos, con lo demás constante. La especificación del mes cambia el error más que cualquier algoritmo:</p>
-  <div class="lab">
-    <div class="lab-h">Residuo medio por mes · validación</div>
-    <div class="lab-s">Mes como número (una recta de enero a diciembre) frente a mes como categoría (un nivel por mes). Barras positivas: el modelo predice de menos.</div>
-    <label for="res-modo">Especificación</label>
-    <select id="res-modo"><option value="numero">Mes como número</option><option value="categoria">Mes como categoría</option></select>
-    <canvas role="img" aria-label="Residuo medio por mes en validación" id="res-canvas" width="640" height="230"></canvas>
-    <div class="stats" id="res-stats"></div>
-  </div>
-  <div class="lab">
-    <div class="lab-h">Escenarios con intervalo · modelo estacional de QuillayMarket</div>
-    <div class="lab-s">Coeficientes estimados con entrenamiento. Intervalo conformal aproximado de 80% con residuos de validación. Se advierte la extrapolación de precio.</div>
-    <div class="row">
-      <div><label for="esc-cat">Categoría</label><select id="esc-cat"></select></div>
-      <div><label for="esc-promo">Promoción activa</label><select id="esc-promo"><option value="1">Sí</option><option value="0">No</option></select></div>
-    </div>
-    <label for="esc-mes">Mes: <span id="esc-mes-val">11</span></label><input type="range" id="esc-mes" min="1" max="12" value="11" step="1">
-    <label for="esc-precio">Precio promedio (miles CLP): <span id="esc-precio-val">20,0</span></label><input type="range" id="esc-precio" min="3" max="30" value="20" step="0.5">
-    <label for="esc-mkt">Inversión en marketing (cientos de miles CLP): <span id="esc-mkt-val">5,0</span></label><input type="range" id="esc-mkt" min="0.5" max="9" value="5" step="0.5">
-    <div class="stats" id="esc-stats"></div>
-    <div class="hint" id="esc-hint" role="status" aria-live="polite"></div>
-  </div>
-  <div class="callout key"><strong>Cobertura honesta</strong>En el notebook 03 se informa la cobertura observada en prueba. Si el modelo se reestima después de calcular el cuantil, la garantía conformal deja de aplicarse exactamente. Informar la cobertura observada es parte de la evaluación.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 4 · Unidad 2 · CE 2.3–2.6</div>
+<h2>Regresión</h2><div class="ba-clase-objetivo" data-ba-generado=""><strong>Al terminar:</strong> Comparar regresión y alternativas con referencia e incertidumbre de predicción. <a href="#modulo-03">Ver práctica y criterio de logro</a></div>
+<p class="sub">Estimar, interpretar con cautela, representar bien las variables y entregar predicciones con rango.</p>
+</div>
+<div class="formula">β̂ = (XᵀX)⁻¹ Xᵀy    Var(β̂) = σ̂² (XᵀX)⁻¹<span class="note">Cada coeficiente es un cambio esperado manteniendo lo demás constante, en el rango observado. No es un efecto causal sin diseño experimental.</span></div>
+<p>En QuillayMarket, la promoción se asocia con unas 32 unidades adicionales por categoría-mes y cada mil pesos de precio con unas 8,5 unidades menos, con lo demás constante. La especificación del mes cambia el error más que cualquier algoritmo:</p>
+<div class="lab">
+<div class="lab-h">Residuo medio por mes · validación</div>
+<div class="lab-s">Mes como número (una recta de enero a diciembre) frente a mes como categoría (un nivel por mes). Barras positivas: el modelo predice de menos.</div>
+<label for="res-modo">Especificación</label>
+<select id="res-modo"><option value="numero">Mes como número</option><option value="categoria">Mes como categoría</option></select>
+<canvas aria-label="Residuo medio por mes en validación" height="230" id="res-canvas" role="img" width="640">Residuo medio por mes en validación</canvas>
+<div class="stats" id="res-stats"></div>
+</div>
+<div class="lab">
+<div class="lab-h">Escenarios con intervalo · modelo estacional de QuillayMarket</div>
+<div class="lab-s">Coeficientes estimados con entrenamiento. Intervalo conformal aproximado de 80% con residuos de validación. Se advierte la extrapolación de precio.</div>
+<div class="row">
+<div><label for="esc-cat">Categoría</label><select id="esc-cat"></select></div>
+<div><label for="esc-promo">Promoción activa</label><select id="esc-promo"><option value="1">Sí</option><option value="0">No</option></select></div>
+</div>
+<label for="esc-mes">Mes: <span id="esc-mes-val">11</span></label><input id="esc-mes" max="12" min="1" step="1" type="range" value="11"/>
+<label for="esc-precio">Precio promedio (miles CLP): <span id="esc-precio-val">20,0</span></label><input id="esc-precio" max="30" min="3" step="0.5" type="range" value="20"/>
+<label for="esc-mkt">Inversión en marketing (cientos de miles CLP): <span id="esc-mkt-val">5,0</span></label><input id="esc-mkt" max="9" min="0.5" step="0.5" type="range" value="5"/>
+<div class="stats" id="esc-stats"></div>
+<div aria-live="polite" class="hint" id="esc-hint" role="status"></div>
+</div>
+<div class="callout key"><strong>Cobertura honesta</strong>En el notebook 03 se informa la cobertura observada en prueba. Si el modelo se reestima después de calcular el cuantil, la garantía conformal deja de aplicarse exactamente. Informar la cobertura observada es parte de la evaluación.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c3">← Anterior: CRISP-DM y preparación de datos</a><a href="#c5">Siguiente →: Clasificación</a></nav></section>
 <!-- ============ 5 ============ -->
 <section class="chapter" id="c5">
-  <div class="chapter-head">
-    <div class="num">Capítulo 5 · Unidad 2 · CE 2.3–2.6</div>
-    <h2>Clasificación</h2>
-    <p class="sub">Probabilidades, razones de chances y reglas; un puntaje ordena, el negocio decide dónde cortar.</p>
-  </div>
-  <div class="formula">log[p/(1−p)] = β₀ + βᵀx    p = 1 / (1 + e^−(β₀ + βᵀx))<span class="note">e^βⱼ es la razón de chances: factor por el que se multiplican las chances al subir una unidad xⱼ, con lo demás fijo.</span></div>
-  <div class="lab">
-    <div class="lab-h">Simulador · curva sigmoide</div>
-    <div class="lab-s">Probabilidad de abandono según el número de reclamos para un intercepto y una pendiente.</div>
-    <div class="row">
-      <div><label for="sig-b0">Intercepto β₀: <span id="sig-b0-val">-2,00</span></label><input type="range" id="sig-b0" min="-5" max="2" value="-2" step="0.25"></div>
-      <div><label for="sig-b1">Pendiente β₁: <span id="sig-b1-val">0,80</span></label><input type="range" id="sig-b1" min="-1" max="2" value="0.8" step="0.05"></div>
-    </div>
-    <canvas role="img" aria-label="Curva sigmoide de probabilidad" id="sig-canvas" width="640" height="220"></canvas>
-    <div class="stats" id="sig-stats"></div>
-  </div>
-  <h3 class="sec">FinCordillera · razones de chances estandarizadas</h3>
-  <div id="or-tabla"></div>
-  <p class="muted">Reclamos y retrasos aumentan las chances de abandono; antigüedad, productos e ingreso las reducen. Son asociaciones condicionales en datos simulados, no efectos de intervención.</p>
-  <div class="chartgrid">
-    <div class="chartcard"><canvas role="img" aria-label="Curva de ganancia acumulada" id="gan-canvas" width="320" height="230"></canvas><h4>Curva de ganancia · validación</h4><p id="gan-texto"></p></div>
-    <div class="chartcard"><canvas role="img" aria-label="Tasa de abandono por decil de riesgo" id="dec-canvas" width="320" height="230"></canvas><h4>Tasa por decil de riesgo</h4><p>El decil 1 reúne al 10% con mayor puntaje; la línea es la tasa base.</p></div>
-  </div>
-  <div class="callout tip"><strong>Escala y vecinos</strong>KNN sin estandarizar en FinCordillera logró un AUC inferior a 0,5: el ingreso, medido en cientos de miles de pesos, domina la distancia. Con estandarización sube a 0,77 (notebook 04).</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 5 · Unidad 2 · CE 2.3–2.6</div>
+<h2>Clasificación</h2><div class="ba-clase-objetivo" data-ba-generado=""><strong>Al terminar:</strong> Evaluar discriminación y una campaña con probabilidades y costos explícitos. <a href="#modulo-04">Ver práctica y criterio de logro</a></div>
+<p class="sub">Probabilidades, razones de chances y reglas; un puntaje ordena, el negocio decide dónde cortar.</p>
+</div>
+<div class="formula">log[p/(1−p)] = β₀ + βᵀx    p = 1 / (1 + e^−(β₀ + βᵀx))<span class="note">e^βⱼ es la razón de chances: factor por el que se multiplican las chances al subir una unidad xⱼ, con lo demás fijo.</span></div>
+<div class="lab">
+<div class="lab-h">Simulador · curva sigmoide</div>
+<div class="lab-s">Probabilidad de abandono según el número de reclamos para un intercepto y una pendiente.</div>
+<div class="row">
+<div><label for="sig-b0">Intercepto β₀: <span id="sig-b0-val">-2,00</span></label><input id="sig-b0" max="2" min="-5" step="0.25" type="range" value="-2"/></div>
+<div><label for="sig-b1">Pendiente β₁: <span id="sig-b1-val">0,80</span></label><input id="sig-b1" max="2" min="-1" step="0.05" type="range" value="0.8"/></div>
+</div>
+<canvas aria-label="Curva sigmoide de probabilidad" height="220" id="sig-canvas" role="img" width="640">Curva sigmoide de probabilidad</canvas>
+<div class="stats" id="sig-stats"></div>
+</div>
+<h3 class="sec">FinCordillera · razones de chances estandarizadas</h3>
+<div id="or-tabla"></div>
+<p class="muted">Reclamos y retrasos aumentan las chances de abandono; antigüedad, productos e ingreso las reducen. Son asociaciones condicionales en datos simulados, no efectos de intervención.</p>
+<div class="chartgrid">
+<div class="chartcard"><canvas aria-label="Curva de ganancia acumulada" height="230" id="gan-canvas" role="img" width="320">Curva de ganancia acumulada</canvas><h4>Curva de ganancia · validación</h4><p id="gan-texto"></p></div>
+<div class="chartcard"><canvas aria-label="Tasa de abandono por decil de riesgo" height="230" id="dec-canvas" role="img" width="320">Tasa de abandono por decil de riesgo</canvas><h4>Tasa por decil de riesgo</h4><p>El decil 1 reúne al 10% con mayor puntaje; la línea es la tasa base.</p></div>
+</div>
+<div class="callout tip"><strong>Escala y vecinos</strong>KNN sin estandarizar en FinCordillera logró un AUC inferior a 0,5: el ingreso, medido en cientos de miles de pesos, domina la distancia. Con estandarización sube a 0,77 (notebook 04).</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c4">← Anterior: Regresión</a><a href="#c6">Siguiente →: Regularización: Ridge y Lasso</a></nav></section>
 <!-- ============ 6 ============ -->
 <section class="chapter" id="c6">
-  <div class="chapter-head">
-    <div class="num">Capítulo 6 · Unidad 2 · CE 2.3–2.4</div>
-    <h2>Regularización: Ridge y Lasso</h2>
-    <p class="sub">Penalizar coeficientes para estabilizar modelos con muchas variables correlacionadas.</p>
-  </div>
-  <div class="formula">Ridge: Σ(yᵢ − xᵢᵀβ)² + α Σβⱼ²    Lasso: (1/2n) Σ(yᵢ − xᵢᵀβ)² + α Σ|βⱼ|<span class="note">Las variables se estandarizan antes de penalizar. α se elige con validación cruzada dentro de entrenamiento.</span></div>
-  <div class="lab">
-    <div class="lab-h">Trayectoria de coeficientes · QuillayMarket con interacciones</div>
-    <div class="lab-s">26 variables (meses, categorías e interacciones de categoría con promoción, precio y marketing). Barras doradas: coeficientes exactamente en cero.</div>
-    <div class="row">
-      <div><label for="reg-tipo">Tipo</label><select id="reg-tipo"><option>Lasso</option><option>Ridge</option></select></div>
-      <div><label for="reg-alpha">log₁₀ α: <span id="reg-alpha-val">0,00</span></label><input type="range" id="reg-alpha" min="0" max="22" value="12" step="1"></div>
-    </div>
-    <canvas role="img" aria-label="Coeficientes regularizados" id="reg-canvas" width="640" height="420"></canvas>
-    <div class="stats" id="reg-stats"></div>
-  </div>
-  <div class="callout key"><strong>Lectura</strong>Ridge encoge todo sin anular; Lasso selecciona. Con variables muy correlacionadas, la variable que Lasso conserva puede cambiar entre muestras: la selección es condicional a α y a los datos, no una prueba de irrelevancia.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 6 · Unidad 2 · CE 2.3–2.4</div>
+<h2>Regularización: Ridge y Lasso</h2>
+<p class="sub">Penalizar coeficientes para estabilizar modelos con muchas variables correlacionadas.</p>
+</div>
+<div class="formula">Ridge: Σ(yᵢ − xᵢᵀβ)² + α Σβⱼ²    Lasso: (1/2n) Σ(yᵢ − xᵢᵀβ)² + α Σ|βⱼ|<span class="note">Las variables se estandarizan antes de penalizar. α se elige con validación cruzada dentro de entrenamiento.</span></div>
+<div class="lab">
+<div class="lab-h">Trayectoria de coeficientes · QuillayMarket con interacciones</div>
+<div class="lab-s">26 variables (meses, categorías e interacciones de categoría con promoción, precio y marketing). Barras doradas: coeficientes exactamente en cero.</div>
+<div class="row">
+<div><label for="reg-tipo">Tipo</label><select id="reg-tipo"><option>Lasso</option><option>Ridge</option></select></div>
+<div><label for="reg-alpha">log₁₀ α: <span id="reg-alpha-val">0,00</span></label><input id="reg-alpha" max="22" min="0" step="1" type="range" value="12"/></div>
+</div>
+<canvas aria-label="Coeficientes regularizados" height="420" id="reg-canvas" role="img" width="640">Coeficientes regularizados</canvas>
+<div class="stats" id="reg-stats"></div>
+</div>
+<div class="callout key"><strong>Lectura</strong>Ridge encoge todo sin anular; Lasso selecciona. Con variables muy correlacionadas, la variable que Lasso conserva puede cambiar entre muestras: la selección es condicional a α y a los datos, no una prueba de irrelevancia.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c5">← Anterior: Clasificación</a><a href="#c7">Siguiente →: Validación y sobreajuste</a></nav></section>
 <!-- ============ 7 ============ -->
 <section class="chapter" id="c7">
-  <div class="chapter-head">
-    <div class="num">Capítulo 7 · Unidad 2 · CE 2.4</div>
-    <h2>Validación y sobreajuste</h2>
-    <p class="sub">Estimar cómo predecirá el modelo datos que no vio, con su variabilidad.</p>
-  </div>
-  <h3 class="sec">Validación cruzada de cinco pliegues</h3>
-  <div id="kfold" class="kfold" role="img" aria-label="Esquema de validación cruzada de cinco pliegues"></div>
-  <p class="muted">Cada fila es una ronda: el bloque dorado evalúa y los demás entrenan. Se informa la media y la desviación estándar entre pliegues.</p>
-  <div class="lab">
-    <div class="lab-h">Curva de complejidad · árbol en PulpaLenga</div>
-    <div class="lab-s">Precisión promedio (AP) en entrenamiento y en validación cruzada según la profundidad máxima. La brecha creciente es la señal de sobreajuste.</div>
-    <label for="cx-prof">Profundidad: <span id="cx-prof-val">4</span></label><input type="range" id="cx-prof" min="1" max="15" value="4" step="1">
-    <canvas role="img" aria-label="Curva de complejidad de un árbol" id="cx-canvas" width="640" height="240"></canvas>
-    <div class="stats" id="cx-stats"></div>
-  </div>
-  <table class="data">
-    <tr><th>Esquema</th><th>Cuándo usarlo</th><th>Riesgo si se usa mal</th></tr>
-    <tr><td><strong>Entrenamiento / validación / prueba</strong></td><td>Decisiones de umbral y costos</td><td>Validación pequeña: decisiones ruidosas</td></tr>
-    <tr><td><strong>k pliegues estratificados</strong></td><td>Comparar especificaciones con su variabilidad</td><td>Fuga si la preparación ocurre fuera del pipeline</td></tr>
-    <tr><td><strong>Origen móvil</strong></td><td>Datos temporales</td><td>Una partición aleatoria mezcla pasado y futuro</td></tr>
-    <tr><td><strong>Por grupos</strong></td><td>Una entidad con varias filas</td><td>Optimismo por filas casi repetidas</td></tr>
-  </table>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 7 · Unidad 2 · CE 2.4</div>
+<h2>Validación y sobreajuste</h2>
+<p class="sub">Estimar cómo predecirá el modelo datos que no vio, con su variabilidad.</p>
+</div>
+<h3 class="sec">Validación cruzada de cinco pliegues</h3>
+<div aria-label="Esquema de validación cruzada de cinco pliegues" class="kfold" id="kfold" role="img"></div>
+<p class="muted">Cada fila es una ronda: el bloque dorado evalúa y los demás entrenan. Se informa la media y la desviación estándar entre pliegues.</p>
+<div class="lab">
+<div class="lab-h">Curva de complejidad · árbol en PulpaLenga</div>
+<div class="lab-s">Precisión promedio (AP) en entrenamiento y en validación cruzada según la profundidad máxima. La brecha creciente es la señal de sobreajuste.</div>
+<label for="cx-prof">Profundidad: <span id="cx-prof-val">4</span></label><input id="cx-prof" max="15" min="1" step="1" type="range" value="4"/>
+<canvas aria-label="Curva de complejidad de un árbol" height="240" id="cx-canvas" role="img" width="640">Curva de complejidad de un árbol</canvas>
+<div class="stats" id="cx-stats"></div>
+</div>
+<table class="data">
+<tr><th>Esquema</th><th>Cuándo usarlo</th><th>Riesgo si se usa mal</th></tr>
+<tr><td><strong>Entrenamiento / validación / prueba</strong></td><td>Decisiones de umbral y costos</td><td>Validación pequeña: decisiones ruidosas</td></tr>
+<tr><td><strong>k pliegues estratificados</strong></td><td>Comparar especificaciones con su variabilidad</td><td>Fuga si la preparación ocurre fuera del pipeline</td></tr>
+<tr><td><strong>Origen móvil</strong></td><td>Datos temporales</td><td>Una partición aleatoria mezcla pasado y futuro</td></tr>
+<tr><td><strong>Por grupos</strong></td><td>Una entidad con varias filas</td><td>Optimismo por filas casi repetidas</td></tr>
+</table>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c6">← Anterior: Regularización: Ridge y Lasso</a><a href="#c8">Siguiente →: Métricas de evaluación</a></nav></section>
 <!-- ============ 8 ============ -->
 <section class="chapter" id="c8">
-  <div class="chapter-head">
-    <div class="num">Capítulo 8 · Unidad 3 · CE 3.1–3.2</div>
-    <h2>Métricas de evaluación</h2>
-    <p class="sub">Cada métrica responde una pregunta distinta. Ninguna basta sola.</p>
-  </div>
-  <h3 class="sec">Regresión</h3>
-  <table class="data">
-    <tr><th>Métrica</th><th>Fórmula</th><th>Lectura</th></tr>
-    <tr><td><strong>MAE</strong></td><td>Σ|yᵢ − ŷᵢ| / n</td><td>Error típico en unidades; robusto</td></tr>
-    <tr><td><strong>RMSE</strong></td><td>√(Σ(yᵢ − ŷᵢ)² / n)</td><td>Penaliza errores grandes</td></tr>
-    <tr><td><strong>R²</strong></td><td>1 − SCE/SCT</td><td>Comparación con la media; puede ser negativo fuera de muestra</td></tr>
-    <tr><td><strong>MAPE</strong></td><td>100·Σ|(yᵢ − ŷᵢ)/yᵢ| / n</td><td>Indefinido con ceros</td></tr>
-    <tr><td><strong>Sesgo</strong></td><td>Σ(ŷᵢ − yᵢ) / n</td><td>Error sistemático: comprar de menos o de más</td></tr>
-  </table>
-  <div class="lab">
-    <div class="lab-h">Calculadora · métricas de regresión</div>
-    <div class="lab-s">Quince casos ficticios del laboratorio de la semana 8. Edita las listas: valores separados por espacios; usa coma o punto como separador decimal.</div>
-    <label for="mr-real">Valores reales</label><input type="text" id="mr-real" value="95 140 185 230 260 175 210 255 300 340 380 410 445 470 520">
-    <label for="mr-pred">Valores predichos</label><input type="text" id="mr-pred" value="88 121 168 199 236 160 184 226 271 301 345 368 402 431 468">
-    <button id="mr-calc" type="button">Calcular</button>
-    <div class="stats" id="mr-stats"></div>
-    <div class="hint" id="mr-hint" role="status" aria-live="polite"></div>
-  </div>
-  <h3 class="sec">Clasificación</h3>
-  <div class="lab">
-    <div class="lab-h">Calculadora · matriz de confusión y costo</div>
-    <div class="lab-s">Ingresa los conteos y los costos de cada error.</div>
-    <div class="row">
-      <div><label for="cm-vp">Verdaderos positivos (VP)</label><input type="text" id="cm-vp" value="30"></div>
-      <div><label for="cm-fn">Falsos negativos (FN)</label><input type="text" id="cm-fn" value="10"></div>
-      <div><label for="cm-fp">Falsos positivos (FP)</label><input type="text" id="cm-fp" value="20"></div>
-      <div><label for="cm-vn">Verdaderos negativos (VN)</label><input type="text" id="cm-vn" value="140"></div>
-    </div>
-    <div class="row">
-      <div><label for="cm-cfn">Costo de un FN</label><input type="text" id="cm-cfn" value="5"></div>
-      <div><label for="cm-cfp">Costo de un FP</label><input type="text" id="cm-cfp" value="1"></div>
-    </div>
-    <button id="cm-calc" type="button">Calcular</button>
-    <div class="stats" id="cm-stats"></div>
-  </div>
-  <div class="callout key"><strong>Ordenamiento frente a decisión</strong>ROC-AUC y AP no dependen del umbral: describen cómo el modelo ordena. Precisión, recall y costo dependen del umbral elegido. KS y Gini = 2·AUC − 1 son habituales en puntajes de riesgo de crédito; Brier evalúa la calidad de las probabilidades.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 8 · Unidad 3 · CE 3.1–3.2</div>
+<h2>Métricas de evaluación</h2><div class="ba-clase-objetivo" data-ba-generado=""><strong>Al terminar:</strong> Seleccionar modelo y umbral sin reutilizar la prueba para decidir. <a href="#modulo-05">Ver práctica y criterio de logro</a></div>
+<p class="sub">Cada métrica responde una pregunta distinta. Ninguna basta sola.</p>
+</div>
+<h3 class="sec">Regresión</h3>
+<table class="data">
+<tr><th>Métrica</th><th>Fórmula</th><th>Lectura</th></tr>
+<tr><td><strong>MAE</strong></td><td>Σ|yᵢ − ŷᵢ| / n</td><td>Error típico en unidades; robusto</td></tr>
+<tr><td><strong>RMSE</strong></td><td>√(Σ(yᵢ − ŷᵢ)² / n)</td><td>Penaliza errores grandes</td></tr>
+<tr><td><strong>R²</strong></td><td>1 − SCE/SCT</td><td>Comparación con la media; puede ser negativo fuera de muestra</td></tr>
+<tr><td><strong>MAPE</strong></td><td>100·Σ|(yᵢ − ŷᵢ)/yᵢ| / n</td><td>Indefinido con ceros</td></tr>
+<tr><td><strong>Sesgo</strong></td><td>Σ(ŷᵢ − yᵢ) / n</td><td>Error sistemático: comprar de menos o de más</td></tr>
+</table>
+<div class="lab">
+<div class="lab-h">Calculadora · métricas de regresión</div>
+<div class="lab-s">Quince casos ficticios del laboratorio de la semana 8. Edita las listas: valores separados por espacios; usa coma o punto como separador decimal.</div>
+<label for="mr-real">Valores reales</label><input id="mr-real" type="text" value="95 140 185 230 260 175 210 255 300 340 380 410 445 470 520"/>
+<label for="mr-pred">Valores predichos</label><input id="mr-pred" type="text" value="88 121 168 199 236 160 184 226 271 301 345 368 402 431 468"/>
+<button id="mr-calc" type="button">Calcular</button>
+<div class="stats" id="mr-stats"></div>
+<div aria-live="polite" class="hint" id="mr-hint" role="status"></div>
+</div>
+<h3 class="sec">Clasificación</h3>
+<div class="lab">
+<div class="lab-h">Calculadora · matriz de confusión y costo</div>
+<div class="lab-s">Ingresa los conteos y los costos de cada error.</div>
+<div class="row">
+<div><label for="cm-vp">Verdaderos positivos (VP)</label><input id="cm-vp" type="text" value="30"/></div>
+<div><label for="cm-fn">Falsos negativos (FN)</label><input id="cm-fn" type="text" value="10"/></div>
+<div><label for="cm-fp">Falsos positivos (FP)</label><input id="cm-fp" type="text" value="20"/></div>
+<div><label for="cm-vn">Verdaderos negativos (VN)</label><input id="cm-vn" type="text" value="140"/></div>
+</div>
+<div class="row">
+<div><label for="cm-cfn">Costo de un FN</label><input id="cm-cfn" type="text" value="5"/></div>
+<div><label for="cm-cfp">Costo de un FP</label><input id="cm-cfp" type="text" value="1"/></div>
+</div>
+<button id="cm-calc" type="button">Calcular</button>
+<div class="stats" id="cm-stats"></div>
+</div>
+<div class="callout key"><strong>Ordenamiento frente a decisión</strong>ROC-AUC y AP no dependen del umbral: describen cómo el modelo ordena. Precisión, recall y costo dependen del umbral elegido. KS y Gini = 2·AUC − 1 son habituales en puntajes de riesgo de crédito; Brier evalúa la calidad de las probabilidades.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c7">← Anterior: Validación y sobreajuste</a><a href="#c9">Siguiente →: Umbral, costos y calibración</a></nav></section>
 <!-- ============ 9 ============ -->
 <section class="chapter" id="c9">
-  <div class="chapter-head">
-    <div class="num">Capítulo 9 · Unidad 3 · CE 3.1–3.2</div>
-    <h2>Umbral, costos y calibración</h2>
-    <p class="sub">El algoritmo ordena; fijar el punto de corte es una decisión de gestión con supuestos declarados.</p>
-  </div>
-  <div class="formula">Actuar si p &gt; t* = c_FP / (c_FP + c_FN)<span class="note">Válido con probabilidades calibradas. En PulpaLenga, con c_FN = 800 y c_FP = 90 miles de CLP, t* ≈ 0,10.</span></div>
-  <div class="lab">
-    <div class="lab-h">Simulador · umbral y costo con datos de PulpaLenga</div>
-    <div class="lab-s" id="um-fuente">760 lotes con predicciones fuera de pliegue de la logística de desvíos (notebook 05).</div>
-    <label for="um-t">Umbral: <span id="um-t-val">0,50</span></label><input type="range" id="um-t" min="0" max="100" value="50" step="1">
-    <div class="row">
-      <div><label for="um-cfn">Costo de un defecto despachado (FN, miles CLP)</label><input type="text" id="um-cfn" value="800"></div>
-      <div><label for="um-cfp">Costo de inspeccionar un lote bueno (FP, miles CLP)</label><input type="text" id="um-cfp" value="90"></div>
-    </div>
-    <div class="chartgrid">
-      <div><canvas role="img" aria-label="Costo medio según umbral" id="um-costo" width="320" height="230"></canvas></div>
-      <div><canvas role="img" aria-label="Curva ROC con el punto del umbral" id="um-roc" width="320" height="230"></canvas></div>
-    </div>
-    <div class="stats" id="um-stats"></div>
-    <div class="hint" id="um-hint" role="status" aria-live="polite"></div>
-  </div>
-  <div class="grid2">
-    <div class="tile"><span class="tag">Calibración</span><h4>¿Un 0,3 significa 30%?</h4><p>Se revisa con un diagrama de confiabilidad y el puntaje de Brier. Ponderar clases puede cambiar probabilidades y orden. La recalibración de Platt busca mejorar su interpretación y debe comprobarse en datos independientes.</p></div>
-    <div class="tile gold"><span class="tag">Estabilidad</span><h4>Umbral con pocos eventos</h4><p>Con 31 defectos en validación, el mínimo de costo es ruidoso. Las predicciones fuera de pliegue y la regla t* dan umbrales cercanos a 0,10.</p></div>
-  </div>
-  <div class="callout warn"><strong>Nunca con la prueba</strong>Elegir el umbral o comparar modelos con el conjunto de prueba hace que el costo informado sea optimista. La versión original del notebook de PulpaLenga lo hacía; se conserva en el archivo como ejercicio de detección.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 9 · Unidad 3 · CE 3.1–3.2</div>
+<h2>Umbral, costos y calibración</h2>
+<p class="sub">El algoritmo ordena; fijar el punto de corte es una decisión de gestión con supuestos declarados.</p>
+</div>
+<div class="formula">Actuar si p &gt; t* = c_FP / (c_FP + c_FN)<span class="note">Válido con probabilidades calibradas. En PulpaLenga, con c_FN = 800 y c_FP = 90 miles de CLP, t* ≈ 0,10.</span></div>
+<div class="lab">
+<div class="lab-h">Simulador · umbral y costo con datos de PulpaLenga</div>
+<div class="lab-s" id="um-fuente">760 lotes con predicciones fuera de pliegue de la logística de desvíos (notebook 05).</div>
+<label for="um-t">Umbral: <span id="um-t-val">0,50</span></label><input id="um-t" max="100" min="0" step="1" type="range" value="50"/>
+<div class="row">
+<div><label for="um-cfn">Costo de un defecto despachado (FN, miles CLP)</label><input id="um-cfn" type="text" value="800"/></div>
+<div><label for="um-cfp">Costo de inspeccionar un lote bueno (FP, miles CLP)</label><input id="um-cfp" type="text" value="90"/></div>
+</div>
+<div class="chartgrid">
+<div><canvas aria-label="Costo medio según umbral" height="230" id="um-costo" role="img" width="320">Costo medio según umbral</canvas></div>
+<div><canvas aria-label="Curva ROC con el punto del umbral" height="230" id="um-roc" role="img" width="320">Curva ROC con el punto del umbral</canvas></div>
+</div>
+<div class="stats" id="um-stats"></div>
+<div aria-live="polite" class="hint" id="um-hint" role="status"></div>
+</div>
+<div class="grid2">
+<div class="tile"><span class="tag">Calibración</span><h4>¿Un 0,3 significa 30%?</h4><p>Se revisa con un diagrama de confiabilidad y el puntaje de Brier. Ponderar clases puede cambiar probabilidades y orden. La recalibración de Platt busca mejorar su interpretación y debe comprobarse en datos independientes.</p></div>
+<div class="tile gold"><span class="tag">Estabilidad</span><h4>Umbral con pocos eventos</h4><p>Con 31 defectos en validación, el mínimo de costo es ruidoso. Las predicciones fuera de pliegue y la regla t* dan umbrales cercanos a 0,10.</p></div>
+</div>
+<div class="callout warn"><strong>Nunca con la prueba</strong>Elegir el umbral o comparar modelos con el conjunto de prueba hace que el costo informado sea optimista. La versión original del notebook de PulpaLenga lo hacía; se conserva en el archivo como ejercicio de detección.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c8">← Anterior: Métricas de evaluación</a><a href="#c10">Siguiente →: Limitaciones, estabilidad y riesgo de modelo</a></nav></section>
 <!-- ============ 10 ============ -->
 <section class="chapter" id="c10">
-  <div class="chapter-head">
-    <div class="num">Capítulo 10 · Unidad 3 · CE 3.3</div>
-    <h2>Limitaciones, estabilidad y riesgo de modelo</h2>
-    <p class="sub">Dónde puede fallar un modelo y cómo detectarlo antes de que falle en operación.</p>
-  </div>
-  <table class="data">
-    <tr><th>Limitación</th><th>Cómo se detecta</th><th>Respuesta</th></tr>
-    <tr><td><strong>Desempeño desigual por grupo</strong></td><td>Métricas y calibración por segmento, con intervalos</td><td>Revisar datos, recalibrar o restringir el uso</td></tr>
-    <tr><td><strong>Inestabilidad</strong></td><td>Coeficientes bajo remuestreo bootstrap</td><td>No basar recomendaciones en efectos de signo incierto</td></tr>
-    <tr><td><strong>Deriva</strong></td><td>PSI de variables y del puntaje</td><td>Investigar la causa; recalibrar o reentrenar</td></tr>
-    <tr><td><strong>Costos inciertos</strong></td><td>Sensibilidad del umbral</td><td>Acordar rangos con finanzas</td></tr>
-    <tr><td><strong>Predicción no es causa</strong></td><td>El modelo no identifica efectos de intervenciones</td><td>Piloto con grupo de control</td></tr>
-  </table>
-  <div class="formula">PSI = Σₖ (aₖ − eₖ) · ln(aₖ / eₖ)<span class="note">Convención habitual en riesgo de crédito (no un estándar universal): &lt; 0,10 estable · 0,10–0,25 cambio moderado · &gt; 0,25 cambio significativo.</span></div>
-  <div class="lab">
-    <div class="lab-h">Calculadora · Population Stability Index</div>
-    <div class="lab-s">Porcentaje de la población en cinco tramos de puntaje: referencia (entrenamiento) y mes nuevo.</div>
-    <label for="psi-ref">Referencia (%)</label><input type="text" id="psi-ref" value="20 20 20 20 20">
-    <label for="psi-new">Mes nuevo (%)</label><input type="text" id="psi-new" value="12 16 20 24 28">
-    <button id="psi-calc" type="button">Calcular</button>
-    <div class="stats" id="psi-stats"></div>
-    <div class="hint" id="psi-hint" role="status" aria-live="polite"></div>
-  </div>
-  <div class="callout key"><strong>Gobierno del modelo</strong>Desarrollo documentado, validación independiente, monitoreo y un responsable por modelo (SR 11-7). En Chile, el tratamiento de datos personales para modelar queda sujeto a la Ley 21.719: finalidad, minimización, seguridad y derechos de los titulares.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 10 · Unidad 3 · CE 3.3</div>
+<h2>Limitaciones, estabilidad y riesgo de modelo</h2><div class="ba-clase-objetivo" data-ba-generado=""><strong>Al terminar:</strong> Construir una ficha de modelo con seguimiento, responsables y condiciones de uso. <a href="#modulo-06">Ver práctica y criterio de logro</a></div>
+<p class="sub">Dónde puede fallar un modelo y cómo detectarlo antes de que falle en operación.</p>
+</div>
+<table class="data">
+<tr><th>Limitación</th><th>Cómo se detecta</th><th>Respuesta</th></tr>
+<tr><td><strong>Desempeño desigual por grupo</strong></td><td>Métricas y calibración por segmento, con intervalos</td><td>Revisar datos, recalibrar o restringir el uso</td></tr>
+<tr><td><strong>Inestabilidad</strong></td><td>Coeficientes bajo remuestreo bootstrap</td><td>No basar recomendaciones en efectos de signo incierto</td></tr>
+<tr><td><strong>Deriva</strong></td><td>PSI de variables y del puntaje</td><td>Investigar la causa; recalibrar o reentrenar</td></tr>
+<tr><td><strong>Costos inciertos</strong></td><td>Sensibilidad del umbral</td><td>Acordar rangos con finanzas</td></tr>
+<tr><td><strong>Predicción no es causa</strong></td><td>El modelo no identifica efectos de intervenciones</td><td>Piloto con grupo de control</td></tr>
+</table>
+<div class="formula">PSI = Σₖ (aₖ − eₖ) · ln(aₖ / eₖ)<span class="note">Convención habitual en riesgo de crédito (no un estándar universal): &lt; 0,10 estable · 0,10–0,25 cambio moderado · &gt; 0,25 cambio significativo.</span></div>
+<div class="lab">
+<div class="lab-h">Calculadora · Population Stability Index</div>
+<div class="lab-s">Porcentaje de la población en cinco tramos de puntaje: referencia (entrenamiento) y mes nuevo.</div>
+<label for="psi-ref">Referencia (%)</label><input id="psi-ref" type="text" value="20 20 20 20 20"/>
+<label for="psi-new">Mes nuevo (%)</label><input id="psi-new" type="text" value="12 16 20 24 28"/>
+<button id="psi-calc" type="button">Calcular</button>
+<div class="stats" id="psi-stats"></div>
+<div aria-live="polite" class="hint" id="psi-hint" role="status"></div>
+</div>
+<div class="callout key"><strong>Gobierno del modelo</strong>Desarrollo documentado, validación, monitoreo y responsables proporcionales al riesgo: referencia estadounidense <a href="https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm">SR 26-2 (2026)</a>, que reemplazó SR 11-7. Su alcance no se traslada automáticamente a Chile. Esta edición de octubre distingue la transición general de la <a href="https://www.bcn.cl/leychile/Navegar?idNorma=1209272">Ley 21.719 al 1 de diciembre de 2026</a>; revisar disposición y fecha aplicables.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c9">← Anterior: Umbral, costos y calibración</a><a href="#c11">Siguiente →: Comunicación y ficha del modelo</a></nav></section>
 <!-- ============ 11 ============ -->
 <section class="chapter" id="c11">
-  <div class="chapter-head">
-    <div class="num">Capítulo 11 · Unidad 3 · CE 3.4–3.5</div>
-    <h2>Comunicación y ficha del modelo</h2>
-    <p class="sub">La misma evidencia, contada para audiencias distintas; recomendaciones que responden a limitaciones observadas.</p>
-  </div>
-  <div class="lab">
-    <div class="lab-h">Constructor de mensajes · estructura SCR</div>
-    <div class="lab-s">Situación, complicación y resolución con las cifras de validación del modelo de abandono de FinCordillera.</div>
-    <label for="scr-aud">Audiencia</label>
-    <select id="scr-aud"><option>Directorio</option><option>Gerencia comercial</option><option>Comité de riesgo de modelos</option></select>
-    <div id="scr-out" class="scr-out" role="status" aria-live="polite"></div>
-  </div>
-  <h3 class="sec">Ficha del modelo (model card)</h3>
-  <table class="data">
-    <tr><th>Campo</th><th>Contenido esperado</th></tr>
-    <tr><td><strong>Propósito y uso no permitido</strong></td><td>Qué decisión apoya y qué decisiones no debe tomar</td></tr>
-    <tr><td><strong>Datos y población</strong></td><td>Fuente, período, tamaño, tasa del evento y exclusiones</td></tr>
-    <tr><td><strong>Modelo y variables</strong></td><td>Familia, preparación y variables con su disponibilidad</td></tr>
-    <tr><td><strong>Evaluación</strong></td><td>Métricas en prueba, umbral y supuestos de costo</td></tr>
-    <tr><td><strong>Limitaciones</strong></td><td>Segmentos, estabilidad, deriva y causalidad</td></tr>
-    <tr><td><strong>Monitoreo y responsables</strong></td><td>Indicadores, umbrales de alerta, revisión y validación independiente</td></tr>
-  </table>
-  <h3 class="sec">Recomendaciones de mejora (CE 3.5)</h3>
-  <p>Cada recomendación declara la <strong>limitación</strong>, la <strong>evidencia</strong>, la <strong>acción</strong> y la <strong>métrica de verificación</strong>. «Mejorar el modelo» no es una recomendación; «recalibrar por región porque la probabilidad media difiere de la tasa observada, y verificar con Brier por región el próximo trimestre» sí lo es.</p>
-  <div class="callout tip"><strong>Leer un informe con criterio</strong>Un <a href="notebooks/MPN_06_limitaciones_comunicacion.ipynb#caso-informe">informe de modelo</a> puede tener buena estructura y conclusiones optimistas. Antes de usarlo como referencia, revisa que el umbral se calibre fuera de la prueba, que haya incertidumbre y análisis por segmento, y que los datos estén disponibles para reproducirlo.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 11 · Unidad 3 · CE 3.4–3.5</div>
+<h2>Comunicación y ficha del modelo</h2>
+<p class="sub">La misma evidencia, contada para audiencias distintas; recomendaciones que responden a limitaciones observadas.</p>
+</div>
+<div class="lab">
+<div class="lab-h">Constructor de mensajes · estructura SCR</div>
+<div class="lab-s">Situación, complicación y resolución con las cifras de validación del modelo de abandono de FinCordillera.</div>
+<label for="scr-aud">Audiencia</label>
+<select id="scr-aud"><option>Directorio</option><option>Gerencia comercial</option><option>Comité de riesgo de modelos</option></select>
+<div aria-live="polite" class="scr-out" id="scr-out" role="status"></div>
+</div>
+<h3 class="sec">Ficha del modelo (model card)</h3>
+<table class="data">
+<tr><th>Campo</th><th>Contenido esperado</th></tr>
+<tr><td><strong>Propósito y uso no permitido</strong></td><td>Qué decisión apoya y qué decisiones no debe tomar</td></tr>
+<tr><td><strong>Datos y población</strong></td><td>Fuente, período, tamaño, tasa del evento y exclusiones</td></tr>
+<tr><td><strong>Modelo y variables</strong></td><td>Familia, preparación y variables con su disponibilidad</td></tr>
+<tr><td><strong>Evaluación</strong></td><td>Métricas en prueba, umbral y supuestos de costo</td></tr>
+<tr><td><strong>Limitaciones</strong></td><td>Segmentos, estabilidad, deriva y causalidad</td></tr>
+<tr><td><strong>Monitoreo y responsables</strong></td><td>Indicadores, umbrales de alerta, revisión y validación independiente</td></tr>
+</table>
+<h3 class="sec">Recomendaciones de mejora (CE 3.5)</h3>
+<p>Cada recomendación declara la <strong>limitación</strong>, la <strong>evidencia</strong>, la <strong>acción</strong> y la <strong>métrica de verificación</strong>. «Mejorar el modelo» no es una recomendación; «recalibrar por región porque la probabilidad media difiere de la tasa observada, y verificar con Brier por región el próximo trimestre» sí lo es.</p>
+<div class="callout tip"><strong>Leer un informe con criterio</strong>Un <a href="notebooks/MPN_06_limitaciones_comunicacion.ipynb#caso-informe">informe de modelo</a> puede tener buena estructura y conclusiones optimistas. Antes de usarlo como referencia, revisa que el umbral se calibre fuera de la prueba, que haya incertidumbre y análisis por segmento, y que los datos estén disponibles para reproducirlo.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c10">← Anterior: Limitaciones, estabilidad y riesgo de modelo</a><a href="#c12">Siguiente →: Ruta de doce semanas</a></nav></section>
 <!-- ============ 12 ============ -->
 <section class="chapter" id="c12">
-  <div class="chapter-head">
-    <div class="num">Capítulo 12 · Ruta docente</div>
-    <h2>Ruta de doce semanas</h2>
-    <p class="sub">Cada semana: objetivo, criterios, contenidos, caso, notas para el docente, cronograma de 90 minutos, preguntas gatillantes y recursos.</p>
-  </div>
-  <div class="callout key"><strong>Formato vespertino o semipresencial</strong>Con una hora sincrónica y dos de laboratorio asíncrono, usa la hora sincrónica para la activación, la explicación central y la discusión del caso; los notebooks y la autoevaluación cubren el trabajo asíncrono.</div>
-  <div id="semanas"></div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 12 · Ruta docente</div>
+<h2>Ruta de doce semanas</h2>
+<p class="sub">Cada semana: objetivo, criterios, contenidos, caso, notas para el docente, cronograma de 90 minutos, preguntas gatillantes y recursos.</p>
+</div>
+<div class="callout key"><strong>Formato vespertino o semipresencial</strong>Con una hora sincrónica y dos de laboratorio asíncrono, usa la hora sincrónica para la activación, la explicación central y la discusión del caso; los notebooks y la autoevaluación cubren el trabajo asíncrono.</div>
+<div id="semanas"></div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c11">← Anterior: Comunicación y ficha del modelo</a><a href="#c13">Siguiente →: Glosario</a></nav></section>
 <!-- ============ 13 ============ -->
 <section class="chapter" id="c13">
-  <div class="chapter-head">
-    <div class="num">Capítulo 13</div>
-    <h2>Glosario</h2>
-    <p class="sub">Términos que aparecen a lo largo de la asignatura.</p>
-  </div>
-  <input aria-label="Buscar término en el glosario" type="text" id="glos-search" placeholder="Buscar término…" style="width:100%;padding:.6rem .8rem;border:1px solid var(--line);border-radius:5px;margin-bottom:1rem;font-family:var(--fb);font-size:14px;">
-  <dl class="glosario" id="glos-list"></dl>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 13</div>
+<h2>Glosario</h2>
+<p class="sub">Términos que aparecen a lo largo de la asignatura.</p>
+</div>
+<input aria-label="Buscar término en el glosario" id="glos-search" placeholder="Buscar término…" style="width:100%;padding:.6rem .8rem;border:1px solid var(--line);border-radius:5px;margin-bottom:1rem;font-family:var(--fb);font-size:14px;" type="text"/>
+<dl class="glosario" id="glos-list"></dl>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c12">← Anterior: Ruta de doce semanas</a><a href="#c14">Siguiente →: Autoevaluación</a></nav></section>
 <!-- ============ 14 ============ -->
 <section class="chapter" id="c14">
-  <div class="chapter-head">
-    <div class="num">Capítulo 14</div>
-    <h2>Autoevaluación</h2>
-    <p class="sub">Banco de preguntas por capítulo, con retroalimentación inmediata. No registra ni envía respuestas.</p>
-  </div>
-  <div id="quiz-root"></div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 14</div>
+<h2>Autoevaluación</h2>
+<p class="sub">Banco de preguntas por capítulo, con retroalimentación inmediata. No registra ni envía respuestas.</p>
+</div>
+<div id="quiz-root"></div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c13">← Anterior: Glosario</a><a href="#c15">Siguiente →: Referencias y ruta docente</a></nav></section>
 <!-- ============ 15 ============ -->
 <section class="chapter" id="c15">
-  <div class="chapter-head">
-    <div class="num">Capítulo 15</div>
-    <h2>Referencias y ruta docente</h2>
-    <p class="sub">Cómo usar el material en distintos formatos y bibliografía.</p>
-  </div>
-  <h3 class="sec">Tres formas de usar la edición</h3>
-  <div class="grid3">
-    <div class="tile"><span class="tag">Pregrado presencial</span><h4>Sesiones de 90 minutos</h4><p>Activación con preguntas gatillantes, explicación con un simulador, laboratorio guiado con el notebook de la semana y autoevaluación.</p></div>
-    <div class="tile gold"><span class="tag">Vespertino o semipresencial</span><h4>1 h sincrónica + 2 h asíncronas</h4><p>La sesión sincrónica explica y discute el caso; los notebooks, con sus comprobaciones y autoevaluaciones, sostienen el trabajo asíncrono.</p></div>
-    <div class="tile plum"><span class="tag">Postgrado</span><h4>Caso + extensión</h4><p>Núcleo como lectura previa; la sesión discute supuestos, validación, calibración, riesgo de modelo y el capítulo 16.</p></div>
-  </div>
-  <h3 class="sec">Bibliografía</h3>
-  <ul class="bul">
-    <li>James, G., Witten, D., Hastie, T., Tibshirani, R. y Taylor, J. (2023). <em>An Introduction to Statistical Learning with Applications in Python</em>. Springer. <a href="https://www.statlearning.com/">statlearning.com</a></li>
-    <li>Hastie, T., Tibshirani, R. y Friedman, J. (2009). <em>The Elements of Statistical Learning</em> (2.ª ed.). Springer.</li>
-    <li>Shmueli, G., Bruce, P. C., Gedeck, P. y Patel, N. R. (2019). <em>Data Mining for Business Analytics: Concepts, Techniques and Applications in Python</em>. Wiley.</li>
-    <li>Chapman, P. et al. (2000). <em>CRISP-DM 1.0: Step-by-Step Data Mining Guide</em>. SPSS.</li>
-    <li>Hyndman, R. J. y Athanasopoulos, G. (2021). <em>Forecasting: Principles and Practice</em> (3.ª ed.). OTexts. <a href="https://otexts.com/fpp3/">otexts.com/fpp3</a></li>
-    <li>Elkan, C. (2001). The foundations of cost-sensitive learning. <em>IJCAI</em>, 973–978.</li>
-    <li>Saito, T. y Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. <em>PLOS ONE</em>, 10(3).</li>
-    <li>Mitchell, M. et al. (2019). Model cards for model reporting. <em>FAT* 2019</em>, 220–229.</li>
-    <li>Siddiqi, N. (2006). <em>Credit Risk Scorecards</em>. Wiley.</li>
-    <li>Board of Governors of the Federal Reserve System y OCC (2011). <em>SR 11-7: Supervisory Guidance on Model Risk Management</em>.</li>
-    <li>scikit-learn developers. <a href="https://scikit-learn.org/stable/common_pitfalls.html">Common pitfalls and recommended practices</a> · <a href="https://scikit-learn.org/stable/modules/model_evaluation.html">Model evaluation</a> · <a href="https://scikit-learn.org/stable/modules/calibration.html">Probability calibration</a>.</li>
-  </ul>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 15</div>
+<h2>Referencias y ruta docente</h2>
+<p class="sub">Cómo usar el material en distintos formatos y bibliografía.</p>
+</div>
+<h3 class="sec">Tres formas de usar la edición</h3>
+<div class="grid3">
+<div class="tile"><span class="tag">Pregrado presencial</span><h4>Sesiones de 90 minutos</h4><p>Activación con preguntas gatillantes, explicación con un simulador, laboratorio guiado con el notebook de la semana y autoevaluación.</p></div>
+<div class="tile gold"><span class="tag">Vespertino o semipresencial</span><h4>1 h sincrónica + 2 h asíncronas</h4><p>La sesión sincrónica explica y discute el caso; los notebooks, con sus comprobaciones y autoevaluaciones, sostienen el trabajo asíncrono.</p></div>
+<div class="tile plum"><span class="tag">Postgrado</span><h4>Caso + extensión</h4><p>Núcleo como lectura previa; la sesión discute supuestos, validación, calibración, riesgo de modelo y el capítulo 16.</p></div>
+</div>
+<h3 class="sec">Bibliografía</h3>
+<ul class="bul">
+<li>James, G., Witten, D., Hastie, T., Tibshirani, R. y Taylor, J. (2023). <em>An Introduction to Statistical Learning with Applications in Python</em>. Springer. <a href="https://www.statlearning.com/">statlearning.com</a></li>
+<li>Hastie, T., Tibshirani, R. y Friedman, J. (2009). <em>The Elements of Statistical Learning</em> (2.ª ed.). Springer.</li>
+<li>Shmueli, G., Bruce, P. C., Gedeck, P. y Patel, N. R. (2019). <em>Data Mining for Business Analytics: Concepts, Techniques and Applications in Python</em>. Wiley.</li>
+<li>Chapman, P. et al. (2000). <em>CRISP-DM 1.0: Step-by-Step Data Mining Guide</em>. SPSS.</li>
+<li>Hyndman, R. J. y Athanasopoulos, G. (2021). <em>Forecasting: Principles and Practice</em> (3.ª ed.). OTexts. <a href="https://otexts.com/fpp3/">otexts.com/fpp3</a></li>
+<li>Elkan, C. (2001). The foundations of cost-sensitive learning. <em>IJCAI</em>, 973–978.</li>
+<li>Saito, T. y Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. <em>PLOS ONE</em>, 10(3).</li>
+<li>Mitchell, M. et al. (2019). Model cards for model reporting. <em>FAT* 2019</em>, 220–229.</li>
+<li>Siddiqi, N. (2006). <em>Credit Risk Scorecards</em>. Wiley.</li>
+<li>Board of Governors of the Federal Reserve System, OCC y FDIC (2026). <a href="https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm"><em>SR 26-2: Revised Guidance on Model Risk Management</em></a>. SR 11-7 es el antecedente histórico reemplazado.</li>
+<li>scikit-learn developers. <a href="https://scikit-learn.org/stable/common_pitfalls.html">Common pitfalls and recommended practices</a> · <a href="https://scikit-learn.org/stable/modules/model_evaluation.html">Model evaluation</a> · <a href="https://scikit-learn.org/stable/modules/calibration.html">Probability calibration</a>.</li>
+</ul>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c14">← Anterior: Autoevaluación</a><a href="#c16">Siguiente →: Pronóstico de series de tiempo</a></nav></section>
 <!-- ============ 16 ============ -->
 <section class="chapter" id="c16">
-  <div class="chapter-head">
-    <div class="num">Capítulo 16 · Profundización</div>
-    <h2>Pronóstico de series de tiempo</h2>
-    <p class="sub">Tendencia, estacionalidad y validación con origen móvil, con una serie simulada que reproduce el perfil estacional de QuillayMarket.</p>
-  </div>
-  <div class="grid3">
-    <div class="tile"><span class="tag">Referencia</span><h4>Ingenuo estacional</h4><p>Cada mes igual al mismo mes del año anterior. Es la vara mínima.</p></div>
-    <div class="tile gold"><span class="tag">Modelo</span><h4>Tendencia + estacionalidad</h4><p>Regresión con tendencia lineal y un indicador por mes.</p></div>
-    <div class="tile plum"><span class="tag">Métrica</span><h4>MASE</h4><p>MAE dividido por el del ingenuo estacional; &lt; 1 indica mejora.</p></div>
-  </div>
-  <div class="lab">
-    <div class="lab-h">Simulador · pronóstico con origen móvil</div>
-    <div class="lab-s">Métricas promedio de origen móvil (desde el mes 36) y pronóstico desde el último origen para el horizonte elegido.</div>
-    <div class="row">
-      <div><label for="pr-h">Horizonte (meses): <span id="pr-h-val">3</span></label><input type="range" id="pr-h" min="1" max="12" value="3" step="1"></div>
-      <div><label for="pr-m">Método</label><select id="pr-m"></select></div>
-    </div>
-    <canvas role="img" aria-label="Serie mensual y pronóstico" id="pr-canvas" width="640" height="240"></canvas>
-    <div id="pr-tabla"></div>
-  </div>
-  <div class="callout warn"><strong>Partición temporal</strong>Una partición aleatoria usaría meses posteriores para predecir meses anteriores. La validación con origen móvil entrena solo con el pasado de cada origen. Con pocos orígenes, los intervalos empíricos tienden a ser estrechos: verifica su cobertura.</div>
-</section>
-
+<div class="chapter-head">
+<div class="num">Capítulo 16 · Profundización</div>
+<h2>Pronóstico de series de tiempo</h2><div class="ba-clase-objetivo" data-ba-generado=""><strong>Al terminar:</strong> Evaluar una serie mediante orígenes móviles y referencias comparables. <a href="#modulo-07">Ver práctica y criterio de logro</a></div>
+<p class="sub">Tendencia, estacionalidad y validación con origen móvil, con una serie simulada que reproduce el perfil estacional de QuillayMarket.</p>
+</div>
+<div class="grid3">
+<div class="tile"><span class="tag">Referencia</span><h4>Ingenuo estacional</h4><p>Cada mes igual al mismo mes del año anterior. Es la vara mínima.</p></div>
+<div class="tile gold"><span class="tag">Modelo</span><h4>Tendencia + estacionalidad</h4><p>Regresión con tendencia lineal y un indicador por mes.</p></div>
+<div class="tile plum"><span class="tag">Métrica</span><h4>MASE</h4><p>MAE dividido por el del ingenuo estacional; &lt; 1 indica mejora.</p></div>
+</div>
+<div class="lab">
+<div class="lab-h">Simulador · pronóstico con origen móvil</div>
+<div class="lab-s">Métricas promedio de origen móvil (desde el mes 36) y pronóstico desde el último origen para el horizonte elegido.</div>
+<div class="row">
+<div><label for="pr-h">Horizonte (meses): <span id="pr-h-val">3</span></label><input id="pr-h" max="12" min="1" step="1" type="range" value="3"/></div>
+<div><label for="pr-m">Método</label><select id="pr-m"></select></div>
+</div>
+<canvas aria-label="Serie mensual y pronóstico" height="240" id="pr-canvas" role="img" width="640">Serie mensual y pronóstico</canvas>
+<div id="pr-tabla"></div>
+</div>
+<div class="callout warn"><strong>Partición temporal</strong>Una partición aleatoria usaría meses posteriores para predecir meses anteriores. La validación con origen móvil entrena solo con el pasado de cada origen. Con pocos orígenes, los intervalos empíricos tienden a ser estrechos: verifica su cobertura.</div>
+<nav aria-label="Secuencia del capítulo" class="ba-pasos" data-ba-generado=""><a href="#c15">← Anterior: Referencias y ruta docente</a></nav></section>
 <footer class="pie">Guía maestra · Modelos Predictivos en Negocios · edición docente del 8 de octubre de 2026. Material propio de apoyo; los casos son docentes y los datos simulados. Funciona sin conexión; los enlaces externos requieren red. La autoevaluación no almacena ni envía respuestas.</footer>
 </main>
 </div>
 <script id="mpn-datos" type="application/json">{"edicion":"2026-10-08","semilla":2026,"escenario":{"intercepto":250.737812,"coef":{"promocion_activa":33.339897,"categoria_producto_Electrohogar":16.248243,"categoria_producto_Tecnologia":42.149259,"categoria_producto_Vestuario":10.756775,"mes_2":-4.00977,"mes_3":19.990669,"mes_4":3.179835,"mes_5":6.116119,"mes_6":6.873746,"mes_7":6.926994,"mes_8":15.932972,"mes_9":21.68875,"mes_10":21.031196,"mes_11":25.564457,"mes_12":59.282026,"precio_miles":-9.015069,"marketing_100mil":4.458275},"q80":20.4775,"categorias":["Alimentos","Electrohogar","Tecnologia","Vestuario"],"referencia":"Alimentos","rango_precio_miles":{"Alimentos":[4.9,7.8],"Electrohogar":[13.9,22.1],"Tecnologia":[17.9,27.9],"Vestuario":[10.6,16.7]}},"residuos_mes":{"mes":[1,2,3,4,5,6,7,8,9,10,11,12],"numero":[-1.98,-6.6,32.83,7.14,-8.26,-13.08,-7.4,-6.69,-4.85,-4.08,3.37,34.71],"categoria":[-6.64,-3.68,15.94,9.93,-4.43,-7.04,3.39,-1.37,-1.96,3.77,9.96,9.42],"rmse_numero":19.59,"rmse_categoria":15.91},"regularizacion":{"nombres":["promocion_activa","categoria_producto_Electrohogar","categoria_producto_Tecnologia","categoria_producto_Vestuario","mes_2","mes_3","mes_4","mes_5","mes_6","mes_7","mes_8","mes_9","mes_10","mes_11","mes_12","precio_miles","marketing_100mil","categoria_producto_Electrohogar×promoción","categoria_producto_Electrohogar×precio","categoria_producto_Electrohogar×marketing","categoria_producto_Tecnologia×promoción","categoria_producto_Tecnologia×precio","categoria_producto_Tecnologia×marketing","categoria_producto_Vestuario×promoción","categoria_producto_Vestuario×precio","categoria_producto_Vestuario×marketing"],"log10_alpha":[-3.0,-2.75,-2.5,-2.25,-2.0,-1.75,-1.5,-1.25,-1.0,-0.75,-0.5,-0.25,0.0,0.25,0.5,0.75,1.0,1.25,1.5,1.75,2.0,2.25,2.5],"Ridge":[{"coef":[12.4736,-1.1408,22.2192,7.8541,-1.2822,5.9497,0.8151,1.5627,1.7307,1.8934,4.447,5.9054,5.7269,7.0252,16.5642,-58.4392,12.7387,1.8705,9.354,-2.3707,3.5389,-6.7913,0.6291,2.8232,-1.891,-3.3368],"rmse":15.855,"no_nulos":26},{"coef":[12.4733,-1.1265,22.2281,7.8657,-1.2826,5.949,0.8148,1.5624,1.7301,1.893,4.4466,5.905,5.7264,7.0249,16.5635,-58.4056,12.7374,1.8708,9.3112,-2.3693,3.5391,-6.8404,0.6307,2.8233,-1.9215,-3.3352],"rmse":15.855,"no_nulos":26},{"coef":[12.4729,-1.1013,22.2435,7.8861,-1.2834,5.9478,0.8141,1.5618,1.7291,1.8923,4.4458,5.9041,5.7254,7.0244,16.5622,-58.3464,12.735,1.8711,9.236,-2.3667,3.5393,-6.9267,0.6334,2.8235,-1.9751,-3.3324],"rmse":15.854,"no_nulos":26},{"coef":[12.4721,-1.0575,22.2701,7.9213,-1.2848,5.9457,0.813,1.5607,1.7274,1.891,4.4443,5.9027,5.7237,7.0234,16.56,-58.2435,12.7308,1.8718,9.1051,-2.3622,3.5397,-7.0766,0.6383,2.8238,-2.0681,-3.3274],"rmse":15.853,"no_nulos":26},{"coef":[12.4708,-0.9827,22.3143,7.9808,-1.2871,5.942,0.811,1.5589,1.7243,1.8888,4.4419,5.9001,5.7208,7.0217,16.5562,-58.0672,12.7235,1.8731,8.8811,-2.3543,3.5404,-7.3321,0.6469,2.8243,-2.2269,-3.3188],"rmse":15.85,"no_nulos":26},{"coef":[12.4685,-0.8587,22.384,8.0779,-1.2912,5.9356,0.8076,1.5558,1.7192,1.8851,4.4376,5.8956,5.7157,7.0188,16.5497,-57.7733,12.7109,1.8751,8.5077,-2.3407,3.5417,-7.7549,0.6617,2.8253,-2.49,-3.304],"rmse":15.846,"no_nulos":26},{"coef":[12.4645,-0.6628,22.4842,8.2266,-1.298,5.9249,0.802,1.5507,1.7107,1.8788,4.4306,5.8879,5.7073,7.014,16.5388,-57.3042,12.6896,1.8786,7.9125,-2.3178,3.5437,-8.4201,0.6871,2.827,-2.905,-3.2789],"rmse":15.84,"no_nulos":26},{"coef":[12.4578,-0.3758,22.6029,8.4313,-1.3089,5.9077,0.793,1.5425,1.6974,1.8688,4.4194,5.8751,5.6936,7.006,16.5213,-56.6037,12.6544,1.8842,7.0256,-2.2804,3.5471,-9.3873,0.7297,2.8299,-3.5112,-3.2375],"rmse":15.83,"no_nulos":26},{"coef":[12.4466,0.0005,22.6865,8.6664,-1.3258,5.8807,0.7791,1.5302,1.6774,1.8533,4.402,5.8542,5.6722,6.9932,16.4941,-55.6485,12.5981,1.8928,5.8219,-2.2212,3.5522,-10.6394,0.7994,2.8348,-4.3036,-3.1714],"rmse":15.815,"no_nulos":26},{"coef":[12.4282,0.4265,22.6109,8.8548,-1.3514,5.8396,0.7582,1.5123,1.6486,1.8298,4.3758,5.8204,5.6397,6.9731,16.4533,-54.475,12.51,1.9057,4.3588,-2.1301,3.56,-12.0253,0.9112,2.843,-5.1984,-3.0681],"rmse":15.793,"no_nulos":26},{"coef":[12.398,0.8267,22.1738,8.8684,-1.39,5.7768,0.7266,1.486,1.6076,1.7943,4.3364,5.7659,5.59,6.9413,16.3918,-53.1528,12.3739,1.9244,2.7509,-1.9926,3.5715,-13.2848,1.0874,2.8567,-6.0501,-2.9093],"rmse":15.764,"no_nulos":26},{"coef":[12.3479,1.1106,21.1199,8.5571,-1.4496,5.6791,0.6771,1.4463,1.5469,1.739,4.275,5.6782,5.5127,6.8902,16.2974,-51.6985,12.1668,1.9513,1.08,-1.7892,3.5885,-14.1723,1.3578,2.8792,-6.7261,-2.6687],"rmse":15.726,"no_nulos":26},{"coef":[12.2658,1.1795,19.1897,7.7874,-1.5433,5.5244,0.5965,1.3833,1.4531,1.6503,4.1761,5.5381,5.3898,6.8062,16.1491,-50.0098,11.8636,1.9884,-0.6541,-1.5032,3.6125,-14.5697,1.7489,2.9152,-7.1711,-2.3199],"rmse":15.683,"no_nulos":26},{"coef":[12.1354,0.908,16.206,6.4817,-1.6898,5.2817,0.4641,1.2812,1.3054,1.5078,4.0146,5.3213,5.1953,6.6681,15.9163,-47.8898,11.4593,2.0344,-2.4663,-1.1471,3.6418,-14.5079,2.2489,2.969,-7.4064,-1.8633],"rmse":15.65,"no_nulos":26},{"coef":[11.9411,0.1659,12.2156,4.6767,-1.9109,4.916,0.2523,1.1187,1.0779,1.2864,3.7562,5.0036,4.8977,6.4453,15.56,-45.1502,11.005,2.0796,-4.2743,-0.802,3.664,-14.1202,2.7495,3.0406,-7.483,-1.3723],"rmse":15.672,"no_nulos":26},{"coef":[11.6794,-1.0706,7.6029,2.5713,-2.2234,4.4,-0.0663,0.8747,0.7473,0.9632,3.364,4.57,4.4677,6.1007,15.0386,-41.7376,10.6248,2.0995,-5.8799,-0.6313,3.6426,-13.562,3.0124,3.116,-7.4294,-1.0137],"rmse":15.824,"no_nulos":26},{"coef":[11.3688,-2.6189,3.015,0.4849,-2.6244,3.7306,-0.5012,0.5433,0.3101,0.5313,2.8173,4.0245,3.8906,5.6046,14.3186,-37.796,10.4464,2.0518,-7.0814,-0.7995,3.5079,-12.9235,2.757,3.1598,-7.2353,-0.9625],"rmse":16.204,"no_nulos":26},{"coef":[11.0328,-4.1538,-0.91,-1.2781,-3.0701,2.9483,-1.0181,0.1586,-0.1945,0.0178,2.1414,3.3994,3.1835,4.9601,13.3899,-33.6121,10.4584,1.8878,-7.7912,-1.3227,3.1738,-12.2053,1.8625,3.1238,-6.8859,-1.2327],"rmse":16.911,"no_nulos":26},{"coef":[10.6373,-5.3709,-3.7857,-2.5313,-3.4649,2.1435,-1.5233,-0.1919,-0.6741,-0.504,1.4222,2.7574,2.4049,4.2195,12.2675,-29.4792,10.4487,1.5864,-8.0374,-2.0202,2.5943,-11.3712,0.4991,2.9824,-6.3877,-1.6236],"rmse":18.06,"no_nulos":26},{"coef":[10.0415,-6.0783,-5.5303,-3.1999,-3.6854,1.4269,-1.8892,-0.3983,-1.0151,-0.9321,0.7741,2.1686,1.6365,3.4601,10.9631,-25.5546,10.1154,1.1797,-7.8797,-2.6397,1.8142,-10.4015,-0.9625,2.7583,-5.7376,-1.8738],"rmse":19.846,"no_nulos":26},{"coef":[9.0599,-6.1985,-6.2729,-3.2759,-3.6338,0.8753,-2.016,-0.3987,-1.1428,-1.1811,0.2802,1.6712,0.9494,2.7391,9.4599,-21.801,9.2409,0.7322,-7.3493,-3.0028,0.9539,-9.2971,-2.1614,2.4964,-4.8974,-1.8346],"rmse":22.607,"no_nulos":26},{"coef":[7.6152,-5.7551,-6.2272,-2.8236,-3.2804,0.5032,-1.8815,-0.2315,-1.0616,-1.2176,-0.0352,1.2593,0.3959,2.0805,7.7527,-18.0816,7.8104,0.3066,-6.4692,-3.0411,0.1531,-8.0634,-2.8925,2.2181,-3.8439,-1.5018],"rmse":26.679,"no_nulos":26},{"coef":[5.8502,-4.8767,-5.6205,-2.02,-2.6862,0.2796,-1.5507,-0.0174,-0.847,-1.0716,-0.1924,0.9093,0.0164,1.5009,5.9336,-14.3507,6.04,-0.0388,-5.3169,-2.7726,-0.4667,-6.7205,-3.1201,1.9184,-2.6579,-0.9758],"rmse":32.003,"no_nulos":26}],"Lasso":[{"coef":[12.4776,-1.1666,22.0189,7.6336,-1.2907,5.9398,0.8066,1.554,1.7234,1.8842,4.438,5.8941,5.7175,7.0147,16.5552,-58.6889,12.7274,1.8702,9.5609,-2.3511,3.5334,-6.3094,0.6383,2.8194,-1.5535,-3.3204],"rmse":15.857,"no_nulos":26},{"coef":[12.4805,-1.171,21.873,7.4747,-1.2977,5.9314,0.7995,1.5468,1.717,1.8766,4.4305,5.8847,5.7096,7.0061,16.5474,-58.8472,12.7173,1.8702,9.676,-2.3343,3.5292,-5.9874,0.6471,2.8166,-1.3237,-3.3061],"rmse":15.858,"no_nulos":26},{"coef":[12.4856,-1.1769,21.6154,7.1938,-1.3103,5.9164,0.7869,1.534,1.7058,1.8631,4.4171,5.8681,5.6955,6.9909,16.5335,-59.1244,12.6992,1.8702,9.8752,-2.3044,3.5218,-5.4216,0.6627,2.8116,-0.9191,-3.2805],"rmse":15.861,"no_nulos":26},{"coef":[12.4947,-1.1814,21.1626,6.6995,-1.3328,5.8895,0.7644,1.5112,1.6856,1.8389,4.3932,5.8384,5.6703,6.9638,16.5086,-59.6051,12.6669,1.8704,10.2133,-2.251,3.5086,-4.4351,0.6905,2.8028,-0.2113,-3.2348],"rmse":15.865,"no_nulos":26},{"coef":[12.5073,-0.8004,20.7451,6.3651,-1.3786,5.8303,0.7164,1.4639,1.6374,1.7898,4.343,5.7811,5.6171,6.9119,16.4517,-59.5307,12.5933,1.8737,9.6663,-2.1391,3.4879,-4.1512,0.7536,2.7898,-0.0,-3.1306],"rmse":15.863,"no_nulos":25},{"coef":[12.5285,-0.0001,20.1134,5.9651,-1.4621,5.7208,0.6279,1.3776,1.5472,1.7001,4.2513,5.6772,5.5193,6.8187,16.3458,-59.0802,12.4516,1.8805,8.3056,-1.9293,3.452,-4.1346,0.8768,2.7676,-0.0,-2.9289],"rmse":15.859,"no_nulos":25},{"coef":[12.5446,-0.0,18.6955,5.3319,-1.6018,5.5101,0.4555,1.2253,1.3874,1.5281,4.0915,5.4896,5.3392,6.668,16.1688,-58.7025,12.0996,1.8819,7.5514,-1.4776,3.4001,-3.4304,1.1844,2.7429,-0.0,-2.4423],"rmse":15.822,"no_nulos":24},{"coef":[12.5745,0.0,16.2116,4.2048,-1.8504,5.1355,0.1489,0.9541,1.1032,1.222,3.8071,5.1563,5.0189,6.3998,15.8542,-58.0211,11.4761,1.8829,6.206,-0.6767,3.307,-2.2215,1.7262,2.6981,0.0,-1.5803],"rmse":15.779,"no_nulos":24},{"coef":[12.6014,0.0,12.1407,2.5273,-2.0765,4.7295,-0.0,0.7021,0.804,0.9133,3.5155,4.7841,4.6828,6.1297,15.5117,-56.6981,10.7847,1.8565,4.3927,-0.0,3.1594,-0.2598,2.3569,2.6208,0.0,-0.5274],"rmse":15.734,"no_nulos":22},{"coef":[12.4846,0.0,7.5875,0.0927,-2.5861,3.9448,-0.4398,0.1699,0.1664,0.2947,2.8597,4.0781,4.0145,5.5361,14.8068,-53.2359,10.4302,1.853,1.3689,0.0,3.0296,-0.0,2.5958,2.5732,0.0,-0.0],"rmse":15.85,"no_nulos":21},{"coef":[13.2429,0.0,5.1787,-0.0,-2.7927,3.4249,-0.5927,0.0,0.0,0.0,2.3457,3.5653,3.5172,5.0464,14.3152,-50.9517,10.1528,1.1621,0.0,0.0,2.2928,-0.0,2.8618,1.6519,-0.1877,-0.0062],"rmse":16.074,"no_nulos":18},{"coef":[14.2292,-0.0,3.7519,-0.0,-2.8219,2.9009,-0.5569,-0.0,-0.0,-0.0,1.8075,3.0335,2.9745,4.4907,13.8041,-49.4019,9.8318,0.0,-0.0,-0.0,1.3028,0.0,3.2137,0.5898,-0.0,-0.0],"rmse":16.418,"no_nulos":15},{"coef":[14.0488,-0.0,1.1631,-0.0,-2.8913,1.8795,-0.5846,-0.0,-0.0,-0.0,0.8679,2.1652,2.0028,3.5782,12.8695,-46.8436,9.4174,-0.0,-0.8906,-0.0,0.7931,0.0,3.6049,0.0,-0.0,-0.0],"rmse":17.234,"no_nulos":15},{"coef":[13.2103,-0.0,0.0,-0.0,-2.8108,0.2682,-0.615,-0.0,-0.0,-0.0,0.0,0.9305,0.4503,2.1423,11.4451,-43.3613,9.1056,-0.0,-2.0098,-0.0,0.0,0.0,2.005,0.0,-0.0844,-0.0],"rmse":19.014,"no_nulos":13},{"coef":[11.5352,-0.0,0.0,-0.0,-1.8029,0.0,-0.0,-0.0,-0.0,-0.0,0.0,0.0,0.0,0.618,9.9325,-40.4589,8.3609,-0.0,-1.8887,-0.0,0.0,0.0,0.0,0.0,-0.0,-0.0],"rmse":21.322,"no_nulos":7},{"coef":[8.7991,-0.0,0.0,-0.0,-0.0,0.0,-0.0,-0.0,-0.0,-0.0,0.0,0.0,0.0,0.0,7.576,-38.089,6.3205,-0.0,-0.026,-0.0,0.0,-0.0,0.0,0.0,-0.0,-0.0],"rmse":24.921,"no_nulos":5},{"coef":[3.7853,-0.0,-0.0,0.0,-0.0,0.0,-0.0,-0.0,-0.0,-0.0,0.0,0.0,0.0,0.0,3.2059,-33.0943,2.122,0.0,-0.0,-0.0,0.0,-0.0,0.0,0.0,-0.0,0.0],"rmse":31.337,"no_nulos":4},{"coef":[0.0,-0.0,-0.0,0.0,-0.0,0.0,-0.0,-0.0,-0.0,-0.0,-0.0,0.0,-0.0,0.0,0.0,-24.8262,0.0,0.0,-0.0,-0.0,0.0,-0.0,-0.0,0.0,0.0,0.0],"rmse":39.319,"no_nulos":1},{"coef":[0.0,0.0,-0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-10.9862,0.0,0.0,0.0,0.0,0.0,-0.0,0.0,0.0,0.0,0.0],"rmse":49.504,"no_nulos":1},{"coef":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rmse":58.946,"no_nulos":0},{"coef":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rmse":58.946,"no_nulos":0},{"coef":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rmse":58.946,"no_nulos":0},{"coef":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rmse":58.946,"no_nulos":0}]},"fincordillera":{"variables":["edad","antiguedad_meses","ingreso_mensual_clp","num_productos_contratados","frecuencia_reclamos_12m","retrasos_pago_12m","uso_app_movil_mensual","region_Biobio","region_La Araucania","region_Metropolitana","region_Valparaiso"],"coef":[-0.0703,-0.245,-0.2104,-0.5257,0.5795,0.4729,-0.2244,0.3281,0.6488,0.0924,0.2788],"odds_ratio":[0.9321,0.7827,0.8103,0.5911,1.7852,1.6047,0.799,1.3883,1.9133,1.0968,1.3216],"metricas_validacion":{"KS":0.3527,"AUC":0.7146,"Gini":0.4293,"AP":0.5075},"captura_acumulada":[0.2264,0.3962,0.4906,0.566,0.717,0.8491,0.9245,0.9434,0.9811,1.0],"tasa_por_decil":[0.6316,0.4737,0.2632,0.2105,0.4211,0.3684,0.2105,0.0526,0.1053,0.0526],"tasa_base":0.2789},"umbral":{"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0,0,1,1,0,1,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],"p":[0.1908,0.3048,0.2209,0.1633,0.2592,0.0323,0.1416,0.2121,0.2465,0.0589,0.1182,0.2422,0.0527,0.3157,0.3135,0.1353,0.0226,0.0527,0.1429,0.0456,0.0665,0.1812,0.1201,0.0896,0.2718,0.0974,0.3789,0.2003,0.0344,0.1726,0.1134,0.679,0.2326,0.3412,0.2825,0.0926,0.0661,0.3627,0.0666,0.2471,0.0398,0.1742,0.4566,0.0689,0.2707,0.0693,0.1272,0.2864,0.1361,0.0512,0.1518,0.0186,0.0607,0.0941,0.374,0.1427,0.0373,0.3891,0.1541,0.0241,0.0828,0.0969,0.0863,0.0721,0.2362,0.0808,0.3097,0.1572,0.0596,0.1339,0.2178,0.0396,0.13,0.2026,0.1367,0.2019,0.0616,0.07,0.2972,0.038,0.0677,0.0366,0.1145,0.1974,0.2189,0.5033,0.2161,0.1471,0.0618,0.0479,0.2131,0.2747,0.0936,0.0727,0.11,0.0814,0.2596,0.0844,0.0832,0.4472,0.0376,0.1117,0.5089,0.0944,0.0309,0.3411,0.0391,0.2173,0.5397,0.0688,0.0853,0.1515,0.1529,0.1198,0.1183,0.0572,0.0577,0.1533,0.1482,0.0439,0.237,0.1272,0.052,0.0241,0.1239,0.0802,0.0389,0.0656,0.0483,0.0523,0.4107,0.1023,0.1206,0.0928,0.2072,0.2076,0.2276,0.0282,0.0944,0.0889,0.1237,0.2265,0.0393,0.0975,0.0445,0.0775,0.0693,0.1762,0.034,0.257,0.2377,0.5195,0.2299,0.28,0.2558,0.0606,0.1512,0.0541,0.1653,0.0979,0.0538,0.138,0.0522,0.112,0.0871,0.0442,0.1908,0.4268,0.1148,0.1581,0.2004,0.0629,0.1071,0.2082,0.1045,0.0613,0.0966,0.1271,0.0388,0.214,0.2221,0.252,0.0898,0.2118,0.3968,0.1595,0.3583,0.0998,0.042,0.1423,0.2466,0.1095,0.1407,0.6454,0.1044,0.1762,0.029,0.1521,0.0348,0.1781,0.2981,0.185,0.1083,0.1647,0.0867,0.1076,0.3415,0.183,0.2571,0.0757,0.0319,0.1281,0.1088,0.5496,0.1307,0.0482,0.0362,0.1071,0.2529,0.2105,0.1244,0.1645,0.0345,0.074,0.0842,0.1978,0.0654,0.1595,0.0193,0.2071,0.4507,0.0267,0.0746,0.1546,0.4006,0.0754,0.1137,0.0966,0.0335,0.2214,0.0595,0.2676,0.2638,0.0877,0.0543,0.183,0.2664,0.1397,0.158,0.392,0.0831,0.1654,0.074,0.0284,0.1399,0.5807,0.1273,0.0533,0.0425,0.1611,0.0949,0.0343,0.0507,0.0956,0.0363,0.0542,0.3671,0.0647,0.2038,0.1346,0.1031,0.0353,0.2373,0.1987,0.1489,0.0929,0.2187,0.2049,0.2233,0.3188,0.0321,0.0584,0.2204,0.1581,0.1109,0.0489,0.207,0.0562,0.0733,0.2813,0.0877,0.0844,0.1928,0.1886,0.11,0.2648,0.0554,0.0668,0.1165,0.0354,0.2052,0.2832,0.061,0.3561,0.0826,0.2251,0.0742,0.0796,0.136,0.6067,0.3098,0.1574,0.0696,0.18,0.0888,0.0607,0.0697,0.1552,0.0502,0.2772,0.1187,0.187,0.5995,0.0989,0.1243,0.2595,0.094,0.0979,0.0443,0.212,0.0371,0.172,0.2677,0.1389,0.2784,0.029,0.208,0.0805,0.1631,0.2078,0.2301,0.0366,0.1428,0.1672,0.186,0.1049,0.0777,0.1963,0.0844,0.6929,0.0318,0.3875,0.4505,0.4044,0.2498,0.127,0.2429,0.2218,0.4811,0.212,0.0207,0.1044,0.1037,0.0405,0.2922,0.1926,0.0353,0.1355,0.3564,0.0917,0.038,0.212,0.0567,0.0711,0.0686,0.1977,0.1154,0.135,0.1227,0.296,0.225,0.0542,0.2677,0.3229,0.0723,0.1946,0.0539,0.0897,0.2373,0.6016,0.0541,0.1123,0.13,0.0399,0.1393,0.1094,0.0537,0.3825,0.1498,0.0404,0.1254,0.0646,0.128,0.0342,0.0974,0.0613,0.3624,0.1437,0.1379,0.1747,0.147,0.1421,0.0416,0.2064,0.0463,0.0749,0.0835,0.1054,0.2907,0.3567,0.5469,0.1476,0.2065,0.0431,0.0341,0.2608,0.0577,0.2706,0.0283,0.0466,0.1778,0.1015,0.2228,0.2152,0.0226,0.4232,0.0919,0.1442,0.0287,0.1117,0.3108,0.3308,0.1222,0.1451,0.0895,0.1288,0.4711,0.0275,0.3604,0.0289,0.094,0.3983,0.1985,0.1999,0.07,0.148,0.1658,0.5097,0.0273,0.0773,0.6509,0.0718,0.2315,0.0305,0.6208,0.5188,0.1226,0.0703,0.0695,0.2553,0.312,0.2683,0.3744,0.2156,0.1206,0.0908,0.2359,0.0832,0.0186,0.1594,0.1812,0.2895,0.1444,0.1401,0.0623,0.0707,0.1625,0.2109,0.6276,0.0875,0.0964,0.0545,0.1256,0.0496,0.1048,0.0947,0.3504,0.0446,0.1928,0.1056,0.0445,0.0492,0.0426,0.0404,0.1059,0.1771,0.0916,0.2226,0.146,0.0538,0.1314,0.0916,0.0716,0.0388,0.1355,0.0694,0.0728,0.172,0.131,0.2073,0.2713,0.0845,0.0779,0.0445,0.0746,0.2788,0.1207,0.1851,0.0873,0.0328,0.0706,0.1068,0.0979,0.1073,0.0403,0.0673,0.1146,0.1908,0.1165,0.2471,0.088,0.2404,0.0637,0.0316,0.0576,0.2332,0.0818,0.1839,0.1382,0.5261,0.2555,0.1441,0.2576,0.5858,0.2914,0.0392,0.3351,0.3254,0.1688,0.0942,0.0385,0.1595,0.0434,0.0939,0.0856,0.4533,0.0792,0.1279,0.1141,0.0397,0.1722,0.3325,0.6079,0.0799,0.1773,0.7171,0.1227,0.1252,0.3575,0.2568,0.0329,0.5794,0.435,0.1066,0.0462,0.135,0.0937,0.1222,0.0947,0.0401,0.0991,0.2641,0.0336,0.2541,0.2073,0.1514,0.1735,0.2039,0.2128,0.0921,0.3846,0.0694,0.1107,0.0235,0.5005,0.0259,0.1532,0.1088,0.198,0.315,0.0844,0.1233,0.3781,0.1234,0.4531,0.0269,0.1368,0.0398,0.1746,0.1241,0.0987,0.1173,0.1474,0.1847,0.1077,0.0733,0.0639,0.1457,0.1206,0.0682,0.1001,0.151,0.0459,0.0801,0.1254,0.1328,0.0303,0.0519,0.4891,0.7407,0.4185,0.11,0.1223,0.0828,0.1628,0.2195,0.3213,0.2751,0.0543,0.0817,0.184,0.0754,0.1779,0.5928,0.048,0.1382,0.2083,0.0479,0.0795,0.0398,0.2011,0.2838,0.1068,0.2786,0.1485,0.0803,0.2254,0.0226,0.1849,0.1621,0.0866,0.7483,0.2742,0.1225,0.1698,0.044,0.0539,0.1031,0.0671,0.0815,0.075,0.1568,0.0888,0.0779,0.1514,0.2032,0.0574,0.0538,0.0564,0.0253,0.0957,0.0853,0.0476,0.1605,0.0423,0.4395,0.0913,0.0271,0.2741,0.0488,0.0673,0.1983,0.2871,0.1896,0.1157,0.2188,0.0564,0.2122,0.1195,0.2548,0.0608,0.0897,0.0785,0.3988,0.1537,0.1012,0.046,0.2208,0.4026,0.0833,0.6187,0.1403,0.1677,0.1091,0.0413,0.2608,0.1063,0.0799,0.0907,0.1366,0.1182,0.0702,0.0541,0.4477,0.0256,0.2,0.653,0.1265,0.3017,0.1284,0.0998,0.3599,0.0924,0.3534,0.2981,0.1891,0.039,0.0463,0.0722,0.0591,0.1588,0.0696,0.0679,0.123,0.6103,0.0966,0.0713,0.0908,0.0419,0.1239],"c_fn":800,"c_fp":90,"fuente":"Predicciones fuera de pliegue (5 pliegues) en entrenamiento + validación"},"complejidad":{"profundidad":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"entrenamiento":[0.2395,0.3279,0.4536,0.5702,0.6859,0.7899,0.8692,0.9226,0.957,0.9785,0.9888,0.9958,0.9988,0.9995,0.9999],"validacion_cruzada":[0.2271,0.2232,0.2508,0.2373,0.2209,0.2035,0.1959,0.1906,0.1819,0.1684,0.1802,0.1893,0.1812,0.1837,0.1856]},"pronostico":{"fechas":["2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12"],"valores":[1068.02,1028.17,1140.32,1278.95,1240.19,1189.57,1146.06,1228.81,1263.7,1201.91,1394.81,1633.91,1167.05,1074.23,1305.71,1260.4,1264.56,1297.78,1221.81,1223.74,1327.87,1311.22,1429.8,1695.66,1265.04,1220.92,1339.19,1420.6,1298.64,1351.39,1242.63,1416.84,1460.48,1402.46,1478.26,1824.76,1279.02,1178.97,1466.89,1471.27,1434.46,1385.66,1325.68,1491.47,1523.28,1453.24,1694.22,1848.85,1483.77,1402.08,1589.73,1540.93,1466.65,1529.07,1410.5,1495.94,1557.08,1503.22,1731.77,1952.17,1390.48,1275.89,1546.14,1511.2,1526.7,1612.92,1471.3,1578.93,1588.99,1567.67,1673.33,2037.33],"metodos":["Ingenuo","Ingenuo estacional","Media","Tendencia + estacionalidad"],"metricas":{"1":{"Ingenuo":{"MAE":143.564,"MAPE":9.475,"MASE":1.759},"Ingenuo estacional":{"MAE":79.058,"MAPE":5.227,"MASE":0.971},"Media":{"MAE":184.286,"MAPE":11.364,"MASE":2.258},"Tendencia + estacionalidad":{"MAE":48.263,"MAPE":3.265,"MASE":0.589}},"2":{"Ingenuo":{"MAE":161.015,"MAPE":10.779,"MASE":1.975},"Ingenuo estacional":{"MAE":79.9,"MAPE":5.301,"MASE":0.981},"Media":{"MAE":181.619,"MAPE":11.31,"MASE":2.224},"Tendencia + estacionalidad":{"MAE":48.893,"MAPE":3.313,"MASE":0.597}},"3":{"Ingenuo":{"MAE":161.003,"MAPE":10.713,"MASE":1.974},"Ingenuo estacional":{"MAE":80.78,"MAPE":5.362,"MASE":0.992},"Media":{"MAE":181.069,"MAPE":11.295,"MASE":2.215},"Tendencia + estacionalidad":{"MAE":48.451,"MAPE":3.277,"MASE":0.591}},"4":{"Ingenuo":{"MAE":165.131,"MAPE":10.884,"MASE":2.02},"Ingenuo estacional":{"MAE":81.015,"MAPE":5.379,"MASE":0.995},"Media":{"MAE":181.668,"MAPE":11.335,"MASE":2.219},"Tendencia + estacionalidad":{"MAE":48.496,"MAPE":3.277,"MASE":0.592}},"5":{"Ingenuo":{"MAE":167.568,"MAPE":10.972,"MASE":2.049},"Ingenuo estacional":{"MAE":81.661,"MAPE":5.422,"MASE":1.003},"Media":{"MAE":182.622,"MAPE":11.391,"MASE":2.228},"Tendencia + estacionalidad":{"MAE":48.809,"MAPE":3.298,"MASE":0.595}},"6":{"Ingenuo":{"MAE":166.929,"MAPE":10.904,"MASE":2.041},"Ingenuo estacional":{"MAE":81.821,"MAPE":5.432,"MASE":1.005},"Media":{"MAE":184.002,"MAPE":11.47,"MASE":2.244},"Tendencia + estacionalidad":{"MAE":49.636,"MAPE":3.354,"MASE":0.605}},"7":{"Ingenuo":{"MAE":171.675,"MAPE":11.187,"MASE":2.098},"Ingenuo estacional":{"MAE":82.27,"MAPE":5.46,"MASE":1.011},"Media":{"MAE":186.456,"MAPE":11.612,"MASE":2.274},"Tendencia + estacionalidad":{"MAE":50.467,"MAPE":3.409,"MASE":0.615}},"8":{"Ingenuo":{"MAE":175.982,"MAPE":11.444,"MASE":2.15},"Ingenuo estacional":{"MAE":82.619,"MAPE":5.481,"MASE":1.015},"Media":{"MAE":189.284,"MAPE":11.78,"MASE":2.308},"Tendencia + estacionalidad":{"MAE":51.276,"MAPE":3.462,"MASE":0.624}},"9":{"Ingenuo":{"MAE":178.778,"MAPE":11.58,"MASE":2.183},"Ingenuo estacional":{"MAE":83.032,"MAPE":5.505,"MASE":1.02},"Media":{"MAE":192.128,"MAPE":11.946,"MASE":2.342},"Tendencia + estacionalidad":{"MAE":52.026,"MAPE":3.512,"MASE":0.633}},"10":{"Ingenuo":{"MAE":185.69,"MAPE":11.969,"MASE":2.268},"Ingenuo estacional":{"MAE":83.659,"MAPE":5.545,"MASE":1.028},"Media":{"MAE":194.978,"MAPE":12.109,"MASE":2.378},"Tendencia + estacionalidad":{"MAE":52.509,"MAPE":3.545,"MASE":0.638}},"11":{"Ingenuo":{"MAE":178.849,"MAPE":11.513,"MASE":2.189},"Ingenuo estacional":{"MAE":84.466,"MAPE":5.596,"MASE":1.039},"Media":{"MAE":197.96,"MAPE":12.278,"MASE":2.418},"Tendencia + estacionalidad":{"MAE":53.101,"MAPE":3.585,"MASE":0.645}},"12":{"Ingenuo":{"MAE":169.27,"MAPE":10.937,"MASE":2.073},"Ingenuo estacional":{"MAE":84.615,"MAPE":5.605,"MASE":1.041},"Media":{"MAE":200.6,"MAPE":12.426,"MASE":2.452},"Tendencia + estacionalidad":{"MAE":52.972,"MAPE":3.575,"MASE":0.644}}},"ultimo_origen":{"1":{"Ingenuo":[1673.33],"Ingenuo estacional":[1952.17],"Media":[1409.51],"Tendencia + estacionalidad":[2003.53]},"2":{"Ingenuo":[1567.67,1567.67],"Ingenuo estacional":[1731.77,1952.17],"Media":[1405.74,1405.74],"Tendencia + estacionalidad":[1761.5,2006.79]},"3":{"Ingenuo":[1588.99,1588.99,1588.99],"Ingenuo estacional":[1503.22,1731.77,1952.17],"Media":[1403.39,1403.39,1403.39],"Tendencia + estacionalidad":[1591.03,1762.4,2007.69]},"4":{"Ingenuo":[1578.93,1578.93,1578.93,1578.93],"Ingenuo estacional":[1557.08,1503.22,1731.77,1952.17],"Media":[1400.66,1400.66,1400.66,1400.66],"Tendencia + estacionalidad":[1645.36,1593.29,1764.65,2009.95]},"5":{"Ingenuo":[1471.3,1471.3,1471.3,1471.3,1471.3],"Ingenuo estacional":[1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1398.0,1398.0,1398.0,1398.0,1398.0],"Tendencia + estacionalidad":[1590.73,1645.85,1593.78,1765.14,2010.44]},"6":{"Ingenuo":[1612.92,1612.92,1612.92,1612.92,1612.92,1612.92],"Ingenuo estacional":[1410.5,1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1396.89,1396.89,1396.89,1396.89,1396.89,1396.89],"Tendencia + estacionalidad":[1489.5,1591.52,1646.64,1594.57,1765.93,2011.23]},"7":{"Ingenuo":[1526.7,1526.7,1526.7,1526.7,1526.7,1526.7,1526.7],"Ingenuo estacional":[1529.07,1410.5,1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1393.57,1393.57,1393.57,1393.57,1393.57,1393.57,1393.57],"Tendencia + estacionalidad":[1568.85,1487.49,1589.52,1644.64,1592.57,1763.93,2009.23]},"8":{"Ingenuo":[1511.2,1511.2,1511.2,1511.2,1511.2,1511.2,1511.2,1511.2],"Ingenuo estacional":[1466.65,1529.07,1410.5,1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1391.49,1391.49,1391.49,1391.49,1391.49,1391.49,1391.49,1391.49],"Tendencia + estacionalidad":[1560.68,1570.47,1489.11,1591.14,1646.26,1594.18,1765.55,2010.84]},"9":{"Ingenuo":[1546.14,1546.14,1546.14,1546.14,1546.14,1546.14,1546.14,1546.14,1546.14],"Ingenuo estacional":[1540.93,1466.65,1529.07,1410.5,1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1389.59,1389.59,1389.59,1389.59,1389.59,1389.59,1389.59,1389.59,1389.59],"Tendencia + estacionalidad":[1619.63,1566.1,1575.89,1494.53,1596.56,1651.68,1599.61,1770.97,2016.27]},"10":{"Ingenuo":[1275.89,1275.89,1275.89,1275.89,1275.89,1275.89,1275.89,1275.89,1275.89,1275.89],"Ingenuo estacional":[1589.73,1540.93,1466.65,1529.07,1410.5,1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1387.06,1387.06,1387.06,1387.06,1387.06,1387.06,1387.06,1387.06,1387.06,1387.06],"Tendencia + estacionalidad":[1596.2,1622.26,1568.73,1578.53,1497.17,1599.19,1654.31,1602.24,1773.6,2018.9]},"11":{"Ingenuo":[1390.48,1390.48,1390.48,1390.48,1390.48,1390.48,1390.48,1390.48,1390.48,1390.48,1390.48],"Ingenuo estacional":[1402.08,1589.73,1540.93,1466.65,1529.07,1410.5,1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1388.88,1388.88,1388.88,1388.88,1388.88,1388.88,1388.88,1388.88,1388.88,1388.88,1388.88],"Tendencia + estacionalidad":[1416.52,1604.01,1630.07,1576.54,1586.34,1504.98,1607.0,1662.13,1610.05,1781.42,2026.71]},"12":{"Ingenuo":[1952.17,1952.17,1952.17,1952.17,1952.17,1952.17,1952.17,1952.17,1952.17,1952.17,1952.17,1952.17],"Ingenuo estacional":[1483.77,1402.08,1589.73,1540.93,1466.65,1529.07,1410.5,1495.94,1557.08,1503.22,1731.77,1952.17],"Media":[1388.86,1388.86,1388.86,1388.86,1388.86,1388.86,1388.86,1388.86,1388.86,1388.86,1388.86,1388.86],"Tendencia + estacionalidad":[1494.33,1422.63,1610.12,1636.18,1582.65,1592.45,1511.09,1613.11,1668.23,1616.16,1787.53,2032.82]}},"indice_estacional":[0.9198,0.8436,1.0113,0.9985,0.9898,0.9778,0.9386,0.9784,1.0222,0.9666,1.0813,1.2723]}}</script>
-
 <script>
 /* ================= utilidades ================= */
 const $ = id => document.getElementById(id);
@@ -1074,7 +1138,7 @@ const WEEKS = [
   temas:[['Desempeño por segmento','Métricas y calibración por región con intervalos bootstrap; grupos pequeños, intervalos amplios.'],
    ['Estabilidad y deriva','Coeficientes bajo remuestreo; PSI de variables y del puntaje; monitoreo sin etiquetas.'],
    ['Storytelling de modelos','Estructura SCR: situación, complicación y resolución, con la incertidumbre declarada.'],
-   ['Riesgo de modelo','Desarrollo documentado, validación independiente y monitoreo (SR 11-7); datos personales y Ley 21.719.']],
+   ['Riesgo de modelo','Desarrollo, validación y monitoreo proporcionales al riesgo (SR 26-2); Ley 21.719 con transición general al 1 de diciembre de 2026.']],
   caso:['FinCordillera · monitoreo','Banca','Un mes con más reclamos tras una falla de servicio eleva el PSI del puntaje a cerca de 0,14 y la tasa predicha de 0,28 a 0,37. El PSI detecta el cambio; la causa se investiga.'],
   notas:'Usar el constructor de mensajes del capítulo 11 para que cada grupo presente el mismo resultado a un directorio y a un comité de riesgo. Discutir qué cifra cambia y qué se omite en cada caso.',
   timeline:[['0–20 min','Segmentos y estabilidad (notebook 06)'],['20–40 min','Deriva y PSI (capítulo 10)'],['40–75 min','Mensajes por audiencia (capítulo 11)'],['75–90 min','Autoevaluación de los capítulos 10 y 11']],
@@ -1183,11 +1247,11 @@ const BANK = {
  c9:{label:'Cap. 9 — Umbral y calibración',questions:[
   {q:'Con c_FN = 800 y c_FP = 90, el umbral teórico es cercano a…',o:['0,90','0,10','0,50'],c:1,e:'90/(90+800) ≈ 0,101.'},
   {q:'Elegir el umbral con la prueba…',o:['Es válido si la prueba es grande','Hace optimista el costo informado','Mejora la calibración'],c:1,e:'La prueba deja de ser independiente.'},
-  {q:'class_weight="balanced" suele…',o:['Mejorar la calibración','Sobrestimar probabilidades sin cambiar mucho el orden','Reducir el AUC a 0,5'],c:1,e:'Puede modificar intercepto y coeficientes; la recalibración debe comprobarse con datos independientes.'}]},
+  {q:'class_weight="balanced" suele…',o:['Mejorar la calibración','Cambiar probabilidades y posiblemente el orden; requiere validación','Reducir el AUC a 0,5'],c:1,e:'La ponderación cambia la función objetivo y puede modificar intercepto, coeficientes y orden. La calibración se evalúa con datos independientes.'}]},
  c10:{label:'Cap. 10 — Limitaciones y riesgo',questions:[
   {q:'Un PSI de 0,30 en el puntaje indica…',o:['Que el AUC cayó','Un cambio significativo de distribución que hay que investigar','Que el modelo está calibrado'],c:1,e:'El PSI detecta cambios, no sus causas ni el desempeño.'},
   {q:'Un coeficiente cuyo intervalo bootstrap cruza 1 (como razón de chances)…',o:['Debe sostener la recomendación principal','Tiene signo incierto y no debería sostener recomendaciones','Es el más importante del modelo'],c:1,e:'Su dirección cambia entre muestras.'},
-  {q:'¿Qué exige la gestión del riesgo de modelos?',o:['Solo un buen AUC','Desarrollo documentado, validación independiente y monitoreo','Reentrenar cada semana'],c:1,e:'Es el estándar de SR 11-7.'}]},
+  {q:'¿Qué exige la gestión del riesgo de modelos?',o:['Solo un buen AUC','Desarrollo documentado, validación independiente y monitoreo','Reentrenar cada semana'],c:1,e:'Principios de gestión de riesgo; SR 26-2 es una referencia estadounidense cuyo alcance debe precisarse.'}]},
  c11:{label:'Cap. 11 — Comunicación',questions:[
   {q:'¿Cuál es una recomendación de mejora bien formulada?',o:['Mejorar el modelo','Recalibrar por región porque la probabilidad media difiere de la tasa observada, verificando con Brier por región','Usar un algoritmo más moderno'],c:1,e:'Declara limitación, evidencia, acción y verificación.'},
   {q:'La estructura SCR significa…',o:['Score, Calibración, Riesgo','Situación, Complicación, Resolución','Segmento, Costo, Retorno'],c:1,e:'Ordena el mensaje para audiencias ejecutivas.'},
@@ -1243,5 +1307,66 @@ function pronostico(){ const h=+$('pr-h').value, m=$('pr-m').value; $('pr-h-val'
 window.MPN_LISTA = true;
 
 </script>
-</body>
+<script data-ba-generado="" id="ba-interfaz">(() => {
+  'use strict';
+  const formulas = [...document.querySelectorAll('main math')].map((math, i) => {
+    const wrap = document.createElement('span');
+    wrap.className = 'ba-math' + (math.getAttribute('display') === 'block' ? ' ba-display' : '');
+    wrap.setAttribute('role', 'group'); wrap.setAttribute('aria-label', `Expresión matemática ${i + 1}`);
+    math.before(wrap); wrap.append(math); return wrap;
+  });
+  const focusFormulas = () => formulas.forEach(wrap => {
+    if (wrap.scrollWidth > wrap.clientWidth + 1) wrap.tabIndex = 0;
+    else wrap.removeAttribute('tabindex');
+  });
+  focusFormulas(); window.addEventListener('resize', focusFormulas);
+  const menu = document.getElementById('ba-menu'), panel = document.getElementById('ba-panel-indice');
+  const setMenu = open => { panel.classList.toggle('ba-abierto', open); menu.setAttribute('aria-expanded', String(open)); menu.textContent = open ? 'Cerrar índice' : 'Mostrar índice'; };
+  menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { setMenu(false); menu.focus(); } });
+  const normal = value => value.toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const search = document.getElementById('buscar') || document.getElementById('ba-buscar');
+  const results = document.getElementById('ba-resultados'), count = document.getElementById('ba-conteo');
+  const chapters = [...document.querySelectorAll('main > section[id],main > header[id]')];
+  const index = chapters.map(section => ({section, title:section.querySelector('h1,h2')?.textContent.trim() || section.id, text:normal(section.textContent)}));
+  function clearSearch() {
+    search.value = ''; search.dispatchEvent(new Event('input', {bubbles:true}));
+    document.querySelectorAll('section.level1').forEach(section => { section.hidden = false; });
+    const empty = document.getElementById('sin-resultados'); if (empty) empty.hidden = true;
+  }
+  search.addEventListener('input', () => {
+    const q = normal(search.value.trim()); results.replaceChildren();
+    const found = q ? index.filter(item => item.text.includes(q)) : [];
+    count.textContent = q ? `${found.length} capítulos encontrados` : '';
+    found.forEach(item => { const li = document.createElement('li'), a = document.createElement('a'); a.href = '#' + item.section.id; a.textContent = item.title; li.append(a); results.append(li); });
+    results.hidden = !q;
+  });
+  document.addEventListener('click', e => {
+    const link = e.target.closest('a[href^="#"]'); if (!link) return;
+    const target = document.getElementById(decodeURIComponent(link.hash.slice(1))); if (!target) return;
+    if (search.value) clearSearch();
+    setMenu(false);
+    requestAnimationFrame(() => { target.setAttribute('tabindex','-1'); target.focus({preventScroll:true}); target.scrollIntoView({block:'start'}); });
+  });
+  const links = [...panel.querySelectorAll('nav a[href^="#"]')];
+  let scheduled = false;
+  function markCurrent() {
+    const visible = chapters.filter(s => !s.hidden && s.getBoundingClientRect().top < innerHeight * .35);
+    const id = (visible.at(-1) || chapters[0])?.id;
+    links.forEach(link => { if (link.hash === '#' + id) link.setAttribute('aria-current','location'); else link.removeAttribute('aria-current'); });
+    scheduled = false;
+  }
+  window.addEventListener('scroll', () => { if (!scheduled) { scheduled = true; requestAnimationFrame(markCurrent); } }, {passive:true}); markCurrent();
+  const mode = document.getElementById('clase-toggle');
+  mode.addEventListener('change', () => { document.body.classList.toggle('ba-clase',mode.checked); document.body.classList.toggle('clase',mode.checked); window.dispatchEvent(new Event('resize')); });
+  document.querySelectorAll('[data-ba-ruta]').forEach(button => button.addEventListener('click', () => {
+    document.querySelectorAll('[data-ba-ruta]').forEach(b => b.setAttribute('aria-pressed',String(b === button)));
+    document.querySelectorAll('[data-ba-calendario]').forEach(p => { p.hidden = p.dataset.baCalendario !== button.dataset.baRuta; });
+  }));
+  document.querySelectorAll('input[type=range]').forEach(input => {
+    const update = () => input.setAttribute('aria-valuetext', `${input.value}${input.dataset.unidad ? ' ' + input.dataset.unidad : ''}`);
+    update(); input.addEventListener('input', update);
+  });
+})();
+</script></body>
 </html>
