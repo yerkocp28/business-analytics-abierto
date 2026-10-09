@@ -32,6 +32,8 @@ La portada distingue el uso directo de las guías del uso de Jupyter para los la
 
 Resultado local: **OK**. Se ejecutaron **28 notebooks, 221 celdas de código y 168 cambios de controles**, con 28 autoevaluaciones. La revisión de las publicaciones verificó **662 enlaces y anclas locales**, las nueve páginas en cuatro anchos sin desbordamiento horizontal y cuatro PDF de **19, 15, 16 y 14 páginas**, respectivamente. Los datos compartidos se conservaron sin cambios.
 
+Además, el notebook de optimización comprueba tres combinaciones de capacidad y material, incluida la solución de 120 unidades con 240 horas, para verificar que el óptimo permanezca visible dentro de los ejes del gráfico.
+
 La evidencia se conserva separada por función para que una captura no sustituya un cálculo y una ejecución sin errores no se confunda con eficacia pedagógica:
 
 - Las carpetas `reproducibilidad/` de los cuatro cursos registran ejecución de notebooks, pruebas de controles y autoevaluaciones, cobertura y contraste de simuladores contra Python.

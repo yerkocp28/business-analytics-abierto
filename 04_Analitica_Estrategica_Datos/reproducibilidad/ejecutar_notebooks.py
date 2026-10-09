@@ -36,7 +36,20 @@ _radio.value=None;_boton.click();assert 'Selecciona' in _out.value
 _radio.value=_radio.options[0];_boton.click();assert 'Revisa' in _out.value
 _radio.value=_radio.options[1];_boton.click();assert 'Correcto.' in _out.value
 _radio.value=None;_boton.click()
-print('AED_QA='+json.dumps({'cambios_controles':_cambios,'autoevaluacion':'OK'}))
+_resultado={'cambios_controles':_cambios,'autoevaluacion':'OK'}
+if '__NUM__' == '04':
+    from unittest.mock import patch as _patch
+    for _horas,_material in [(240,120),(200,90),(0,0)]:
+        # Inspeccionar el gráfico real antes de que la función cierre su figura.
+        with _patch.object(plt,'close'):
+            optimizar(horas=_horas,material=_material)
+            _ax=plt.gcf().axes[0]
+            _x,_y=_ax.collections[0].get_offsets()[0]
+            assert _ax.get_xlim()[0]<=_x<=_ax.get_xlim()[1], 'Óptimo fuera del eje A'
+            assert _ax.get_ylim()[0]<=_y<=_ax.get_ylim()[1], 'Óptimo fuera del eje B'
+        plt.close('all')
+    _resultado['escenarios_optimizacion_visibles']=3
+print('AED_QA='+json.dumps(_resultado))
 '''
 
 
