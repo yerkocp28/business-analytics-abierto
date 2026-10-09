@@ -85,13 +85,23 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 **NB01 · Pregunta de negocio y datos (Núcleo).** Formular una decisión con unidad de análisis, variable y regla de calidad. **Evidencia:** Entregar una ficha con pregunta, unidad, fuente, decisión y dos límites.
 
+**Transferencia NB01:** Un piloto contactará 2.000 clientes. Se supone que el abandono baja de 10% a 8%, cada retención vale 120 UM y cada contacto cuesta 2 UM. Formula decisión, unidad, horizonte y beneficio. ¿Qué dato falta para comprobar el efecto con el archivo de ventas?
+
 **NB02 · Exploración y comunicación visual (Núcleo).** Elegir un resumen y un gráfico coherentes con la pregunta y el denominador. **Evidencia:** Presentar un gráfico con unidad, período, población y una interpretación verificable.
+
+**Transferencia NB02:** Dos canales tienen 30 y 90 transacciones e ingresos de 9.000 y 18.000 UM. Calcula el ticket general, diseña un gráfico con su denominador y explica una comparación engañosa. Después construye un gráfico propio del CSV sin copiar el tablero.
 
 **NB03 · Herramientas y caso integrador (Núcleo).** Reproducir un indicador con filtros, agregaciones y una unión validada. **Evidencia:** Entregar cálculo conciliado, control de cardinalidad y recomendación con sensibilidad.
 
+**Transferencia NB03:** Trabaja en una copia del libro FBA_herramientas.xlsx. Filtra un canal y trimestre, calcula ingresos y ticket en Excel y pandas. Duplica una clave del catálogo y explica qué control debe detener una unión; entrega una recomendación de una página.
+
 **NB04 · Probabilidad y simulación (Profundización).** Explicar una probabilidad condicionada y la variación de una estimación. **Evidencia:** Dibujar una tabla de frecuencias y explicar el efecto de n sin confundir sesgo con precisión.
 
+**Transferencia NB04:** En 10.000 casos, prevalencia 1%, sensibilidad 90% y especificidad 95%: predice el valor de una alerta antes de calcular. Repite con prevalencia 10% y justifica el cambio. Explica qué reduce cuadruplicar las simulaciones.
+
 **NB05 · Puente hacia modelos predictivos (Profundización).** Comparar un modelo con una referencia usando datos reservados. **Evidencia:** Informar partición, referencia, métrica, costo y un límite de generalización.
+
+**Transferencia NB05:** Diseña cuatro tarjetas: datos para ajuste, selección, regla de decisión y prueba. Cambia el costo FN de 5 a 10 manteniendo FP=1 y explica qué puede cambiar antes de abrir la prueba. Formula un uso de clusters que deba validarse después.
 
 <!-- BA_APRENDIZAJE_FIN -->
 
@@ -666,3 +676,7 @@ Reserve 10 minutos para una pregunta de decisión, 20 para conceptos y supuestos
 | Reproducibilidad | Capacidad de reconstruir el cálculo con fuentes y procedimiento identificados |
 
 # Referencias {.unnumbered}
+
+## Libro propio de herramientas {#sec-libro-herramientas}
+
+[FBA_herramientas.xlsx](FBA_herramientas.xlsx) contiene datos, fórmulas, controles e instrucciones. Los valores cacheados provienen de Python; recalcular en Excel para contrastar su motor. Los filtros visuales no modifican automáticamente las fórmulas SUMIF.

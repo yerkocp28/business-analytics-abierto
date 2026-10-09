@@ -125,17 +125,31 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 **NB01 · Problema predictivo (Núcleo).** Definir objetivo, horizonte, disponibilidad de variables y referencia. **Evidencia:** Entregar ficha de problema, referencia y justificación de una técnica; explicar la red mínima.
 
+**Transferencia NB01:** Se quiere predecir abandono al inicio de un trimestre. Hay reclamos del trimestre anterior, fecha de cancelación y descuento ofrecido después de cancelar. Define Y, unidad, instante y baseline; justifica variables admisibles y distingue el ejemplo de red fija de entrenar una red.
+
 **NB02 · Preparación sin fuga (Núcleo).** Construir un pipeline que aprenda transformaciones solo con entrenamiento. **Evidencia:** Demostrar separación de datos, contrato de variables y transformaciones ajustadas sin prueba.
+
+**Transferencia NB02:** Los ingresos altos presentan más ausencias. Propón dos tratamientos, explica sus límites y diseña la validación. La tasa base es .28 y el criterio acordado AP≥2×base y AUC≥.70: informa cumplimiento con tus resultados, incluso si falla.
 
 **NB03 · Regresión de demanda (Núcleo).** Comparar regresión y alternativas con referencia e incertidumbre de predicción. **Evidencia:** Reportar MAE/RMSE, referencia, diagnóstico y diferencia entre IC de media e intervalo predictivo.
 
+**Transferencia NB03:** Con modelo congelado que predice 20 y residuos absolutos de calibración [1,2,3,4,5,6,7,8,9], calcula el intervalo conformal 80%. Identifica qué conjunto puede elegir alpha y qué cambia si reajustas después con calibración.
+
 **NB04 · Clasificación de abandono (Núcleo).** Evaluar discriminación y una campaña con probabilidades y costos explícitos. **Evidencia:** Justificar modelo y política con métricas fuera de muestra y límites de utilidad.
+
+**Transferencia NB04:** Probabilidad base .25 y odds ratio 1.5 por una unidad: calcula la nueva probabilidad. Luego compara dos modelos en los mismos clientes de validación y explica qué incertidumbre de la diferencia debes examinar antes de prometer superioridad.
 
 **NB05 · Validación, métricas y umbral (Núcleo).** Seleccionar modelo y umbral sin reutilizar la prueba para decidir. **Evidencia:** Documentar selección, datos reservados y costo; no inferir calibración por coincidencia de umbrales.
 
+**Transferencia NB05:** Con TP=30, FN=10, FP=20, TN=140 y costos FN=8, FP=2, calcula precisión, recall y costo medio. Fija una política antes de evaluar. Explica qué captura el bootstrap sobre predicciones OOF ya calculadas.
+
 **NB06 · Limitaciones y comunicación (Núcleo).** Construir una ficha de modelo con seguimiento, responsables y condiciones de uso. **Evidencia:** Entregar ficha con evidencia, incertidumbre, umbral de revisión y propuesta de mejora.
 
+**Transferencia NB06:** Una variable binaria pasa de proporciones [.90,.10] a [.60,.40]. Calcula PSI conservando dos categorías. Propón un tratamiento para un faltante y una categoría nueva y redacta una alerta sin afirmar caída del AUC.
+
 **NB07 · Pronóstico de demanda (Profundización).** Evaluar una serie mediante orígenes móviles y referencias comparables. **Evidencia:** Explicar horizonte, cobertura observada, referencia y límites de cambios del proceso.
+
+**Transferencia NB07:** Al emitir en abril solo se observan resultados hasta marzo. Un error de pronóstico tiene objetivo abril y otro marzo. Decide cuáles pueden calibrar el intervalo y escribe una condición con fechas. Explica el límite de usar el mismo backtest para escoger y evaluar el método.
 
 <!-- BA_APRENDIZAJE_FIN -->
 
@@ -292,9 +306,10 @@ indicadores con una categoría de referencia.
 #| label: tbl-mco
 #| tbl-cap: "QuillayMarket · regresión de unidades vendidas estimada con entrenamiento. Precio en miles de CLP y marketing en cientos de miles; categoría de referencia: Alimentos."
 from scipy import stats
+# Diez réplicas independientes por categoría/mes; sin tienda ni año, no es un panel.
 dem = mr.quillaymarket_demanda()
 Xd = dem.drop(columns=["registro_id", "ventas_unidades"]); yd = dem["ventas_unidades"]
-Xde, Xdv, Xdt, yde, ydv, ydt = mr.particion_tres(Xd, yd, estratificar=False)
+Xde, Xdv, Xdcal, Xdt, yde, ydv, ydcal, ydt = mr.particion_con_calibracion(Xd, yd)
 def diseno(m, mes_cat=False, cols=None):
     # La referencia se elimina solo al ajustar; al predecir se alinean todas las categorías.
     d = pd.get_dummies(m, columns=["categoria_producto"] + (["mes"] if mes_cat else []), drop_first=cols is None, dtype=float)
@@ -335,16 +350,35 @@ normalidad importa para intervalos paramétricos, no para la calidad predictiva.
 Con muchas variables correlacionadas, la regularización estabiliza los coeficientes. Ridge minimiza
 $\sum_i (y_i-x_i^\top\beta)^2 + \alpha\sum_j\beta_j^2$ y encoge todos los coeficientes; Lasso usa la penalización
 $\alpha\sum_j|\beta_j|$ y puede anular algunos, lo que equivale a seleccionar variables. Las variables se estandarizan
-antes de penalizar y $\alpha$ se elige con validación cruzada en entrenamiento [@islp2023, capítulo 6].
+dentro de cada pliegue antes de penalizar. `GridSearchCV` recibe el pipeline completo con `StandardScaler`
+y `Ridge` o `Lasso`; así vuelve a estimar la escala en cada entrenamiento interno. Usar un escalador
+antes de `LassoCV`/`RidgeCV` no reestima la escala en sus pliegues internos [@islp2023, capítulo 6].
 
 ## Predicciones con intervalo
 
-Una predicción puntual sin rango invita a decisiones frágiles. El **intervalo conformal dividido** usa los residuos
-absolutos de un conjunto de calibración: con $q$ igual a su cuantil de orden $\lceil (n+1)(1-\alpha)\rceil/n$, el
-intervalo $\hat y \pm q$ cubre al menos $1-\alpha$ de casos nuevos **intercambiables** con los de calibración, si el
-modelo se mantiene fijo [@angelopoulos2021]. No protege contra extrapolación ni cambios del proceso, y su cobertura
-debe verificarse en prueba. Si el modelo se reestima después de calcular el cuantil, la garantía deja de
-aplicarse exactamente; el notebook 03 informa la cobertura observada junto con su error estándar.
+Una predicción puntual sin rango invita a decisiones frágiles. Se reservan desde el inicio cuatro conjuntos:
+60% ajuste, 10% selección, 10% calibración y 20% prueba. El **intervalo conformal dividido** calcula residuos
+absolutos de calibración con el modelo ya congelado. Con $k=\lceil(n_{cal}+1)(1-\alpha)\rceil$ se toma el
+k-ésimo residuo ordenado; si $k>n_{cal}$, se usa infinito. El intervalo $\hat y\pm q$ tiene cobertura marginal
+de al menos $1-\alpha$ bajo intercambiabilidad [@angelopoulos2021]. No garantiza cobertura por grupo ni extrapolaciones.
+
+No se reutiliza selección como calibración ni se reajusta el modelo después de calcular $q$. El notebook 03
+evalúa una vez en prueba y muestra cobertura observada, sin elegir un nuevo nivel a partir de ella.
+Para ilustrar calibración se conserva MCO estacional como referencia interpretable. Ridge obtiene menor RMSE
+de selección en esta muestra; no se presenta MCO como ganador de esa métrica. Esta elección didáctica se fija
+antes de consultar calibración y prueba.
+
+```{python}
+#| label: tbl-conformal
+#| tbl-cap: "Intervalo 80%: calibración separada y modelo congelado; evaluación final reservada."
+De_conf = diseno(Xde, True)
+modelo_conf = LinearRegression().fit(De_conf, yde)
+res_cal = np.abs(ydcal.to_numpy() - modelo_conf.predict(diseno(Xdcal, True, De_conf.columns)))
+q_conf = mr.cuantil_conformal(res_cal, .8)
+pred_conf = modelo_conf.predict(diseno(Xdt, True, De_conf.columns))
+tabla(pd.DataFrame([{"n calibración": len(ydcal), "n prueba": len(ydt),
+                     "semiancho": q_conf, "cobertura prueba": np.mean(np.abs(ydt - pred_conf) <= q_conf)}]), 3, False)
+```
 
 # Clasificación {#sec-clasificacion}
 
@@ -400,8 +434,10 @@ especificado es difícil de superar. KNN sin escalar casi no supera al azar porq
 | Origen móvil | Datos temporales | Una partición aleatoria mezcla pasado y futuro |
 | Por grupos | Una entidad con varias filas | Optimismo por filas casi repetidas |
 
-Una diferencia entre modelos menor que la desviación estándar entre pliegues no justifica preferir uno por
-desempeño: deciden la interpretabilidad, el costo de operación o la robustez.
+La desviación entre pliegues describe variación, pero compararla con una diferencia de medias no constituye
+una prueba de igualdad de modelos. Si importa esa diferencia, evalúela directamente con un diseño de remuestreo
+apropiado, preservando emparejamiento y selección; los folds comparten entrenamiento. La interpretabilidad y
+el costo de operación son criterios adicionales que deben declararse antes de decidir.
 
 ## Hiperparámetros y complejidad
 
@@ -515,7 +551,9 @@ cercana a $p$. Se revisa con un diagrama de confiabilidad y puntajes probabilís
 
 Con prevalencias bajas, accuracy es casi inútil y las métricas se vuelven inestables: con 30 fraudes en 1.200
 transacciones, una prueba del 20% contendría unos seis casos. Conviene usar predicciones fuera de pliegue,
-intervalos bootstrap para AP y, sobre todo, más casos etiquetados y mejores variables. Ponderar clases cambia el
+intervalos bootstrap para AP y, sobre todo, más casos etiquetados y mejores variables.
+Remuestrear pares de etiquetas y predicciones OOF fijas describe incertidumbre condicionada a esas predicciones;
+no incorpora toda la variación de entrenamiento y selección. Para estudiarla se repite el procedimiento completo. Ponderar clases cambia el
 umbral efectivo; no crea información.
 
 # Limitaciones, estabilidad y gobierno del modelo {#sec-limitaciones}
@@ -540,6 +578,10 @@ $$\text{PSI}=\sum_k (a_k-e_k)\ln\frac{a_k}{e_k}.$$
 Una convención habitual en riesgo de crédito —no un estándar universal— lee PSI < 0,10 como estable, 0,10–0,25 como
 cambio moderado y > 0,25 como cambio significativo [@siddiqi2006]. El PSI detecta cambios de distribución, no sus
 causas ni la pérdida de desempeño, que solo se mide cuando llegan etiquetas.
+El helper conserva categorías discretas, faltantes y categorías nuevas. Para variables continuas, los cortes
+se aprenden solo en referencia. Una referencia constante requiere tratamiento categórico. Se regularizan las
+proporciones cero con epsilon y se renormalizan; el valor depende de ese convenio. El cambio binario 5%→80%
+produce PSI ≈ 3,248, no cero. PSI no es una prueba estadística de deterioro.
 
 ## Riesgo de modelo y obligaciones
 
@@ -589,9 +631,14 @@ Una serie mensual combina tendencia, estacionalidad y ruido. Las referencias mí
 y el **ingenuo estacional**. Una regresión con tendencia lineal y meses como indicadores es un primer modelo
 interpretable; Holt-Winters y SARIMA son extensiones [@fpp3]. La evaluación usa **origen móvil**: con historia hasta
 $T$ se pronostica $T+1,\dots,T+h$ y se avanza. El MASE divide el MAE del método por el MAE del ingenuo estacional
-en la muestra de entrenamiento; MASE < 1 indica mejora [@hyndman2006]. Los intervalos empíricos por horizonte se
-calculan con errores de origen móvil y su cobertura se verifica en orígenes posteriores; con pocas observaciones
-tienden a ser estrechos.
+en la muestra de entrenamiento; MASE < 1 indica error menor que esa escala histórica, no demuestra superar
+al ingenuo en el período futuro. Para esto se comparan ambos métodos en los mismos orígenes y horizontes
+[@hyndman2006]. Los intervalos empíricos por horizonte se
+calculan únicamente con errores cuyo **resultado objetivo ya se observó antes de emitir** cada intervalo.
+Separar orígenes por mitades no basta cuando el horizonte es mayor que uno. Se muestra la última fecha objetivo
+de calibración y la primera emisión de verificación. Los cuantiles son inestables con poca historia y los errores
+pueden depender entre sí: no se usa automáticamente un error binomial independiente. La comparación es retrospectiva;
+si se selecciona un método con ella, se necesita una nueva ventana reservada para evaluar esa selección.
 
 # Ejercicios resueltos y preguntas de discusión {#sec-ejercicios}
 

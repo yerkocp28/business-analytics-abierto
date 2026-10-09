@@ -89,9 +89,13 @@ def verificar_guia():
     # Modelo de escenarios reconstruido con scikit-learn, igual que en el notebook 03
     demanda = mr.quillaymarket_demanda()
     X = demanda.drop(columns=["registro_id", "ventas_unidades"]); yd = demanda["ventas_unidades"]
-    Xe, *_ , ye, _, _ = mr.particion_tres(X, yd, estratificar=False)
+    Xe, Xv, Xcal, Xt, ye, yv, ycal, yt = mr.particion_con_calibracion(X, yd)
     De = dg.matriz_diseno(Xe, True)
     estacional = LinearRegression().fit(De, ye)
+    residuos_cal = np.abs(ycal.to_numpy() - estacional.predict(dg.matriz_diseno(Xcal, True, De.columns)))
+    k = int(np.ceil((len(residuos_cal) + 1) * .8))
+    q80_independiente = np.sort(residuos_cal)[k - 1]
+    assert abs(datos_html['escenario']['q80'] - q80_independiente) < 1e-4
     resultado = {}
     with sync_playwright() as pw:
         navegador = pw.chromium.launch(channel=os.environ.get("BA_BROWSER_CHANNEL","chrome"), headless=True)
@@ -108,6 +112,10 @@ def verificar_guia():
         pagina.goto(GUIA.as_uri(), wait_until="load")
         pagina.screenshot(path=str(CAPTURAS / "guia_inicio.png"))
         assert pagina.evaluate("window.MPN_LISTA") is True
+        notas = pagina.locator('[data-correccion="2026-10-09"]')
+        assert notas.count() == 4
+        for nota in notas.all():
+            assert nota.evaluate("e => e.tagName === 'DIV' && e.getBoundingClientRect().width > e.parentElement.getBoundingClientRect().width * .8"), 'Nota hereda estilos de barra lateral'
         # Umbral: conteos y costos idénticos a Python sobre los mismos datos
         for t in [0.0, .05, .1, 90 / 890, .25, .5, .9, 1.0]:
             js = pagina.evaluate(f"MPN.evaluarUmbral({t}, 800, 90)")
@@ -193,7 +201,13 @@ def verificar_pdf():
     for termino in ["CRISP-DM", "Glosario", "Referencias", "PulpaLenga", "umbral", "calibr", "PSI", "QuillayMarket"]:
         assert termino.casefold() in texto.casefold(), termino
     assert "undefined" not in texto.lower() and "?@" not in texto
-    for indice in [0, min(6, len(pdf) - 1), len(pdf) - 1]:
+    paginas_muestra = [0, min(6, len(pdf) - 1), len(pdf) - 1]
+    nombres_muestra = {f"manual_pagina_{i + 1:02}.png" for i in paginas_muestra}
+    for anterior in CAPTURAS.glob('manual_pagina_*.png'):
+        if anterior.name not in nombres_muestra:
+            assert anterior.resolve().is_relative_to(CAPTURAS.resolve())
+            anterior.unlink()
+    for indice in paginas_muestra:
         pdf[indice].get_pixmap(matrix=fitz.Matrix(1.2, 1.2)).save(CAPTURAS / f"manual_pagina_{indice + 1:02}.png")
     resultado = {"paginas": len(pdf), "caracteres_extraidos": len(texto), "resultado": "OK"}
     pdf.close()

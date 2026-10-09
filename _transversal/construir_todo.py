@@ -43,12 +43,15 @@ def main():
         if result.returncode:
             print((logs/(name+'.log')).read_text(encoding='utf-8')[-8000:]);raise SystemExit(result.returncode)
     if not args.solo_verificar:
+        run('recursos_herramientas',[sys.executable,str(RAIZ/'_transversal/herramientas.py')])
+        run('perfil_datos',[sys.executable,str(RAIZ/'_transversal/datos/perfilar.py')])
         run('rutas_fuentes',[sys.executable,str(RAIZ/'_transversal/construir_interfaz.py'),'--fuentes'])
     for code,course in CURSOS.items():
         script='verificar_edicion.py' if args.solo_verificar else 'construir.py'
         command=[sys.executable,str(RAIZ/course['carpeta']/'reproducibilidad'/script)]
         if args.solo_render:command.append('--solo-render')
         run(code,command)
+    run('metodologia',[sys.executable,str(RAIZ/'_transversal/verificar_metodologia.py')])
     run('interfaz',[sys.executable,str(RAIZ/'_transversal/verificar_interfaz.py')])
     run('publico',[sys.executable,str(RAIZ/'_transversal/verificar_publico.py')])
     registrar('OK')

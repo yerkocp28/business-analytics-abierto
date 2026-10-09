@@ -1,0 +1,7 @@
+// Nombrar la consulta importada Ventas. Crear cada medida por separado.
+Ventas únicas = DISTINCTCOUNT(Ventas[IdVenta])
+Ingresos UM = SUM(Ventas[Ingreso])
+Margen UM = SUM(Ventas[Margen])
+Margen relativo = DIVIDE([Margen UM], [Ingresos UM])
+Ticket UM = DIVIDE([Ingresos UM], [Ventas únicas])
+Entrega media días = AVERAGE(Ventas[TiempoEntregaDias])

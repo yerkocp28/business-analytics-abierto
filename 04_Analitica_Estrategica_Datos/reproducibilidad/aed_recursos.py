@@ -80,12 +80,24 @@ def boldonet():
     df['elegible_kpi'] = df.maduro & df.estado_valido
     df['costo_valido'] = df.Costo_acompañamiento.ge(0)
     df['satisfaccion_valida'] = df.Satisfacción.between(1,5)
+    df['actualizacion_antes_ingreso'] = df['Fecha_actualización'] < df['Fecha_ingreso']
+    df['actualizacion_invalida'] = df['Fecha_actualización'].isna()
+    df['permanencia_valida'] = df['Días_permanencia'].ge(0)
+    df['elegible_kpi_estricto'] = (df.elegible_kpi & ~df.actualizacion_antes_ingreso
+                                  & ~df.actualizacion_invalida)
     auditoria = {'filas_originales':len(base),'clientes_unicos':len(df),
                  'versiones_retiradas':len(base)-len(df),
                  'fechas_ingreso_invalidas':int(df.Fecha_ingreso.isna().sum()),
                  'maduros_sin_estado_valido':int((df.maduro & ~df.estado_valido).sum()),
                  'no_maduros_con_estado':int((~df.maduro & df.estado_valido).sum()),
-                 'costos_invalidos':int((~df.costo_valido).sum())}
+                 'costos_invalidos':int((~df.costo_valido).sum()),
+                 'actualizaciones_anteriores_ingreso':int(df.actualizacion_antes_ingreso.sum()),
+                 'actualizaciones_invalidas':int(df.actualizacion_invalida.sum()),
+                 'satisfacciones_fuera_rango':int((df.Satisfacción.notna() & ~df.satisfaccion_valida).sum()),
+                 'satisfacciones_faltantes':int(df.Satisfacción.isna().sum()),
+                 'permanencias_negativas':int(df['Días_permanencia'].lt(0).sum()),
+                 'elegibles_kpi':int(df.elegible_kpi.sum()),
+                 'elegibles_kpi_estricto':int(df.elegible_kpi_estricto.sum())}
     return df, auditoria
 
 
@@ -139,14 +151,10 @@ def resumen_solar(df):
             'SE_probabilidad':float(np.sqrt(prob*(1-prob)/n))}
 
 
+import sys
+if str(RAIZ) not in sys.path:
+    sys.path.insert(0, str(RAIZ))
+from _transversal.evaluacion import pregunta as _pregunta
+
 def pregunta(enunciado, opciones, correcta, explicacion):
-    elegir=widgets.RadioButtons(options=opciones,value=None,layout={'width':'95%'})
-    boton=widgets.Button(description='Comprobar',button_style='info')
-    salida=widgets.HTML('<p role="status">Selecciona una respuesta.</p>')
-    def revisar(_):
-        mensaje='Selecciona una respuesta.' if elegir.value is None else ('Correcto. ' if elegir.value==opciones[correcta] else 'Revisa tu respuesta. ')+explicacion
-        salida.value='<p role="status" aria-live="polite">'+html.escape(mensaje)+'</p>'
-    boton.on_click(revisar)
-    caja=widgets.VBox([widgets.HTML('<b>'+html.escape(enunciado)+'</b>'),elegir,boton,salida])
-    display(caja)
-    return caja
+    return _pregunta(enunciado, opciones, correcta, explicacion)

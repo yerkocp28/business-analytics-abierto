@@ -15,7 +15,7 @@
     },
     {
       "nombre": "FBA_03_herramientas_caso_integrador.ipynb",
-      "celdas_codigo": 8,
+      "celdas_codigo": 9,
       "widgets": 40,
       "resultado": "OK"
     },
@@ -33,7 +33,7 @@
     }
   ],
   "html": {
-    "enlaces_locales_verificados": 152,
+    "enlaces_locales_verificados": 155,
     "javascript": "OK",
     "uso_sin_red": "OK",
     "filtros_contrastados_python": "OK",
@@ -42,7 +42,7 @@
   },
   "pdf": {
     "paginas": 19,
-    "caracteres_extraidos": 56904,
+    "caracteres_extraidos": 58505,
     "resultado": "OK"
   },
   "cobertura": {

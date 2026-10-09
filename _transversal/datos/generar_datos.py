@@ -37,7 +37,8 @@ def _csv(df, caso, archivo):
 def _k_positivos(latente, k, rng):
     """Marca los k casos con mayor latente + ruido logístico.
 
-    Equivale a un modelo logístico cuyo intercepto se fija para obtener exactamente k eventos.
+    Es una construcción de prevalencia fija: las etiquetas son dependientes.
+    No equivale a Bernoulli independientes con un intercepto logístico fijado a priori.
     """
     ruido = rng.logistic(0, 1, len(latente))
     orden = np.argsort(-(latente + ruido), kind="stable")
@@ -60,7 +61,7 @@ def fincordillera_clientes(rng):
     regiones = ["Metropolitana", "Valparaiso", "Biobio", "La Araucania", "Antofagasta"]
     region = rng.choice(regiones, n, p=[.38, .17, .17, .14, .14])
     # Mecanismo: reclamos y retrasos elevan el riesgo; uso de app, productos y antigüedad lo
-    # reducen. Edad no tiene efecto (variable sin señal deliberada); región, efecto pequeño.
+    # reducen. Edad no tiene efecto directo; influye indirectamente vía ingreso. Región tiene efecto pequeño.
     latente = (.55 * reclamos + .45 * retrasos - .13 * app - .38 * (productos - 3)
                - .007 * (antig - 85) - .25 * (ingreso - 1_100_000) / 500_000
                + np.where(region == "Antofagasta", .25, 0))
@@ -123,7 +124,7 @@ def quillaymarket_demanda_mensual(rng):
     filas = []
     for cat, (base, precio_ref) in categorias.items():
         for mes in range(1, 13):
-            for _ in range(10):  # diez tiendas por categoría y mes
+            for _ in range(10):  # diez réplicas independientes por categoría y mes; no se identifica tienda ni año
                 precio = precio_ref * rng.uniform(.75, 1.2)
                 promo = rng.binomial(1, .35)
                 mkt = rng.uniform(50_000, 900_000)

@@ -1,6 +1,6 @@
 {
-  "fecha_utc": "2026-10-09T13:43:32.954610+00:00",
-  "enlaces_locales_y_anclas": 662,
+  "fecha_utc": "2026-10-09T16:47:45.602137+00:00",
+  "enlaces_locales_y_anclas": 672,
   "modulos_coherentes": 28,
   "pdf": [
     {
@@ -15,12 +15,12 @@
     },
     {
       "curso": "MPN",
-      "paginas": 16,
+      "paginas": 17,
       "texto_fuera_pagina": 0
     },
     {
       "curso": "AED",
-      "paginas": 14,
+      "paginas": 15,
       "texto_fuera_pagina": 0
     }
   ],

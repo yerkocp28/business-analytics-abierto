@@ -2338,7 +2338,10 @@ main math[display=block] { width: max-content; min-width: 100%; }
   <li><a href="#autoevaluación-con-retroalimentación" id="toc-autoevaluación-con-retroalimentación" class="nav-link" data-scroll-target="#autoevaluación-con-retroalimentación"><span class="header-section-number">13.2</span> Autoevaluación con retroalimentación</a></li>
   </ul></li>
   <li><a href="#sec-glosario" id="toc-sec-glosario" class="nav-link" data-scroll-target="#sec-glosario"><span class="header-section-number">14</span> Glosario de consulta</a></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a>
+  <ul class="collapse">
+  <li><a href="#sec-libro-herramientas" id="toc-sec-libro-herramientas" class="nav-link" data-scroll-target="#sec-libro-herramientas"><span class="header-section-number">14.1</span> Libro propio de herramientas</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Otros formatos</h2><ul><li><a href="FBA_manual_cientifico.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
 </div>
@@ -2428,10 +2431,15 @@ main math[display=block] { width: max-content; min-width: 100%; }
 <p><strong>Preparación de entrada:</strong> Porcentajes, lectura de tablas y operaciones básicas; Python se introduce con ejemplos.</p>
 <p>Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del grupo. Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. La profundización se consulta después del núcleo.</p>
 <p><strong>NB01 · Pregunta de negocio y datos (Núcleo).</strong> Formular una decisión con unidad de análisis, variable y regla de calidad. <strong>Evidencia:</strong> Entregar una ficha con pregunta, unidad, fuente, decisión y dos límites.</p>
+<p><strong>Transferencia NB01:</strong> Un piloto contactará 2.000 clientes. Se supone que el abandono baja de 10% a 8%, cada retención vale 120 UM y cada contacto cuesta 2 UM. Formula decisión, unidad, horizonte y beneficio. ¿Qué dato falta para comprobar el efecto con el archivo de ventas?</p>
 <p><strong>NB02 · Exploración y comunicación visual (Núcleo).</strong> Elegir un resumen y un gráfico coherentes con la pregunta y el denominador. <strong>Evidencia:</strong> Presentar un gráfico con unidad, período, población y una interpretación verificable.</p>
+<p><strong>Transferencia NB02:</strong> Dos canales tienen 30 y 90 transacciones e ingresos de 9.000 y 18.000 UM. Calcula el ticket general, diseña un gráfico con su denominador y explica una comparación engañosa. Después construye un gráfico propio del CSV sin copiar el tablero.</p>
 <p><strong>NB03 · Herramientas y caso integrador (Núcleo).</strong> Reproducir un indicador con filtros, agregaciones y una unión validada. <strong>Evidencia:</strong> Entregar cálculo conciliado, control de cardinalidad y recomendación con sensibilidad.</p>
+<p><strong>Transferencia NB03:</strong> Trabaja en una copia del libro FBA_herramientas.xlsx. Filtra un canal y trimestre, calcula ingresos y ticket en Excel y pandas. Duplica una clave del catálogo y explica qué control debe detener una unión; entrega una recomendación de una página.</p>
 <p><strong>NB04 · Probabilidad y simulación (Profundización).</strong> Explicar una probabilidad condicionada y la variación de una estimación. <strong>Evidencia:</strong> Dibujar una tabla de frecuencias y explicar el efecto de n sin confundir sesgo con precisión.</p>
+<p><strong>Transferencia NB04:</strong> En 10.000 casos, prevalencia 1%, sensibilidad 90% y especificidad 95%: predice el valor de una alerta antes de calcular. Repite con prevalencia 10% y justifica el cambio. Explica qué reduce cuadruplicar las simulaciones.</p>
 <p><strong>NB05 · Puente hacia modelos predictivos (Profundización).</strong> Comparar un modelo con una referencia usando datos reservados. <strong>Evidencia:</strong> Informar partición, referencia, métrica, costo y un límite de generalización.</p>
+<p><strong>Transferencia NB05:</strong> Diseña cuatro tarjetas: datos para ajuste, selección, regla de decisión y prueba. Cambia el costo FN de 5 a 10 manteniendo FP=1 y explica qué puede cambiar antes de abrir la prueba. Formula un uso de clusters que deba validarse después.</p>
 <!-- BA_APRENDIZAJE_FIN -->
 </section>
 </section>
@@ -3531,8 +3539,12 @@ L(t)=\frac{c_{FN}FN(t)+c_{FP}FP(t)}{n}.
 </table>
 </section>
 <section id="referencias" class="level1 unnumbered">
+<h1 class="unnumbered">Referencias</h1>
+<section id="sec-libro-herramientas" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="sec-libro-herramientas"><span class="header-section-number">14.1</span> Libro propio de herramientas</h2>
+<p><a href="FBA_herramientas.xlsx">FBA_herramientas.xlsx</a> contiene datos, fórmulas, controles e instrucciones. Los valores cacheados provienen de Python; recalcular en Excel para contrastar su motor. Los filtros visuales no modifican automáticamente las fórmulas SUMIF.</p>
 
-
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">

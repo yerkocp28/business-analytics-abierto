@@ -8,17 +8,17 @@
     },
     {
       "archivo": "EBA_02_probabilidad_bayes_distribuciones.ipynb",
-      "celdas_codigo": 7,
+      "celdas_codigo": 8,
       "resultado": "OK"
     },
     {
       "archivo": "EBA_03_estimacion_intervalos.ipynb",
-      "celdas_codigo": 7,
+      "celdas_codigo": 8,
       "resultado": "OK"
     },
     {
       "archivo": "EBA_04_correlacion_regresion.ipynb",
-      "celdas_codigo": 7,
+      "celdas_codigo": 8,
       "resultado": "OK"
     },
     {
@@ -47,7 +47,7 @@
     "criterios": 12,
     "minimos": 17,
     "filas": 32,
-    "enlaces_html": 152
+    "enlaces_html": 155
   },
   "calculos": "Bayes, IC t, Wilson, Holm, ANOVA y agregados Excel verificados con casos independientes.",
   "guia": {
@@ -60,7 +60,7 @@
   },
   "manual": {
     "paginas": 15,
-    "caracteres": 46222,
+    "caracteres": 48518,
     "formulas_mathml": 112
   }
 }

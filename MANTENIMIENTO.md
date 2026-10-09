@@ -13,6 +13,10 @@
 | Guía de Analítica Estratégica | `material_propio/guia_maestra_aed.template.html` | HTML de la guía |
 | Presentación común | [_transversal/interfaz/](_transversal/interfaz/) | CSS y JavaScript incorporados en las publicaciones |
 | Laboratorios | Celdas originales de los notebooks y funciones de `reproducibilidad/` | Notebooks con salidas y evidencia de ejecución |
+| Actividades de transferencia y soluciones | [_transversal/practicas.py](_transversal/practicas.py) | Problema en cada notebook, sección del QMD y `PAUTA_DOCENTE.md` por curso |
+| Tiempos de trabajo | `TIEMPOS` en [_transversal/rutas.py](_transversal/rutas.py) | Explicación, práctica y autonomía coherentes en las rutas |
+| Libro FBA y controles BI | [_transversal/herramientas.py](_transversal/herramientas.py) | XLSX con fórmulas y caché calculado en Python; controles CSV de medidas M/DAX |
+| Contratos y perfil de datos | [_transversal/datos/CATALOGO.md](_transversal/datos/CATALOGO.md), `perfilar.py` y generadores | Perfil de las columnas de 19 tablas analíticas |
 
 No edite las salidas generadas para corregir un problema de origen. Las rutas se generan con `python _transversal/construir_interfaz.py --fuentes`; sus bloques se reemplazan de forma idempotente. El comando completo realiza este paso automáticamente.
 
@@ -35,6 +39,10 @@ python _transversal/construir_todo.py
 Sin `BA_BROWSER_CHANNEL`, las comprobaciones usan Chrome instalado en el sistema. El kernel se registra dentro del entorno, sin cambiar el kernel del usuario. Los PDF usan las fuentes predeterminadas de Typst; no requieren una fuente comercial específica.
 
 El constructor completo ejecuta los 28 notebooks, modifica controles para comprobar los cálculos, verifica las autoevaluaciones, reconstruye los cuatro manuales en HTML/PDF, genera las guías y comprueba cobertura, navegación e interfaz. Se detiene ante el primer error y deja su registro en `.cache-fba/verificacion/`.
+
+Incluye diez pruebas en [_transversal/verificar_metodologia.py](_transversal/verificar_metodologia.py): cambio de prevalencia y categorías en PSI; particiones disjuntas; cuantil conformal finito; ajuste efectivo del escalador en cada pliegue; disponibilidad de resultados al emitir pronósticos; incidencias de BoldoNet; todas las alternativas de los 28 quizzes; y fórmulas/caché de ambos libros. Se pueden ejecutar por separado con `python _transversal/verificar_metodologia.py`.
+
+Las prácticas BI incluyen M, DAX y controles numéricos para importación local. La comprobación automática ejecuta Python, no los motores nativos de Excel o Power BI. El caché del libro facilita la consulta sin perder fórmulas; quien lo adapte debe recalcular y conciliar en su herramienta.
 
 ```bash
 python _transversal/construir_todo.py --solo-render

@@ -2474,12 +2474,19 @@ main math[display=block] { width: max-content; min-width: 100%; }
 <p><strong>Preparación de entrada:</strong> Python básico, tablas, probabilidad e interpretación de regresión; diagnóstico en NB01.</p>
 <p>Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del grupo. Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. La profundización se consulta después del núcleo.</p>
 <p><strong>NB01 · Problema predictivo (Núcleo).</strong> Definir objetivo, horizonte, disponibilidad de variables y referencia. <strong>Evidencia:</strong> Entregar ficha de problema, referencia y justificación de una técnica; explicar la red mínima.</p>
+<p><strong>Transferencia NB01:</strong> Se quiere predecir abandono al inicio de un trimestre. Hay reclamos del trimestre anterior, fecha de cancelación y descuento ofrecido después de cancelar. Define Y, unidad, instante y baseline; justifica variables admisibles y distingue el ejemplo de red fija de entrenar una red.</p>
 <p><strong>NB02 · Preparación sin fuga (Núcleo).</strong> Construir un pipeline que aprenda transformaciones solo con entrenamiento. <strong>Evidencia:</strong> Demostrar separación de datos, contrato de variables y transformaciones ajustadas sin prueba.</p>
+<p><strong>Transferencia NB02:</strong> Los ingresos altos presentan más ausencias. Propón dos tratamientos, explica sus límites y diseña la validación. La tasa base es .28 y el criterio acordado AP≥2×base y AUC≥.70: informa cumplimiento con tus resultados, incluso si falla.</p>
 <p><strong>NB03 · Regresión de demanda (Núcleo).</strong> Comparar regresión y alternativas con referencia e incertidumbre de predicción. <strong>Evidencia:</strong> Reportar MAE/RMSE, referencia, diagnóstico y diferencia entre IC de media e intervalo predictivo.</p>
+<p><strong>Transferencia NB03:</strong> Con modelo congelado que predice 20 y residuos absolutos de calibración [1,2,3,4,5,6,7,8,9], calcula el intervalo conformal 80%. Identifica qué conjunto puede elegir alpha y qué cambia si reajustas después con calibración.</p>
 <p><strong>NB04 · Clasificación de abandono (Núcleo).</strong> Evaluar discriminación y una campaña con probabilidades y costos explícitos. <strong>Evidencia:</strong> Justificar modelo y política con métricas fuera de muestra y límites de utilidad.</p>
+<p><strong>Transferencia NB04:</strong> Probabilidad base .25 y odds ratio 1.5 por una unidad: calcula la nueva probabilidad. Luego compara dos modelos en los mismos clientes de validación y explica qué incertidumbre de la diferencia debes examinar antes de prometer superioridad.</p>
 <p><strong>NB05 · Validación, métricas y umbral (Núcleo).</strong> Seleccionar modelo y umbral sin reutilizar la prueba para decidir. <strong>Evidencia:</strong> Documentar selección, datos reservados y costo; no inferir calibración por coincidencia de umbrales.</p>
+<p><strong>Transferencia NB05:</strong> Con TP=30, FN=10, FP=20, TN=140 y costos FN=8, FP=2, calcula precisión, recall y costo medio. Fija una política antes de evaluar. Explica qué captura el bootstrap sobre predicciones OOF ya calculadas.</p>
 <p><strong>NB06 · Limitaciones y comunicación (Núcleo).</strong> Construir una ficha de modelo con seguimiento, responsables y condiciones de uso. <strong>Evidencia:</strong> Entregar ficha con evidencia, incertidumbre, umbral de revisión y propuesta de mejora.</p>
+<p><strong>Transferencia NB06:</strong> Una variable binaria pasa de proporciones [.90,.10] a [.60,.40]. Calcula PSI conservando dos categorías. Propón un tratamiento para un faltante y una categoría nueva y redacta una alerta sin afirmar caída del AUC.</p>
 <p><strong>NB07 · Pronóstico de demanda (Profundización).</strong> Evaluar una serie mediante orígenes móviles y referencias comparables. <strong>Evidencia:</strong> Explicar horizonte, cobertura observada, referencia y límites de cambios del proceso.</p>
+<p><strong>Transferencia NB07:</strong> Al emitir en abril solo se observan resultados hasta marzo. Un error de pronóstico tiene objetivo abril y otro marzo. Decide cuáles pueden calibrar el intervalo y escribe una condición con fechas. Explica el límite de usar el mismo backtest para escoger y evaluar el método.</p>
 <!-- BA_APRENDIZAJE_FIN -->
 </section>
 </section>
@@ -2829,19 +2836,19 @@ Tabla 2: QuillayMarket · validación. Mes como número frente a mes como categ
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">mes como número</td>
-<td style="text-align: right;">15.45</td>
-<td style="text-align: right;">19.59</td>
+<td style="text-align: right;">16.29</td>
+<td style="text-align: right;">19.40</td>
 <td style="text-align: right;">0.89</td>
-<td style="text-align: right;">0.61</td>
-<td style="text-align: right;">9.90</td>
+<td style="text-align: right;">3.32</td>
+<td style="text-align: right;">10.52</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mes como categoría</td>
-<td style="text-align: right;">13.20</td>
-<td style="text-align: right;">15.91</td>
-<td style="text-align: right;">0.93</td>
-<td style="text-align: right;">-1.20</td>
-<td style="text-align: right;">8.32</td>
+<td style="text-align: right;">14.77</td>
+<td style="text-align: right;">17.07</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">9.37</td>
 </tr>
 </tbody>
 </table>
@@ -2854,11 +2861,43 @@ Tabla 2: QuillayMarket · validación. Mes como número frente a mes como categ
 <section id="diagnóstico-y-regularización" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="diagnóstico-y-regularización"><span class="header-section-number">4.3</span> Diagnóstico y regularización</h2>
 <p>Los residuos de un buen modelo no muestran estructura respecto de la predicción, el tiempo o los grupos. La normalidad importa para intervalos paramétricos, no para la calidad predictiva.</p>
-<p>Con muchas variables correlacionadas, la regularización estabiliza los coeficientes. Ridge minimiza <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>x</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>β</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mi>α</mi><msub><mo>∑</mo><mi>j</mi></msub><msubsup><mi>β</mi><mi>j</mi><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">\sum_i (y_i-x_i^\top\beta)^2 + \alpha\sum_j\beta_j^2</annotation></semantics></math> y encoge todos los coeficientes; Lasso usa la penalización <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><msub><mo>∑</mo><mi>j</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>β</mi><mi>j</mi></msub><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">\alpha\sum_j|\beta_j|</annotation></semantics></math> y puede anular algunos, lo que equivale a seleccionar variables. Las variables se estandarizan antes de penalizar y <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> se elige con validación cruzada en entrenamiento <span class="citation" data-cites="islp2023">(<a href="#ref-islp2023" role="doc-biblioref">James et al. 2023, cap. 6</a>)</span>.</p>
+<p>Con muchas variables correlacionadas, la regularización estabiliza los coeficientes. Ridge minimiza <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>x</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>β</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mi>α</mi><msub><mo>∑</mo><mi>j</mi></msub><msubsup><mi>β</mi><mi>j</mi><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">\sum_i (y_i-x_i^\top\beta)^2 + \alpha\sum_j\beta_j^2</annotation></semantics></math> y encoge todos los coeficientes; Lasso usa la penalización <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><msub><mo>∑</mo><mi>j</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>β</mi><mi>j</mi></msub><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">\alpha\sum_j|\beta_j|</annotation></semantics></math> y puede anular algunos, lo que equivale a seleccionar variables. Las variables se estandarizan dentro de cada pliegue antes de penalizar. <code>GridSearchCV</code> recibe el pipeline completo con <code>StandardScaler</code> y <code>Ridge</code> o <code>Lasso</code>; así vuelve a estimar la escala en cada entrenamiento interno. Usar un escalador antes de <code>LassoCV</code>/<code>RidgeCV</code> no reestima la escala en sus pliegues internos <span class="citation" data-cites="islp2023">(<a href="#ref-islp2023" role="doc-biblioref">James et al. 2023, cap. 6</a>)</span>.</p>
 </section>
 <section id="predicciones-con-intervalo" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="predicciones-con-intervalo"><span class="header-section-number">4.4</span> Predicciones con intervalo</h2>
-<p>Una predicción puntual sin rango invita a decisiones frágiles. El <strong>intervalo conformal dividido</strong> usa los residuos absolutos de un conjunto de calibración: con <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math> igual a su cuantil de orden <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">⌈</mo><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">⌉</mo><mi>/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\lceil (n+1)(1-\alpha)\rceil/n</annotation></semantics></math>, el intervalo <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>y</mi><mo accent="true">̂</mo></mover><mo>±</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">\hat y \pm q</annotation></semantics></math> cubre al menos <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">1-\alpha</annotation></semantics></math> de casos nuevos <strong>intercambiables</strong> con los de calibración, si el modelo se mantiene fijo <span class="citation" data-cites="angelopoulos2021">(<a href="#ref-angelopoulos2021" role="doc-biblioref">Angelopoulos y Bates 2021</a>)</span>. No protege contra extrapolación ni cambios del proceso, y su cobertura debe verificarse en prueba. Si el modelo se reestima después de calcular el cuantil, la garantía deja de aplicarse exactamente; el notebook 03 informa la cobertura observada junto con su error estándar.</p>
+<p>Una predicción puntual sin rango invita a decisiones frágiles. Se reservan desde el inicio cuatro conjuntos: 60% ajuste, 10% selección, 10% calibración y 20% prueba. El <strong>intervalo conformal dividido</strong> calcula residuos absolutos de calibración con el modelo ya congelado. Con <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mo stretchy="false" form="prefix">⌈</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>n</mi><mrow><mi>c</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">⌉</mo></mrow><annotation encoding="application/x-tex">k=\lceil(n_{cal}+1)(1-\alpha)\rceil</annotation></semantics></math> se toma el k-ésimo residuo ordenado; si <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>&gt;</mo><msub><mi>n</mi><mrow><mi>c</mi><mi>a</mi><mi>l</mi></mrow></msub></mrow><annotation encoding="application/x-tex">k&gt;n_{cal}</annotation></semantics></math>, se usa infinito. El intervalo <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>y</mi><mo accent="true">̂</mo></mover><mo>±</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">\hat y\pm q</annotation></semantics></math> tiene cobertura marginal de al menos <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">1-\alpha</annotation></semantics></math> bajo intercambiabilidad <span class="citation" data-cites="angelopoulos2021">(<a href="#ref-angelopoulos2021" role="doc-biblioref">Angelopoulos y Bates 2021</a>)</span>. No garantiza cobertura por grupo ni extrapolaciones.</p>
+<p>No se reutiliza selección como calibración ni se reajusta el modelo después de calcular <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>. El notebook 03 evalúa una vez en prueba y muestra cobertura observada, sin elegir un nuevo nivel a partir de ella. Para ilustrar calibración se conserva MCO estacional como referencia interpretable. Ridge obtiene menor RMSE de selección en esta muestra; no se presenta MCO como ganador de esa métrica. Esta elección didáctica se fija antes de consultar calibración y prueba.</p>
+<div class="cell" data-execution_count="5">
+<div id="tbl-conformal" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-conformal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla 3: Intervalo 80%: calibración separada y modelo congelado; evaluación final reservada.
+</figcaption>
+<div aria-describedby="tbl-conformal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">n calibración</th>
+<th style="text-align: right;">n prueba</th>
+<th style="text-align: right;">semiancho</th>
+<th style="text-align: right;">cobertura prueba</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">48.000</td>
+<td style="text-align: right;">96.000</td>
+<td style="text-align: right;">18.706</td>
+<td style="text-align: right;">0.792</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 </section>
 <section id="sec-clasificacion" class="level1" data-number="5">
@@ -2871,11 +2910,11 @@ Tabla 2: QuillayMarket · validación. Mes como número frente a mes como categ
 <section id="árboles-bosques-y-vecinos" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="árboles-bosques-y-vecinos"><span class="header-section-number">5.2</span> Árboles, bosques y vecinos</h2>
 <p>Un árbol elige en cada nodo la división que más reduce la impureza; con el índice de Gini, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mn>1</mn><mo>−</mo><msub><mo>∑</mo><mi>k</mi></msub><msubsup><mi>p</mi><mi>k</mi><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">G=1-\sum_k p_k^2</annotation></semantics></math>. Es legible e inestable. Un bosque promedia árboles entrenados con muestras bootstrap y subconjuntos de variables, lo que reduce varianza. KNN predice con los <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> vecinos más cercanos: sin estandarizar, la variable de mayor escala domina la distancia. Para interpretar modelos complejos se prefiere la <strong>importancia por permutación</strong> medida en validación.</p>
-<div class="cell" data-execution_count="5">
-<div id="tbl-clasificacion" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
+<div class="cell" data-execution_count="6">
+<div id="tbl-clasificacion" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="6">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-clasificacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla 3: FinCordillera · comparación en validación de modelos ajustados con entrenamiento.
+Tabla 4: FinCordillera · comparación en validación de modelos ajustados con entrenamiento.
 </figcaption>
 <div aria-describedby="tbl-clasificacion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display cell-output-markdown">
@@ -2986,7 +3025,7 @@ Tabla 3: FinCordillera · comparación en validación de modelos ajustados con 
 </tr>
 </tbody>
 </table>
-<p>Una diferencia entre modelos menor que la desviación estándar entre pliegues no justifica preferir uno por desempeño: deciden la interpretabilidad, el costo de operación o la robustez.</p>
+<p>La desviación entre pliegues describe variación, pero compararla con una diferencia de medias no constituye una prueba de igualdad de modelos. Si importa esa diferencia, evalúela directamente con un diseño de remuestreo apropiado, preservando emparejamiento y selección; los folds comparten entrenamiento. La interpretabilidad y el costo de operación son criterios adicionales que deben declararse antes de decidir.</p>
 </section>
 <section id="hiperparámetros-y-complejidad" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="hiperparámetros-y-complejidad"><span class="header-section-number">6.2</span> Hiperparámetros y complejidad</h2>
@@ -3045,12 +3084,12 @@ Tabla 3: FinCordillera · comparación en validación de modelos ajustados con 
 </section>
 <section id="ejemplo-lectura-crítica-de-métricas" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="ejemplo-lectura-crítica-de-métricas"><span class="header-section-number">7.3</span> Ejemplo: lectura crítica de métricas</h2>
-<p>Quince casos ficticios con valores reales y predichos permiten practicar la lectura de métricas. <a href="#tbl-s8" class="quarto-xref">Tabla 4</a> calcula las métricas habituales y agrega el sesgo, que suele omitirse.</p>
-<div class="cell" data-execution_count="6">
-<div id="tbl-s8" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="6">
+<p>Quince casos ficticios con valores reales y predichos permiten practicar la lectura de métricas. <a href="#tbl-s8" class="quarto-xref">Tabla 5</a> calcula las métricas habituales y agrega el sesgo, que suele omitirse.</p>
+<div class="cell" data-execution_count="7">
+<div id="tbl-s8" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-s8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla 4: Quince casos ficticios · métricas de ventas y de abandono.
+Tabla 5: Quince casos ficticios · métricas de ventas y de abandono.
 </figcaption>
 <div aria-describedby="tbl-s8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display cell-output-markdown">
@@ -3103,7 +3142,7 @@ Tabla 4: Quince casos ficticios · métricas de ventas y de abandono.
 <p>Un clasificador probabilístico <strong>ordena</strong>; el umbral convierte el orden en acción. Sean <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub><annotation encoding="application/x-tex">c_{FN}</annotation></semantics></math> y <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><annotation encoding="application/x-tex">c_{FP}</annotation></semantics></math> los costos de un falso negativo y de un falso positivo. Si la probabilidad <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math> está calibrada, actuar tiene un costo esperado <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><msub><mi>c</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub></mrow><annotation encoding="application/x-tex">(1-p)\,c_{FP}</annotation></semantics></math> y no actuar <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mspace width="0.167em"></mspace><msub><mi>c</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p\,c_{FN}</annotation></semantics></math>. Conviene actuar cuando</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>&gt;</mo><msup><mi>t</mi><mo>*</mo></msup><mo>=</mo><mfrac><msub><mi>c</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><mrow><msub><mi>c</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><mo>+</mo><msub><mi>c</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub></mrow></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">p &gt; t^* = \frac{c_{FP}}{c_{FP}+c_{FN}} ,</annotation></semantics></math></p>
 <p>un resultado clásico del aprendizaje sensible a costos <span class="citation" data-cites="elkan2001">(<a href="#ref-elkan2001" role="doc-biblioref">Elkan 2001</a>)</span>. En PulpaLenga, con <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mrow><mi>F</mi><mi>N</mi></mrow></msub><mo>=</mo><mn>800</mn></mrow><annotation encoding="application/x-tex">c_{FN}=800</annotation></semantics></math> y <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mrow><mi>F</mi><mi>P</mi></mrow></msub><mo>=</mo><mn>90</mn></mrow><annotation encoding="application/x-tex">c_{FP}=90</annotation></semantics></math> miles de CLP, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>t</mi><mo>*</mo></msup><mo>≈</mo><mn>0</mn><mo>,</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">t^*\approx0{,}10</annotation></semantics></math>. El umbral convencional 0,5 corresponde a costos iguales.</p>
-<div id="cell-fig-umbral" class="cell" data-execution_count="7">
+<div id="cell-fig-umbral" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div id="fig-umbral" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Costo medio por lote en PulpaLenga según umbral. Comparar el umbral económico 90 dividido por 890 y el umbral 0,5 usando predicciones fuera de pliegue.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -3117,11 +3156,11 @@ Figura 2: PulpaLenga · costo medio por lote según umbral, con predicciones fu
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
-<div id="tbl-politicas" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="8">
+<div class="cell" data-execution_count="9">
+<div id="tbl-politicas" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="9">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-politicas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla 5: PulpaLenga · prueba consultada una vez. Modelo y umbrales fijados antes de mirar la prueba.
+Tabla 6: PulpaLenga · prueba consultada una vez. Modelo y umbrales fijados antes de mirar la prueba.
 </figcaption>
 <div aria-describedby="tbl-politicas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display cell-output-markdown">
@@ -3214,7 +3253,7 @@ Tabla 5: PulpaLenga · prueba consultada una vez. Modelo y umbrales fijados ant
 </section>
 <section id="eventos-raros" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="eventos-raros"><span class="header-section-number">8.3</span> Eventos raros</h2>
-<p>Con prevalencias bajas, accuracy es casi inútil y las métricas se vuelven inestables: con 30 fraudes en 1.200 transacciones, una prueba del 20% contendría unos seis casos. Conviene usar predicciones fuera de pliegue, intervalos bootstrap para AP y, sobre todo, más casos etiquetados y mejores variables. Ponderar clases cambia el umbral efectivo; no crea información.</p>
+<p>Con prevalencias bajas, accuracy es casi inútil y las métricas se vuelven inestables: con 30 fraudes en 1.200 transacciones, una prueba del 20% contendría unos seis casos. Conviene usar predicciones fuera de pliegue, intervalos bootstrap para AP y, sobre todo, más casos etiquetados y mejores variables. Remuestrear pares de etiquetas y predicciones OOF fijas describe incertidumbre condicionada a esas predicciones; no incorpora toda la variación de entrenamiento y selección. Para estudiarla se repite el procedimiento completo. Ponderar clases cambia el umbral efectivo; no crea información.</p>
 </section>
 </section>
 <section id="sec-limitaciones" class="level1" data-number="9">
@@ -3267,7 +3306,7 @@ Tabla 5: PulpaLenga · prueba consultada una vez. Modelo y umbrales fijados ant
 <h2 data-number="9.2" class="anchored" data-anchor-id="estabilidad-poblacional"><span class="header-section-number">9.2</span> Estabilidad poblacional</h2>
 <p>El Population Stability Index compara la distribución de una variable entre una población de referencia (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>e</mi><mi>k</mi></msub><annotation encoding="application/x-tex">e_k</annotation></semantics></math>) y una nueva (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>k</mi></msub><annotation encoding="application/x-tex">a_k</annotation></semantics></math>) en tramos <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">PSI</mtext><mo>=</mo><munder><mo>∑</mo><mi>k</mi></munder><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mi>k</mi></msub><mo>−</mo><msub><mi>e</mi><mi>k</mi></msub><mo stretchy="false" form="postfix">)</mo><mrow><mi mathvariant="normal">ln</mi><mo>⁡</mo></mrow><mfrac><msub><mi>a</mi><mi>k</mi></msub><msub><mi>e</mi><mi>k</mi></msub></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">\text{PSI}=\sum_k (a_k-e_k)\ln\frac{a_k}{e_k}.</annotation></semantics></math></p>
-<p>Una convención habitual en riesgo de crédito —no un estándar universal— lee PSI &lt; 0,10 como estable, 0,10–0,25 como cambio moderado y &gt; 0,25 como cambio significativo <span class="citation" data-cites="siddiqi2006">(<a href="#ref-siddiqi2006" role="doc-biblioref">Siddiqi 2006</a>)</span>. El PSI detecta cambios de distribución, no sus causas ni la pérdida de desempeño, que solo se mide cuando llegan etiquetas.</p>
+<p>Una convención habitual en riesgo de crédito —no un estándar universal— lee PSI &lt; 0,10 como estable, 0,10–0,25 como cambio moderado y &gt; 0,25 como cambio significativo <span class="citation" data-cites="siddiqi2006">(<a href="#ref-siddiqi2006" role="doc-biblioref">Siddiqi 2006</a>)</span>. El PSI detecta cambios de distribución, no sus causas ni la pérdida de desempeño, que solo se mide cuando llegan etiquetas. El helper conserva categorías discretas, faltantes y categorías nuevas. Para variables continuas, los cortes se aprenden solo en referencia. Una referencia constante requiere tratamiento categórico. Se regularizan las proporciones cero con epsilon y se renormalizan; el valor depende de ese convenio. El cambio binario 5%→80% produce PSI ≈ 3,248, no cero. PSI no es una prueba estadística de deterioro.</p>
 </section>
 <section id="riesgo-de-modelo-y-obligaciones" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="riesgo-de-modelo-y-obligaciones"><span class="header-section-number">9.3</span> Riesgo de modelo y obligaciones</h2>
@@ -3296,7 +3335,7 @@ Tabla 5: PulpaLenga · prueba consultada una vez. Modelo y umbrales fijados ant
 </section>
 <section id="sec-series" class="level1" data-number="11">
 <h1 data-number="11"><span class="header-section-number">11</span> Profundización: pronóstico de series de tiempo</h1>
-<p>Una serie mensual combina tendencia, estacionalidad y ruido. Las referencias mínimas son el pronóstico <strong>ingenuo</strong> y el <strong>ingenuo estacional</strong>. Una regresión con tendencia lineal y meses como indicadores es un primer modelo interpretable; Holt-Winters y SARIMA son extensiones <span class="citation" data-cites="fpp3">(<a href="#ref-fpp3" role="doc-biblioref">Hyndman y Athanasopoulos 2021</a>)</span>. La evaluación usa <strong>origen móvil</strong>: con historia hasta <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math> se pronostica <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>+</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>T</mi><mo>+</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">T+1,\dots,T+h</annotation></semantics></math> y se avanza. El MASE divide el MAE del método por el MAE del ingenuo estacional en la muestra de entrenamiento; MASE &lt; 1 indica mejora <span class="citation" data-cites="hyndman2006">(<a href="#ref-hyndman2006" role="doc-biblioref">Hyndman y Koehler 2006</a>)</span>. Los intervalos empíricos por horizonte se calculan con errores de origen móvil y su cobertura se verifica en orígenes posteriores; con pocas observaciones tienden a ser estrechos.</p>
+<p>Una serie mensual combina tendencia, estacionalidad y ruido. Las referencias mínimas son el pronóstico <strong>ingenuo</strong> y el <strong>ingenuo estacional</strong>. Una regresión con tendencia lineal y meses como indicadores es un primer modelo interpretable; Holt-Winters y SARIMA son extensiones <span class="citation" data-cites="fpp3">(<a href="#ref-fpp3" role="doc-biblioref">Hyndman y Athanasopoulos 2021</a>)</span>. La evaluación usa <strong>origen móvil</strong>: con historia hasta <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math> se pronostica <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>+</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>T</mi><mo>+</mo><mi>h</mi></mrow><annotation encoding="application/x-tex">T+1,\dots,T+h</annotation></semantics></math> y se avanza. El MASE divide el MAE del método por el MAE del ingenuo estacional en la muestra de entrenamiento; MASE &lt; 1 indica error menor que esa escala histórica, no demuestra superar al ingenuo en el período futuro. Para esto se comparan ambos métodos en los mismos orígenes y horizontes <span class="citation" data-cites="hyndman2006">(<a href="#ref-hyndman2006" role="doc-biblioref">Hyndman y Koehler 2006</a>)</span>. Los intervalos empíricos por horizonte se calculan únicamente con errores cuyo <strong>resultado objetivo ya se observó antes de emitir</strong> cada intervalo. Separar orígenes por mitades no basta cuando el horizonte es mayor que uno. Se muestra la última fecha objetivo de calibración y la primera emisión de verificación. Los cuantiles son inestables con poca historia y los errores pueden depender entre sí: no se usa automáticamente un error binomial independiente. La comparación es retrospectiva; si se selecciona un método con ella, se necesita una nueva ventana reservada para evaluar esa selección.</p>
 </section>
 <section id="sec-ejercicios" class="level1" data-number="12">
 <h1 data-number="12"><span class="header-section-number">12</span> Ejercicios resueltos y preguntas de discusión</h1>

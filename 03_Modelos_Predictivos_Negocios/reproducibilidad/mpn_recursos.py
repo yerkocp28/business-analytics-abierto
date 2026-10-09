@@ -55,7 +55,10 @@ def fincordillera_transacciones():
 
 
 def quillaymarket_demanda():
-    """480 registros mensuales simulados por categoría; respuesta ventas_unidades."""
+    """480 réplicas transversales: diez por categoría/mes, sin tienda ni año.
+
+    No constituyen un panel ni una serie longitudinal; la partición aleatoria evalúa
+    réplicas intercambiables del simulador, no meses futuros de tiendas reales."""
     df = _leer("quillaymarket", "quillaymarket_demanda_mensual.csv")
     assert df["registro_id"].is_unique
     assert df["mes"].between(1, 12).all()
@@ -175,15 +178,60 @@ def lift_deciles(y_real, prob, grupos=10):
     return resumen
 
 
-def psi(esperado, actual, cortes=10):
-    """Population Stability Index con cortes por cuantiles de la muestra esperada."""
-    esperado, actual = np.asarray(esperado, float), np.asarray(actual, float)
-    limites = np.unique(np.quantile(esperado, np.linspace(0, 1, cortes + 1)))
-    limites[0], limites[-1] = -np.inf, np.inf
-    e = np.histogram(esperado, limites)[0] / len(esperado)
-    a = np.histogram(actual, limites)[0] / len(actual)
-    e, a = np.clip(e, 1e-6, None), np.clip(a, 1e-6, None)
-    return float(np.sum((a - e) * np.log(a / e)))
+def psi(esperado, actual, cortes=10, tipo="auto", epsilon=1e-6):
+    """PSI con categorías explícitas o tramos aprendidos solo en referencia.
+
+    Auto trata como categóricas las variables no numéricas o con <= cortes valores
+    de referencia. Conserva categorías nuevas y faltantes en celdas propias.
+    epsilon regulariza celdas vacías; el resultado depende de este convenio.
+    """
+    e, a = pd.Series(esperado), pd.Series(actual)
+    if e.empty or a.empty or int(cortes) != cortes or cortes < 2:
+        raise ValueError("Muestras no vacías y al menos dos cortes enteros.")
+    if tipo not in {"auto", "categorico", "continuo"} or not 0 < epsilon < 1:
+        raise ValueError("Tipo o regularización fuera del dominio.")
+    numericas = pd.api.types.is_numeric_dtype(e) and pd.api.types.is_numeric_dtype(a)
+    categorico = tipo == "categorico" or (tipo == "auto" and
+                   (not numericas or e.nunique(dropna=True) <= cortes))
+    if categorico:
+        # Tuplas separan de forma inequívoca el faltante de una categoría literal.
+        def contar(x):
+            return x.map(lambda v: ("faltante",) if pd.isna(v) else ("valor", v)).value_counts()
+        ec, ac = contar(e), contar(a)
+        claves = ec.index.union(ac.index, sort=False)
+        ep = ec.reindex(claves, fill_value=0).to_numpy(float) / len(e)
+        ap = ac.reindex(claves, fill_value=0).to_numpy(float) / len(a)
+    else:
+        if not numericas or np.isinf(e.dropna()).any() or np.isinf(a.dropna()).any():
+            raise ValueError("El PSI continuo requiere números finitos o faltantes.")
+        referencia = e.dropna().to_numpy(float)
+        if len(np.unique(referencia)) < 2:
+            raise ValueError("Referencia constante o vacía: use tipo='categorico'.")
+        interiores = np.unique(np.quantile(referencia, np.linspace(0, 1, cortes + 1)[1:-1]))
+        limites = np.r_[-np.inf, interiores, np.inf]
+        ep = np.r_[np.histogram(referencia, limites)[0], e.isna().sum()] / len(e)
+        ap = np.r_[np.histogram(a.dropna().to_numpy(float), limites)[0], a.isna().sum()] / len(a)
+    ep, ap = np.maximum(ep, epsilon), np.maximum(ap, epsilon)
+    ep, ap = ep / ep.sum(), ap / ap.sum()
+    return float(np.sum((ap - ep) * np.log(ap / ep)))
+
+
+def particion_con_calibracion(X, y):
+    """60% ajuste, 10% selección, 10% calibración y 20% prueba, sin solapamiento."""
+    Xe, Xv, Xt, ye, yv, yt = particion_tres(X, y, estratificar=False)
+    Xv, Xcal, yv, ycal = train_test_split(Xv, yv, test_size=.5, random_state=SEMILLA + 1)
+    grupos = [set(d.index) for d in [Xe, Xv, Xcal, Xt]]
+    assert all(grupos[i].isdisjoint(grupos[j]) for i in range(4) for j in range(i))
+    return Xe, Xv, Xcal, Xt, ye, yv, ycal, yt
+
+
+def cuantil_conformal(residuos_absolutos, nivel=.8):
+    """Estadístico de orden ceil((n+1)*nivel); infinito si n no permite ese nivel."""
+    r = np.asarray(residuos_absolutos, float)
+    if r.ndim != 1 or len(r) == 0 or not np.isfinite(r).all() or (r < 0).any() or not 0 < nivel < 1:
+        raise ValueError("Residuos finitos no negativos y nivel entre cero y uno.")
+    k = int(np.ceil((len(r) + 1) * nivel))
+    return float(np.sort(r)[k - 1]) if k <= len(r) else np.inf
 
 
 def brier(y_real, prob):
@@ -191,21 +239,10 @@ def brier(y_real, prob):
 
 
 # ---------------------------------------------------------------- autoevaluación
+import sys
+if str(RAIZ) not in sys.path:
+    sys.path.insert(0, str(RAIZ))
+from _transversal.evaluacion import pregunta as _pregunta
+
 def pregunta(enunciado, opciones, correcta, explicacion):
-    """Autoevaluación local; no recopila respuestas ni envía información."""
-    elegir = widgets.RadioButtons(options=opciones, value=None, layout={"width": "95%"})
-    boton = widgets.Button(description="Comprobar", button_style="info")
-    salida = widgets.HTML(value='<p role="status">Selecciona una respuesta y pulsa Comprobar.</p>')
-
-    def revisar(_):
-        if elegir.value is None:
-            mensaje = "Selecciona una respuesta para recibir retroalimentación."
-        else:
-            acierto = elegir.value == opciones[correcta]
-            mensaje = ("Correcto. " if acierto else "Revisa tu respuesta. ") + explicacion
-        salida.value = '<p role="status" aria-live="polite">' + html.escape(mensaje) + '</p>'
-
-    boton.on_click(revisar)
-    caja = widgets.VBox([widgets.HTML("<b>" + html.escape(enunciado) + "</b>"), elegir, boton, salida])
-    display(caja)
-    return caja
+    return _pregunta(enunciado, opciones, correcta, explicacion)

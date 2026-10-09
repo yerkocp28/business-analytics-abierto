@@ -35,21 +35,10 @@ def resumen_ventas(frame):
             "precio_por_unidad": float(ingreso / unidades) if unidades else np.nan}
 
 
+import sys
+if str(RAIZ) not in sys.path:
+    sys.path.insert(0, str(RAIZ))
+from _transversal.evaluacion import pregunta as _pregunta
+
 def pregunta(enunciado, opciones, correcta, explicacion):
-    """Autoevaluación local; no recopila respuestas ni envía información."""
-    elegir = widgets.RadioButtons(options=opciones, value=None, layout={"width": "95%"})
-    boton = widgets.Button(description="Comprobar", button_style="info")
-    salida = widgets.HTML(value='<p role="status">Selecciona una respuesta y pulsa Comprobar.</p>')
-
-    def revisar(_):
-        if elegir.value is None:
-            mensaje = "Selecciona una respuesta para recibir retroalimentación."
-        else:
-            acierto = elegir.value == opciones[correcta]
-            mensaje = ("Correcto. " if acierto else "Revisa tu respuesta. ") + explicacion
-        salida.value = '<p role="status" aria-live="polite">' + html.escape(mensaje) + '</p>'
-
-    boton.on_click(revisar)
-    caja = widgets.VBox([widgets.HTML("<b>" + html.escape(enunciado) + "</b>"), elegir, boton, salida])
-    display(caja)
-    return caja
+    return _pregunta(enunciado, opciones, correcta, explicacion)

@@ -1,8 +1,8 @@
 {
-  "fecha_utc": "2026-10-09T13:40:28.922594+00:00",
+  "fecha_utc": "2026-10-09T16:37:16.094481+00:00",
   "python": "3.12.13",
   "plataforma": "Windows",
-  "modo": "solo_render",
+  "modo": "completo",
   "dependencias": {
     "numpy": "2.5.3",
     "pandas": "3.0.6",
@@ -17,40 +17,71 @@
   "quarto": "1.10.18",
   "pruebas": [
     {
+      "prueba": "recursos_herramientas",
+      "codigo": 0,
+      "segundos": 1.45
+    },
+    {
+      "prueba": "perfil_datos",
+      "codigo": 0,
+      "segundos": 0.86
+    },
+    {
       "prueba": "rutas_fuentes",
       "codigo": 0,
-      "segundos": 1.56
+      "segundos": 1.61
     },
     {
       "prueba": "FBA",
       "codigo": 0,
-      "segundos": 33.8
+      "segundos": 101.74
     },
     {
       "prueba": "EBA",
       "codigo": 0,
-      "segundos": 52.73
+      "segundos": 90.11
     },
     {
       "prueba": "MPN",
       "codigo": 0,
-      "segundos": 54.17
+      "segundos": 208.38
     },
     {
       "prueba": "AED",
       "codigo": 0,
-      "segundos": 38.59
+      "segundos": 84.61
+    },
+    {
+      "prueba": "metodologia",
+      "codigo": 0,
+      "segundos": 5.27
     },
     {
       "prueba": "interfaz",
       "codigo": 0,
-      "segundos": 22.56
+      "segundos": 22.81
     },
     {
       "prueba": "publico",
       "codigo": 0,
-      "segundos": 10.08
+      "segundos": 2.8
+    },
+    {
+      "prueba": "MPN_render_final",
+      "codigo": 0,
+      "segundos": 46.16
+    },
+    {
+      "prueba": "interfaz_final",
+      "codigo": 0,
+      "segundos": 21.5
+    },
+    {
+      "prueba": "publico_final",
+      "codigo": 0,
+      "segundos": 2.97
     }
   ],
-  "resultado": "OK"
+  "resultado": "OK",
+  "revision_final_utc": "2026-10-09T16:48:08.166591+00:00"
 }

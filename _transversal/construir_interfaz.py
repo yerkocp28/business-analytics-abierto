@@ -7,6 +7,7 @@ import re
 import nbformat
 from bs4 import BeautifulSoup
 from rutas import CURSOS, modulos
+from practicas import PRACTICAS
 
 RAIZ = Path(__file__).resolve().parents[1]
 E = html.escape
@@ -27,12 +28,14 @@ def preparar_fuentes(codigo):
              'Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. '
              'La profundización se consulta después del núcleo.\n\n')
     md = f'# Ruta de aprendizaje · {curso["nombre"]}\n\n[Curso](README.md) · [Guía]({curso["guia"]}#ruta-aprendizaje)\n\n' + intro
+    pauta = '# Pauta docente · ' + curso['nombre'] + '\n\n[Guía](../' + curso['guia'] + ') · [Ruta](../RUTA_APRENDIZAJE.md)\n\nResolver primero las prácticas de los notebooks. Esta pauta formativa separa respuestas y errores frecuentes; no es una evaluación institucional.\n\n'
     manual = '## Objetivos y evidencias por módulo {#sec-aprendizaje}\n\n' + intro
     for m in rows:
         n=m['numero']; title=f'{n:02} · {m["titulo"]}'
         block=(f'**Objetivo:** {m["objetivo"]}\n\n**Preparación:** {m["preparacion"]}\n\n'
                f'**Ejemplo de referencia:** {m["ejemplo"]}\n\n**Práctica:** {m["actividad"]}\n\n'
-               f'**Criterio de logro:** {m["logro"]}\n\n')
+               f'**Criterio de logro:** {m["logro"]}\n\n'
+               f'**Distribución orientativa:** explicación {m["explicacion_min"]} min; práctica guiada {m["practica_min"]} min; trabajo autónomo {m["autonomo_min"]} min. Ajustar tras una clase piloto.\n\n' )
         md += f'## {title}\n\n{m["nivel"]} · {m["duracion"]} orientativos.\n\n' + block
         md += f'[Capítulo]({curso["guia"]}#{m["ancla"]}) · [Manual](material_propio/{codigo}_manual_cientifico.html#{m["manual"]}) · [Notebook](notebooks/{m["notebook"]})\n\n'
         manual += f'**NB{n:02} · {m["titulo"]} ({m["nivel"]}).** {m["objetivo"]} **Evidencia:** {m["logro"]}\n\n'
@@ -41,7 +44,17 @@ def preparar_fuentes(codigo):
         cell=nbformat.v4.new_markdown_cell(f'### Antes de ejecutar\n\n{m["nivel"]} · {m["duracion"]} orientativos.\n\n'+block+
             f'[Guía y secuencia](../{curso["guia"]}#ruta-aprendizaje) · [Fundamento del manual](../material_propio/{codigo}_manual_cientifico.html#{m["manual"]})')
         cell.metadata['tags']=['ruta-aprendizaje'];cell.id=hashlib.sha256(f'{codigo}-{n}-ruta'.encode()).hexdigest()[:12]
-        nb.cells.insert(1,cell);nbformat.write(nb,path)
+        nb.cells.insert(1,cell)
+        nb.cells=[c for c in nb.cells if not set(c.metadata.get('tags',[])) & {'practica-transferencia','respuesta-estudiante'}]
+        consigna,solucion,error,discusion=PRACTICAS[codigo][n-1]
+        practica=nbformat.v4.new_markdown_cell(f'## Práctica de transferencia {n:02}\n\n{consigna}\n\n**Entrega:** hipótesis previa, cálculo con unidades, interpretación y límite. Completa tu respuesta antes de consultar la [pauta docente](../material_propio/PAUTA_DOCENTE.md#nb{n:02}).\n\n**Discusión:** {discusion}')
+        practica.metadata['tags']=['practica-transferencia'];practica.id=hashlib.sha256(f'{codigo}-{n}-practica'.encode()).hexdigest()[:12]
+        respuesta=nbformat.v4.new_markdown_cell('### Tu resolución\n\nEdita esta celda: escribe tu hipótesis, procedimiento, resultado, interpretación y una comprobación. Adjunta tu código o gráfico si la actividad lo requiere.\n\n**Auto-revisión:** ¿usé la población correcta?, ¿declaré unidades y supuestos?, ¿mi evidencia permite esa conclusión?')
+        respuesta.metadata['tags']=['respuesta-estudiante'];respuesta.id=hashlib.sha256(f'{codigo}-{n}-respuesta'.encode()).hexdigest()[:12]
+        nb.cells.extend([practica,respuesta]);nbformat.write(nb,path)
+        pauta+=f'<a id="nb{n:02}"></a>\n## {title}\n\n**Consigna:** {consigna}\n\n**Pauta razonada:** {solucion}\n\n**Error frecuente:** {error}\n\n**Discusión:** {discusion}\n\n**Criterio:** {m["logro"]}\n\n'
+        manual+=f'**Transferencia NB{n:02}:** {consigna}\n\n'
+    (carpeta/'material_propio/PAUTA_DOCENTE.md').write_text(pauta.rstrip()+'\n',encoding='utf-8')
     (carpeta/'RUTA_APRENDIZAJE.md').write_text(md.rstrip()+'\n',encoding='utf-8')
     path=carpeta/'material_propio'/f'{codigo}_manual_cientifico.qmd'; text=path.read_text(encoding='utf-8')
     text=re.sub(r'<!-- BA_APRENDIZAJE_INICIO -->.*?<!-- BA_APRENDIZAJE_FIN -->\s*','',text,flags=re.S)

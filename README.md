@@ -24,7 +24,9 @@ Cada curso tiene el mismo formato:
 
 **Estudiantes.** Abra la guía de su curso desde el [sitio web](https://yerkocp28.github.io/business-analytics-abierto/), o descargue el repositorio (botón *Code › Download ZIP*) para usarla sin conexión. Para los laboratorios, prepare el entorno de Python como se indica abajo y ejecute las celdas en orden.
 
-**Docentes.** Cada guía trae una ruta de doce semanas con objetivos, actividades de 90 minutos, preguntas gatillantes y recursos por semana; Modelos Predictivos incluye además una [ruta intensiva de cinco semanas](03_Modelos_Predictivos_Negocios/RUTA_INTENSIVA.md). Las rúbricas son formativas: cada curso define sus ponderaciones y reglas de evaluación.
+**Docentes.** Cada guía trae una propuesta de doce semanas con objetivos, preguntas y recursos; Modelos Predictivos incluye además una [ruta intensiva de cinco semanas](03_Modelos_Predictivos_Negocios/RUTA_INTENSIVA.md). Las rutas de cada módulo distinguen explicación, práctica guiada y trabajo autónomo: los notebooks extensos pueden ocupar varias sesiones. Los tiempos son estimaciones que se ajustan tras pilotear con el grupo. Las rúbricas y autoevaluaciones son formativas.
+
+Los 28 notebooks incluyen un problema de transferencia y espacio para justificar la respuesta. Las soluciones y errores frecuentes están separados en las pautas docentes de [Fundamentos](01_Fundamentos_Business_Analytics/material_propio/PAUTA_DOCENTE.md), [Estadística](02_Estadistica_Business_Analytics/material_propio/PAUTA_DOCENTE.md), [Modelos Predictivos](03_Modelos_Predictivos_Negocios/material_propio/PAUTA_DOCENTE.md) y [Analítica Estratégica](04_Analitica_Estrategica_Datos/material_propio/PAUTA_DOCENTE.md).
 
 ## Entorno para los notebooks
 
@@ -43,11 +45,11 @@ Abra Jupyter desde la raíz del repositorio o desde una subcarpeta: los notebook
 
 La [guía de mantenimiento](MANTENIMIENTO.md) documenta qué fuentes editar, cómo preparar el entorno de construcción y cómo validar la colección con `python _transversal/construir_todo.py`. Incluye reconstrucción de manuales, ejecución de laboratorios, controles de contenido y pruebas de las nueve páginas principales en cuatro tamaños de pantalla.
 
-Consulte el [informe de mejoras y alcance de la revisión](docs/mejoras_publico_2026-10-09_analisis_codex.md), la [evidencia de interfaz](verificacion/interfaz.json) y el [resultado de la última verificación global](verificacion/ultima_ejecucion.json). El flujo de GitHub Actions ejecuta las comprobaciones en cada cambio a `main` y solicitud de incorporación.
+Consulte el [informe de mejoras y alcance de la revisión](docs/mejoras_publico_2026-10-09_analisis_codex.md), las [correcciones de la auditoría de notebooks](docs/correcciones_notebooks_2026-10-09_analisis_codex.md), la [evidencia de interfaz](verificacion/interfaz.json) y el [resultado de la última verificación global](verificacion/ultima_ejecucion.json). El flujo de GitHub Actions ejecuta las comprobaciones en cada cambio a `main` y solicitud de incorporación.
 
 ## Datos
 
-Todas las empresas son ficticias y todos los datos son simulados con un [generador documentado](_transversal/datos/generar_datos.py) de semilla fija: FinCordillera (banca), QuillayMarket (retail), PulpaLenga (celulosa), CasaPeumo (hogar), BoldoNet (servicio digital) y ComercioSur (comercio). Algunos conjuntos traen defectos de calidad deliberados para practicar limpieza. Consulte el [diccionario de datos](_transversal/datos/README.md).
+Todas las empresas son ficticias y todos los datos son simulados: FinCordillera (banca), QuillayMarket (retail), PulpaLenga (celulosa), CasaPeumo (hogar), BoldoNet (servicio digital) y ComercioSur (comercio). Los [casos compartidos](_transversal/datos/README.md) y [ComercioSur](02_Estadistica_Business_Analytics/datos/README.md) tienen generadores documentados. Algunos conjuntos traen defectos de calidad para practicar limpieza. El [catálogo y diccionario semántico](_transversal/datos/CATALOGO.md) cubre 13 fuentes, 19 tablas analíticas y un [perfil de 133 columnas](_transversal/datos/perfil_columnas.csv).
 
 ## Licencia y forma de citar
 

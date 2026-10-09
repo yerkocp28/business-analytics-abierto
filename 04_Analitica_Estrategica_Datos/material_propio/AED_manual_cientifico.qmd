@@ -90,19 +90,35 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 **NB01 · Proceso y calidad (Núcleo).** Diseñar un proceso con entregables y reglas de calidad que cambian la decisión. **Evidencia:** Entregar contrato, auditoría, denominadores y registro de exclusiones reproducible.
 
+**Transferencia NB01:** Hay 100 clientes maduros: 72 activos, 18 abandonos y 10 estados desconocidos; además 40 inmaduros. Calcula retención observada y límites por faltantes. Documenta una actualización previa al ingreso sin inventar fechas.
+
 **NB02 · Selección de técnicas (Núcleo).** Elegir técnica según pregunta, respuesta, estructura y decisión. **Evidencia:** Justificar técnica, referencia, validación y una implicación práctica que no confunda asociación y efecto.
+
+**Transferencia NB02:** Obtén tres segmentos con otra semilla y compara la partición con la original. Explica por qué comparar etiquetas 0/1/2 directamente puede fallar. Diseña un uso y una comprobación comercial posteriores.
 
 **NB03 · KPIs y dashboard (Núcleo).** Definir y conciliar una medida con grano, unidad, denominador y responsable. **Evidencia:** Entregar ficha de KPI y tablero con fuente, población, período y acción ante desviaciones.
 
+**Transferencia NB03:** Dos unidades generan ingresos 100 y 900 UM, con margen 10 y 50 UM. Calcula margen agregado. Diseña cuatro tarjetas con fórmula, período, denominador, responsable y acción; concilia una con la consulta Power Query entregada.
+
 **NB04 · Optimización y restricciones (Núcleo).** Formular y resolver una decisión factible e interpretar sensibilidad local. **Evidencia:** Presentar variables, objetivo, restricciones, solución, holguras y una decisión de capacidad.
+
+**Transferencia NB04:** Reformula producción A/B para 130 horas y 100 unidades de material. Resuelve, verifica restricciones y compara contra una solución factible elegida a mano. Explica qué no demuestra el óptimo matemático.
 
 **NB05 · Alternativas e información (Núcleo).** Comparar acciones bajo riesgo y valorar información antes de pagar por ella. **Evidencia:** Entregar matriz de pagos, alternativa, sensibilidad y cota del costo de información.
 
+**Transferencia NB05:** Con probabilidad de demanda alta .6, calcula EV de expandir y pilotar, EVPI y el precio máximo defendible de información perfecta. Dibuja la secuencia señal→decisión→resultado y distingue EVPI de EVSI neto.
+
 **NB06 · SolarSur y Monte Carlo (Núcleo).** Comparar proyectos con flujos, dependencia y precisión numérica explícitos. **Evidencia:** Informar VAN, pérdida, SE de la media, supuestos y sensibilidad de una recomendación.
+
+**Transferencia NB06:** Duplica N manteniendo el modelo y después cambia shocks persistentes por anuales independientes. Predice qué cambia en SE y en la dispersión de VAN antes de ejecutar. Redacta una recomendación con límite de riesgo supuesto.
 
 **NB07 · Integración e implementación (Núcleo).** Defender una alternativa y diseñar el piloto que evaluará su efecto. **Evidencia:** Entregar memo con alternativas, factibilidad, incertidumbre, piloto, responsable y criterio de revisión.
 
+**Transferencia NB07:** Un piloto cubre 10.000 pedidos: riesgo base .06, reducción relativa supuesta .15, costo evitado 25 UM y costo total 1.500 UM. Calcula beneficio y reducción absoluta. Prepara memo, alternativas y tres hitos de seguimiento.
+
 **NB08 · Profundización prescriptiva (Profundización).** Analizar sensibilidad, colas y aprendizaje secuencial sin extrapolar garantías. **Evidencia:** Defender supuestos, criterio de riesgo, comparación independiente y límite de transferencia.
+
+**Transferencia NB08:** Elige una estación: precio no lineal, cartera, cola o política secuencial. Para precio con costo 20 y q=120−2p, deriva el óptimo en [20,60]. Para otra estación, entrega hipótesis, referencia y sensibilidad, usando los prerrequisitos indicados.
 
 <!-- BA_APRENDIZAJE_FIN -->
 
@@ -448,3 +464,11 @@ Para mantener esta edición, modifique el QMD y regenere PDF/HTML; edite los not
 # Referencias {.unnumbered #sec-referencias}
 
 Las referencias primarias externas apoyan métodos y herramientas; las explicaciones, ejemplos y ejercicios de esta edición son elaboración propia. Los enlaces bibliográficos requieren conexión al consultarlos.
+
+## Auditoría complementaria de las fichas BoldoNet {#sec-fichas-boldonet}
+
+BoldoNet marca también actualizaciones anteriores al ingreso, actualización faltante, satisfacción fuera de 1–5 y permanencia negativa. NB01 presenta sensibilidad de retención con y sin incidencias temporales; no corrige fechas automáticamente. NB03 muestra madurez, cobertura de estado y límites por faltantes junto a cada tasa por programa.
+
+## Práctica de herramientas {#sec-practica-herramientas}
+
+[Consulta Power Query, medidas DAX y controles de conciliación](herramientas_bi/README.md). Los controles se calculan en Python; verificar el motor nativo al realizar la práctica.

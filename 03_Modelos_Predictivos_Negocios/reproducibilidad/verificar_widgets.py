@@ -41,9 +41,9 @@ _quiz = globals()[__QUIZ__]
 _radio, _boton, _out = _quiz.children[1], _quiz.children[2], _quiz.children[3]
 _radio.value = None; _boton.click()
 assert "Selecciona una respuesta" in _out.value
-_radio.value = _radio.options[1]; _boton.click()
+_radio.value = _quiz._ba_clave; _boton.click()
 assert "Correcto." in _out.value
-_radio.value = _radio.options[0]; _boton.click()
+_radio.value = next(v for _, v in _radio.options if v != _quiz._ba_clave); _boton.click()
 assert "Revisa tu respuesta" in _out.value
 print("MPN_QA=" + json.dumps({"cambios_de_control": _cambios, "autoevaluacion": "OK"}))
 '''

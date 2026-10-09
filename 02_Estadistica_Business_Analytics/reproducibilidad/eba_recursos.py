@@ -76,11 +76,10 @@ def indicadores(df):
             'tiempo_medio':float(df.tiempo_min.mean()) if len(df) else None,
             'resueltos_pct':100*float(df.resuelto.mean()) if len(df) else None}
 
-def pregunta(texto,incorrecta,correcta,explicacion):
-    radio=widgets.RadioButtons(options=[incorrecta,correcta],value=None,layout=widgets.Layout(width='auto'))
-    boton=widgets.Button(description='Comprobar',button_style='info');out=widgets.HTML()
-    def revisar(_):
-        estado='Selecciona una respuesta.' if radio.value is None else ('Correcto.' if radio.value==correcta else 'Revisa tu razonamiento.')
-        out.value=f'<p><strong>{estado}</strong> {html.escape(explicacion) if radio.value else ""}</p>'
-    boton.on_click(revisar)
-    return widgets.VBox([widgets.HTML('<strong>'+html.escape(texto)+'</strong>'),radio,boton,out])
+import sys
+if str(RAIZ) not in sys.path:
+    sys.path.insert(0, str(RAIZ))
+from _transversal.evaluacion import pregunta as _pregunta
+
+def pregunta(texto, incorrecta, correcta, explicacion, tercera):
+    return _pregunta(texto, [incorrecta, correcta, tercera], 1, explicacion, mostrar=False)

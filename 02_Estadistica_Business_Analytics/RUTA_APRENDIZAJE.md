@@ -8,7 +8,7 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 ## 01 · Problema, descripción y muestreo
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 180 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Definir población y estimando y justificar a quién representa la muestra.
 
@@ -20,11 +20,13 @@ Núcleo · 60–90 min orientativos.
 
 **Criterio de logro:** Entregar contrato de análisis con población, diseño, estimando y fuentes de sesgo.
 
+**Distribución orientativa:** explicación 45 min; práctica guiada 135 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_eba.html#sec-problema) · [Manual](material_propio/EBA_manual_cientifico.html#sec-problema) · [Notebook](notebooks/EBA_01_problema_descripcion_muestreo.ipynb)
 
 ## 02 · Probabilidad, Bayes y distribuciones
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 90 min guiados + 30 min autónomos orientativos.
 
 **Objetivo:** Construir un modelo probabilístico cuyo soporte y supuestos sean explícitos.
 
@@ -36,11 +38,13 @@ Núcleo · 60–90 min orientativos.
 
 **Criterio de logro:** Calcular e interpretar el posterior 180/670 y explicar por qué no equivale a sensibilidad.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 60 min; trabajo autónomo 30 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_eba.html#sec-probabilidad) · [Manual](material_propio/EBA_manual_cientifico.html#sec-probabilidad) · [Notebook](notebooks/EBA_02_probabilidad_bayes_distribuciones.ipynb)
 
 ## 03 · Estimación e intervalos
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 90 min guiados + 40 min autónomos orientativos.
 
 **Objetivo:** Elegir un intervalo según el parámetro, la población y el diseño.
 
@@ -52,11 +56,13 @@ Núcleo · 60–90 min orientativos.
 
 **Criterio de logro:** Reportar estimación, intervalo, unidad, población objetivo y condiciones de validez.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 60 min; trabajo autónomo 40 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_eba.html#sec-intervalos) · [Manual](material_propio/EBA_manual_cientifico.html#sec-intervalos) · [Notebook](notebooks/EBA_03_estimacion_intervalos.ipynb)
 
 ## 04 · Correlación y regresión
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Interpretar coeficientes condicionados y evaluar diagnósticos del modelo.
 
@@ -68,11 +74,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Justificar especificación, interpretar un coeficiente y señalar un límite causal.
 
+**Distribución orientativa:** explicación 40 min; práctica guiada 80 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_eba.html#sec-regresion) · [Manual](material_propio/EBA_manual_cientifico.html#sec-regresion) · [Notebook](notebooks/EBA_04_correlacion_regresion.ipynb)
 
 ## 05 · Contrastes, ANOVA y decisión
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 150 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Elegir un contraste y comunicar efecto, incertidumbre y relevancia práctica.
 
@@ -84,11 +92,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Entregar diferencia, IC, p, ajuste por multiplicidad y una decisión condicionada.
 
+**Distribución orientativa:** explicación 40 min; práctica guiada 110 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_eba.html#sec-contrastes) · [Manual](material_propio/EBA_manual_cientifico.html#sec-contrastes) · [Notebook](notebooks/EBA_05_hipotesis_anova.ipynb)
 
 ## 06 · Series y pronóstico
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 150 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Comparar pronósticos con igual horizonte y orden temporal preservado.
 
@@ -100,11 +110,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Dibujar las ventanas y explicar métrica, referencia y dependencia entre errores solapados.
 
+**Distribución orientativa:** explicación 40 min; práctica guiada 110 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_eba.html#sec-series) · [Manual](material_propio/EBA_manual_cientifico.html#sec-series) · [Notebook](notebooks/EBA_06_series_tiempo.ipynb)
 
 ## 07 · Visualización y herramientas
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 90 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Conciliar un indicador entre herramientas y diseñar un tablero interpretable.
 
@@ -116,11 +128,13 @@ Núcleo · 60–90 min orientativos.
 
 **Criterio de logro:** Entregar un tablero con unidades, filtros y totales conciliados; identificar qué se ejecutó.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 60 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_eba.html#sec-visualizacion) · [Manual](material_propio/EBA_manual_cientifico.html#sec-visualizacion) · [Notebook](notebooks/EBA_07_visualizacion_herramientas.ipynb)
 
 ## 08 · Integrador y comunicación
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 120 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Defender una recomendación con efecto, incertidumbre y costo.
 
@@ -131,5 +145,7 @@ Núcleo · 60–90 min orientativos.
 **Práctica:** Redactar un memo y defenderlo frente a un escenario que invierte la decisión.
 
 **Criterio de logro:** Entregar memo, cálculo, gráfico y defensa con población, sensibilidad y siguiente evidencia.
+
+**Distribución orientativa:** explicación 20 min; práctica guiada 100 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
 
 [Capítulo](guia_maestra_eba.html#sec-comunicacion) · [Manual](material_propio/EBA_manual_cientifico.html#sec-comunicacion) · [Notebook](notebooks/EBA_08_integrador_comunicacion.ipynb)

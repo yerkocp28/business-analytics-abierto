@@ -59,17 +59,18 @@ def ampliar(marco, columnas=None):
 def datos_quillaymarket():
     demanda = mr.quillaymarket_demanda()
     X = demanda.drop(columns=["registro_id", "ventas_unidades"]); y = demanda["ventas_unidades"]
-    Xe, Xv, Xt, ye, yv, yt = mr.particion_tres(X, y, estratificar=False)
+    Xe, Xv, Xcal, Xt, ye, yv, ycal, yt = mr.particion_con_calibracion(X, y)
     De = matriz_diseno(Xe, True)
     estacional = LinearRegression().fit(De, ye)
     pred_est = estacional.predict(matriz_diseno(Xv, True, De.columns))
     De_l = matriz_diseno(Xe, False)
     pred_lin = LinearRegression().fit(De_l, ye).predict(matriz_diseno(Xv, False, De_l.columns))
-    abs_res = np.abs(yv.values - pred_est)
-    q80 = float(np.quantile(abs_res, min(1, np.ceil((len(abs_res) + 1) * .8) / len(abs_res))))
+    pred_cal = estacional.predict(matriz_diseno(Xcal, True, De.columns))
+    abs_res = np.abs(ycal.values - pred_cal)
+    q80 = mr.cuantil_conformal(abs_res, .8)
     residuos = pd.DataFrame({"mes": Xv["mes"].values, "numero": yv.values - pred_lin,
                              "categoria": yv.values - pred_est}).groupby("mes").mean()
-    rangos = demanda.groupby("categoria_producto")["precio_promedio_clp"].agg(["min", "max"]) / 1000
+    rangos = Xe.groupby("categoria_producto")["precio_promedio_clp"].agg(["min", "max"]) / 1000
     escenario = {"intercepto": r(estacional.intercept_, 6),
                  "coef": {c: r(b, 6) for c, b in zip(De.columns, estacional.coef_)},
                  "q80": r(q80, 4), "categorias": sorted(demanda["categoria_producto"].unique()),

@@ -1,0 +1,83 @@
+{
+  "fecha": "2026-10-09",
+  "archivos": [
+    {
+      "archivo": "02_Estadistica_Business_Analytics/datos/comerciosur_marco.csv",
+      "sha256": "b56175078af5dbcd82e84e557d184ef02d26ee42ede134b6030a0098ab7aed49",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "02_Estadistica_Business_Analytics/datos/comerciosur_mensual.csv",
+      "sha256": "ec0244ef7f55b11c2e84a627961529810fa07ad8b26b155f5fc5510193879b35",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "02_Estadistica_Business_Analytics/datos/comerciosur_pareado.csv",
+      "sha256": "59c1ecef89873ad2469f3ed761ac132d88a5055e1763bb6354ee31393e3ab0a1",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "02_Estadistica_Business_Analytics/datos/comerciosur_pedidos.csv",
+      "sha256": "092550a681ef41261268a228f7e20bcc0517e1fa238f1f714db5270af1923e69",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/boldonet/originales/boldonet_kpis.xlsx",
+      "sha256": "3739892b45b4569597e1df43d56cc750e0be8f488dc3f2bb2da4127882cae8e0",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx",
+      "sha256": "1a22c3f09be6d68ddac012dbeb26eedc6b7fddd0d1dfb34a252df0b47e90bdd1",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/embudo_digital/originales/embudo_digital.xlsx",
+      "sha256": "0bd87334a92161689cef483473d1431958c5fd8a2ce05d147f288304d7b9cc83",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/fincordillera/originales/fincordillera_clientes.csv",
+      "sha256": "e2cf106c361fb04141b84c60e38f89b26f647d5ada3d646b433b3c967a8c3404",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv",
+      "sha256": "49c74033be1580c739943187b3cb27cab346203055e1c18b6d4f0ddec79ca035",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv",
+      "sha256": "26a82336c08179cec0ace31cd6683e507be14fa9382f869ba039255d8c4e2dd9",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/pulpa_lenga/originales/pulpalenga_consumo_energetico.csv",
+      "sha256": "9e7bcbf1ce7491aa81a8020e3c0802b692d42710a1bba198f32054a678d1392e",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv",
+      "sha256": "e71ff9a1a5fe5b338376ed04ebcc3273c710c3245bb76e9256ec5e24ae99df78",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    },
+    {
+      "archivo": "_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv",
+      "sha256": "a422baa62f3825a371f4c6463a2586ba8b25f668f335d67d29d2272b4514f19a",
+      "original_sin_cambios": true,
+      "regenerado_identico": true
+    }
+  ]
+}

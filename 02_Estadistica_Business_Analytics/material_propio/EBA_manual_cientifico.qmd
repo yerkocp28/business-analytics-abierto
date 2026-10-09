@@ -93,19 +93,35 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 **NB01 · Problema, descripción y muestreo (Núcleo).** Definir población y estimando y justificar a quién representa la muestra. **Evidencia:** Entregar contrato de análisis con población, diseño, estimando y fuentes de sesgo.
 
+**Transferencia NB01:** Una muestra toma el mismo número de pedidos Web y Tienda. Sus medias son 10 y 20 minutos, pero la población contiene 70% Web y 30% Tienda. Estima la media poblacional y contrasta con el promedio sin ponderar. Redacta la ficha de muestreo.
+
 **NB02 · Probabilidad, Bayes y distribuciones (Núcleo).** Construir un modelo probabilístico cuyo soporte y supuestos sean explícitos. **Evidencia:** Calcular e interpretar el posterior 180/670 y explicar por qué no equivale a sensibilidad.
+
+**Transferencia NB02:** Construye una tabla 2×2 para 10.000 alertas potenciales con prevalencia 3%, sensibilidad 85% y especificidad 94%. Calcula P(riesgo|alerta) sin llamar al helper. Elige una distribución para llegadas y justifica un supuesto que podría fallar.
 
 **NB03 · Estimación e intervalos (Núcleo).** Elegir un intervalo según el parámetro, la población y el diseño. **Evidencia:** Reportar estimación, intervalo, unidad, población objetivo y condiciones de validez.
 
+**Transferencia NB03:** Con n=25 pedidos independientes, media 12 minutos y SD=5, construye el IC t del 95% paso a paso. Indica qué parámetro cubre. Compara con n=100 manteniendo media y SD.
+
 **NB04 · Correlación y regresión (Núcleo).** Interpretar coeficientes condicionados y evaluar diagnósticos del modelo. **Evidencia:** Justificar especificación, interpretar un coeficiente y señalar un límite causal.
+
+**Transferencia NB04:** Un modelo de tiempo incluye ticket, canal y campaña. El coeficiente de ticket es .08 min por mil UM. Interpreta un incremento de 20 mil UM, distingue IC del coeficiente e intervalo de un pedido y propone un diagnóstico de residuos.
 
 **NB05 · Contrastes, ANOVA y decisión (Núcleo).** Elegir un contraste y comunicar efecto, incertidumbre y relevancia práctica. **Evidencia:** Entregar diferencia, IC, p, ajuste por multiplicidad y una decisión condicionada.
 
+**Transferencia NB05:** B−A en tiempo tiene IC95% [−6,−2] min y estimación −4. B cuesta 5 UM adicionales por pedido y ahorrar un minuto vale 1 UM. Decide si significación estadística basta para recomendar B y elige la prueba para datos independientes o pareados.
+
 **NB06 · Series y pronóstico (Núcleo).** Comparar pronósticos con igual horizonte y orden temporal preservado. **Evidencia:** Dibujar las ventanas y explicar métrica, referencia y dependencia entre errores solapados.
+
+**Transferencia NB06:** Para reales [120,150,180], una referencia predice [110,160,170] y otro método [125,140,190]. Calcula MAE. Dibuja entrenamiento, selección y prueba por fechas para un horizonte de tres meses; explica cuándo se conoce cada error.
 
 **NB07 · Visualización y herramientas (Núcleo).** Conciliar un indicador entre herramientas y diseñar un tablero interpretable. **Evidencia:** Entregar un tablero con unidades, filtros y totales conciliados; identificar qué se ejecutó.
 
+**Transferencia NB07:** Filtra Tienda en ComercioSur y concilia cantidad, tiempo medio y resolución en Python, Excel y la consulta Power Query entregada. Diseña una tarea de usuario que evalúe comprensión del tablero manteniendo iguales los datos.
+
 **NB08 · Integrador y comunicación (Núcleo).** Defender una recomendación con efecto, incertidumbre y costo. **Evidencia:** Entregar memo, cálculo, gráfico y defensa con población, sensibilidad y siguiente evidencia.
+
+**Transferencia NB08:** Una campaña reduce tiempo: IC de B−A [−5,−1] min. Para resolución el IC de diferencia es [−.06,.02]; el margen de no inferioridad predefinido es −.03. Redacta un memo de 100 palabras con decisión, incertidumbre y siguiente evidencia.
 
 <!-- BA_APRENDIZAJE_FIN -->
 
@@ -442,3 +458,7 @@ Las fuentes técnicas citadas respaldan métodos y herramientas. Las explicacion
 
 ::: {#refs}
 :::
+
+## Práctica de herramientas {#sec-practica-herramientas}
+
+[Consulta Power Query, medidas DAX y controles de conciliación](herramientas_bi/README.md). Los controles se calculan en Python; verificar el motor nativo al realizar la práctica.

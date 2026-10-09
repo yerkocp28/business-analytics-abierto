@@ -161,8 +161,17 @@ CURSOS = {
 
 OPCIONALES = {'FBA':{4,5}, 'EBA':set(), 'MPN':{7}, 'AED':{8}}
 
+# Minutos orientativos: explicación, práctica guiada, trabajo autónomo.
+TIEMPOS = {
+ 'FBA': [(30,60,30),(35,85,40),(30,120,60),(30,60,30),(40,110,60)],
+ 'EBA': [(45,135,45),(30,60,30),(30,60,40),(40,80,45),(40,110,60),(40,110,60),(30,60,45),(20,100,60)],
+ 'MPN': [(35,85,45),(30,90,45),(45,135,60),(40,110,60),(45,135,75),(35,115,60),(35,85,45)],
+ 'AED': [(30,90,45),(40,80,45),(30,90,45),(35,85,45),(35,85,45),(40,80,60),(30,90,60),(60,180,90)]
+}
+
 def modulos(codigo):
     campos = ('ancla','manual','titulo','objetivo','preparacion','ejemplo','actividad','logro')
     for i, row in enumerate(CURSOS[codigo]['modulos'], 1):
         yield dict(zip(campos,row), numero=i, nivel='Profundización' if i in OPCIONALES[codigo] else 'Núcleo',
-                   duracion='90–120 min' if codigo in {'MPN','AED'} or i in {4,5,6} else '60–90 min')
+                   duracion=f'{sum(TIEMPOS[codigo][i-1][:2])} min guiados + {TIEMPOS[codigo][i-1][2]} min autónomos',
+                   explicacion_min=TIEMPOS[codigo][i-1][0], practica_min=TIEMPOS[codigo][i-1][1], autonomo_min=TIEMPOS[codigo][i-1][2])

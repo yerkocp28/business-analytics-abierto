@@ -9,7 +9,7 @@
     },
     {
       "nombre": "MPN_02_crisp_preparacion.ipynb",
-      "celdas_codigo": 8,
+      "celdas_codigo": 9,
       "widgets": 24,
       "resultado": "OK"
     },
@@ -62,8 +62,8 @@
     "anclas_y_rutas": "OK"
   },
   "pdf": {
-    "paginas": 16,
-    "caracteres_extraidos": 48607,
+    "paginas": 17,
+    "caracteres_extraidos": 52547,
     "resultado": "OK"
   }
 }

@@ -1,6 +1,7 @@
 """Guía autónoma: capítulos de la fuente QMD renderizada y simuladores con datos locales."""
 from pathlib import Path
-import json, html
+import json, html, os
+from urllib.parse import urlsplit, urlunsplit, unquote, quote
 import numpy as np
 from scipy import stats
 from bs4 import BeautifulSoup
@@ -13,8 +14,18 @@ def main():
     for s in sections:
         heading=s.find(['h1','h2']);nav.append(f'<a href="#{s["id"]}">{html.escape(heading.get_text(" ",strip=True))}</a>')
         for x in s.select('.anchorjs-link'):x.decompose()
-        for a in s.select('a[href]'):
-            if a['href'].startswith('EBA_'):a['href']='material_propio/'+a['href']
+        # El manual vive un nivel más abajo. Reubicar cualquier recurso local,
+        # incluidos directorios nuevos, conservando consultas y anclas.
+        for elemento in s.select('[href], [src]'):
+            for atributo in ['href', 'src']:
+                if not elemento.has_attr(atributo):
+                    continue
+                u = urlsplit(elemento[atributo])
+                if u.scheme or u.netloc or not u.path:
+                    continue
+                destino = (material / unquote(u.path)).resolve()
+                ruta = Path(os.path.relpath(destino, CURSO)).as_posix()
+                elemento[atributo] = urlunsplit(('', '', quote(ruta, safe='/'), u.query, u.fragment))
     df=pedidos();a=df.loc[df.campana.eq('A'),'tiempo_min'];b=df.loc[df.campana.eq('B'),'tiempo_min']
     payload={'pedidos':df.to_dict('records'),'serie':serie().tolist(),
              'tcrit':{str(n):{str(c):float(stats.t.ppf((1+c)/2,n-1)) for c in [.9,.95,.99]} for n in range(20,601,20)},

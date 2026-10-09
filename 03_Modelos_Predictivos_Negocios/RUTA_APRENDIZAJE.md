@@ -8,7 +8,7 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 ## 01 · Problema predictivo
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Definir objetivo, horizonte, disponibilidad de variables y referencia.
 
@@ -20,11 +20,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Entregar ficha de problema, referencia y justificación de una técnica; explicar la red mínima.
 
+**Distribución orientativa:** explicación 35 min; práctica guiada 85 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_mpn.html#c1) · [Manual](material_propio/MPN_manual_cientifico.html#sec-problema) · [Notebook](notebooks/MPN_01_problema_predictivo.ipynb)
 
 ## 02 · Preparación sin fuga
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Construir un pipeline que aprenda transformaciones solo con entrenamiento.
 
@@ -36,11 +38,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Demostrar separación de datos, contrato de variables y transformaciones ajustadas sin prueba.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 90 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_mpn.html#c3) · [Manual](material_propio/MPN_manual_cientifico.html#sec-crisp) · [Notebook](notebooks/MPN_02_crisp_preparacion.ipynb)
 
 ## 03 · Regresión de demanda
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 180 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Comparar regresión y alternativas con referencia e incertidumbre de predicción.
 
@@ -52,11 +56,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Reportar MAE/RMSE, referencia, diagnóstico y diferencia entre IC de media e intervalo predictivo.
 
+**Distribución orientativa:** explicación 45 min; práctica guiada 135 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_mpn.html#c4) · [Manual](material_propio/MPN_manual_cientifico.html#sec-regresion) · [Notebook](notebooks/MPN_03_regresion_demanda.ipynb)
 
 ## 04 · Clasificación de abandono
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 150 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Evaluar discriminación y una campaña con probabilidades y costos explícitos.
 
@@ -68,11 +74,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Justificar modelo y política con métricas fuera de muestra y límites de utilidad.
 
+**Distribución orientativa:** explicación 40 min; práctica guiada 110 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_mpn.html#c5) · [Manual](material_propio/MPN_manual_cientifico.html#sec-clasificacion) · [Notebook](notebooks/MPN_04_clasificacion_abandono.ipynb)
 
 ## 05 · Validación, métricas y umbral
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 180 min guiados + 75 min autónomos orientativos.
 
 **Objetivo:** Seleccionar modelo y umbral sin reutilizar la prueba para decidir.
 
@@ -84,11 +92,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Documentar selección, datos reservados y costo; no inferir calibración por coincidencia de umbrales.
 
+**Distribución orientativa:** explicación 45 min; práctica guiada 135 min; trabajo autónomo 75 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_mpn.html#c8) · [Manual](material_propio/MPN_manual_cientifico.html#sec-validacion) · [Notebook](notebooks/MPN_05_validacion_evaluacion.ipynb)
 
 ## 06 · Limitaciones y comunicación
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 150 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Construir una ficha de modelo con seguimiento, responsables y condiciones de uso.
 
@@ -100,11 +110,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Entregar ficha con evidencia, incertidumbre, umbral de revisión y propuesta de mejora.
 
+**Distribución orientativa:** explicación 35 min; práctica guiada 115 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_mpn.html#c10) · [Manual](material_propio/MPN_manual_cientifico.html#sec-limitaciones) · [Notebook](notebooks/MPN_06_limitaciones_comunicacion.ipynb)
 
 ## 07 · Pronóstico de demanda
 
-Profundización · 90–120 min orientativos.
+Profundización · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Evaluar una serie mediante orígenes móviles y referencias comparables.
 
@@ -115,5 +127,7 @@ Profundización · 90–120 min orientativos.
 **Práctica:** Aumentar el horizonte y analizar cobertura y MASE sin ajustar con los meses de prueba.
 
 **Criterio de logro:** Explicar horizonte, cobertura observada, referencia y límites de cambios del proceso.
+
+**Distribución orientativa:** explicación 35 min; práctica guiada 85 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
 
 [Capítulo](guia_maestra_mpn.html#c16) · [Manual](material_propio/MPN_manual_cientifico.html#sec-series) · [Notebook](notebooks/MPN_07_pronostico_demanda.ipynb)

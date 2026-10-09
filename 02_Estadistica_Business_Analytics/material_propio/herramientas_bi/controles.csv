@@ -1,0 +1,13 @@
+columna_filtro,valor_filtro,medida,valor_python
+canal,TODOS,Pedidos observados,600.0
+canal,TODOS,Tiempo medio min,36.256283333333336
+canal,TODOS,Ticket medio mil UM,50.913016666666664
+canal,TODOS,Resolución,0.755
+canal,Tienda,Pedidos observados,217.0
+canal,Tienda,Tiempo medio min,33.9505069124424
+canal,Tienda,Ticket medio mil UM,55.94944700460829
+canal,Tienda,Resolución,0.7695852534562212
+canal,Web,Pedidos observados,383.0
+canal,Web,Tiempo medio min,37.56268929503916
+canal,Web,Ticket medio mil UM,48.05947780678851
+canal,Web,Resolución,0.7467362924281984

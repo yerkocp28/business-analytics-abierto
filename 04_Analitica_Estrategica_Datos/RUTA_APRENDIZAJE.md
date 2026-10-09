@@ -8,7 +8,7 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 ## 01 · Proceso y calidad
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Diseñar un proceso con entregables y reglas de calidad que cambian la decisión.
 
@@ -20,11 +20,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Entregar contrato, auditoría, denominadores y registro de exclusiones reproducible.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 90 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_aed.html#proceso) · [Manual](material_propio/AED_manual_cientifico.html#sec-proceso) · [Notebook](notebooks/AED_01_proceso_calidad.ipynb)
 
 ## 02 · Selección de técnicas
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Elegir técnica según pregunta, respuesta, estructura y decisión.
 
@@ -36,11 +38,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Justificar técnica, referencia, validación y una implicación práctica que no confunda asociación y efecto.
 
+**Distribución orientativa:** explicación 40 min; práctica guiada 80 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_aed.html#tecnicas) · [Manual](material_propio/AED_manual_cientifico.html#sec-tecnicas) · [Notebook](notebooks/AED_02_tecnicas_analiticas.ipynb)
 
 ## 03 · KPIs y dashboard
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Definir y conciliar una medida con grano, unidad, denominador y responsable.
 
@@ -52,11 +56,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Entregar ficha de KPI y tablero con fuente, población, período y acción ante desviaciones.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 90 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_aed.html#kpis) · [Manual](material_propio/AED_manual_cientifico.html#sec-kpis) · [Notebook](notebooks/AED_03_kpis_dashboard.ipynb)
 
 ## 04 · Optimización y restricciones
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Formular y resolver una decisión factible e interpretar sensibilidad local.
 
@@ -68,11 +74,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Presentar variables, objetivo, restricciones, solución, holguras y una decisión de capacidad.
 
+**Distribución orientativa:** explicación 35 min; práctica guiada 85 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_aed.html#restricciones) · [Manual](material_propio/AED_manual_cientifico.html#sec-optimizacion) · [Notebook](notebooks/AED_04_optimizacion_restricciones.ipynb)
 
 ## 05 · Alternativas e información
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 45 min autónomos orientativos.
 
 **Objetivo:** Comparar acciones bajo riesgo y valorar información antes de pagar por ella.
 
@@ -84,11 +92,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Entregar matriz de pagos, alternativa, sensibilidad y cota del costo de información.
 
+**Distribución orientativa:** explicación 35 min; práctica guiada 85 min; trabajo autónomo 45 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_aed.html#decision) · [Manual](material_propio/AED_manual_cientifico.html#sec-decision) · [Notebook](notebooks/AED_05_alternativas_decision.ipynb)
 
 ## 06 · SolarSur y Monte Carlo
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Comparar proyectos con flujos, dependencia y precisión numérica explícitos.
 
@@ -100,11 +110,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Informar VAN, pérdida, SE de la media, supuestos y sensibilidad de una recomendación.
 
+**Distribución orientativa:** explicación 40 min; práctica guiada 80 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_aed.html#simulacion) · [Manual](material_propio/AED_manual_cientifico.html#sec-simulacion) · [Notebook](notebooks/AED_06_solarsur_monte_carlo.ipynb)
 
 ## 07 · Integración e implementación
 
-Núcleo · 90–120 min orientativos.
+Núcleo · 120 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Defender una alternativa y diseñar el piloto que evaluará su efecto.
 
@@ -116,11 +128,13 @@ Núcleo · 90–120 min orientativos.
 
 **Criterio de logro:** Entregar memo con alternativas, factibilidad, incertidumbre, piloto, responsable y criterio de revisión.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 90 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_aed.html#comunicacion) · [Manual](material_propio/AED_manual_cientifico.html#sec-comunicacion) · [Notebook](notebooks/AED_07_comunicacion_integracion.ipynb)
 
 ## 08 · Profundización prescriptiva
 
-Profundización · 90–120 min orientativos.
+Profundización · 240 min guiados + 90 min autónomos orientativos.
 
 **Objetivo:** Analizar sensibilidad, colas y aprendizaje secuencial sin extrapolar garantías.
 
@@ -131,5 +145,7 @@ Profundización · 90–120 min orientativos.
 **Práctica:** Modificar aversión al riesgo o mecanismo de recompensa y evaluar estabilidad de la política.
 
 **Criterio de logro:** Defender supuestos, criterio de riesgo, comparación independiente y límite de transferencia.
+
+**Distribución orientativa:** explicación 60 min; práctica guiada 180 min; trabajo autónomo 90 min. Ajustar tras una clase piloto.
 
 [Capítulo](guia_maestra_aed.html#avanzado) · [Manual](material_propio/AED_manual_cientifico.html#sec-profundizacion) · [Notebook](notebooks/AED_08_profundizacion_prescriptiva.ipynb)

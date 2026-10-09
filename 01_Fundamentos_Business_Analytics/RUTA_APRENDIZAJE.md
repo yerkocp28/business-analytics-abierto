@@ -8,7 +8,7 @@ Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del 
 
 ## 01 · Pregunta de negocio y datos
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 90 min guiados + 30 min autónomos orientativos.
 
 **Objetivo:** Formular una decisión con unidad de análisis, variable y regla de calidad.
 
@@ -20,11 +20,13 @@ Núcleo · 60–90 min orientativos.
 
 **Criterio de logro:** Entregar una ficha con pregunta, unidad, fuente, decisión y dos límites.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 60 min; trabajo autónomo 30 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_ba.html#c1) · [Manual](material_propio/FBA_manual_cientifico.html#sec-negocio) · [Notebook](notebooks/FBA_01_negocio_datos.ipynb)
 
 ## 02 · Exploración y comunicación visual
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 120 min guiados + 40 min autónomos orientativos.
 
 **Objetivo:** Elegir un resumen y un gráfico coherentes con la pregunta y el denominador.
 
@@ -36,11 +38,13 @@ Núcleo · 60–90 min orientativos.
 
 **Criterio de logro:** Presentar un gráfico con unidad, período, población y una interpretación verificable.
 
+**Distribución orientativa:** explicación 35 min; práctica guiada 85 min; trabajo autónomo 40 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_ba.html#c5) · [Manual](material_propio/FBA_manual_cientifico.html#sec-visualizacion) · [Notebook](notebooks/FBA_02_exploracion_visual.ipynb)
 
 ## 03 · Herramientas y caso integrador
 
-Núcleo · 60–90 min orientativos.
+Núcleo · 150 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Reproducir un indicador con filtros, agregaciones y una unión validada.
 
@@ -52,11 +56,13 @@ Núcleo · 60–90 min orientativos.
 
 **Criterio de logro:** Entregar cálculo conciliado, control de cardinalidad y recomendación con sensibilidad.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 120 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_ba.html#c14) · [Manual](material_propio/FBA_manual_cientifico.html#sec-herramientas) · [Notebook](notebooks/FBA_03_herramientas_caso_integrador.ipynb)
 
 ## 04 · Probabilidad y simulación
 
-Profundización · 90–120 min orientativos.
+Profundización · 90 min guiados + 30 min autónomos orientativos.
 
 **Objetivo:** Explicar una probabilidad condicionada y la variación de una estimación.
 
@@ -68,11 +74,13 @@ Profundización · 90–120 min orientativos.
 
 **Criterio de logro:** Dibujar una tabla de frecuencias y explicar el efecto de n sin confundir sesgo con precisión.
 
+**Distribución orientativa:** explicación 30 min; práctica guiada 60 min; trabajo autónomo 30 min. Ajustar tras una clase piloto.
+
 [Capítulo](guia_maestra_ba.html#c8) · [Manual](material_propio/FBA_manual_cientifico.html#sec-probabilidad) · [Notebook](notebooks/FBA_04_probabilidad_simulacion.ipynb)
 
 ## 05 · Puente hacia modelos predictivos
 
-Profundización · 90–120 min orientativos.
+Profundización · 150 min guiados + 60 min autónomos orientativos.
 
 **Objetivo:** Comparar un modelo con una referencia usando datos reservados.
 
@@ -83,5 +91,7 @@ Profundización · 90–120 min orientativos.
 **Práctica:** Justificar un costo distinto de falso negativo y comprobar su efecto en la recomendación.
 
 **Criterio de logro:** Informar partición, referencia, métrica, costo y un límite de generalización.
+
+**Distribución orientativa:** explicación 40 min; práctica guiada 110 min; trabajo autónomo 60 min. Ajustar tras una clase piloto.
 
 [Capítulo](guia_maestra_ba.html#c9) · [Manual](material_propio/FBA_manual_cientifico.html#sec-modelos) · [Notebook](notebooks/FBA_05_modelos_evaluacion.ipynb)

@@ -1,0 +1,134 @@
+archivo,hoja,campo,filas,tipo_leido,faltantes,valores_distintos,min_observado,max_observado,categorias_observadas
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,ID_cliente,246,str,0,240,,,
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Fecha_ingreso,246,object,0,132,,,
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Segmento,246,str,0,8,,,BÁSICO | Básico | Estandar | Estándar | Premium | basico | estandar | premium
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Región,246,str,1,8,,,Biobío | Coquimbo | La Araucanía | Los Lagos | Maule | Metropolitana | O'Higgins | Valparaíso
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Canal_ingreso,246,str,1,6,,,App | Campaña | Ejecutivo | Referido | Tienda | Web
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Programa_acompañamiento,246,str,0,3,,,No | SI | Sí
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Llamada_bienvenida,246,str,0,4,,,NO | No | Sí | si
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Contenido_personalizado,246,str,0,4,,,No | SÍ | Sí | no
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Sesión_orientación,246,str,0,4,,,N | No | S | Sí
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Estado_90_días,246,str,101,3,,,Abandono | Activo | Pendiente
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Días_permanencia,246,int64,0,130,-12,183,
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Costo_acompañamiento,246,int64,0,40,-4500,47000,
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Satisfacción,246,float64,6,8,0.0,7.0,
+_transversal/datos/boldonet/originales/boldonet_kpis.xlsx,Base_original,Fecha_actualización,246,datetime64[us],1,26,2026-06-25 00:00:00,2026-07-24 00:00:00,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Clientes,IdCliente,180,str,0,180,,,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Clientes,Segmento,180,str,8,4,,,Clientes frecuentes | Familias | Hogar joven | Profesionales
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Clientes,Región,180,str,0,3,,,Centro | Norte | Sur
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Clientes,FechaAlta,180,datetime64[us],0,137,2025-03-03 00:00:00,2026-04-24 00:00:00,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Clientes,TipoCliente,180,str,0,2,,,Persona | Pyme
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Productos,IdProducto,13,str,0,13,,,P001 | P002 | P003 | P004 | P005 | P006 | P007 | P008 | P009 | P010 | P011 | P012 | P013
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Productos,Categoría,13,str,0,4,,,Climatización | Cocina | Limpieza | Organización
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Productos,Producto,13,str,0,13,,,Aspiradora vertical | Cafetera | Estufa eléctrica | Hervidor | Licuadora | Organizador de clóset | Purificador de aire | Repisa modular | Robot limpiador | Set de cajas | Tostador | Vaporizador | Ventilador de pie
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Productos,PrecioLista,13,int64,0,13,42,329,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Productos,CostoUnitario,13,float64,0,13,25.82,202.29,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,IdVenta,680,str,0,675,,,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,Fecha,680,datetime64[us],0,175,2026-01-01 00:00:00,2026-06-30 00:00:00,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,IdCliente,680,str,0,178,,,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,IdProducto,680,str,0,13,,,P001 | P002 | P003 | P004 | P005 | P006 | P007 | P008 | P009 | P010 | P011 | P012 | P013
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,Canal,680,str,0,9,,, Sitio web | MARKETPLACE | Marketplace | Sitio web | Tienda física | Tienda física  | marketplace | sitio web | tienda física
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,Región,680,str,0,3,,,Centro | Norte | Sur
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,Unidades,680,int64,0,3,1,3,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,PrecioLista,680,int64,0,13,42,329,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,DescuentoPct,680,float64,0,286,0.0,0.1999,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,CostoUnitario,680,float64,0,13,25.82,202.29,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,TiempoEntregaDias,680,int64,0,7,0,7,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Ventas,CampañaOrigen,680,str,0,4,,,Email | Google Search | Meta Ads | Orgánico
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Reclamos,IdReclamo,39,str,0,39,,,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Reclamos,IdVenta,39,str,0,39,,,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Reclamos,FechaReclamo,39,datetime64[us],0,35,2026-01-09 00:00:00,2026-07-08 00:00:00,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Reclamos,Motivo,39,str,0,5,,,Atención | Atraso en entrega | Pedido incompleto | Problema de pago | Producto defectuoso
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Reclamos,Resuelto,39,str,0,2,,,No | Sí
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Reclamos,DiasResolucion,39,float64,6,8,1.0,9.0,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Reclamos,Satisfaccion1a5,39,int64,0,4,1,4,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Marketing,FechaMes,18,datetime64[us],0,6,2026-01-01 00:00:00,2026-06-01 00:00:00,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Marketing,Campaña,18,str,0,3,,,Email | Google Search | Meta Ads
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Marketing,Inversión,18,float64,0,18,249.88,8427.99,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Marketing,Impresiones,18,int64,0,18,74044,588567,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Marketing,Clics,18,int64,0,18,1904,16142,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Marketing,ClientesAdquiridos,18,int64,0,18,60,689,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Metas,FechaMes,6,datetime64[us],0,6,2026-01-01 00:00:00,2026-06-01 00:00:00,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Metas,MetaVentas,6,int64,0,6,15000,19500,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Metas,MetaMargenPct,6,float64,0,1,0.3,0.3,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Metas,MaxReclamosPor1000,6,int64,0,1,40,40,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Metas,MaxTiempoEntregaDias,6,int64,0,1,2,2,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Calendario,Fecha,181,datetime64[us],0,181,2026-01-01 00:00:00,2026-06-30 00:00:00,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Calendario,Año,181,int64,0,1,2026,2026,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Calendario,NumeroMes,181,int64,0,6,1,6,
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Calendario,Mes,181,str,0,6,,,Abril | Enero | Febrero | Junio | Marzo | Mayo
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Calendario,Trimestre,181,str,0,2,,,T1 | T2
+_transversal/datos/casapeumo/originales/casapeumo_laboratorio.xlsx,Calendario,AñoMes,181,str,0,6,,,2026-01 | 2026-02 | 2026-03 | 2026-04 | 2026-05 | 2026-06
+_transversal/datos/embudo_digital/originales/embudo_digital.xlsx,Datos originales,Segmento,6,str,0,6,,,App Android | App iOS | Tablet | Web escritorio | Web móvil Android | Web móvil iOS
+_transversal/datos/embudo_digital/originales/embudo_digital.xlsx,Datos originales,Sesiones_anterior,6,int64,0,6,4300,14800,
+_transversal/datos/embudo_digital/originales/embudo_digital.xlsx,Datos originales,Sesiones_actual,6,int64,0,6,4100,14500,
+_transversal/datos/embudo_digital/originales/embudo_digital.xlsx,Datos originales,Inicios_pago,6,int64,0,6,303,1232,
+_transversal/datos/embudo_digital/originales/embudo_digital.xlsx,Datos originales,Compras,6,int64,0,6,200,887,
+_transversal/datos/embudo_digital/originales/embudo_digital.xlsx,Datos originales,Abandonos_pago,6,int64,0,6,103,357,
+_transversal/datos/embudo_digital/originales/embudo_digital.xlsx,Datos originales,Satisfaccion,6,float64,0,6,0.68,0.83,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,cliente_id,950,int64,0,950,1001,1950,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,edad,950,int64,0,56,19,74,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,antiguedad_meses,950,int64,0,167,2,179,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,ingreso_mensual_clp,950,int64,0,661,350000,2400000,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,num_productos_contratados,950,int64,0,5,1,5,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,frecuencia_reclamos_12m,950,int64,0,8,0,7,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,retrasos_pago_12m,950,int64,0,6,0,5,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,uso_app_movil_mensual,950,int64,0,18,1,19,
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,region,950,str,0,5,,,Antofagasta | Biobio | La Araucania | Metropolitana | Valparaiso
+_transversal/datos/fincordillera/originales/fincordillera_clientes.csv,CSV,churn,950,int64,0,2,0,1,
+_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv,CSV,transaccion_id,1200,int64,0,1200,500000,501199,
+_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv,CSV,monto_clp,1200,int64,0,713,2000,873500,
+_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv,CSV,hora_transaccion,1200,int64,0,24,0,23,
+_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv,CSV,pais_distinto_habitual,1200,int64,0,2,0,1,
+_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv,CSV,dispositivo_nuevo,1200,int64,0,2,0,1,
+_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv,CSV,num_transacciones_dia_cliente,1200,int64,0,9,0,9,
+_transversal/datos/fincordillera/originales/fincordillera_transacciones.csv,CSV,fraude,1200,int64,0,2,0,1,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,lote_id,950,int64,0,950,20000,20949,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,temperatura_coccion_c,950,float64,0,382,140.0,199.4,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,presion_digestor_bar,950,float64,0,358,4.66,9.9,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,tiempo_coccion_min,950,float64,0,75,78.0,157.0,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,concentracion_alcali_pct,950,float64,0,118,11.0,25.2,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,humedad_madera_pct,950,float64,0,276,28.0,62.3,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,velocidad_linea_m_min,950,float64,0,448,530.0,1099.0,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_calidad_pulpa.csv,CSV,defecto,950,int64,0,2,0,1,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_consumo_energetico.csv,CSV,lote_id,480,int64,0,480,1,480,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_consumo_energetico.csv,CSV,toneladas_producidas,480,float64,0,457,180.2,817.2,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_consumo_energetico.csv,CSV,temperatura_ambiente_c,480,float64,0,223,-3.0,31.0,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_consumo_energetico.csv,CSV,tipo_proceso,480,str,0,2,,,Kraft | Mecanico
+_transversal/datos/pulpa_lenga/originales/pulpalenga_consumo_energetico.csv,CSV,antiguedad_equipo_anios,480,int64,0,30,1,30,
+_transversal/datos/pulpa_lenga/originales/pulpalenga_consumo_energetico.csv,CSV,consumo_energetico_mwh,480,float64,0,463,240.0,1013.3,
+_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv,CSV,registro_id,480,int64,0,480,1,480,
+_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv,CSV,mes,480,int64,0,12,1,12,
+_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv,CSV,categoria_producto,480,str,0,4,,,Alimentos | Electrohogar | Tecnologia | Vestuario
+_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv,CSV,precio_promedio_clp,480,int64,0,172,4900,27900,
+_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv,CSV,promocion_activa,480,int64,0,2,0,1,
+_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv,CSV,inversion_marketing_clp,480,int64,0,356,53000,898000,
+_transversal/datos/quillaymarket/originales/quillaymarket_demanda_mensual.csv,CSV,ventas_unidades,480,int64,0,198,48,329,
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,ID_Venta,180,int64,0,180,1000,1179,
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Fecha,180,str,0,113,,,
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Mes,180,str,0,6,,,Abril | Enero | Febrero | Junio | Marzo | Mayo
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Region,180,str,0,3,,,Centro | Norte | Sur
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Producto,180,str,0,4,,,A | B | C | D
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Producto_Nombre,180,str,0,4,,,"Aspiradora robot | Notebook 14"" | Refrigerador 300 L | Smart TV 55"""
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Vendedor,180,str,0,8,,,Benjamín Araya | Catalina Vega | Constanza Lagos | Daniela Torres | Felipe Navarro | Ignacio Fuentes | Javiera Castro | Tomás Herrera
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Canal,180,str,0,2,,,Online | Tienda física
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Unidades,180,int64,0,6,1,6,
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Precio_Unitario,180,float64,0,12,179990.0,529990.0,
+_transversal/datos/quillaymarket/originales/quillaymarket_ventas_detalle.csv,CSV,Monto,180,float64,0,49,179990.0,2699940.0,
+02_Estadistica_Business_Analytics/datos/comerciosur_marco.csv,CSV,id,5000,int64,0,5000,1,5000,
+02_Estadistica_Business_Analytics/datos/comerciosur_marco.csv,CSV,canal,5000,str,0,2,,,Tienda | Web
+02_Estadistica_Business_Analytics/datos/comerciosur_marco.csv,CSV,campana,5000,str,0,3,,,A | B | C
+02_Estadistica_Business_Analytics/datos/comerciosur_marco.csv,CSV,ticket_mil,5000,float64,0,3519,12.58,181.24,
+02_Estadistica_Business_Analytics/datos/comerciosur_marco.csv,CSV,tiempo_min,5000,float64,0,2428,11.58,59.28,
+02_Estadistica_Business_Analytics/datos/comerciosur_marco.csv,CSV,resuelto,5000,int64,0,2,0,1,
+02_Estadistica_Business_Analytics/datos/comerciosur_mensual.csv,CSV,mes,72,str,0,72,,,
+02_Estadistica_Business_Analytics/datos/comerciosur_mensual.csv,CSV,unidades,72,float64,0,72,154.62,236.46,
+02_Estadistica_Business_Analytics/datos/comerciosur_pareado.csv,CSV,id,80,int64,0,80,1,80,
+02_Estadistica_Business_Analytics/datos/comerciosur_pareado.csv,CSV,antes,80,float64,0,78,23.93,56.01,
+02_Estadistica_Business_Analytics/datos/comerciosur_pareado.csv,CSV,despues,80,float64,0,79,14.88,59.14,
+02_Estadistica_Business_Analytics/datos/comerciosur_pedidos.csv,CSV,id,600,int64,0,600,3,4986,
+02_Estadistica_Business_Analytics/datos/comerciosur_pedidos.csv,CSV,canal,600,str,0,2,,,Tienda | Web
+02_Estadistica_Business_Analytics/datos/comerciosur_pedidos.csv,CSV,campana,600,str,0,3,,,A | B | C
+02_Estadistica_Business_Analytics/datos/comerciosur_pedidos.csv,CSV,ticket_mil,600,float64,0,567,14.35,155.84,
+02_Estadistica_Business_Analytics/datos/comerciosur_pedidos.csv,CSV,tiempo_min,600,float64,0,538,15.05,56.02,
+02_Estadistica_Business_Analytics/datos/comerciosur_pedidos.csv,CSV,resuelto,600,int64,0,2,0,1,

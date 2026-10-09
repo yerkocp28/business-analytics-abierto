@@ -37,7 +37,7 @@ _quiz=globals()[__QUIZ__]
 _radio=_quiz.children[1];_boton=_quiz.children[2];_out=_quiz.children[3]
 _radio.value=None;_boton.click()
 assert 'Selecciona una respuesta' in _out.value
-_radio.value=_radio.options[1];_boton.click()
+_radio.value=_quiz._ba_clave;_boton.click()
 assert 'Correcto.' in _out.value
 print('FBA_QA='+json.dumps({'cambios_de_control':_cambios,'autoevaluacion':'OK'}))
 '''

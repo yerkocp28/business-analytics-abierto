@@ -6,31 +6,31 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_01_problema_descripcion_muestreo.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 5.69,
+      "segundos": 6.28,
       "cambios_controles": 6,
       "autoevaluacion": "OK"
     },
     {
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_02_probabilidad_bayes_distribuciones.ipynb",
       "resultado": "OK",
-      "celdas_codigo": 7,
-      "segundos": 5.3,
+      "celdas_codigo": 8,
+      "segundos": 5.34,
       "cambios_controles": 8,
       "autoevaluacion": "OK"
     },
     {
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_03_estimacion_intervalos.ipynb",
       "resultado": "OK",
-      "celdas_codigo": 7,
-      "segundos": 4.97,
+      "celdas_codigo": 8,
+      "segundos": 4.81,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
     {
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_04_correlacion_regresion.ipynb",
       "resultado": "OK",
-      "celdas_codigo": 7,
-      "segundos": 7.77,
+      "celdas_codigo": 8,
+      "segundos": 5.33,
       "cambios_controles": 4,
       "autoevaluacion": "OK"
     },
@@ -46,7 +46,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_06_series_tiempo.ipynb",
       "resultado": "OK",
       "celdas_codigo": 9,
-      "segundos": 8.08,
+      "segundos": 5.72,
       "cambios_controles": 2,
       "autoevaluacion": "OK"
     },
@@ -54,7 +54,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_07_visualizacion_herramientas.ipynb",
       "resultado": "OK",
       "celdas_codigo": 8,
-      "segundos": 6.44,
+      "segundos": 5.09,
       "cambios_controles": 2,
       "autoevaluacion": "OK"
     },
@@ -62,7 +62,7 @@
       "archivo": "02_Estadistica_Business_Analytics/notebooks/EBA_08_integrador_comunicacion.ipynb",
       "resultado": "OK",
       "celdas_codigo": 7,
-      "segundos": 3.66,
+      "segundos": 3.74,
       "cambios_controles": 2,
       "autoevaluacion": "OK"
     }

@@ -1,0 +1,25 @@
+columna_filtro,valor_filtro,medida,valor_python
+Canal,TODOS,Ventas únicas,675.0
+Canal,TODOS,Ingresos UM,101505.6111
+Canal,TODOS,Margen UM,30341.401100000003
+Canal,TODOS,Margen relativo,0.29891353562817974
+Canal,TODOS,Ticket UM,150.37868311111112
+Canal,TODOS,Entrega media días,0.92
+Canal,Marketplace,Ventas únicas,138.0
+Canal,Marketplace,Ingresos UM,23555.9741
+Canal,Marketplace,Margen UM,7249.6341
+Canal,Marketplace,Margen relativo,0.3077620169398981
+Canal,Marketplace,Ticket UM,170.69546449275362
+Canal,Marketplace,Entrega media días,1.3840579710144927
+Canal,Sitio web,Ventas únicas,275.0
+Canal,Sitio web,Ingresos UM,40978.476299999995
+Canal,Sitio web,Margen UM,12242.116300000002
+Canal,Sitio web,Margen relativo,0.29874503410952846
+Canal,Sitio web,Ticket UM,149.01264109090909
+Canal,Sitio web,Entrega media días,1.5636363636363637
+Canal,Tienda física,Ventas únicas,262.0
+Canal,Tienda física,Ingresos UM,36971.1607
+Canal,Tienda física,Margen UM,10849.6507
+Canal,Tienda física,Margen relativo,0.2934625393029654
+Canal,Tienda física,Ticket UM,141.1113003816794
+Canal,Tienda física,Entrega media días,0.0

@@ -1,0 +1,5 @@
+// Nombrar la consulta importada Pedidos. Crear cada medida por separado.
+Pedidos observados = COUNTROWS(Pedidos)
+Tiempo medio min = AVERAGE(Pedidos[tiempo_min])
+Ticket medio mil UM = AVERAGE(Pedidos[ticket_mil])
+Resolución = DIVIDE(SUM(Pedidos[resuelto]), [Pedidos observados])

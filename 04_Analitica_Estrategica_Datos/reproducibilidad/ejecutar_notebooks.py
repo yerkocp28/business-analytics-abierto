@@ -33,8 +33,8 @@ for _f in _funciones:
         _control.value=_original
 _quiz=globals()['auto___NUM__'];_radio=_quiz.children[1];_boton=_quiz.children[2];_out=_quiz.children[3]
 _radio.value=None;_boton.click();assert 'Selecciona' in _out.value
-_radio.value=_radio.options[0];_boton.click();assert 'Revisa' in _out.value
-_radio.value=_radio.options[1];_boton.click();assert 'Correcto.' in _out.value
+_radio.value=next(v for _, v in _radio.options if v != _quiz._ba_clave);_boton.click();assert 'Revisa' in _out.value
+_radio.value=_quiz._ba_clave;_boton.click();assert 'Correcto.' in _out.value
 _radio.value=None;_boton.click()
 _resultado={'cambios_controles':_cambios,'autoevaluacion':'OK'}
 if '__NUM__' == '04':

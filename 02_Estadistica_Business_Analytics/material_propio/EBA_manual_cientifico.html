@@ -2259,7 +2259,10 @@ main math[display=block] { width: max-content; min-width: 100%; }
   <li><a href="#entrega-y-evaluación-formativa" id="toc-entrega-y-evaluación-formativa" class="nav-link" data-scroll-target="#entrega-y-evaluación-formativa"><span class="header-section-number">15.1</span> Entrega y evaluación formativa</a></li>
   <li><a href="#errores-que-debe-poder-detectar-el-estudiante" id="toc-errores-que-debe-poder-detectar-el-estudiante" class="nav-link" data-scroll-target="#errores-que-debe-poder-detectar-el-estudiante"><span class="header-section-number">15.2</span> Errores que debe poder detectar el estudiante</a></li>
   </ul></li>
-  <li><a href="#sec-referencias" id="toc-sec-referencias" class="nav-link" data-scroll-target="#sec-referencias">Referencias</a></li>
+  <li><a href="#sec-referencias" id="toc-sec-referencias" class="nav-link" data-scroll-target="#sec-referencias">Referencias</a>
+  <ul class="collapse">
+  <li><a href="#sec-practica-herramientas" id="toc-sec-practica-herramientas" class="nav-link" data-scroll-target="#sec-practica-herramientas"><span class="header-section-number">15.3</span> Práctica de herramientas</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Otros formatos</h2><ul><li><a href="EBA_manual_cientifico.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
 </div>
@@ -2409,13 +2412,21 @@ main math[display=block] { width: max-content; min-width: 100%; }
 <p><strong>Preparación de entrada:</strong> Fundamentos: variables, gráficos y porcentajes; lectura y ejecución básica de Python.</p>
 <p>Los tiempos orientan una práctica guiada y deben ajustarse al diagnóstico del grupo. Cada módulo sigue la secuencia: anticipar → ejecutar → modificar → explicar. La profundización se consulta después del núcleo.</p>
 <p><strong>NB01 · Problema, descripción y muestreo (Núcleo).</strong> Definir población y estimando y justificar a quién representa la muestra. <strong>Evidencia:</strong> Entregar contrato de análisis con población, diseño, estimando y fuentes de sesgo.</p>
+<p><strong>Transferencia NB01:</strong> Una muestra toma el mismo número de pedidos Web y Tienda. Sus medias son 10 y 20 minutos, pero la población contiene 70% Web y 30% Tienda. Estima la media poblacional y contrasta con el promedio sin ponderar. Redacta la ficha de muestreo.</p>
 <p><strong>NB02 · Probabilidad, Bayes y distribuciones (Núcleo).</strong> Construir un modelo probabilístico cuyo soporte y supuestos sean explícitos. <strong>Evidencia:</strong> Calcular e interpretar el posterior 180/670 y explicar por qué no equivale a sensibilidad.</p>
+<p><strong>Transferencia NB02:</strong> Construye una tabla 2×2 para 10.000 alertas potenciales con prevalencia 3%, sensibilidad 85% y especificidad 94%. Calcula P(riesgo|alerta) sin llamar al helper. Elige una distribución para llegadas y justifica un supuesto que podría fallar.</p>
 <p><strong>NB03 · Estimación e intervalos (Núcleo).</strong> Elegir un intervalo según el parámetro, la población y el diseño. <strong>Evidencia:</strong> Reportar estimación, intervalo, unidad, población objetivo y condiciones de validez.</p>
+<p><strong>Transferencia NB03:</strong> Con n=25 pedidos independientes, media 12 minutos y SD=5, construye el IC t del 95% paso a paso. Indica qué parámetro cubre. Compara con n=100 manteniendo media y SD.</p>
 <p><strong>NB04 · Correlación y regresión (Núcleo).</strong> Interpretar coeficientes condicionados y evaluar diagnósticos del modelo. <strong>Evidencia:</strong> Justificar especificación, interpretar un coeficiente y señalar un límite causal.</p>
+<p><strong>Transferencia NB04:</strong> Un modelo de tiempo incluye ticket, canal y campaña. El coeficiente de ticket es .08 min por mil UM. Interpreta un incremento de 20 mil UM, distingue IC del coeficiente e intervalo de un pedido y propone un diagnóstico de residuos.</p>
 <p><strong>NB05 · Contrastes, ANOVA y decisión (Núcleo).</strong> Elegir un contraste y comunicar efecto, incertidumbre y relevancia práctica. <strong>Evidencia:</strong> Entregar diferencia, IC, p, ajuste por multiplicidad y una decisión condicionada.</p>
+<p><strong>Transferencia NB05:</strong> B−A en tiempo tiene IC95% [−6,−2] min y estimación −4. B cuesta 5 UM adicionales por pedido y ahorrar un minuto vale 1 UM. Decide si significación estadística basta para recomendar B y elige la prueba para datos independientes o pareados.</p>
 <p><strong>NB06 · Series y pronóstico (Núcleo).</strong> Comparar pronósticos con igual horizonte y orden temporal preservado. <strong>Evidencia:</strong> Dibujar las ventanas y explicar métrica, referencia y dependencia entre errores solapados.</p>
+<p><strong>Transferencia NB06:</strong> Para reales [120,150,180], una referencia predice [110,160,170] y otro método [125,140,190]. Calcula MAE. Dibuja entrenamiento, selección y prueba por fechas para un horizonte de tres meses; explica cuándo se conoce cada error.</p>
 <p><strong>NB07 · Visualización y herramientas (Núcleo).</strong> Conciliar un indicador entre herramientas y diseñar un tablero interpretable. <strong>Evidencia:</strong> Entregar un tablero con unidades, filtros y totales conciliados; identificar qué se ejecutó.</p>
+<p><strong>Transferencia NB07:</strong> Filtra Tienda en ComercioSur y concilia cantidad, tiempo medio y resolución en Python, Excel y la consulta Power Query entregada. Diseña una tarea de usuario que evalúe comprensión del tablero manteniendo iguales los datos.</p>
 <p><strong>NB08 · Integrador y comunicación (Núcleo).</strong> Defender una recomendación con efecto, incertidumbre y costo. <strong>Evidencia:</strong> Entregar memo, cálculo, gráfico y defensa con población, sensibilidad y siguiente evidencia.</p>
+<p><strong>Transferencia NB08:</strong> Una campaña reduce tiempo: IC de B−A [−5,−1] min. Para resolución el IC de diferencia es [−.06,.02]; el margen de no inferioridad predefinido es −.03. Redacta un memo de 100 palabras con decisión, incertidumbre y siguiente evidencia.</p>
 <!-- BA_APRENDIZAJE_FIN -->
 </section>
 </section>
@@ -3227,6 +3238,10 @@ SciPy Developers. s. f.-b. <em>scipy.stats.ttest_ind</em>. Accedido 8 de octubr
 <span class="nocase">statsmodels Developers</span>. s. f. <em>ARIMA: model specification and API</em>. Accedido 8 de octubre de 2026. <a href="https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima.model.ARIMA.html">https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima.model.ARIMA.html</a>.
 </div>
 </div>
+<section id="sec-practica-herramientas" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="sec-practica-herramientas"><span class="header-section-number">15.3</span> Práctica de herramientas</h2>
+<p><a href="herramientas_bi/README.md">Consulta Power Query, medidas DAX y controles de conciliación</a>. Los controles se calculan en Python; verificar el motor nativo al realizar la práctica.</p>
+</section>
 </section>
 
 </main>
