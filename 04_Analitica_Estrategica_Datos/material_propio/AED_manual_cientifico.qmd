@@ -182,7 +182,7 @@ tabla(pd.DataFrame([{'maduros':len(m),'observados':len(o),'retenidos':a,'tasa_ob
 
 Documente fuente declarada, fecha de extracción, dueño, finalidad, acceso, retención y transformaciones. La representatividad exige un marco de referencia: BoldoNet no entrega la composición total de cartera, por lo que solo puede describirse la cobertura disponible. Un promedio calculable no implica que represente al universo.
 
-Una política docente de IA útil pide declarar asistencia recibida, verificar fórmulas/citas, reproducir resultados y explicar personalmente la decisión. Las evaluaciones deben especificar qué ayuda se permite. No introduzca datos personales o empresariales reales en servicios externos sin la autorización correspondiente. Esta pauta de trabajo no sustituye reglas institucionales.
+La integridad académica exige citar las fuentes, verificar fórmulas y referencias, reproducir resultados y explicar personalmente la decisión. Las evaluaciones deben especificar qué ayuda se permite. No introduzca datos personales o empresariales reales en servicios externos sin la autorización correspondiente. Esta pauta de trabajo no sustituye reglas institucionales.
 
 # Descripción y selección de técnicas {#sec-tecnicas}
 

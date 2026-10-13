@@ -1,6 +1,6 @@
 # Mantener y verificar la colección
 
-[Biblioteca](README.md) · [Informe de mejoras](docs/mejoras_publico_2026-10-09_analisis_codex.md)
+[Biblioteca](README.md) · [Informe de mejoras](docs/mejoras_publico_2026-10-09_analisis.md)
 
 ## Fuentes y productos
 
@@ -19,6 +19,8 @@
 | Contratos y perfil de datos | [_transversal/datos/CATALOGO.md](_transversal/datos/CATALOGO.md), `perfilar.py` y generadores | Perfil de las columnas de 19 tablas analíticas |
 
 No edite las salidas generadas para corregir un problema de origen. Las rutas se generan con `python _transversal/construir_interfaz.py --fuentes`; sus bloques se reemplazan de forma idempotente. El comando completo realiza este paso automáticamente.
+
+Los constructores de los cuatro cursos usan [_transversal/optimizar_html.py](_transversal/optimizar_html.py) para retirar estilos de iconos que el documento no utiliza, conservando los referenciados por sus controles y scripts. Esta depuración se aplica después de cada renderizado y antes de derivar la guía de Estadística.
 
 ## Entorno y verificación completa
 

@@ -1,6 +1,9 @@
 """Ejecuta, renderiza manual, deriva guía y verifica toda la edición."""
 from pathlib import Path
 import argparse, os, shutil, subprocess, sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / '_transversal'))
+from optimizar_html import depurar_iconos
+
 C=Path(__file__).resolve().parents[1]
 def main():
     p=argparse.ArgumentParser();p.add_argument('--solo-render',action='store_true');args=p.parse_args()
@@ -16,6 +19,7 @@ def main():
         # El notebook 07 escribe su libro en salidas/ (excluida de Git); la edición publica esa versión.
         shutil.copy2(C.parent/'salidas'/'EBA_tablero_excel.xlsx',C/'material_propio'/'EBA_tablero_excel.xlsx')
     run([quarto,'render',str(C/'material_propio/EBA_manual_cientifico.qmd'),'--to','all'])
+    depurar_iconos(C / 'material_propio/EBA_manual_cientifico.html')
     script('construir_guia.py')
     run([sys.executable,str(C.parent/'_transversal/construir_interfaz.py'),'--curso','EBA'])
     script('verificar_edicion.py')

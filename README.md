@@ -45,7 +45,7 @@ Abra Jupyter desde la raíz del repositorio o desde una subcarpeta: los notebook
 
 La [guía de mantenimiento](MANTENIMIENTO.md) documenta qué fuentes editar, cómo preparar el entorno de construcción y cómo validar la colección con `python _transversal/construir_todo.py`. Incluye reconstrucción de manuales, ejecución de laboratorios, controles de contenido y pruebas de las nueve páginas principales en cuatro tamaños de pantalla.
 
-Consulte el [informe de mejoras y alcance de la revisión](docs/mejoras_publico_2026-10-09_analisis_codex.md), las [correcciones de la auditoría de notebooks](docs/correcciones_notebooks_2026-10-09_analisis_codex.md), la [evidencia de interfaz](verificacion/interfaz.json) y el [resultado de la última verificación global](verificacion/ultima_ejecucion.json). El flujo de GitHub Actions ejecuta las comprobaciones en cada cambio a `main` y solicitud de incorporación.
+Consulte el [informe de mejoras y alcance de la revisión](docs/mejoras_publico_2026-10-09_analisis.md), las [correcciones de la auditoría de notebooks](docs/correcciones_notebooks_2026-10-09_analisis.md), la [evidencia de interfaz](verificacion/interfaz.json) y el [resultado de la última verificación global](verificacion/ultima_ejecucion.json). El flujo de GitHub Actions ejecuta las comprobaciones en cada cambio a `main` y solicitud de incorporación.
 
 ## Datos
 

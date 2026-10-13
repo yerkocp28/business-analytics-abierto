@@ -6,6 +6,9 @@ import shutil
 import subprocess
 import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / '_transversal'))
+from optimizar_html import depurar_iconos
+
 CURSO=Path(__file__).resolve().parents[1]
 RAIZ=CURSO.parent
 
@@ -19,6 +22,7 @@ def main():
     if not args.solo_render:script('ejecutar_notebooks.py')
     script('construir_guia.py')
     subprocess.run([quarto,'render',str(CURSO/'material_propio/AED_manual_cientifico.qmd'),'--to','all'],cwd=RAIZ,env=env,check=True)
+    depurar_iconos(CURSO / 'material_propio/AED_manual_cientifico.html')
     subprocess.run([sys.executable,str(RAIZ/'_transversal/construir_interfaz.py'),'--curso','AED'],cwd=RAIZ,env=env,check=True)
     script('verificar_edicion.py')
     print('Edición verificada. Revise resultados y evidencia antes de publicar.')

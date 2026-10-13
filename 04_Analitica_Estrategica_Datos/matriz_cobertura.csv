@@ -12,7 +12,7 @@
 3.2,nucleo,Discutir alternativas y razones de descarte,sec-decision,decision,notebooks/AED_05_alternativas_decision.ipynb,riesgo,"EV, maximin, arrepentimiento y restricciones"
 3.3,nucleo,Explicar conexión entre resultados y decisiones,sec-comunicacion,implementacion,notebooks/AED_07_comunicacion_integracion.ipynb,experimento,"Mecanismo supuesto, piloto y evaluación de impacto"
 3.4,nucleo,Comunicar con estructura lógica y comprensible,sec-comunicacion,integrador,notebooks/AED_07_comunicacion_integracion.ipynb,entrega,"Memo, cinco diapositivas, apéndice y defensa"
-T01,apoyo,"Gobierno, ética, trazabilidad y uso de IA",sec-proceso,proceso,notebooks/AED_01_proceso_calidad.ipynb,gobierno,Actividad resuelta y discusión de supuestos
+T01,apoyo,"Gobierno, ética, trazabilidad e integridad académica",sec-proceso,proceso,notebooks/AED_01_proceso_calidad.ipynb,gobierno,Actividad resuelta y discusión de supuestos
 T02,apoyo,"Cohortes, censura administrativa y estados faltantes",sec-calidad,calidad,notebooks/AED_01_proceso_calidad.ipynb,cohortes,Actividad resuelta y discusión de supuestos
 T03,apoyo,"Dispersión, percentiles y mezcla de grupos",sec-tecnicas,tecnicas,notebooks/AED_02_tecnicas_analiticas.ipynb,descripcion,Actividad resuelta y discusión de supuestos
 T04,apoyo,Regresión logística y probabilidades fuera de muestra,sec-tecnicas,tecnicas,notebooks/AED_02_tecnicas_analiticas.ipynb,logistica,Actividad resuelta y discusión de supuestos

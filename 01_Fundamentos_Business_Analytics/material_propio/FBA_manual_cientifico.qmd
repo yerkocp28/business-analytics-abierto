@@ -452,7 +452,7 @@ La incertidumbre se comunica con el nivel que la evidencia permite. No todos los
 
 Defina finalidad antes de recopilar datos. Evite incorporar identificadores cuando no son necesarios para aprender el método. Revise representatividad, diferencias de error entre grupos y mecanismos de revisión humana cuando una decisión afecte a personas. Quitar una columna sensible no elimina sus sustitutas; una combinación de variables puede recuperar parte de esa información.
 
-Al usar IA para programar o redactar, conserve responsabilidad por la evidencia. Verifique operaciones, fuentes, unidades y alcance de las conclusiones. No atribuya a un libro una afirmación solo porque aparece en un texto generado. Identifique asistencia en el proceso conforme a los acuerdos del curso y evite cargar datos personales o institucionales fuera de los entornos autorizados.
+Al programar o redactar, conserve responsabilidad por la evidencia. Verifique operaciones, fuentes, unidades y alcance de las conclusiones. Contraste las afirmaciones con las fuentes citadas. Documente el proceso conforme a los acuerdos del curso y evite cargar datos personales o institucionales fuera de los entornos autorizados.
 
 ## Rúbrica de práctica
 

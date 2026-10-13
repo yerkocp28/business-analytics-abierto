@@ -6,6 +6,9 @@ import shutil
 import subprocess
 import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / '_transversal'))
+from optimizar_html import depurar_iconos
+
 CURSO=Path(__file__).resolve().parents[1]
 
 
@@ -26,6 +29,7 @@ def main():
         run([sys.executable,CURSO/'reproducibilidad/verificar_widgets.py'])
         run([sys.executable,CURSO/'reproducibilidad/datos_guia.py'])
     run([quarto,'render',CURSO/'material_propio/FBA_manual_cientifico.qmd','--to','all'])
+    depurar_iconos(CURSO / 'material_propio/FBA_manual_cientifico.html')
     run([sys.executable, CURSO.parent / '_transversal/construir_interfaz.py', '--curso', 'FBA'])
     run([sys.executable, CURSO / 'reproducibilidad/verificar_edicion.py'])
     print('Construcción terminada. Revise las salidas y la evidencia de ejecución antes de publicar.')
